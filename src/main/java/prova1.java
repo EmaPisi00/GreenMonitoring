@@ -15,6 +15,7 @@ public class prova1 {
     * @return ritorna un
     * @pre precondizione:
     * @post postcondizione:
+    * ciao
      */
     public int prova11(int x) {
         return 0;
