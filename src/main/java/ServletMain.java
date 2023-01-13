@@ -6,6 +6,14 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "ServletMain", value = "/ServletMain")
 public class ServletMain extends HttpServlet {
+
+    /**
+     * prova.
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -18,6 +26,13 @@ public class ServletMain extends HttpServlet {
 
     }
 
+    /**
+     * prova.
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
