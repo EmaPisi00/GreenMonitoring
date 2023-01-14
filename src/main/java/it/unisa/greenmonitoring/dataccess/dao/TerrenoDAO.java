@@ -9,4 +9,5 @@ public interface TerrenoDAO {
     public void create(TerrenoBean t) throws SQLException;
     public TerrenoBean retrieve(String id_terreno) throws SQLException;
     public void update(String id_terreno) throws SQLException;
+    public void delete(String id_terreno) throws SQLException;
 }
