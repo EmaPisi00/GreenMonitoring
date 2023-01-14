@@ -1,5 +1,6 @@
 package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
 
-public class ColtivazioneManager {
+import java.sql.SQLException;
 
+public class ColtivazioneManager {
 }
