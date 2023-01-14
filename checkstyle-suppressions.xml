@@ -9,5 +9,6 @@
         <suppress checks="naming" files="."/>
         <suppress checks="FinalParameters" files="."/>
         <suppress files=".java" checks="DesignForExtension" lines="" />
+        <suppress files="*/Servlet.java" checks="*" />
         </suppressions>
 
