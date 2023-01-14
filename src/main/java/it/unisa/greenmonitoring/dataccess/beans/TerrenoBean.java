@@ -20,5 +20,36 @@ public class TerrenoBean {
         this.superficie = superficie;
         this.immagine = immagine;
     }
+    
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLocazione() {
+        return locazione;
+    }
+
+    public void setLocazione(String locazione) {
+        this.locazione = locazione;
+    }
+
+    public String getSuperficie() {
+        return superficie;
+    }
+
+    public void setSuperficie(String superficie) {
+        this.superficie = superficie;
+    }
+
+    public String getImmagine() {
+        return immagine;
+    }
+
+    public void setImmagine(String immagine) {
+        this.immagine = immagine;
+    }
 }
