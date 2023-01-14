@@ -11,6 +11,8 @@
     </deployment>
     <server-settings>
       <option name="BASE_DIRECTORY_NAME" value="c7a9db72-c46b-412d-9463-0c775dcbff21" />
+      <option name="DEPLOY_TOMCAT_APPS" value="true" />
+      <option name="PRESERVE_SESSIONS" value="true" />
     </server-settings>
     <predefined_log_file enabled="true" id="Tomcat" />
     <predefined_log_file enabled="true" id="Tomcat Catalina" />
