@@ -28,6 +28,12 @@
             height: 8%;
             background: green;
         }
+
+
+        a:link {
+            text-decoration: none;
+            align-content: center;
+        }
     </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,6 +63,10 @@
         </div>
     </div>
 </div>
-<!-- End Example Code -->
+
+<a href="RegistrazioneAzienda.jsp">Se non hai ancora un account, puoi registrarti qui se devi registrare
+    un'azienda</a><br><br>
+<a href="RegistrazioneDipendente.jsp">Se non hai ancora un account, puoi registrarti qui se devi registrare un
+    dipendente</a>
 </body>
 </html>
