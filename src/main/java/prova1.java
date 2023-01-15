@@ -15,9 +15,9 @@ public class prova1 {
     * @return ritorna un
     * @pre precondizione:
     * @post postcondizione:
-    * ciao
+    * ciao sono manuel
      */
-    public int prova11(int x) {
+    public int prova1(int x) {
         return 0;
     }
 }
