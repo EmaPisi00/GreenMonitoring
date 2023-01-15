@@ -17,5 +17,7 @@ public class prova1 {
     * @post postcondizione:
     * ciao sono manuel
      */
-    public int prova11(int x) {return 0;}
+    public int prova1(int x) {
+        return 0;
+    }
 }
