@@ -6,9 +6,13 @@ public class TerrenoBean {
      */
     private String id;
     /**
-     * This field contains the type of location.
+     * This field contains latitudine.
      */
-    private String locazione;
+    private String latitudine;
+    /**
+     * This field contains longitudine.
+     */
+    private String longitudine;
     /**
      * This field contains the type of surface.
      */
@@ -21,13 +25,15 @@ public class TerrenoBean {
     /**
      * This meth0d creates a TerrenoBean from the following parameters.
      * @param given_id
-     * @param given_locazione
+     * @param given_latitudine
+     * @param given_longitudine
      * @param given_superficie
      * @param given_immagine
      */
-    public TerrenoBean(String given_id, String given_locazione, String given_superficie, String given_immagine) {
+    public TerrenoBean(String given_id, String given_latitudine, String given_longitudine, String given_superficie, String given_immagine) {
         this.id = id;
-        this.locazione = locazione;
+        this.latitudine = latitudine;
+        this.longitudine = longitudine;
         this.superficie = superficie;
         this.immagine = immagine;
     }
@@ -52,16 +58,32 @@ public class TerrenoBean {
      *
      * @return String
      */
-    public String getLocazione() {
-        return locazione;
+    public String getLatitudine() {
+        return latitudine;
     }
 
     /**
      *
-     * @param given_locazione
+     * @param given_latitudine
      */
-    public void setLocazione(String given_locazione) {
-        this.locazione = given_locazione;
+    public void setLatitudine(String given_latitudine) {
+        this.latitudine = given_latitudine;
+    }
+
+    /**
+     *
+     * @return String
+     */
+    public String getLongitudine() {
+        return longitudine;
+    }
+
+    /**
+     *
+     * @param given_longitudine
+     */
+    public void setLongitudine(String given_longitudine) {
+        this.longitudine = given_longitudine;
     }
 
     /**
