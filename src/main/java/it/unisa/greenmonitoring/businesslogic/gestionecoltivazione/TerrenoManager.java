@@ -1,8 +1,11 @@
 package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
+import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAO;
+import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAOImpl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class TerrenoManager {
     /**
@@ -50,4 +53,21 @@ public class TerrenoManager {
     public void deleteTerreno(String id_terreno) throws SQLException {
 
     }
+
+    /**
+     * Metodo usato per rimuovere un terreno.
+     * @param t
+     * @pre t ha un id che esiste nel database.
+     * @post la relazione tra t e la coltivazione nel database non esiste più.
+     * @return void
+     */
+    public void rimuoviTerreno(TerrenoBean t){
+        try {
+            TerrenoDAO td = new TerrenoDAOImpl();
+            td.deleteTerreno(t.getId());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
