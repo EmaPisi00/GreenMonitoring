@@ -6,7 +6,7 @@ public class TerrenoBean {
      */
     private String id;
     /**
-     * Questo campo contiene la latitudine del terreno
+     * Questo campo contiene la latitudine del terreno.
      */
     private Float  latitudine;
     /**
