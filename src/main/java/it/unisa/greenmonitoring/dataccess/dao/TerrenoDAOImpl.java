@@ -4,6 +4,7 @@ import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TerrenoDAOImpl implements TerrenoDAO {
@@ -23,7 +24,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     @Override
     public TerrenoBean createTerreno(TerrenoBean t,String email) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL="INSERT INTO Terreno(azienda, immagine, latitudine, longitudine, superfice) VALUES(?, ? ?, ?, ?)";
+        String insertSQL="INSERT INTO Terreno(azienda, immagine, latitudine, longitudine, superfice) VALUES(?, ?, ?, ?, ?)";
         try{
             connection= ConnectionPool.getConnection();
             preparedStatement=connection.prepareStatement(insertSQL);
@@ -42,10 +43,33 @@ public class TerrenoDAOImpl implements TerrenoDAO {
         return t;
     }
 
-
     @Override
     public TerrenoBean retrieveTerreno(String id_terreno) throws SQLException {
-        return null;
+
+        String selectSQL= "SELECT * FROM Terreno WHERE Terreno.id = ?";
+        TerrenoBean t = null;
+        try{
+            connection= ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, id_terreno);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()){
+                t.setId(rs.getString("id"));
+                t.setImmagine(rs.getString("immagine"));
+                t.setSuperficie(rs.getString("superficie"));
+                t.setLatitudine(rs.getFloat("latitudine"));
+                t.setLongitudine(rs.getFloat("longitudine"));
+                t.setAzienda(rs.getString("azienda"));
+            }
+
+        }catch (SQLException s){
+            s.printStackTrace();
+        }
+        finally {
+            connection.close();
+        }
+        return t;
     }
 
     @Override
@@ -56,5 +80,18 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     @Override
     public void deleteTerreno(String id_terreno) throws SQLException {
 
+        String deleteSQL= "DELETE FROM Terreno WHERE Terreno.id = ?";
+        try{
+            connection= ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setString(1, id_terreno);
+            preparedStatement.execute();
+
+        }catch (SQLException s){
+            s.printStackTrace();
+        }
+        finally {
+            connection.close();
+        }
     }
 }

@@ -7,13 +7,13 @@ import java.sql.SQLException;
 
 public interface TerrenoDAO {
     /**
-     * This method creates a new record in table TERRENO.
+     * Questo metodo crea un nuovo record nella tabella TERRENO.
      * @param t
      * @throws SQLException
      */
     TerrenoBean createTerreno(TerrenoBean t, String email) throws SQLException;
     /**
-     * This method return an istance of TerrenoBean constructed from an id.
+     * Questo metodo restituisce una istanza di TerrenoBean a partire da un id.
      * @param id_terreno
      * @throws SQLException
      * @return TerrenoBean
@@ -21,13 +21,13 @@ public interface TerrenoDAO {
     TerrenoBean retrieveTerreno(String id_terreno) throws SQLException;
 
     /**
-     * This method updates a record in table TERRENO.
+     * Questo metodo aggiorna un record nella tabella TERRENO.
      * @param id_terreno
      * @throws SQLException
      */
     void updateTerreno(String id_terreno) throws SQLException;
     /**
-     * This method destroys a record in table TERRENO.
+     * Questo metodo distrugge un record nella tabella TERRENO.
      * @param id_terreno
      * @throws SQLException
      */

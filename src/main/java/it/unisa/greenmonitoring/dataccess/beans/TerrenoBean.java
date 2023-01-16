@@ -2,40 +2,46 @@ package it.unisa.greenmonitoring.dataccess.beans;
 
 public class TerrenoBean {
     /**
-     * This field contains the id.
+     * Questo campo contiene l'id.
      */
     private String id;
     /**
-     * This field contains latitudine.
+     * Questo campo contiene la latitudine del terreno
      */
-    private String latitudine;
+    private Float  latitudine;
     /**
-     * This field contains longitudine.
+     * Questo campo contiene la longitudine del terreno.
      */
-    private String longitudine;
+    private Float  longitudine;
     /**
-     * This field contains the type of surface.
+     * Questo campo contiene il tipo di superficie.
      */
     private String superficie;
     /**
-     * This field contains the link to the image.
+     * Questo campo contiene il link all'immagine.
      */
     private String immagine;
+    /**
+     * Questo campo contiene l'azienda associata al terreno.
+     */
+    private String azienda;
 
     /**
-     * This meth0d creates a TerrenoBean from the following parameters.
+     * Questo metodo crea un TerrenoBean a partire da i seguenti parametri.
      * @param given_id
      * @param given_latitudine
      * @param given_longitudine
      * @param given_superficie
      * @param given_immagine
+     * @param given_azienda
      */
-    public TerrenoBean(String given_id, String given_latitudine, String given_longitudine, String given_superficie, String given_immagine) {
-        this.id = id;
-        this.latitudine = latitudine;
-        this.longitudine = longitudine;
-        this.superficie = superficie;
-        this.immagine = immagine;
+    public TerrenoBean(String given_id, Float given_latitudine, Float given_longitudine, String given_superficie, String given_immagine, String given_azienda) {
+        this.id = given_id;
+        this.latitudine = given_latitudine;
+        this.longitudine = given_longitudine;
+        this.superficie = given_superficie;
+        this.immagine = given_immagine;
+        this.azienda = given_azienda;
     }
 
     /**
@@ -56,9 +62,9 @@ public class TerrenoBean {
 
     /**
      *
-     * @return String
+     * @return Float
      */
-    public String getLatitudine() {
+    public Float getLatitudine() {
         return latitudine;
     }
 
@@ -66,15 +72,15 @@ public class TerrenoBean {
      *
      * @param given_latitudine
      */
-    public void setLatitudine(String given_latitudine) {
+    public void setLatitudine(Float given_latitudine) {
         this.latitudine = given_latitudine;
     }
 
     /**
      *
-     * @return String
+     * @return Float
      */
-    public String getLongitudine() {
+    public Float getLongitudine() {
         return longitudine;
     }
 
@@ -82,7 +88,7 @@ public class TerrenoBean {
      *
      * @param given_longitudine
      */
-    public void setLongitudine(String given_longitudine) {
+    public void setLongitudine(Float given_longitudine) {
         this.longitudine = given_longitudine;
     }
 
@@ -116,5 +122,19 @@ public class TerrenoBean {
      */
     public void setImmagine(String given_immagine) {
         this.immagine = given_immagine;
+    }
+    /**
+     *
+     * @param given_azienda
+     */
+    public void setAzienda(String given_azienda) {
+        this.azienda = given_azienda;
+    }
+    /**
+     *
+     * @return String
+     */
+    public String getAzienda() {
+        return azienda;
     }
 }
