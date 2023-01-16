@@ -1,54 +1,54 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
-import it.unisa.greenmonitoring.dataccess.beans.RegistrazioneAziendaBean;
-
+import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Implementazione dell'interfaccia RegistrazioneDAO.
  */
-public class RegistrazioneAziendaDAOImpl implements RegistrazioneAziendaDAO {
+public class AziendaDAOImpl implements AziendaDAO {
 
     /**
      * Metodo create che implementa la creazione di una nuova azienda.
-     * @param registrazioneAziendaBean
+     * @param aziendaBean
      * @throws SQLException
      */
     @Override
-    public void create(RegistrazioneAziendaBean registrazioneAziendaBean) throws SQLException {
+    public void create(AziendaBean aziendaBean) throws SQLException {
 
     }
 
     /**
      * Metodo retrieve che implementa la ricerca di un'azienda attraverso il passaggio di un ID.
-     * @param idRegistrazioneAzienda
+     *
+     * @param idAzienda
      * @return
      * @throws SQLException
      */
 
     @Override
-    public List<RegistrazioneAziendaBean> retrieve(String idRegistrazioneAzienda) throws SQLException {
+    public List<AziendaBean> retrieve(String idAzienda) throws SQLException {
         return null;
     }
 
     /**
      * Metodo update che implementa un aggiornamento al DB attraverso il passaggio di un ID.
-     * @param idRegistrazioneAzienda
+     * @param idAzienda
      * @throws SQLException
      */
     @Override
-    public void update(String idRegistrazioneAzienda) throws SQLException {
+    public void update(String idAzienda) throws SQLException {
 
     }
 
     /**
      * Metodo delete che implementa una cancellazione dal sistema attraverso il passaggio di un ID.
-     * @param idRegistrazioneAzienda
+     * @param idAzienda
      * @throws SQLException
      */
     @Override
-    public void delete(String idRegistrazioneAzienda) throws SQLException {
+    public void delete(String idAzienda) throws SQLException {
 
     }
 }
