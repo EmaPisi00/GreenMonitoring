@@ -17,6 +17,11 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     private Connection connection;
 
     /**
+     * Dichiaro la Variabile final "azienda" che mi identifica la tabella nel db.
+     */
+    private static final String TABLE_NAME = "Terreno";
+
+    /**
      * Classe per l'implementazione di TerrenoDAOImpl.
      */
     public TerrenoDAOImpl() throws SQLException {
@@ -30,9 +35,9 @@ public class TerrenoDAOImpl implements TerrenoDAO {
 
     }
     @Override
-    public TerrenoBean createTerreno(TerrenoBean t, String email) throws SQLException {
+    public void createTerreno(TerrenoBean t) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT INTO Terreno(azienda, immagine, latitudine, longitudine, superfice) VALUES(?, ?, ?, ?, ?)";
+        String insertSQL = "INSERT " + TABLE_NAME + "(azienda,immagine,latitudine,longitudine,superfice)" + " VALUES (?,?,?,?,?)";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
@@ -41,20 +46,26 @@ public class TerrenoDAOImpl implements TerrenoDAO {
             preparedStatement.setFloat(3, t.getLatitudine());
             preparedStatement.setFloat(4, t.getLongitudine());
             preparedStatement.setString(5, t.getSuperficie());
-            preparedStatement.execute();
-        } catch (SQLException s) {
-            System.out.println("errore nel salvare il terreno: " + s);
+            preparedStatement.executeUpdate();
+            connection.commit();
         } finally {
-            connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
         }
-        return t;
     }
 
     @Override
     public synchronized List<TerrenoBean> retrieveTerreno() throws SQLException {
 
         String selectSQL = "SELECT * FROM Terreno";
-        TerrenoBean t = new TerrenoBean(null, null, null, null, null, null);
+        TerrenoBean t = new TerrenoBean(null, null, null, null, null);
         List<TerrenoBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();

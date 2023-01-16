@@ -10,11 +10,9 @@ public interface TerrenoDAO {
     /**
      * Questo metodo crea un nuovo record nella tabella TERRENO.
      * @param t
-     * @param email
      * @throws SQLException
-     * @return TerrenoBean
      */
-    TerrenoBean createTerreno(TerrenoBean t, String email) throws SQLException;
+    void createTerreno(TerrenoBean t) throws SQLException;
 
     /**
      * Questo metodo restituisce ogni terreno del DB.
