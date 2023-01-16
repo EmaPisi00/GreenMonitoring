@@ -32,7 +32,7 @@
 
         a:link {
             text-decoration: none;
-            align-content: center;
+            margin-bottom: 0;
         }
     </style>
     <meta charset="utf-8">
@@ -44,7 +44,7 @@
 </head>
 
 
-<body class="bg">
+<body >
 
 <img src="img/Logo.png" class="rounded mx-auto d-block" alt="...">
 

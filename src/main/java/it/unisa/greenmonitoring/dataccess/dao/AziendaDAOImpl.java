@@ -4,7 +4,9 @@ import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -80,20 +82,71 @@ public class AziendaDAOImpl implements AziendaDAO {
 
     }
 
+
+
     /**
      * Metodo retrieve che implementa la ricerca di un'azienda attraverso il passaggio di un ID.
-     *
-     * @param idAzienda
      * @return
      * @throws SQLException
      */
-
     @Override
-    public List<AziendaBean> retrieve(String idAzienda) throws SQLException {
-        return null;
+    public List<AziendaBean> retrieveAll() throws SQLException {
 
+        PreparedStatement preparedStatement = null;
 
+        List<AziendaBean> azienda = new LinkedList<AziendaBean>();
+
+        String retrieveSQL = "SELECT * FROM" + TABLE_NAME;
+
+        try {
+
+            connection = ConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement(retrieveSQL);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                AziendaBean bean = new AziendaBean();
+
+                bean.setEmail(resultSet.getString("email"));
+                bean.setPassword(resultSet.getString("password"));
+                bean.setTelefono(resultSet.getString("telefono"));
+                bean.setCitta(resultSet.getString("citta"));
+                bean.setProvincia(resultSet.getString("provincia"));
+                bean.setIndirizzo(resultSet.getString("indirizzo"));
+                bean.setNome_azienda(resultSet.getString("nome_azienda"));
+                bean.setPartita_iva(resultSet.getString("partita_iva"));
+
+                azienda.add(bean);
+            }
+
+        } finally {
+            try {
+                 if (preparedStatement != null) {
+                      preparedStatement.close();
+                 }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return  azienda;
     }
+
+    /**
+     * Implementazione metodo che permette la ricerca di un'azienda in base alla sua email.
+     * @param email
+     * @return List<AziendaBean>
+     * @throws SQLException
+     */
+    @Override
+    public List<AziendaBean> retrieveForKey(String email) throws SQLException {
+        return null;
+    }
+
 
     /**
      * Metodo update che implementa un aggiornamento al DB attraverso il passaggio di un ID.

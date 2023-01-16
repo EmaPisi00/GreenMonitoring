@@ -31,6 +31,13 @@ public class AziendaBean extends UtenteBean {
     }
 
     /**
+     * Costruttore vuoto.
+     */
+    public AziendaBean() {
+        super();
+    }
+
+    /**
      * Get di nome_zienda.
      *
      * @return nome_azienda
