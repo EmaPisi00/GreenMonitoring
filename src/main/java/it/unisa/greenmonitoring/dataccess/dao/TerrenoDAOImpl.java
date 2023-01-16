@@ -54,7 +54,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     public synchronized List<TerrenoBean> retrieveTerreno() throws SQLException {
 
         String selectSQL = "SELECT * FROM Terreno";
-        TerrenoBean t = null;
+        TerrenoBean t = new TerrenoBean(null, null, null, null, null, null);
         List<TerrenoBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
@@ -64,7 +64,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
             while (rs.next()) {
                 t.setId(rs.getString("id"));
                 t.setImmagine(rs.getString("immagine"));
-                t.setSuperficie(rs.getString("superficie"));
+                t.setSuperficie(rs.getString("superfice"));
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setLongitudine(rs.getFloat("longitudine"));
                 t.setAzienda(rs.getString("azienda"));

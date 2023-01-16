@@ -57,7 +57,7 @@ public class TerrenoBean {
      * @param given_id
      */
     public void setId(String given_id) {
-        this.id = id;
+        this.id = given_id;
     }
 
     /**
