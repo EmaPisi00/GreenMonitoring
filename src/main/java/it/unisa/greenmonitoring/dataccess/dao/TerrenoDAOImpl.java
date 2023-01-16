@@ -69,8 +69,6 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setAzienda(rs.getString("azienda"));
             }
 
-
-
         }catch (SQLException s){
             s.printStackTrace();
         }

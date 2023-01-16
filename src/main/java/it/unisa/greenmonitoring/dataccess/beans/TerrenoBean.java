@@ -2,32 +2,32 @@ package it.unisa.greenmonitoring.dataccess.beans;
 
 public class TerrenoBean {
     /**
-     * This field contains the id.
+     * Questo campo contiene l'id.
      */
     private String id;
     /**
-     * This field contains latitudine.
+     * Questo campo contiene la latitudine del terreno
      */
     private Float  latitudine;
     /**
-     * This field contains longitudine.
+     * Questo campo contiene la longitudine del terreno.
      */
     private Float  longitudine;
     /**
-     * This field contains the type of surface.
+     * Questo campo contiene il tipo di superficie.
      */
     private String superficie;
     /**
-     * This field contains the link to the image.
+     * Questo campo contiene il link all'immagine.
      */
     private String immagine;
     /**
-     * This field contains the azienda foreign key.
+     * Questo campo contiene l'azienda associata al terreno.
      */
     private String azienda;
 
     /**
-     * This method creates a TerrenoBean from the following parameters.
+     * Questo metodo crea un TerrenoBean a partire da i seguenti parametri.
      * @param given_id
      * @param given_latitudine
      * @param given_longitudine
