@@ -9,35 +9,40 @@ import java.sql.SQLException;
 
 public class TerrenoDAOImpl implements TerrenoDAO {
 
+    /**
+     * Start Connection.
+     */
     private Connection connection;
 
-    public TerrenoDAOImpl () throws SQLException {
-        try{
-            connection= ConnectionPool.getConnection();
-        }catch (SQLException s){
-            System.out.println("errore nel creare la connessione: "+s);
-        }finally {
+    /**
+     * Classe per l'implementazione di TerrenoDAOImpl.
+     */
+    public TerrenoDAOImpl() throws SQLException {
+        try {
+            connection = ConnectionPool.getConnection();
+        } catch (SQLException s) {
+            System.out.println("errore nel creare la connessione: " + s);
+        } finally {
             connection.close();
         }
 
     }
     @Override
-    public TerrenoBean createTerreno(TerrenoBean t,String email) throws SQLException {
+    public TerrenoBean createTerreno(TerrenoBean t, String email) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL="INSERT INTO Terreno(azienda, immagine, latitudine, longitudine, superfice) VALUES(?, ?, ?, ?, ?)";
-        try{
-            connection= ConnectionPool.getConnection();
-            preparedStatement=connection.prepareStatement(insertSQL);
-            preparedStatement.setString(1,email);
-            preparedStatement.setString(2,t.getImmagine());
-            preparedStatement.setString(3,t.getLatitudine());
-            preparedStatement.setString(4,t.getLongitudine());
-            preparedStatement.setString(5,t.getSuperficie());
+        String insertSQL = "INSERT INTO Terreno(azienda, immagine, latitudine, longitudine, superfice) VALUES(?, ?, ?, ?, ?)";
+        try {
+            connection = ConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(insertSQL);
+            preparedStatement.setString(1, t.getAzienda());
+            preparedStatement.setString(2, t.getImmagine());
+            preparedStatement.setFloat(3, t.getLatitudine());
+            preparedStatement.setFloat(4, t.getLongitudine());
+            preparedStatement.setString(5, t.getSuperficie());
             preparedStatement.execute();
-        }catch (SQLException s){
-            System.out.println("errore nel salvare il terreno: "+s);
-        }
-        finally {
+        } catch (SQLException s) {
+            System.out.println("errore nel salvare il terreno: " + s);
+        } finally {
             connection.close();
         }
         return t;
@@ -46,15 +51,15 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     @Override
     public TerrenoBean retrieveTerreno(String id_terreno) throws SQLException {
 
-        String selectSQL= "SELECT * FROM Terreno WHERE Terreno.id = ?";
+        String selectSQL = "SELECT * FROM Terreno WHERE Terreno.id = ?";
         TerrenoBean t = null;
-        try{
-            connection= ConnectionPool.getConnection();
+        try {
+            connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
             preparedStatement.setString(1, id_terreno);
             ResultSet rs = preparedStatement.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 t.setId(rs.getString("id"));
                 t.setImmagine(rs.getString("immagine"));
                 t.setSuperficie(rs.getString("superficie"));
@@ -63,10 +68,9 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setAzienda(rs.getString("azienda"));
             }
 
-        }catch (SQLException s){
+        } catch (SQLException s) {
             s.printStackTrace();
-        }
-        finally {
+        } finally {
             connection.close();
         }
         return t;
@@ -80,17 +84,16 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     @Override
     public void deleteTerreno(String id_terreno) throws SQLException {
 
-        String deleteSQL= "DELETE FROM Terreno WHERE Terreno.id = ?";
-        try{
-            connection= ConnectionPool.getConnection();
+        String deleteSQL = "DELETE FROM Terreno WHERE Terreno.id = ?";
+        try {
+            connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
             preparedStatement.setString(1, id_terreno);
             preparedStatement.execute();
 
-        }catch (SQLException s){
+        } catch (SQLException s) {
             s.printStackTrace();
-        }
-        finally {
+        } finally {
             connection.close();
         }
     }
