@@ -24,7 +24,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     @Override
     public TerrenoBean createTerreno(TerrenoBean t,String email) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL="INSERT INTO Terreno(azienda, immagine, latitudine, longitudine, superfice) VALUES(?, ? ?, ?, ?)";
+        String insertSQL="INSERT INTO Terreno(azienda, immagine, latitudine, longitudine, superfice) VALUES(?, ?, ?, ?, ?)";
         try{
             connection= ConnectionPool.getConnection();
             preparedStatement=connection.prepareStatement(insertSQL);
@@ -43,16 +43,10 @@ public class TerrenoDAOImpl implements TerrenoDAO {
         return t;
     }
 
-    /**
-     * Questo metodo restituisce un TerrenoBean a partire da un id.
-     * @param id_terreno
-     * @return
-     * @throws SQLException
-     */
     @Override
     public TerrenoBean retrieveTerreno(String id_terreno) throws SQLException {
 
-        String selectSQL="SELECT * FROM Terreno WHERE Terreno.id = ?";
+        String selectSQL= "SELECT * FROM Terreno WHERE Terreno.id = ?";
         TerrenoBean t = null;
         try{
             connection= ConnectionPool.getConnection();
@@ -86,5 +80,18 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     @Override
     public void deleteTerreno(String id_terreno) throws SQLException {
 
+        String deleteSQL= "DELETE FROM Terreno WHERE Terreno.id = ?";
+        try{
+            connection= ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setString(1, id_terreno);
+            preparedStatement.execute();
+
+        }catch (SQLException s){
+            s.printStackTrace();
+        }
+        finally {
+            connection.close();
+        }
     }
 }
