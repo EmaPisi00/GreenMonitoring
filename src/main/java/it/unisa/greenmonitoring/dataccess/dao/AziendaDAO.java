@@ -18,12 +18,20 @@ public interface AziendaDAO {
     void create(AziendaBean registrazioneAziendaBean) throws SQLException;
 
     /**
-     * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
-     * @param idRegistrazioneAzienda
-     * @return List<RegistrazioneAziendaBean>
+     * Metodo retrieve che permette di ricercare tutti i dati di tutte le aziende.
+     * @return List<AziendaBean>
      * @throws SQLException
      */
-    List<AziendaBean> retrieve(String idRegistrazioneAzienda) throws SQLException;
+    List<AziendaBean> retrieveAll() throws SQLException;
+
+    /**
+     * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
+     * @param email
+     * @return List<AziendaBean>
+     * @throws SQLException
+     */
+    List<AziendaBean> retrieveForKey(String email) throws SQLException;
+
 
     /**
      * Metodo update che permette di modificare dati già presenti nel DB.
@@ -38,6 +46,8 @@ public interface AziendaDAO {
      * @throws SQLException
      */
     void delete(String idRegistrazioneAzienda) throws SQLException;
+
+
 
 }
 

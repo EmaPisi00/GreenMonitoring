@@ -4,17 +4,7 @@ package it.unisa.greenmonitoring.dataccess.beans;
  * Registrazione di un'azienda bean.
  */
 
-public class AziendaBean {
-
-    /**
-     * Variabile locale email.
-     */
-    private String email;
-
-    /**
-     * Variabile locale password.
-     */
-    private String password;
+public class AziendaBean extends UtenteBean {
 
     /**
      * Variabile locale nome_azienda.
@@ -28,57 +18,23 @@ public class AziendaBean {
 
     /**
      * Costruttore RegistrazioneAziendaBean.
-     *
-     * @param give_email
-     * @param give_password
      * @param give_nomeAzienda
      * @param give_partitaIva
      */
     @SuppressWarnings({})
-    public AziendaBean(String give_email, String give_password,
-                                     String give_nomeAzienda, String give_partitaIva) {
+    public AziendaBean(String give_nomeAzienda, String give_partitaIva) {
+        super();
 
-        this.email = give_email;
-        this.password = give_password;
         this.nome_azienda = give_nomeAzienda;
         this.partita_iva = give_partitaIva;
 
     }
 
     /**
-     * Get di email.
-     *
-     * @return email
+     * Costruttore vuoto.
      */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * Set di email.
-     *
-     * @param give_email
-     */
-    public void setEmail(String give_email) {
-        this.email = give_email;
-    }
-
-    /**
-     * Get di Password.
-     *
-     * @return password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Set di password.
-     *
-     * @param give_password
-     */
-    public void setPassword(String give_password) {
-        this.password = give_password;
+    public AziendaBean() {
+        super();
     }
 
     /**
