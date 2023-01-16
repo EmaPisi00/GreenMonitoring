@@ -59,12 +59,29 @@ public class TerrenoManager {
      * @param t
      * @pre t ha un id che esiste nel database.
      * @post la relazione tra t e la coltivazione nel database non esiste più.
-     * @return void
      */
-    public void rimuoviTerreno(TerrenoBean t){
+    public void rimuoviTerreno(TerrenoBean t) {
         try {
             TerrenoDAO td = new TerrenoDAOImpl();
             td.deleteTerreno(t.getId());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Metodo usato per visualizzare la lista di terreni di una azienda.
+     * @return List&ltTerrenoBean&gt
+     */
+    public List<TerrenoBean> visualizzaListaTerreni() {
+        TerrenoDAO td = null;
+        try {
+            td = new TerrenoDAOImpl();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            return td.retrieveTerreno();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
