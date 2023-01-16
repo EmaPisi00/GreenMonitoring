@@ -144,27 +144,95 @@ public class AziendaDAOImpl implements AziendaDAO {
      */
     @Override
     public List<AziendaBean> retrieveForKey(String email) throws SQLException {
-        return null;
-    }
+
+        List<AziendaBean> azienda = new LinkedList<AziendaBean>();
+        PreparedStatement preparedStatement = null;
+
+        String retrieveSQL = "SELECT * FROM " + TABLE_NAME + "WHERE email = ?";
+
+        try {
+            connection = ConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement(retrieveSQL);
+            preparedStatement.setString(1, email);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                AziendaBean bean = new AziendaBean();
+
+                bean.setEmail(resultSet.getString("email"));
+                bean.setPassword(resultSet.getString("password"));
+                bean.setTelefono(resultSet.getString("telefono"));
+                bean.setCitta(resultSet.getString("citta"));
+                bean.setProvincia(resultSet.getString("provincia"));
+                bean.setIndirizzo(resultSet.getString("indirizzo"));
+                bean.setNome_azienda(resultSet.getString("nome_azienda"));
+                bean.setPartita_iva(resultSet.getString("partita_iva"));
+
+                azienda.add(bean);
+            }
+
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return  azienda;
+
+
+            }
+
 
 
     /**
      * Metodo update che implementa un aggiornamento al DB attraverso il passaggio di un ID.
-     * @param idAzienda
+     * @param email
      * @throws SQLException
      */
     @Override
-    public void update(String idAzienda) throws SQLException {
+    public void update(String email) throws SQLException {
 
     }
 
     /**
      * Metodo delete che implementa una cancellazione dal sistema attraverso il passaggio di un ID.
-     * @param idAzienda
+     * @param email
      * @throws SQLException
      */
     @Override
-    public void delete(String idAzienda) throws SQLException {
+    public void delete(String email) throws SQLException {
+
+        PreparedStatement preparedStatement = null;
+
+        String deleteSQL =  "DELETE * FROM " + TABLE_NAME + "where email = ?";
+
+        try {
+            connection = ConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setString(1, email);
+
+            preparedStatement.executeUpdate();
+            connection.commit();
+        } finally {
+              try {
+                   if (preparedStatement != null) {
+                       preparedStatement.close();
+                   }
+               } finally {
+                   if (connection != null) {
+                        connection.close();
+                   }
+              }
+        }
+
 
     }
 }

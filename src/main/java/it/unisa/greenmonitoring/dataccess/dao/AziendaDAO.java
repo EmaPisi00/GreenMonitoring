@@ -35,17 +35,17 @@ public interface AziendaDAO {
 
     /**
      * Metodo update che permette di modificare dati già presenti nel DB.
-     * @param idRegistrazioneAzienda
+     * @param email
      * @throws SQLException
      */
-    void update(String idRegistrazioneAzienda) throws SQLException;
+    void update(String email) throws SQLException;
 
     /**
      * Metodo delete che permette di eliminare un'azienda dal sistema.
-     * @param idRegistrazioneAzienda
+     * @param email
      * @throws SQLException
      */
-    void delete(String idRegistrazioneAzienda) throws SQLException;
+    void delete(String email) throws SQLException;
 
 
 
