@@ -28,15 +28,13 @@ public class TerrenoBean {
 
     /**
      * Questo metodo crea un TerrenoBean a partire da i seguenti parametri.
-     * @param given_id
      * @param given_latitudine
      * @param given_longitudine
      * @param given_superficie
      * @param given_immagine
      * @param given_azienda
      */
-    public TerrenoBean(String given_id, Float given_latitudine, Float given_longitudine, String given_superficie, String given_immagine, String given_azienda) {
-        this.id = given_id;
+    public TerrenoBean(Float given_latitudine, Float given_longitudine, String given_superficie, String given_immagine, String given_azienda) {
         this.latitudine = given_latitudine;
         this.longitudine = given_longitudine;
         this.superficie = given_superficie;
