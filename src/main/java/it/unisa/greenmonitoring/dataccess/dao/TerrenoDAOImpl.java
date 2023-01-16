@@ -4,6 +4,7 @@ import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TerrenoDAOImpl implements TerrenoDAO {
@@ -42,10 +43,41 @@ public class TerrenoDAOImpl implements TerrenoDAO {
         return t;
     }
 
-
+    /**
+     * Questo metodo restituisce un TerrenoBean a partire da un id.
+     * @param id_terreno
+     * @return
+     * @throws SQLException
+     */
     @Override
     public TerrenoBean retrieveTerreno(String id_terreno) throws SQLException {
-        return null;
+
+        String selectSQL="SELECT * FROM Terreno WHERE Terreno.id = ?";
+        TerrenoBean t = null;
+        try{
+            connection= ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, id_terreno);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()){
+                t.setId(rs.getString("id"));
+                t.setImmagine(rs.getString("immagine"));
+                t.setSuperficie(rs.getString("superficie"));
+                t.setLatitudine(rs.getFloat("latitudine"));
+                t.setLongitudine(rs.getFloat("longitudine"));
+                t.setAzienda(rs.getString("azienda"));
+            }
+
+
+
+        }catch (SQLException s){
+            s.printStackTrace();
+        }
+        finally {
+            connection.close();
+        }
+        return t;
     }
 
     @Override
