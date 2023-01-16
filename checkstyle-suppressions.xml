@@ -8,7 +8,8 @@
         <suppress checks="AvoidStarImport" files="."/>
         <suppress checks="naming" files="."/>
         <suppress checks="FinalParameters" files="." />
-        <suppress files=".java" checks="DesignForExtension" lines="" />
+        <suppress files=".java" checks="DesignForExtension"/>
+        <suppress checks="MagicNumber" files=".+.(?:jar|zip|java|war|class|tar|bin)$"/>
       <!--  <suppress files="/Servlet.java" checks="*" /> !-->
         </suppressions>
 

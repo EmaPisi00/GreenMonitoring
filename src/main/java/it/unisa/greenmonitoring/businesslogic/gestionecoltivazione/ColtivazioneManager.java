@@ -9,7 +9,7 @@ public class ColtivazioneManager implements ColtivazioneManagerInterface {
     @Override
     public TerrenoBean createTerreno(TerrenoBean t, String email) throws SQLException {
         if (!(t.getSuperficie().matches("[a-zA-Z]]"))) {
-
+            System.out.println("zzz");
         } else {
             System.out.println("la superfice non può contenere lettere, ma solo numeri");
         }
