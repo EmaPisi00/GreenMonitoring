@@ -11,25 +11,25 @@ public interface TerrenoDAO {
      * @param t
      * @throws SQLException
      */
-    void create(TerrenoBean t) throws SQLException;
+    TerrenoBean createTerreno(TerrenoBean t, String email) throws SQLException;
     /**
      * This method return an istance of TerrenoBean constructed from an id.
      * @param id_terreno
      * @throws SQLException
      * @return TerrenoBean
      */
-    TerrenoBean retrieve(String id_terreno) throws SQLException;
+    TerrenoBean retrieveTerreno(String id_terreno) throws SQLException;
 
     /**
      * This method updates a record in table TERRENO.
      * @param id_terreno
      * @throws SQLException
      */
-    void update(String id_terreno) throws SQLException;
+    void updateTerreno(String id_terreno) throws SQLException;
     /**
      * This method destroys a record in table TERRENO.
      * @param id_terreno
      * @throws SQLException
      */
-    void delete(String id_terreno) throws SQLException;
+    void deleteTerreno(String id_terreno) throws SQLException;
 }
