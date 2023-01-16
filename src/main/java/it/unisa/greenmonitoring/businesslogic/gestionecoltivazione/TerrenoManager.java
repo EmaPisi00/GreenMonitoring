@@ -4,9 +4,14 @@ import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 
 import java.sql.SQLException;
 
-public class ColtivazioneManager implements ColtivazioneManagerInterface {
-
-    @Override
+public class TerrenoManager {
+    /**
+     * TO-FILL.
+     * @param t
+     * @param email
+     * @return TerrenoBean
+     * @throws SQLException
+     */
     public TerrenoBean createTerreno(TerrenoBean t, String email) throws SQLException {
         if (!(t.getSuperficie().matches("[a-zA-Z]]"))) {
             System.out.println("zzz");
@@ -18,17 +23,30 @@ public class ColtivazioneManager implements ColtivazioneManagerInterface {
         return null;
     }
 
-    @Override
+    /**
+     * Questo metodo restituisce un terreno a partire da un id.
+     * @param id_terreno
+     * @return TerrenoBean
+     * @throws SQLException
+     */
     public TerrenoBean retrieveTerreno(String id_terreno) throws SQLException {
         return null;
     }
 
-    @Override
+    /**
+     * Questo metodo aggiorna una riga in TERRENO in corrispondenza ad id.
+     * @param id_terreno
+     * @throws SQLException
+     */
     public void updateTerreno(String id_terreno) throws SQLException {
 
     }
 
-    @Override
+    /**
+     * Questo metodo cancella la riga corrispondente a id_terreno nella tabella TERRENO.
+     * @param id_terreno
+     * @throws SQLException
+     */
     public void deleteTerreno(String id_terreno) throws SQLException {
 
     }

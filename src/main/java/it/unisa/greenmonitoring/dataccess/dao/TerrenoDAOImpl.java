@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TerrenoDAOImpl implements TerrenoDAO {
 
@@ -49,14 +51,14 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     }
 
     @Override
-    public TerrenoBean retrieveTerreno(String id_terreno) throws SQLException {
+    public synchronized List<TerrenoBean> retrieveTerreno() throws SQLException {
 
-        String selectSQL = "SELECT * FROM Terreno WHERE Terreno.id = ?";
+        String selectSQL = "SELECT * FROM Terreno";
         TerrenoBean t = null;
+        List<TerrenoBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setString(1, id_terreno);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -66,6 +68,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setLongitudine(rs.getFloat("longitudine"));
                 t.setAzienda(rs.getString("azienda"));
+                list.add(t);
             }
 
         } catch (SQLException s) {
@@ -73,16 +76,16 @@ public class TerrenoDAOImpl implements TerrenoDAO {
         } finally {
             connection.close();
         }
-        return t;
+        return list;
     }
 
     @Override
-    public void updateTerreno(String id_terreno) throws SQLException {
+    public synchronized void updateTerreno(String id_terreno) throws SQLException {
 
     }
 
     @Override
-    public void deleteTerreno(String id_terreno) throws SQLException {
+    public synchronized void deleteTerreno(String id_terreno) throws SQLException {
 
         String deleteSQL = "DELETE FROM Terreno WHERE Terreno.id = ?";
         try {

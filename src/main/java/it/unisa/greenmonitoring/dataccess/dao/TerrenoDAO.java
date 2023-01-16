@@ -3,6 +3,7 @@ package it.unisa.greenmonitoring.dataccess.dao;
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 
 import java.sql.SQLException;
+import java.util.List;
 
 
 public interface TerrenoDAO {
@@ -16,12 +17,11 @@ public interface TerrenoDAO {
     TerrenoBean createTerreno(TerrenoBean t, String email) throws SQLException;
 
     /**
-     * Questo metodo restituisce una istanza di TerrenoBean a partire da un id.
-     * @param id_terreno
-     * @throws SQLException
+     * Questo metodo restituisce ogni terreno del DB.
      * @return TerrenoBean
+     * @throws SQLException
      */
-    TerrenoBean retrieveTerreno(String id_terreno) throws SQLException;
+    List<TerrenoBean> retrieveTerreno() throws SQLException;
 
     /**
      * Questo metodo aggiorna un record nella tabella TERRENO.
