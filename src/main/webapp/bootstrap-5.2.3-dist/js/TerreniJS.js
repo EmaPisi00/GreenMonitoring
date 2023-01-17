@@ -11,8 +11,11 @@ $(document).ready(function() {
 });
 function validate(){
     if($("#chk").prop("checked") == true){
+        $('#alrt').fadeOut();
         $('#Modal').modal('toggle');
+        return true;
     } else {
         $('#alrt').fadeIn();
+        return false;
     }
 }
