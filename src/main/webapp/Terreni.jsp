@@ -54,18 +54,7 @@
                 <%
                     TerrenoManager t = new TerrenoManager();
 
-                    //List<TerrenoBean> list = t.visualizzaListaTerreni(session.getAttribute("Azienda"));
-
-
-                    List<TerrenoBean> list = new ArrayList<>();
-                    TerrenoBean t1 = new TerrenoBean(new Random().nextFloat(), new Random().nextFloat(), "pianeggiante", "esempio", "esempio");
-                    t1.setId(String.valueOf(new Random().nextInt()));
-                    TerrenoBean t2 = new TerrenoBean(new Random().nextFloat(), new Random().nextFloat(), "collinare", "esempio2", "esempio2" );
-                    t2.setId(String.valueOf(new Random().nextInt()));
-                    list.add(t1);
-                    list.add(t2);
-
-
+                    List<TerrenoBean> list = t.visualizzaListaTerreni((String) session.getAttribute("currentUserSession"));
                     int i = 0;
                     for (TerrenoBean tb : list) {
                         System.out.print("<tr>" +
@@ -83,6 +72,10 @@
         </table>
         </div>
     </div>
+    <!-- Button trigger modal -->
+    <button onclick="location.href='TerrenoInsert.jsp'" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter">
+        Aggiungi terreno
+    </button>
     <!-- Button trigger modal -->
     <button id="showModal" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter" onclick="validate()">
         Rimuovi terreni
