@@ -29,7 +29,16 @@ public class DipendenteBean extends UtenteBean {
         this.nome = give_nome;
         this.cognome = give_cognome;
 
+
     }
+
+    /**
+     * Costruttore vuoto.
+     */
+    public DipendenteBean() {
+
+    }
+
     /**
      * Get di azienda.
      *

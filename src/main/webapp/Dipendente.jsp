@@ -45,35 +45,55 @@
 </head>
 <body class="p-3 m-0 border-0 bd-example">
 
+
 <a href="index.jsp"><img src="img/lg.png" class="rounded float-start" alt="..."></a>
+
 
 <fieldset>
     <div class="bd">
-        <legend style="text-align:center;">Registrazione Azienda</legend>
+        <legend style="text-align:center;">Registrazione Dipendente</legend>
 
 
-        <form class="row g-3 " action="ServletAzienda" method="get">
+        <form class="row g-3 "  action="ServletAzienda" method="get">
 
-            <div class="col-md-6 needs-validation was-validated" novalidate="">
-                <label for="inputEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="emanuele@x.com" name="inputEmail"
-                       required=""/>
+            <div class="col-md-6">
+                <label for="inputAzienda" class="form-label">Nome </label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="inputAzienda"
+                        placeholder="Montenegro"
+                        required=""
+                        name="inputAzienda"
+                />
             </div>
-            <div class="col-md-6 needs-validation was-validated" novalidate="">
+            <div class="col-md-6">
+                <label for="inputAzienda" class="form-label">Cognome</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="inputAzienda"
+                        placeholder="Montenegro"
+                        required=""
+                        name="inputAzienda"
+                />
+            </div>
+            <div class="col-md-6 needs-validation was-validated"  novalidate="" >
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="emanuele@x.com" name="inputEmail" required=""/>
+            </div>
+            <div class="col-md-6 needs-validation was-validated"  novalidate="">
                 <label for="inputEmail" class="form-label">Conferma Email</label>
-                <input type="email" class="form-control" id="confermaInputEmail" placeholder="emanuele@x.com"
-                       name="confermaInputEmail" required=""/>
+                <input type="email" class="form-control" id="confermaInputEmail" placeholder="emanuele@x.com" name="confermaInputEmail" required=""/>
             </div>
             <div class="col-md-6">
                 <label for="inputPassword" class="form-label">Password</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="*****" name="inputPassword"
-                       required=""/>
+                <input type="password" class="form-control" id="inputPassword" placeholder="*****" name="inputPassword" required=""/>
 
             </div>
             <div class="col-md-6">
-                <label for="inputPassword" class="form-label">Conferma Password</label>
-                <input type="password" class="form-control" id="confermaInputPassword" placeholder="*****"
-                       name="confermaInputPassword" required=""/>
+                <label for="inputPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="confermaInputPassword" placeholder="*****" name="confermaInputPassword" required=""/>
             </div>
             <div class="col-12">
                 <label for="inputIndirizzo" class="form-label">Indirizzo</label>
@@ -111,39 +131,27 @@
             <div class="col-md-6">
                 <label for="inputTelefono" class="form-label">Telefono</label>
                 <input
-                        type="text"
+                        type="tel"
                         class="form-control"
                         id="inputTelefono"
-                        placeholder="3457257849"
+                        placeholder="3342890437"
                         required=""
                         name="inputTelefono"
                 />
             </div>
+
             <div class="col-md-6">
-                <label for="inputPartitaIva" class="form-label">Partita Iva</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        id="inputPartitaIva"
-                        placeholder="111111111111"
-                        max="11"
-                        required=""
-                        name="inputPartitaIva"
-                />
-            </div>
-            <div class="col-md-12">
                 <label for="inputAzienda" class="form-label">Nome Azienda</label>
                 <input
                         type="text"
                         class="form-control"
                         id="inputAzienda"
-                        placeholder="Montenegro"
-                        required=""
+                        placeholder="***-***"
                         name="inputAzienda"
                 />
             </div>
             <div class="col-12" style="text-align: center; ">
-                <input type="submit" class="btn btn-primary" value="Registrazione"/>
+                <input type="submit" class="btn btn-primary" value="Registrazione" />
             </div>
             <br>
         </form>

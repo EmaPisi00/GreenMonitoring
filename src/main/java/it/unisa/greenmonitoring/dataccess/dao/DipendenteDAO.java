@@ -19,25 +19,39 @@ public interface DipendenteDAO {
 
     /**
      * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
-     * @param idRegistrazioneDipendente
-     * @return List<RegistrazioneDipendenteBean>
+     * @return List<DipendenteBean>
      * @throws SQLException
      */
-    List<DipendenteBean> retrieve(String idRegistrazioneDipendente) throws SQLException;
+    List<DipendenteBean> retrieve() throws SQLException;
+
+    /**
+     * Metodo retrieve che permette di ricercare tutti i dati di tutti i dipendenti.
+     * @return List<DipendenteBean>
+     * @throws SQLException
+     */
+    List<DipendenteBean> retrieveAll() throws SQLException;
+
+    /**
+     * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
+     * @param email
+     * @return List<AziendaBean>
+     * @throws SQLException
+     */
+    List<DipendenteBean> retrieveForKey(String email) throws SQLException;
 
     /**
      * Metodo update che permette di modificare dati già presenti nel DB.
-     * @param idRegistrazioneDipendente
+     * @param email
      * @throws SQLException
      */
-    void update(String idRegistrazioneDipendente) throws SQLException;
+    void update(String email) throws SQLException;
 
     /**
-     * Metodo delete che permette di eliminare un'azienda dal sistema.
-     * @param idRegistrazioneDipendente
+     * Metodo delete che permette di eliminare un dipendente dal sistema.
+     * @param email
      * @throws SQLException
      */
-    void delete(String idRegistrazioneDipendente) throws SQLException;
+    void delete(String email) throws SQLException;
 
 }
 
