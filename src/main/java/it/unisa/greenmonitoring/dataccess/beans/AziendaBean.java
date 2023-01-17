@@ -30,6 +30,7 @@ public class AziendaBean extends UtenteBean {
 
     }
 
+
     /**
      * Costruttore vuoto.
      */

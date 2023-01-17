@@ -48,19 +48,24 @@
         <legend style="text-align:center;">Registrazione Azienda</legend>
 
 
-        <form class="row g-3">
+        <form class="row g-3 "  action="ServletAzienda" method="get">
 
-            <div class="col-md-6">
+            <div class="col-md-6 needs-validation was-validated"  novalidate="" >
                 <label for="inputEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="emanuele@x.com"/>
+                <input type="email" class="form-control" id="inputEmail" placeholder="emanuele@x.com" name="inputEmail" required=""/>
+            </div>
+            <div class="col-md-6 needs-validation was-validated"  novalidate="">
+                <label for="inputEmail" class="form-label">Conferma Email</label>
+                <input type="email" class="form-control" id="confermaInputEmail" placeholder="emanuele@x.com" name="confermaInputEmail" required=""/>
             </div>
             <div class="col-md-6">
-                <label for="inputEmail" class="form-label">Conferma Email</label>
-                <input type="email" class="form-control" id="confermaInputEmail" placeholder="emanuele@x.com"/>
-            </div>
-            <div class="col-md-12">
                 <label for="inputPassword" class="form-label">Password</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="*****"/>
+                <input type="password" class="form-control" id="inputPassword" placeholder="*****" name="inputPassword" required=""/>
+
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="confermaInputPassword" placeholder="*****" name="confermaInputPassword" required=""/>
             </div>
             <div class="col-12">
                 <label for="inputIndirizzo" class="form-label">Indirizzo</label>
@@ -69,6 +74,8 @@
                         class="form-control"
                         id="inputIndirizzo"
                         placeholder="Via Roma 13"
+                        required=""
+                        name="inputIndirizzo"
                 />
             </div>
             <div class="col-12">
@@ -78,6 +85,8 @@
                         class="form-control"
                         id="inputCitta"
                         placeholder="Salerno"
+                        required=""
+                        name="inputCitta"
                 />
             </div>
             <div class="col-md-6">
@@ -87,6 +96,8 @@
                         class="form-control"
                         id="inputTelefono"
                         placeholder="via Roma"
+                        required=""
+                        name="inputTelefono"
                 />
             </div>
             <div class="col-md-6">
@@ -96,6 +107,8 @@
                         class="form-control"
                         id="inputProvincia"
                         placeholder="Napoli"
+                        required=""
+                        name="inputProvincia"
                 />
             </div>
             <div class="col-md-6">
@@ -105,6 +118,8 @@
                         class="form-control"
                         id="inputAzienda"
                         placeholder="Montenegro"
+                        required=""
+                        name="inputAzienda"
                 />
             </div>
             <div class="col-md-6">
@@ -115,20 +130,21 @@
                         id="inputPartitaIva"
                         placeholder="111111111111"
                         max="11"
+                        required=""
+                        name="inputPartitaIva"
                 />
+            </div>
+            <div class="col-12" style="text-align: center; ">
+                <input type="submit" class="btn btn-primary" value="Registrazione" />
             </div>
             <br>
         </form>
     </div>
 </fieldset>
 
-</div>
-<div class="col-12" style="text-align: center; ">
-    <button type="submit" style="font-size: 20px; padding: 1%;" class="btn btn-primary">Registrazione
-    </button>
+
 </div>
 
 
-<!-- End Example Code -->
 </body>
 </html>

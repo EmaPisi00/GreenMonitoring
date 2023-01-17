@@ -49,7 +49,7 @@ public class AziendaDAOImpl implements AziendaDAO {
 
         PreparedStatement preparedStatement = null;
 
-        String insertSQL = "Insert Into" + TABLE_NAME + "('email','password','telefono','citta','indirizzo','provincia', 'nome_azienda','partita_iva')" + "Values (?,?,?,?,?,?,?,?)";
+        String insertSQL = "Insert Into " + TABLE_NAME + "(email, password, telefono, citta, indirizzo,provincia, nome_azienda,partita_iva)" + "Values (?,?,?,?,?,?,?,?)";
 
         try {
 
@@ -96,7 +96,7 @@ public class AziendaDAOImpl implements AziendaDAO {
 
         List<AziendaBean> azienda = new LinkedList<AziendaBean>();
 
-        String retrieveSQL = "SELECT * FROM" + TABLE_NAME;
+        String retrieveSQL = "SELECT * FROM " + TABLE_NAME;
 
         try {
 
