@@ -60,21 +60,15 @@
 <a href="index.jsp"><img src="img/lg.png" class="rounded float-start" alt="..."></a>
 
 
-<div class="form-complete">
-    <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
-    </div>
-    <div class="button">
-        <input class="btn btn-primary" type="reset" value="Login">
-        <div>
-        </div>
-    </div>
-</div>
+<form method="post" action="LoginServlet">
+    <label for="email">Username:</label>
+    <input type="text" id="email" name="email">
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+
+    <input type="submit" value="Login" name="Login">
+</form>
 
 <div class="p">
     <div class="register" > <form action="RegistrazioneAzienda.jsp"><input class="btn btn-primary" type="submit" value="Registra Azienda"></form></div>

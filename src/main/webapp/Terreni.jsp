@@ -10,9 +10,40 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%  %>
+    <style>
+        <style>
+        fieldset {
+
+        }
+
+        legend {
+            font-size: 160%;
+            color: black;
+        }
+
+        input {
+            margin: 5px;
+        }
+
+        .bd {
+            font-size: 120%;
+            line-height: 1.5;
+            position: relative;
+            margin: 30px;
+        }
+
+        .rounded
+        {
+            width: 8%;
+            height: 12%;
+        }
+
+    </style>
     <title>Terreni</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
+    <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,10 +53,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<form id="rimuovi_terreno">
+<div class="bd">
+    <legend>Terreni</legend>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+            <li class="breadcrumb-item active">Terreni</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<form id="rimuovi_terreno" action="ServletTerreno" method="post">
     <div class="card">
         <div class="card-body">
-        <h5 class="card-title">Terreni</h5>
+            <div id="alrt" class="alert alert-warning fade show" role="alert">
+                <i class="bi bi-exclamation-triangle me-1"> Selezionare almeno un terreno.</i>
+            </div>
         <table class="table">
             <thead>
             <tr>
@@ -34,7 +76,7 @@
                 <th scope="col">Latitudine</th>
                 <th scope="col">Longitudine</th>
                 <th scope="col">Immagine</th>
-                <th scope="col">Superficie</th>
+                <th scope="col">Superfice</th>
             </tr>
             </thead>
             <tbody>
@@ -45,7 +87,7 @@
                     for (TerrenoBean tb : list) {
                         out.print("<tr>" +
                                 "<td>"+
-                                "<input id=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"+\"></input>" +
+                                "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
                                 "</td>"+
                                 "<td>" + tb.getId() + "</td>" +
                                 "<td>" + tb.getLatitudine()+ "</td>" +
@@ -53,7 +95,6 @@
                                 "<td>" + tb.getImmagine() + "</td>" +
                                 "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
                         );
-
                     }
                 %>
             </tbody>
@@ -62,7 +103,7 @@
     </div>
 </form>
 <!-- Button trigger modal -->
-<button id="showModal" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter">
+<button id="showModal" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter" onclick="validate()">
     Rimuovi terreni
 </button>
 
@@ -70,7 +111,6 @@
 <div id=Modal class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-
             <div class="modal-body">
                 Sei sicuro di voler effettuare la rimozione?
             </div>
