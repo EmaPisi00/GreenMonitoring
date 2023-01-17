@@ -47,6 +47,9 @@ public class AutenticazioneManager {
                 ad.create(aziendaBean);
                 System.out.println("Inserimento fatto con successo");
             }
+        } else {
+            ad.create(aziendaBean);
+            System.out.println("Inserimento fatto con successo");
         }
     }
 
@@ -66,9 +69,10 @@ public class AutenticazioneManager {
             DipendenteBean bean = listaDipendenti.next();
                 if ((bean.getNome().equals(dipendenteBean.getNome())) && (bean.getCognome().equals(dipendenteBean.getCognome())) && (bean.getAzienda().equals(dipendenteBean.getAzienda()))) {
                     System.out.println("\nDipendente già presente\n");
-                } else {
-                    dp.create(dipendenteBean);
                 }
+        } else {
+            dp.create(dipendenteBean);
+            System.out.println("Inserimento fatto con successo");
         }
 
     }

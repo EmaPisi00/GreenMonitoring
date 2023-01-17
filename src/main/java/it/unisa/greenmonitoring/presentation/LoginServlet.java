@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -15,7 +16,7 @@ public class LoginServlet extends HttpServlet {
     /**
      * Object that provides the methods to manage the Terreno.
      */
-    private LoginManager lm = new LoginManager();
+    private final LoginManager lm = new LoginManager();
     /**
      * Method that handle the GET requests.
      * @param request the request from the client.
@@ -37,14 +38,17 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession sessione = request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         try {
             String checkRole = lm.CheckData(email, password);
             if (checkRole.matches("azienda")) {
-                response.sendRedirect("index.jsp");
+                sessione.setAttribute("currentUserSession", email);
+                response.sendRedirect("Terreni.jsp");
             } else if (checkRole.matches("dipendente")) {
-                response.sendRedirect("index.jsp");
+                sessione.setAttribute("currentUserSession", email);
+                response.sendRedirect("Dipendente.jsp");
             } else {
                 response.sendRedirect("index.jsp?error=true");
             }

@@ -54,28 +54,28 @@
         <legend style="text-align:center;">Registrazione Dipendente</legend>
 
 
-        <form class="row g-3 "  action="ServletAzienda" method="get">
+        <form class="row g-3 "  action="ServletDipendente" method="get">
 
             <div class="col-md-6">
-                <label for="inputAzienda" class="form-label">Nome </label>
+                <label for="inputNome" class="form-label">Nome </label>
                 <input
                         type="text"
                         class="form-control"
-                        id="inputAzienda"
+                        id="inputNome"
                         placeholder="Montenegro"
                         required=""
-                        name="inputAzienda"
+                        name="inputNome"
                 />
             </div>
             <div class="col-md-6">
-                <label for="inputAzienda" class="form-label">Cognome</label>
+                <label for="inputCognome" class="form-label">Cognome</label>
                 <input
                         type="text"
                         class="form-control"
-                        id="inputAzienda"
+                        id="inputCognome"
                         placeholder="Montenegro"
                         required=""
-                        name="inputAzienda"
+                        name="inputCognome"
                 />
             </div>
             <div class="col-md-6 needs-validation was-validated"  novalidate="" >
@@ -148,6 +148,7 @@
                         id="inputAzienda"
                         placeholder="***-***"
                         name="inputAzienda"
+                        required
                 />
             </div>
             <div class="col-12" style="text-align: center; ">
