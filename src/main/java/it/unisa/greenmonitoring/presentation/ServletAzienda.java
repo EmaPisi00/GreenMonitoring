@@ -1,5 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
+import it.unisa.greenmonitoring.businesslogic.autenticazione.AutenticazioneManager;
 import it.unisa.greenmonitoring.businesslogic.registrazione.AziendaManager;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 
@@ -15,7 +16,7 @@ public class ServletAzienda extends HttpServlet {
     /**
      * Dichiaro la variabile privata AziendaManager.
      */
-    private AziendaManager aziendaManager = new AziendaManager();
+    private AutenticazioneManager aziendaManager = new AutenticazioneManager();
 
     /**
      * Metodo doGet.
