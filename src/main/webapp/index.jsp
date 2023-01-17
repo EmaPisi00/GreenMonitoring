@@ -66,7 +66,7 @@
 
 <a href="RegistrazioneAzienda.jsp">Se non hai ancora un account, puoi registrarti qui se devi registrare
     un'azienda</a><br><br>
-<a href="RegistrazioneDipendente.jsp">Se non hai ancora un account, puoi registrarti qui se devi registrare un
+<a href="Dipendente.jsp">Se non hai ancora un account, puoi registrarti qui se devi registrare un
     dipendente</a>
 </body>
 </html>

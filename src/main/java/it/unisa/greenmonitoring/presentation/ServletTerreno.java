@@ -37,6 +37,7 @@ public class ServletTerreno extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String azienda = request.getParameter("azienda");
         String immagine = request.getParameter("immagine");
         Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
