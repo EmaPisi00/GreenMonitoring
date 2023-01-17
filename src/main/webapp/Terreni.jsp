@@ -43,7 +43,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th scoper="col"></th>
+                <th scope="col"></th>
                 <th scope="col">Immagine</th>
                 <th scope="col">Latitudine</th>
                 <th scope="col">Longitudine</th>
