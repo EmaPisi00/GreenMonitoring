@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
-import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager;
-import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
+import it.unisa.greenmonitoring.businesslogic.autenticazione.LoginManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,15 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Enumeration;
 
-
-@WebServlet(name = "ServletTerreno", value = "/ServletTerreno")
-public class ServletTerreno extends HttpServlet {
+@WebServlet(name = "LoginServlet", value = "/LoginServlet")
+public class LoginServlet extends HttpServlet {
     /**
      * Object that provides the methods to manage the Terreno.
      */
-    private TerrenoManager tm = new TerrenoManager();
+    private LoginManager lm = new LoginManager();
     /**
      * Method that handle the GET requests.
      * @param request the request from the client.
@@ -39,26 +36,20 @@ public class ServletTerreno extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("terreno0") != null) {
-            int i = 0;
-            Enumeration<String> parameters = request.getParameterNames();
-            while (parameters.hasMoreElements()) {
-                tm.rimuoviTerreno(parameters.nextElement());
-            }
-            response.sendRedirect("Terreni.jsp");
-        }
 
-        String azienda = request.getParameter("azienda");
-        String immagine = request.getParameter("immagine");
-        Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
-        Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
-        String superfice = request.getParameter("superfice");
-        TerrenoBean terreno = new TerrenoBean(latitudine, longitudine, superfice, immagine, azienda);
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
         try {
-            tm.createTerreno(terreno);
+            String checkRole = lm.CheckData(email, password);
+            if (checkRole.matches("azienda")) {
+                response.sendRedirect("index.jsp");
+            } else if (checkRole.matches("dipendente")) {
+                response.sendRedirect("index.jsp");
+            } else {
+                response.sendRedirect("index.jsp?error=true");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        response.sendRedirect("index.jsp");
     }
 }

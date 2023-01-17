@@ -20,4 +20,7 @@ public class prova1 {
     public int prova1(int x) {
         return 0;
     }
+
+    public static class ServletTerreni {
+    }
 }

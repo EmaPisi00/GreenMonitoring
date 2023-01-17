@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.autenticazione.AutenticazioneManager;
-import it.unisa.greenmonitoring.businesslogic.registrazione.AziendaManager;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 
 import javax.servlet.*;
@@ -40,7 +39,7 @@ public class ServletAzienda extends HttpServlet {
         String partita_iva = request.getParameter("inputPartitaIva");
 
         if (!(password.equals(confermPassword)) || !(email.equals(confermEmail))) {
-            System.out.println("Errore");
+            System.out.println("\nErrore email o password differenti\n");
             response.sendRedirect("RegistrazioneAzienda.jsp");
         } else {
 
@@ -57,11 +56,11 @@ public class ServletAzienda extends HttpServlet {
 
             try {
                 aziendaManager.registraAzienda(aziendaBean);
-                System.out.println("Inserimento fatto con successo");
+                response.sendRedirect("index.jsp");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            response.sendRedirect("index.jsp");
+
         }
     }
 
