@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Enumeration;
-
 
 @WebServlet(name = "ServletTerreno", value = "/ServletTerreno")
 public class ServletTerreno extends HttpServlet {
@@ -39,14 +37,6 @@ public class ServletTerreno extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("terreno0") != null) {
-            int i = 0;
-            Enumeration<String> parameters = request.getParameterNames();
-            while (parameters.hasMoreElements()) {
-                tm.rimuoviTerreno(parameters.nextElement());
-            }
-            response.sendRedirect("Terreni.jsp");
-        }
 
         String azienda = request.getParameter("azienda");
         String immagine = request.getParameter("immagine");
