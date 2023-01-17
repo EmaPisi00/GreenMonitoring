@@ -2,6 +2,14 @@
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+    <servlet>
+        <servlet-name>ServletTerreno</servlet-name>
+        <servlet-class>it.unisa.greenmonitoring.presentation.ServletTerreno</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ServletTerreno</servlet-name>
+        <url-pattern>/ServletTerreno</url-pattern>
+    </servlet-mapping>
 </web-app>

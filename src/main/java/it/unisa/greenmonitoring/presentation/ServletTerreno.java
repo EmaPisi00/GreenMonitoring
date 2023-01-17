@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "ServletTerreno", value = "/ServletTerreno")
 public class ServletTerreno extends HttpServlet {
@@ -37,17 +39,36 @@ public class ServletTerreno extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String azienda = request.getParameter("azienda");
-        String immagine = request.getParameter("immagine");
-        Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
-        Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
-        String superfice = request.getParameter("superfice");
-        TerrenoBean terreno = new TerrenoBean(latitudine, longitudine, superfice, immagine, azienda);
-        try {
-            tm.createTerreno(terreno);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (request.getParameter("terreno0") != null) {
+            int i = 0;
+            List<String> list = new ArrayList<>();
+            while (request.getParameterNames().hasMoreElements()) {
+                System.out.println(request.getParameter("terreno" + i));
+                list.add(request.getParameter("terreno" + i));
+                i++;
+            }
+            list.stream().forEach(o -> {
+                try {
+                    tm.deleteTerreno(o);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            response.sendRedirect("Terreni.jsp");
+        } else {
+
+            String azienda = request.getParameter("azienda");
+            String immagine = request.getParameter("immagine");
+            Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
+            Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
+            String superfice = request.getParameter("superfice");
+            TerrenoBean terreno = new TerrenoBean(latitudine, longitudine, superfice, immagine, azienda);
+            try {
+                tm.createTerreno(terreno);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            response.sendRedirect("index.jsp");
         }
-        response.sendRedirect("index.jsp");
     }
 }
