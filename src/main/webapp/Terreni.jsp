@@ -68,7 +68,7 @@
 
                     int i = 0;
                     for (TerrenoBean tb : list) {
-                        out.print("<tr>" +
+                        System.out.print("<tr>" +
                                 "<td>"+
                                 "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
                                 "</td>"+
