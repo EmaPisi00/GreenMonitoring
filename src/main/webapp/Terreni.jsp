@@ -11,6 +11,35 @@
 <html>
 <head>
     <%  %>
+    <style>
+        <style>
+        fieldset {
+
+        }
+
+        legend {
+            font-size: 160%;
+            color: black;
+        }
+
+        input {
+            margin: 5px;
+        }
+
+        .bd {
+            font-size: 120%;
+            line-height: 1.5;
+            position: relative;
+            margin: 30px;
+        }
+
+        .rounded
+        {
+            width: 8%;
+            height: 12%;
+        }
+
+    </style>
     <title>Terreni</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
@@ -24,8 +53,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="pagetitle">
-    <h1>Terreni</h1>
+<div class="bd">
+    <legend>Terreni</legend>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
@@ -33,7 +62,7 @@
         </ol>
     </nav>
 </div><!-- End Page Title -->
-<form id="rimuovi_terreno" action="../ServletTerreno" method="post">
+<form id="rimuovi_terreno" action="ServletTerreno" method="post">
     <div class="card">
         <div class="card-body">
             <div id="alrt" class="alert alert-warning fade show" role="alert">
