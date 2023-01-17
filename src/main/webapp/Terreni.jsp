@@ -43,7 +43,7 @@
                     List<TerrenoBean> list = t.visualizzaListaTerreni();
                     int i = 0;
                     for (TerrenoBean tb : list) {
-                        out.print("<tr>" +
+                        System.out.print("<tr>" +
                                 "<td>"+
                                 "<input id=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"+\"></input>" +
                                 "</td>"+
