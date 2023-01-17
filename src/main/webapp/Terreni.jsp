@@ -1,6 +1,7 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %><%--
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -12,7 +13,6 @@
 <head>
     <%  %>
     <style>
-        <style>
         fieldset {
 
         }
