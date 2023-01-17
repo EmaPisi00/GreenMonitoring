@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.Enumeration;
 
 @WebServlet(name = "ServletTerreno", value = "/ServletTerreno")
 @MultipartConfig
@@ -46,6 +47,13 @@ public class ServletTerreno extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("inserisciTerreno_submit") != null) {
             inserisciTerreno(request, response);
+        }
+        else if (request.getParameter("terreno0") != null) {
+            Enumeration<String> parameters = request.getParameterNames();
+            while(parameters.hasMoreElements()){
+                tm.rimuoviTerreno(parameters.nextElement());
+            }
+            response.sendRedirect("Terreni.jsp");
         }
 
         response.sendRedirect("index.jsp");
