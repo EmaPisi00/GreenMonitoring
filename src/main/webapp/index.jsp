@@ -8,7 +8,7 @@
 
         .form-complete {
             width: 310px;
-            padding-top: 80px;
+            padding-top: 200px;
             margin: 0 auto;
         }
 
@@ -23,10 +23,10 @@
             margin: 0 auto;
         }
 
-        .rounded {
-            width: 5%;
-            height: 8%;
-            background: green;
+        .rounded
+        {
+            width: 8%;
+            height: 12%;
         }
 
 
@@ -46,7 +46,8 @@
 
 <body >
 
-<img src="img/Logo.png" class="rounded mx-auto d-block" alt="...">
+<a href="index.jsp"><img src="img/lg.png" class="rounded float-start" alt="..."></a>
+
 
 <div class="form-complete">
     <div class="form-floating mb-3">
