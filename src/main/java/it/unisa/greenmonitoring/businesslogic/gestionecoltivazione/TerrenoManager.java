@@ -5,6 +5,7 @@ import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAO;
 import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAOImpl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -65,24 +66,15 @@ public class TerrenoManager {
     }
 
     /**
-     * Questo metodo cancella la riga corrispondente a id_terreno nella tabella TERRENO.
-     * @param id_terreno
-     * @throws SQLException
-     */
-    public void deleteTerreno(String id_terreno) throws SQLException {
-
-    }
-
-    /**
      * Metodo usato per rimuovere un terreno.
-     * @param t
+     * @param id_terreno
      * @pre t ha un id che esiste nel database.
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      */
-    public void rimuoviTerreno(TerrenoBean t) {
+    public void rimuoviTerreno(String id_terreno) {
         try {
             TerrenoDAO td = new TerrenoDAOImpl();
-            td.deleteTerreno(t.getId());
+            td.deleteTerreno(id_terreno);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -90,17 +82,20 @@ public class TerrenoManager {
 
     /**
      * Metodo usato per visualizzare la lista di terreni di una azienda.
+     * @param id_azienda
      * @return List&ltTerrenoBean&gt
      */
-    public List<TerrenoBean> visualizzaListaTerreni() {
+    public List<TerrenoBean> visualizzaListaTerreni(String id_azienda) {
         TerrenoDAO td = null;
+        List<TerrenoBean> list = new ArrayList<>();
         try {
             td = new TerrenoDAOImpl();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         try {
-            return td.retrieveTerreno();
+            td.retrieveTerreno().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
+            return list;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

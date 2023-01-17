@@ -7,17 +7,13 @@
         }
 
         .form-complete {
-            width: 310px;
+            width: 30%;
             padding-top: 200px;
             margin: 0 auto;
         }
 
-        .form-control {
-            width: 90%;
-        }
-
         .button {
-            width: 100px;
+            width: 27%;
             padding-top: 20px;
             display: block;
             margin: 0 auto;
@@ -34,6 +30,21 @@
             text-decoration: none;
             margin-bottom: 0;
         }
+
+        .p{
+            text-align: center;
+            padding: 10px;
+        }
+
+        .p div{
+            margin:6px;
+            padding: 10px;
+            max-width: 200px;
+            display: inline-block;
+            text-align: left;
+        }
+
+
     </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,9 +70,12 @@
     <input type="submit" value="Login" name="Login">
 </form>
 
-<a href="RegistrazioneAzienda.jsp">Se non hai ancora un account, puoi registrarti qui se devi registrare
-    un'azienda</a><br><br>
-<a href="Dipendente.jsp">Se non hai ancora un account, puoi registrarti qui se devi registrare un
-    dipendente</a>
+<div class="p">
+    <div class="register" > <form action="RegistrazioneAzienda.jsp"><input class="btn btn-primary" type="submit" value="Registra Azienda"></form></div>
+
+
+    <div class="dip" ><form action="Dipendente.jsp"><input  class="btn btn-primary" type="submit" value="Registra Dipendente"></form></div>
+
+</div>
 </body>
 </html>
