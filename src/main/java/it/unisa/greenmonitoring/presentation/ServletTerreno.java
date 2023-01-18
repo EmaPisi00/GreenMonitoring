@@ -3,6 +3,7 @@ package it.unisa.greenmonitoring.presentation;
 import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager;
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -46,18 +47,13 @@ public class ServletTerreno extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("inserisciTerreno_submit") != null) {
-            inserisciTerreno(request, response);
-        }
-        else if (request.getParameter("terreno0") != null) {
+            gestioneErrori(inserisciTerreno(request, response), request, response);
+        } else if (request.getParameter("terreno0") != null) {
             Enumeration<String> parameters = request.getParameterNames();
-            while(parameters.hasMoreElements()){
+            while (parameters.hasMoreElements()) {
                 tm.rimuoviTerreno(parameters.nextElement());
             }
-            response.sendRedirect("Terreni.jsp");
         }
-
-        response.sendRedirect("index.jsp");
-
     }
 
     private String inserisciTerreno(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -65,22 +61,39 @@ public class ServletTerreno extends HttpServlet {
         String azienda = request.getParameter("azienda");
 
         Part immagine = request.getPart("immagine");
-        String fileName = Paths.get(immagine.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+        String fileName = null;
+
+        if (immagine.getSize() > 0) {
+        fileName = Paths.get(immagine.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
         InputStream fileContent = immagine.getInputStream();
         // Salva l'immagine su disco
         String path = "C:\\Users\\stefa\\IdeaProjects\\GreenMonitoring\\src\\main\\webapp\\img\\" + fileName;
         Files.copy(fileContent, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
         fileContent.close();
+        }
 
         Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
         Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
         String superfice = request.getParameter("superfice");
         TerrenoBean terreno = new TerrenoBean(latitudine, longitudine, superfice, fileName, azienda);
         try {
-            String valore = tm.createTerreno(terreno);
+            return tm.createTerreno(terreno);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
+
+    private void gestioneErrori(String errore, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (errore.matches("erroreTerreno")) {
+            System.out.println("esiste");
+            request.setAttribute("erroreTerreno", "esiste già un terreno in quella posizione");
+            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciTerreno.jsp");
+            dispatcher.forward(request, response);
+
+        }
+    }
+
+
+
 }
