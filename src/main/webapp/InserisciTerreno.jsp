@@ -16,48 +16,45 @@
 
 <body >
 
-
 <form id="inserisci_terreno" action="ServletTerreno" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
 
-  <%
-    String error = (String) request.getAttribute("erroreTerreno");
-    %>
   <label for="azienda">Azienda:</label>
   <input type="text" id="azienda" name="azienda"><br><br>
 
-
-  <%
-    if (error != null) {
-  %>
-  <div class="text-danger text-sm">
-    <%=error%>
-  </div>
-<% } %>
-  <div class="col-md-4">
-    <label for="latitudine" class="form-label" >latitudine:</label>
-    <input type="number" max="90" min="0" id="latitudine" name="latitudine" required>
-    <div class="valid-feedback">Ok!</div>
+  <div class="form-group">
+    <label for="latitudine">latitudine:</label>
+    <input type="text" class="form-control<%= request.getAttribute("erroreLatitudine") != null ? " is-invalid" : "" %>" id="latitudine" name="latitudine" placeholder="Inserisci latitudine">
+    <% if(request.getAttribute("erroreLatitudine") != null) { %>
     <div class="invalid-feedback">
-      Il valore deve essere compreso tra 0 e 90
+      <%= request.getAttribute("erroreLatitudine") %>
     </div>
-
+    <% } %>
   </div>
+
   <br>
 
   <div class="col-md-4">
     <label for="longitudine" class="form-label" >longitudine:</label>
-    <input type="number" max="180" min="0" id="longitudine" name="longitudine" required>
-    <div class="valid-feedback">Ok!
-    </div>
+    <input type="text" class="form-control<%= request.getAttribute("erroreLongitudine") != null ? " is-invalid" : "" %>" id="longitudine" name="longitudine" placeholder="Inserisci longitudine">
+    <% if(request.getAttribute("erroreLongitudine") != null) { %>
     <div class="invalid-feedback">
-      Il valore deve essere compreso tra 0 e 180
+      <%= request.getAttribute("erroreLongitudine") %>
     </div>
+    <% } %>
   </div>
   <br>
 
 
-  <label for="superfice">superfice:</label>
-  <input type="text" id="superfice" name="superfice"><br><br>
+  <div class="col-md-4">
+    <label for="superfice" class="form-label" >superfice:</label>
+    <input type="text" class="form-control<%= request.getAttribute("erroreSuperfice") != null ? " is-invalid" : "" %>" id="superfice" name="superfice" placeholder="Inserisci superfice">
+    <% if(request.getAttribute("erroreSuperfice") != null) { %>
+    <div class="invalid-feedback">
+      <%= request.getAttribute("erroreSuperfice") %>
+    </div>
+    <% } %>
+  </div>
+  <br>
 
   <label for="immagine">immagine:</label>
   <input type="file" id="immagine" name="immagine"  accept=".png, .jpg, .jpeg"><br><br>
