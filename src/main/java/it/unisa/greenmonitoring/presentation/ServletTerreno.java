@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.Enumeration;
+import java.util.List;
 
 @WebServlet(name = "ServletTerreno", value = "/ServletTerreno")
 @MultipartConfig
@@ -56,7 +57,7 @@ public class ServletTerreno extends HttpServlet {
         }
     }
 
-    private String inserisciTerreno(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private List<String> inserisciTerreno(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String azienda = request.getParameter("azienda");
 
@@ -84,12 +85,28 @@ public class ServletTerreno extends HttpServlet {
         }
     }
 
-    private void gestioneErrori(String errore, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (errore.matches("erroreTerreno")) {
-            System.out.println("esiste");
-            request.setAttribute("erroreTerreno", "esiste già un terreno in quella posizione");
+    private void gestioneErrori(List<String> errore, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (errore != null) {
+                if (errore.contains("erroreLatitudine")) {
+                    System.out.println("1111");
+                    request.setAttribute("erroreLatitudine", "latitudine errata");
+                }
+                if (errore.contains("erroreLongitudine")) {
+                    System.out.println("222");
+                    request.setAttribute("erroreLongitudine", "longitudine errore");
+                }
+                if (errore.contains("erroreSuperfice")) {
+                    System.out.println("33");
+                    request.setAttribute("erroreSuperfice", "superfice errore");
+                }
+                if (errore.contains("erroreTerreno")) {
+                    System.out.println("44");
+                    request.setAttribute("erroreTerreno", "terreni errore");
+                }
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciTerreno.jsp");
             dispatcher.forward(request, response);
+
+
 
         }
     }
