@@ -1,8 +1,11 @@
+<% if ( ! (session.getAttribute("currentUserSession") instanceof AziendaBean) || session.getAttribute("currentUserSession") == null){ response.sendError(401); }  %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page import="java.util.List" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Random" %><%--
+<%@ page import="java.util.Random" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
+<%@ page import="java.lang.reflect.AnnotatedArrayType" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -12,7 +15,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-   <% if (session.getAttribute("currentUserSession") == null){ response.sendError(401); }  %>
     <title>Terreni</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
@@ -53,8 +55,8 @@
             <tbody>
                 <%
                     TerrenoManager t = new TerrenoManager();
-
-                    List<TerrenoBean> list = t.visualizzaListaTerreni( (String) session.getAttribute("currentUserSession"));
+                    AziendaBean a = (AziendaBean) session.getAttribute("currentUserSession");
+                    List<TerrenoBean> list = t.visualizzaListaTerreni( a.getEmail() );
 
                     int i = 0;
                     for (TerrenoBean tb : list) {

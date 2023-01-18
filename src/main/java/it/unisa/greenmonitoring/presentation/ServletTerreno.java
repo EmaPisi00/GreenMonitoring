@@ -52,9 +52,14 @@ public class ServletTerreno extends HttpServlet {
         } else if (request.getParameter("terreno0") != null) {
             Enumeration<String> parameters = request.getParameterNames();
             while (parameters.hasMoreElements()) {
-                tm.rimuoviTerreno(parameters.nextElement());
+                String id = request.getParameter(parameters.nextElement());
+                tm.rimuoviTerreno(id);
             }
+            response.sendRedirect("Terreni.jsp");
         }
+
+        //response.sendRedirect("index.jsp");
+
     }
 
     private List<String> inserisciTerreno(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -83,6 +88,7 @@ public class ServletTerreno extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     private void gestioneErrori(List<String> errore, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

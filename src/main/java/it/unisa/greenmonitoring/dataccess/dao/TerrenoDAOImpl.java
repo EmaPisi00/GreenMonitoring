@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TerrenoDAOImpl implements TerrenoDAO {
 
@@ -62,10 +61,10 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     }
 
     @Override
-    public List<TerrenoBean> retrieveTerreno() throws SQLException {
+    public ArrayList<TerrenoBean> retrieveTerreno() throws SQLException {
 
         String selectSQL = "SELECT * FROM Terreno";
-        List<TerrenoBean> list = new ArrayList<>();
+        ArrayList<TerrenoBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
@@ -102,7 +101,6 @@ public class TerrenoDAOImpl implements TerrenoDAO {
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
-            System.out.println("TerrenoDAOImpl ricevuto : " + id_terreno);
             preparedStatement.setString(1, id_terreno);
             preparedStatement.executeUpdate();
             connection.commit();
