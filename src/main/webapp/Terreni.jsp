@@ -27,7 +27,7 @@
 </head>
 <body>
 <div class="bd">
-    <legend>Terreni</legend>
+    <legend style="text-align:center;">Terreni</legend>
     <!-- <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
@@ -55,9 +55,10 @@
                     TerrenoManager t = new TerrenoManager();
 
                     List<TerrenoBean> list = t.visualizzaListaTerreni( (String) session.getAttribute("currentUserSession"));
+
                     int i = 0;
                     for (TerrenoBean tb : list) {
-                        System.out.print("<tr>" +
+                        out.print("<tr>" +
                                 "<td>"+
                                 "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
                                 "</td>"+

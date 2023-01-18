@@ -6,8 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class TerrenoDAOImpl implements TerrenoDAO {
 
@@ -62,17 +62,17 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     }
 
     @Override
-    public synchronized List<TerrenoBean> retrieveTerreno() throws SQLException {
+    public List<TerrenoBean> retrieveTerreno() throws SQLException {
 
         String selectSQL = "SELECT * FROM Terreno";
-        TerrenoBean t = new TerrenoBean(null, null, null, null, null);
-        List<TerrenoBean> list = new ArrayList<>();
+        List<TerrenoBean> list = new Vector<>();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
+                TerrenoBean t = new TerrenoBean(null, null, null, null, null);
                 t.setId(rs.getString("id"));
                 t.setImmagine(rs.getString("immagine"));
                 t.setSuperficie(rs.getString("superfice"));
@@ -80,6 +80,10 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setLongitudine(rs.getFloat("longitudine"));
                 t.setAzienda(rs.getString("azienda"));
                 list.add(t);
+            }
+
+            for (TerrenoBean tb : list) {
+                System.out.println(tb.getImmagine());
             }
 
         } catch (SQLException s) {
