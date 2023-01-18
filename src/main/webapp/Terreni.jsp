@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%  %>
+   <% if (session.getAttribute("currentUserSession") == null){ response.sendError(401); }  %>
     <title>Terreni</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
@@ -27,7 +27,7 @@
 </head>
 <body>
 <div class="bd">
-    <legend>Terreni</legend>
+    <legend style="text-align:center;">Terreni</legend>
     <!-- <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
@@ -54,10 +54,11 @@
                 <%
                     TerrenoManager t = new TerrenoManager();
 
-                    List<TerrenoBean> list = t.visualizzaListaTerreni((String) session.getAttribute("currentUserSession"));
+                    List<TerrenoBean> list = t.visualizzaListaTerreni( (String) session.getAttribute("currentUserSession"));
+
                     int i = 0;
                     for (TerrenoBean tb : list) {
-                        System.out.print("<tr>" +
+                        out.print("<tr>" +
                                 "<td>"+
                                 "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
                                 "</td>"+
@@ -66,6 +67,7 @@
                                 "<td>" + tb.getLongitudine() + "</td>" +
                                 "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
                         );
+                    i++;
                     }
                 %>
             </tbody>
@@ -77,7 +79,7 @@
         Aggiungi terreno
     </button>
     <!-- Button trigger modal -->
-    <button id="showModal" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter" onclick="validate()">
+    <button id="showModal" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter">
         Rimuovi terreni
     </button>
 </form>

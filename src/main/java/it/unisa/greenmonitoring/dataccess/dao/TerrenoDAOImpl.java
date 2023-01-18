@@ -62,10 +62,9 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     }
 
     @Override
-    public synchronized List<TerrenoBean> retrieveTerreno() throws SQLException {
+    public List<TerrenoBean> retrieveTerreno() throws SQLException {
 
         String selectSQL = "SELECT * FROM Terreno";
-        TerrenoBean t = new TerrenoBean(null, null, null, null, null);
         List<TerrenoBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
@@ -73,15 +72,16 @@ public class TerrenoDAOImpl implements TerrenoDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
+                TerrenoBean t = new TerrenoBean(null, null, null, null, null);
                 t.setId(rs.getString("id"));
                 t.setImmagine(rs.getString("immagine"));
                 t.setSuperficie(rs.getString("superfice"));
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setLongitudine(rs.getFloat("longitudine"));
                 t.setAzienda(rs.getString("azienda"));
+                connection.commit();
                 list.add(t);
             }
-
         } catch (SQLException s) {
             s.printStackTrace();
         } finally {
@@ -102,8 +102,10 @@ public class TerrenoDAOImpl implements TerrenoDAO {
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
+            System.out.println("TerrenoDAOImpl ricevuto : " + id_terreno);
             preparedStatement.setString(1, id_terreno);
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
+            connection.commit();
 
         } catch (SQLException s) {
             s.printStackTrace();

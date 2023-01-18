@@ -90,15 +90,12 @@ public class TerrenoManager {
         List<TerrenoBean> list = new ArrayList<>();
         try {
             td = new TerrenoDAOImpl();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             td.retrieveTerreno().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
-            return list;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return list;
     }
 
 }
