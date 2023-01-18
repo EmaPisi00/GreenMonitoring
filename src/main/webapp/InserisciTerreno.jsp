@@ -1,3 +1,5 @@
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,13 +15,16 @@
 
 </head>
 
-
+<% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
+  if (!(u instanceof AziendaBean))  { %>
+  <% response.sendRedirect("error.jsp"); %>
+<% } %>
 <body >
 
 <form id="inserisci_terreno" action="ServletTerreno" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
 
-  <label for="azienda">Azienda:</label>
-  <input type="text" id="azienda" name="azienda"><br><br>
+
+  <input type="text" id="azienda" name="azienda" value="<%=u.getEmail()%>"  style="display: none"><br><br>
 
   <div class="form-group">
     <label for="latitudine">latitudine:</label>
