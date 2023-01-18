@@ -3,10 +3,8 @@ package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAO;
 import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAOImpl;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ListIterator;
 
 public class TerrenoManager {
@@ -85,9 +83,9 @@ public class TerrenoManager {
      * @param id_azienda
      * @return List&ltTerrenoBean&gt
      */
-    public List<TerrenoBean> visualizzaListaTerreni(String id_azienda) {
+    public ArrayList<TerrenoBean> visualizzaListaTerreni(String id_azienda) {
         TerrenoDAO td = null;
-        List<TerrenoBean> list = new ArrayList<>();
+        ArrayList<TerrenoBean> list = new ArrayList<>();
         try {
             td = new TerrenoDAOImpl();
             td.retrieveTerreno().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
