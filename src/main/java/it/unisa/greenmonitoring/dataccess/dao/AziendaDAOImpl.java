@@ -1,6 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
+import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -135,6 +136,56 @@ public class AziendaDAOImpl implements AziendaDAO {
         }
         return  azienda;
     }
+
+    /**
+     * Metodo retrieve che restituisce di dati di un'azienda ad un bean di tipo UtenteBean.
+     * @throws SQLException
+     * @param beanInput
+     * @return restituisce il bean diocane
+     */
+    public static UtenteBean doRetrieve(UtenteBean beanInput) {
+
+        connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String email = beanInput.getEmail();
+        String password = beanInput.getPassword();
+
+        String searchQuery =
+                "select * from " + TABLE_NAME + " where email = ? and password = ?";
+
+
+
+        UtenteBean bean = new AziendaBean();
+
+        try {
+            connection = ConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(searchQuery);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+
+            if (rs.next()) {
+                bean.setEmail(rs.getString("email"));
+                bean.setPassword(rs.getString("password"));
+                bean.setTelefono(rs.getString("telefono"));
+                bean.setCitta(rs.getString("citta"));
+                bean.setProvincia(rs.getString("provincia"));
+                bean.setIndirizzo(rs.getString("indirizzo"));
+                ((AziendaBean) bean).setNome_azienda(rs.getString("nome_azienda"));
+                ((AziendaBean) bean).setPartita_iva(rs.getString("partita_iva"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Log In failed: An Exception has occurred! " + ex);
+        }
+
+        return bean;
+    }
+
 
     /**
      * Implementazione metodo che permette la ricerca di un'azienda in base alla sua email.
