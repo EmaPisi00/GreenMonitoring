@@ -54,9 +54,10 @@ public class ServletTerreno extends HttpServlet {
                 tm.rimuoviTerreno(id);
             }
             response.sendRedirect("Terreni.jsp");
+            return;
         }
 
-        //response.sendRedirect("index.jsp");
+        response.sendRedirect("index.jsp");
 
     }
 
