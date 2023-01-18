@@ -47,10 +47,9 @@ public class ServletTerreno extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("inserisciTerreno_submit") != null) {
             inserisciTerreno(request, response);
-        }
-        else if (request.getParameter("terreno0") != null) {
+        } else if (request.getParameter("terreno0") != null) {
             Enumeration<String> parameters = request.getParameterNames();
-            while(parameters.hasMoreElements()){
+            while (parameters.hasMoreElements()) {
                 tm.rimuoviTerreno(parameters.nextElement());
             }
             response.sendRedirect("Terreni.jsp");
@@ -77,7 +76,7 @@ public class ServletTerreno extends HttpServlet {
         String superfice = request.getParameter("superfice");
         TerrenoBean terreno = new TerrenoBean(latitudine, longitudine, superfice, fileName, azienda);
         try {
-            String valore = tm.createTerreno(terreno);
+            tm.createTerreno(terreno);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
