@@ -1,6 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
-import it.unisa.greenmonitoring.businesslogic.autenticazione.LoginManager;
+import it.unisa.greenmonitoring.businesslogic.autenticazione.AutenticazioneManager;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
     /**
      * Object that provides the methods to manage the Terreno.
      */
-    private final LoginManager lm = new LoginManager();
+    private final AutenticazioneManager lm = new AutenticazioneManager();
     /**
      * Method that handle the GET requests.
      * @param request the request from the client.
