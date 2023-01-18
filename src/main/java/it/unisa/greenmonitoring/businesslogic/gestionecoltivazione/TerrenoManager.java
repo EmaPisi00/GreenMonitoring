@@ -88,10 +88,9 @@ public class TerrenoManager {
     public List<TerrenoBean> visualizzaListaTerreni(String id_azienda) {
         TerrenoDAO td = null;
         List<TerrenoBean> list = new ArrayList<>();
-        List<TerrenoBean> temp = new ArrayList<>();
         try {
             td = new TerrenoDAOImpl();
-            temp = td.retrieveTerreno();
+            td.retrieveTerreno().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

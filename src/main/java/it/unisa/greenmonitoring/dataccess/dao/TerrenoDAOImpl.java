@@ -81,11 +81,6 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setAzienda(rs.getString("azienda"));
                 list.add(t);
             }
-
-            for (TerrenoBean tb : list) {
-                System.out.println(tb.getImmagine());
-            }
-
         } catch (SQLException s) {
             s.printStackTrace();
         } finally {
