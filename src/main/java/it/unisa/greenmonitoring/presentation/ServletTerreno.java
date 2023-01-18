@@ -88,7 +88,6 @@ public class ServletTerreno extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     private void gestioneErrori(List<String> errore, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
