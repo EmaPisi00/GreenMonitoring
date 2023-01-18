@@ -6,8 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class TerrenoDAOImpl implements TerrenoDAO {
 
@@ -65,7 +65,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     public List<TerrenoBean> retrieveTerreno() throws SQLException {
 
         String selectSQL = "SELECT * FROM Terreno";
-        List<TerrenoBean> list = new Vector<>();
+        List<TerrenoBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
@@ -79,6 +79,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setLongitudine(rs.getFloat("longitudine"));
                 t.setAzienda(rs.getString("azienda"));
+                connection.commit();
                 list.add(t);
             }
         } catch (SQLException s) {
@@ -101,8 +102,10 @@ public class TerrenoDAOImpl implements TerrenoDAO {
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
+            System.out.println("TerrenoDAOImpl ricevuto : " + id_terreno);
             preparedStatement.setString(1, id_terreno);
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
+            connection.commit();
 
         } catch (SQLException s) {
             s.printStackTrace();

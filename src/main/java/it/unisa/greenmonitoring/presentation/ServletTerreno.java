@@ -47,15 +47,16 @@ public class ServletTerreno extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("inserisciTerreno_submit") != null) {
             inserisciTerreno(request, response);
-        } else if (request.getParameter("terreno0") != null) {
+        } else {
             Enumeration<String> parameters = request.getParameterNames();
             while (parameters.hasMoreElements()) {
-                tm.rimuoviTerreno(parameters.nextElement());
+                String id = request.getParameter(parameters.nextElement());
+                tm.rimuoviTerreno(id);
             }
             response.sendRedirect("Terreni.jsp");
         }
 
-        response.sendRedirect("index.jsp");
+        //response.sendRedirect("index.jsp");
 
     }
 

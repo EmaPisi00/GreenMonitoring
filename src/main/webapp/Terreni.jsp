@@ -79,7 +79,7 @@
         Aggiungi terreno
     </button>
     <!-- Button trigger modal -->
-    <button id="showModal" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter" onclick="validate()">
+    <button id="showModal" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter">
         Rimuovi terreni
     </button>
 </form>

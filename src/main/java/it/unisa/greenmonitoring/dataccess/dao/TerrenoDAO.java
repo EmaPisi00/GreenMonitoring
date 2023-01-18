@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
-
 import java.sql.SQLException;
 import java.util.List;
 
