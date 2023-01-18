@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
                 user.setPassword(request.getParameter("password"));
                 user = AziendaDAOImpl.doRetrieve(user);
                 sessione.setAttribute("currentUserSession", user);
-                //ciclo for per la verifica del corretto retrieve delle informazioni del user corrente
+                //ciclo for per la verifica del corretto retrieve delle informazioni dello user corrente
                 for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo())) {
                     System.out.println(s);
                 }
@@ -64,8 +64,12 @@ public class LoginServlet extends HttpServlet {
                 UtenteBean user = new DipendenteBean();
                 user.setEmail(request.getParameter("email"));
                 user.setPassword(request.getParameter("password"));
-                //user = DipendenteDAOImpl.doRetrieve(user);
+                user = DipendenteDAOImpl.doRetrieve(user);
                 sessione.setAttribute("currentUserSession", user);
+                //ciclo for per la verifica del corretto retrieve delle informazioni dello user corrente
+                for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo())) {
+                    System.out.println(s);
+                }
                 response.sendRedirect("Dipendente.jsp");
             } else {
                 response.sendRedirect("index.jsp?error=true");
