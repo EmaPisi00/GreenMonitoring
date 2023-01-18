@@ -18,13 +18,6 @@ public interface DipendenteDAO {
     void create(DipendenteBean registrazioneDipendenteBean) throws SQLException;
 
     /**
-     * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
-     * @return List<DipendenteBean>
-     * @throws SQLException
-     */
-    List<DipendenteBean> retrieve() throws SQLException;
-
-    /**
      * Metodo retrieve che permette di ricercare tutti i dati di tutti i dipendenti.
      * @return List<DipendenteBean>
      * @throws SQLException
