@@ -1,4 +1,3 @@
-<% if ( ! (session.getAttribute("currentUserSession") instanceof AziendaBean) || session.getAttribute("currentUserSession") == null){ response.sendError(401); }  %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page import="java.util.List" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %>
@@ -54,8 +53,18 @@
             </thead>
             <tbody>
                 <%
+                    /* -- INIZIO AUTENTICAZIONE -- */
+                    Object seo = session.getAttribute("currentUserSession");
+                    if (seo == null) {
+                        response.sendError(401);
+                    } else if ( ! (session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                        response.sendError(401);
+                    }
+                    /* -- PASSATI I TEST, APRE IL RESTO DELLA PAGINA--*/
+                    else {
+                        AziendaBean a = (AziendaBean) seo;
+
                     TerrenoManager t = new TerrenoManager();
-                    AziendaBean a = (AziendaBean) session.getAttribute("currentUserSession");
                     List<TerrenoBean> list = t.visualizzaListaTerreni( a.getEmail() );
 
                     int i = 0;
@@ -70,6 +79,7 @@
                                 "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
                         );
                     i++;
+                    }
                     }
                 %>
             </tbody>
