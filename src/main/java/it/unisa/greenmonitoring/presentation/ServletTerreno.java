@@ -79,7 +79,9 @@ public class ServletTerreno extends HttpServlet {
         }
 
         Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
+        System.out.println("latitudine=" + latitudine);
         Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
+        System.out.println("latitudine=" + longitudine);
         String superfice = request.getParameter("superfice");
         TerrenoBean terreno = new TerrenoBean(latitudine, longitudine, superfice, fileName, azienda);
         try {
