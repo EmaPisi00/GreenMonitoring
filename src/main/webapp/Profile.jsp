@@ -47,9 +47,9 @@
 
         <%  if (user instanceof DipendenteBean)  {
         %>
-    <table>
+
         <tr>
-            <td>:Nome</td>
+            <td>Nome:</td>
             <td><%= ((DipendenteBean) user).getNome() %></td>
         </tr>
         <tr>
@@ -71,10 +71,8 @@
         </tr>
         <% }  else  { %>
         <% response.sendRedirect("error.jsp"); } %>
-
-        <button id="registratiButton" onclick="javascript:location.href='${pageContext.request.contextPath}/EditProfile.jsp'">Modifica profilo</button></p>
     </table>
-
+    <button id="registratiButton" onclick="javascript:location.href='${pageContext.request.contextPath}/EditProfile.jsp'">Modifica profilo</button></p>
 </body>
 </html>
 
