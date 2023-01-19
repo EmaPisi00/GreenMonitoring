@@ -64,22 +64,22 @@
                     else {
                         AziendaBean a = (AziendaBean) seo;
 
-                    TerrenoManager t = new TerrenoManager();
-                    List<TerrenoBean> list = t.visualizzaListaTerreni( a.getEmail() );
+                        TerrenoManager t = new TerrenoManager();
+                        List<TerrenoBean> list = t.visualizzaListaTerreni( a.getEmail() );
 
-                    int i = 0;
-                    for (TerrenoBean tb : list) {
-                        out.print("<tr>" +
-                                "<td>"+
-                                "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
-                                "</td>"+
-                                "<td>" + tb.getImmagine() + "</td>" +
-                                "<td>" + tb.getLatitudine()+ "</td>" +
-                                "<td>" + tb.getLongitudine() + "</td>" +
-                                "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
-                        );
-                    i++;
-                    }
+                        int i = 0;
+                        for (TerrenoBean tb : list) {
+                            out.print("<tr>" +
+                                    "<td>"+
+                                    "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
+                                    "</td>"+
+                                    "<td>" + tb.getImmagine() + "</td>" +
+                                    "<td>" + tb.getLatitudine()+ "</td>" +
+                                    "<td>" + tb.getLongitudine() + "</td>" +
+                                    "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
+                            );
+                            i++;
+                        }
                     }
                 %>
             </tbody>
