@@ -12,8 +12,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<% UtenteBean user= (UtenteBean) session.getAttribute("currentUserSession"); %>
-
+<% UtenteBean user= (UtenteBean) session.getAttribute("currentUserSession");
+    if (user == null)  { %>
+    <% response.sendRedirect("error.jsp"); } %>
 <html>
 <body>
 
@@ -69,8 +70,7 @@
             <td>Partita IVA:</td>
             <td><%= ((AziendaBean) user).getPartita_iva() %></td>
         </tr>
-        <% }  else  { %>
-        <% response.sendRedirect("error.jsp"); } %>
+    <% } %>
     </table>
     <button id="registratiButton" onclick="javascript:location.href='${pageContext.request.contextPath}/EditProfile.jsp'">Modifica profilo</button></p>
 </body>
