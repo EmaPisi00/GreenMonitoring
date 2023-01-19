@@ -26,9 +26,18 @@
 
   <input type="text" id="azienda" name="azienda" value="<%=u.getEmail()%>"  style="display: none"><br><br>
 
+  <div class=>
+    <% if(request.getAttribute("erroreTerreno") != null) { %>
+    <div class="text-danger">
+      <%= request.getAttribute("erroreTerreno") %>
+    </div>
+    <% } %>
+  </div>
+
+  <div ></div>
   <div class="form-group">
     <label for="latitudine">latitudine:</label>
-    <input type="text" class="form-control<%= request.getAttribute("erroreLatitudine") != null ? " is-invalid" : "" %>" id="latitudine" name="latitudine" placeholder="Inserisci latitudine">
+    <input type="text" class="form-control<%= request.getAttribute("erroreLatitudine") != null ? " is-invalid" : "" %>" id="latitudine" name="latitudine" placeholder="Inserisci latitudine" required>
     <% if(request.getAttribute("erroreLatitudine") != null) { %>
     <div class="invalid-feedback">
       <%= request.getAttribute("erroreLatitudine") %>
@@ -40,7 +49,7 @@
 
   <div class="col-md-4">
     <label for="longitudine" class="form-label" >longitudine:</label>
-    <input type="text" class="form-control<%= request.getAttribute("erroreLongitudine") != null ? " is-invalid" : "" %>" id="longitudine" name="longitudine" placeholder="Inserisci longitudine">
+    <input type="text" class="form-control<%= request.getAttribute("erroreLongitudine") != null ? " is-invalid" : "" %>" id="longitudine" name="longitudine" placeholder="Inserisci longitudine" required>
     <% if(request.getAttribute("erroreLongitudine") != null) { %>
     <div class="invalid-feedback">
       <%= request.getAttribute("erroreLongitudine") %>
@@ -52,7 +61,7 @@
 
   <div class="col-md-4">
     <label for="superfice" class="form-label" >superfice:</label>
-    <input type="text" class="form-control<%= request.getAttribute("erroreSuperfice") != null ? " is-invalid" : "" %>" id="superfice" name="superfice" placeholder="Inserisci superfice">
+    <input type="text" class="form-control<%= request.getAttribute("erroreSuperfice") != null ? " is-invalid" : "" %>" id="superfice" name="superfice" placeholder="Inserisci superfice" required>
     <% if(request.getAttribute("erroreSuperfice") != null) { %>
     <div class="invalid-feedback">
       <%= request.getAttribute("erroreSuperfice") %>
