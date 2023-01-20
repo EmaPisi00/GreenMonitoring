@@ -30,7 +30,7 @@ public interface DipendenteDAO {
      * @return List<AziendaBean>
      * @throws SQLException
      */
-    List<DipendenteBean> retrieveForKey(String email) throws SQLException;
+    List<DipendenteBean> retrieveAllByCode(String email) throws SQLException;
 
     /**
      * Metodo update che permette di modificare dati già presenti nel DB.
