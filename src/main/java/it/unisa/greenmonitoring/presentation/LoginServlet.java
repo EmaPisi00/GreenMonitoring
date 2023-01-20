@@ -20,7 +20,7 @@ import java.util.Arrays;
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
     /**
-     * Object that provides the methods to manage the Terreno.
+     * Object that provides the methods to manage the Login.
      */
     private final AutenticazioneManager lm = new AutenticazioneManager();
     /**

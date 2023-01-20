@@ -1,6 +1,5 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
-
 /**
  * Registrazione di un'azienda bean.
  */
@@ -16,8 +15,10 @@ public class AziendaBean extends UtenteBean implements Comparable<AziendaBean> {
      * Variabile locale partita_iva.
      */
     private String partita_iva;
-
-
+    /**
+     * Variabile locale partita_iva.
+     */
+    private String codice_associazione;
     /**
      * Costruttore UtenteBean.
      *
@@ -73,6 +74,25 @@ public class AziendaBean extends UtenteBean implements Comparable<AziendaBean> {
     public void setPartita_iva(String give_partita_iva) {
         this.partita_iva = give_partita_iva;
     }
+
+    /**
+     * Get di codice_associazione.
+     *
+     * @return codice_associazione
+     */
+    public String getCodice_associazione() {
+        return codice_associazione;
+    }
+
+    /**
+     * Set di codice_associazione.
+     *
+     * @param give_codice_associazione
+     */
+    public void setCodice_associazione(String give_codice_associazione) {
+        this.codice_associazione = give_codice_associazione;
+    }
+
 
     /**
      * Compares this object with the specified object for order.  Returns a
