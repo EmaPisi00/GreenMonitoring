@@ -1,5 +1,6 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
+
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
@@ -18,7 +19,7 @@ public class DipendenteDAOImpl implements DipendenteDAO {
     /**
      * Dichiaro la Variabile final "dipendente" che mi identifica la tabella nel db.
      */
-    private static final String TABLE_NAME = "dipendente";
+    private static final String TABLE_NAME = "Dipendente";
 
     /**
      * Dichiaro la variabile statica che mi permette di richiamare la classe per la connessione al db.
@@ -49,13 +50,12 @@ public class DipendenteDAOImpl implements DipendenteDAO {
     public void create(DipendenteBean dipendenteBean) throws SQLException {
         PreparedStatement preparedStatement = null;
 
-        String insertSQL = "Insert Into " + TABLE_NAME + "(email, password, telefono, citta, indirizzo, provincia, azienda, nome, cognome)" + "Values (?,?,?,?,?,?,?,?,?)";
+        String updateSQL = "Insert Into " + TABLE_NAME + "(email, password, telefono, citta, indirizzo, provincia, azienda, nome, cognome)" + "Values (?,?,?,?,?,?,?,?,?)";
 
         try {
 
             connection = ConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(insertSQL);
-
+            preparedStatement = connection.prepareStatement(updateSQL);
             preparedStatement.setString(1, dipendenteBean.getEmail());
             preparedStatement.setString(2, dipendenteBean.getPassword());
             preparedStatement.setString(3, dipendenteBean.getTelefono());
@@ -246,13 +246,94 @@ public class DipendenteDAOImpl implements DipendenteDAO {
 
     /**
      * Metodo update che implementa un aggiornamento al DB attraverso il passaggio di un ID.
+     * @param utente
+     * @param emailVecchia
+     * @throws SQLException
+     */
+    @Override
+    public void update(DipendenteBean utente, String emailVecchia) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        String retrieveSQL = "UPDATE " + TABLE_NAME + " SET email= ?, password= ?, telefono= ?, citta= ?,"
+                + "   indirizzo= ?, provincia= ?, azienda= ?, nome= ?, cognome= ?" + "WHERE email = ?";
+
+        try {
+            connection = ConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement(retrieveSQL);
+            preparedStatement.setString(1, utente.getEmail());
+            preparedStatement.setString(2, utente.getPassword());
+            preparedStatement.setString(3, utente.getTelefono());
+            preparedStatement.setString(4, utente.getCitta());
+            preparedStatement.setString(5, utente.getIndirizzo());
+            preparedStatement.setString(6, utente.getProvincia());
+            preparedStatement.setString(7, utente.getAzienda());
+            preparedStatement.setString(8, utente.getNome());
+            preparedStatement.setString(9, utente.getCognome());
+            preparedStatement.setString(10, emailVecchia);
+
+            preparedStatement.executeUpdate();
+            connection.commit();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+
+    }
+    /**
+     * Metodo doUpdate che aggiorna i dati di un dipendente.
+     * @param dipendenteBean
+     */
+    public void doUpdate(DipendenteBean dipendenteBean) throws SQLException {
+        PreparedStatement preparedStatement = null;
+
+        String updateSQL = "UPDATE " + TABLE_NAME + " SET password = ?, telefono = ?, citta = ?, indirizzo = ?, provincia = ?, azienda = ?, nome = ?, cognome = ? WHERE email = ?";
+
+        try {
+            connection = ConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(updateSQL);
+
+            preparedStatement.setString(1, dipendenteBean.getPassword());
+            preparedStatement.setString(2, dipendenteBean.getTelefono());
+            preparedStatement.setString(3, dipendenteBean.getCitta());
+            preparedStatement.setString(4, dipendenteBean.getIndirizzo());
+            preparedStatement.setString(5, dipendenteBean.getProvincia());
+            preparedStatement.setString(6, dipendenteBean.getAzienda());
+            preparedStatement.setString(7, dipendenteBean.getNome());
+            preparedStatement.setString(8, dipendenteBean.getCognome());
+            preparedStatement.setString(9, dipendenteBean.getEmail());
+
+            preparedStatement.executeUpdate();
+            connection.commit();
+
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+    }
+
+    /**
      * @param email
      * @throws SQLException
      */
     @Override
-    public void update(String email) throws SQLException {
+    public void updateAziendaToNull(String email) throws SQLException {
 
     }
+
     /**
      * Metodo delete che implementa una cancellazione dal sistema attraverso il passaggio di un ID.
      * @param email

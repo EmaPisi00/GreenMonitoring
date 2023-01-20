@@ -3,7 +3,9 @@ package it.unisa.greenmonitoring.businesslogic.autenticazione;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 
+import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 import it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl;
+
 import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAO;
 import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAOImpl;
 
@@ -13,51 +15,57 @@ import java.util.List;
 
 public class UtenteManager {
     /**
-     * Verifica le credenziali dell'utente e restituisce il tipo di utente (azienda o dipendente) se le credenziali sono corrette, altrimenti restituisce null.
-     * @param email email dell'utente
-     * @return il tipo di utente se le credenziali sono corrette, altrimenti null
-     * @throws SQLException
+     * DipendenteDao.
      */
-    public String CheckData(String email) throws SQLException {
-        AziendaDAOImpl aziendaDao = new AziendaDAOImpl();
-        List<AziendaBean> listAziende = aziendaDao.retrieveAll();
-        for (AziendaBean azienda : listAziende) {
-            if (azienda.getEmail().matches(email)) {
-                return "azienda";
-            }
-        }
-
-        DipendenteDAOImpl dipendenteDao = new DipendenteDAOImpl();
-        List<DipendenteBean> listDipendenti = dipendenteDao.retrieveAll();
-        for (DipendenteBean dipendente : listDipendenti) {
-            if (dipendente.getEmail().matches(email)) {
-                return "dipendente";
-            }
-        }
-
-        return "null";
-    }
+    private DipendenteDAO dipendenteDAO;
 
     /**
-     * Questo metodo restituisce un da un id.
+     * Metodo che permette la rimozione di una associazione ad un'azienda.
      * @param email
-     * @return List<DipendenteBean>
+     * @return dipendente
      * @throws SQLException
      */
     public List<DipendenteBean> retrieveAll(String email) throws SQLException {
         return null;
     }
     /**
-     * Metodo che permette di eliminare un dipendente.
+     * Metodo che permette la rimozione di una associazione ad un'azienda.
      * @param email
+     * @return dipendente
      * @throws SQLException
      */
-    public void delete(String email) throws SQLException {
-        try {
-            DipendenteDAO d = new DipendenteDAOImpl();
-            d.delete(email);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    /*public boolean rimuoviDipendente(String email) throws SQLException {
+        DipendenteBean dipendente = (DipendenteBean) dipendenteDAO.retrieveAllForKey(email);
+        if (dipendente != null) {
+            dipendenteDAO.updateAziendaToNull(email);
+            return true;
+        }
+        return false;
+    }*/
+
+    /**
+     * Metodo che permette di aggiornare un dipendente.
+     * @param utenteNuovo
+     * @param vecchioUtente
+     * @throws SQLException
+     */
+    public void controllaDatiAggiorna(UtenteBean utenteNuovo, UtenteBean vecchioUtente) throws SQLException {
+
+        if (utenteNuovo instanceof AziendaBean) {
+            AziendaDAOImpl aziendaDao = new AziendaDAOImpl();
+            if (((AziendaBean) utenteNuovo).compareTo((AziendaBean) vecchioUtente) != 0) {
+                aziendaDao.update((AziendaBean) utenteNuovo, vecchioUtente.getEmail());
+            }
+
+        } else if (utenteNuovo instanceof DipendenteBean) {
+            DipendenteDAOImpl dipendenteDao = new DipendenteDAOImpl();
+            if (((DipendenteBean) utenteNuovo).compareTo((DipendenteBean) vecchioUtente) != 0) {
+                System.out.println("ci sono modifiche da aggiornare");
+                dipendenteDao.update((DipendenteBean) utenteNuovo, vecchioUtente.getEmail());
+            }
+
         }
     }
 }
+
+
