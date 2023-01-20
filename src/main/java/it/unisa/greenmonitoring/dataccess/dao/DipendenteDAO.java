@@ -40,6 +40,13 @@ public interface DipendenteDAO {
     void update(String email) throws SQLException;
 
     /**
+     * Metodo update che permette di modificare dati già presenti nel DB.
+     * @param dipendenteBean
+     * @throws SQLException
+     */
+    void doUpdate(DipendenteBean dipendenteBean) throws SQLException;
+
+    /**
      * Metodo delete che permette di eliminare un dipendente dal sistema.
      * @param email
      * @throws SQLException
