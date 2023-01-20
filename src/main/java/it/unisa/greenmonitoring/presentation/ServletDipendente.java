@@ -1,7 +1,9 @@
 package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.autenticazione.AutenticazioneManager;
+
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
+import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAOImpl;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -69,7 +71,7 @@ public class ServletDipendente extends HttpServlet {
         }
 
     /**
-     * Metodo get.
+     * Metodo post.
      * @param request
      * @param response
      * @throws ServletException
@@ -77,6 +79,11 @@ public class ServletDipendente extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        DipendenteDAOImpl user = null;
+        try {
+            user.updateAziendaToNull(request.getParameter("email"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -242,7 +242,10 @@ public class DipendenteDAOImpl implements DipendenteDAO {
 
     }
 
+
+
     /**
+     * Metodo update che implementa un aggiornamento al DB attraverso il passaggio di un ID.
      * @param email
      * @throws SQLException
      */
@@ -250,52 +253,6 @@ public class DipendenteDAOImpl implements DipendenteDAO {
     public void update(String email) throws SQLException {
 
     }
-
-
-    /**
-     * Metodo update che implementa un aggiornamento al DB attraverso il passaggio di un ID.
-     * @param dipendenteBean
-     * @throws SQLException
-     */
-
-    @Override
-    public void doUpdate(DipendenteBean dipendenteBean) throws SQLException {
-        PreparedStatement preparedStatement = null;
-
-        String updateSQL = "UPDATE " + TABLE_NAME + " SET password = ?, telefono = ?, citta = ?, indirizzo = ?, provincia = ?, azienda = ?, nome = ?, cognome = ? WHERE email = ?";
-
-        try {
-            connection = ConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(updateSQL);
-
-            preparedStatement.setString(1, dipendenteBean.getPassword());
-            preparedStatement.setString(2, dipendenteBean.getTelefono());
-            preparedStatement.setString(3, dipendenteBean.getCitta());
-            preparedStatement.setString(4, dipendenteBean.getIndirizzo());
-            preparedStatement.setString(5, dipendenteBean.getProvincia());
-            preparedStatement.setString(6, dipendenteBean.getAzienda());
-            preparedStatement.setString(7, dipendenteBean.getNome());
-            preparedStatement.setString(8, dipendenteBean.getCognome());
-            preparedStatement.setString(9, dipendenteBean.getEmail());
-
-            preparedStatement.executeUpdate();
-            connection.commit();
-
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-        }
-        System.out.println(dipendenteBean.getAzienda());
-        //da capire perché nel db non si aggiorna
-    }
-
     /**
      * Metodo delete che implementa una cancellazione dal sistema attraverso il passaggio di un ID.
      * @param email

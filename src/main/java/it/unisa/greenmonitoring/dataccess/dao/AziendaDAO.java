@@ -2,6 +2,7 @@ package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -46,8 +47,6 @@ public interface AziendaDAO {
      * @throws SQLException
      */
     void delete(String email) throws SQLException;
-
-
 
 }
 
