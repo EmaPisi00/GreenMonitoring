@@ -18,7 +18,7 @@ public class AziendaDAOImpl implements AziendaDAO {
     /**
      * Dichiaro la Variabile final "azienda" che mi identifica la tabella nel db.
      */
-    private static final String TABLE_NAME = "azienda";
+    private static final String TABLE_NAME = "Azienda";
 
     /**
      * Dichiaro la variabile statica che mi permette di richiamare la classe per la connessione al db.
@@ -286,15 +286,57 @@ public class AziendaDAOImpl implements AziendaDAO {
         return  azienda;
     }
 
+    /**
+     * Metodo update che permette di modificare dati già presenti nel DB.
+     *
+     * @param utente
+     * @throws SQLException
+     */
+    @Override
+    public void update(AziendaBean utente) throws SQLException {
+
+    }
 
 
     /**
      * Metodo update che implementa un aggiornamento al DB attraverso il passaggio di un ID.
-     * @param email
+     * @param utente
+     * @param emailVecchia
      * @throws SQLException
      */
-    @Override
-    public void update(String email) throws SQLException {
+
+    public void update(AziendaBean utente, String emailVecchia) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        String retrieveSQL = "UPDATE " + TABLE_NAME + " SET email= ?, password= ?, telefono= ?, citta= ?,"
+                + "   indirizzo= ?, provincia= ?, nome_azienda= ?, partita_iva= ?" + "WHERE email = ?";
+
+        try {
+            connection = ConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement(retrieveSQL);
+            preparedStatement.setString(1, utente.getEmail());
+            preparedStatement.setString(2, utente.getPassword());
+            preparedStatement.setString(3, utente.getTelefono());
+            preparedStatement.setString(4, utente.getCitta());
+            preparedStatement.setString(5, utente.getIndirizzo());
+            preparedStatement.setString(6, utente.getProvincia());
+            preparedStatement.setString(7, utente.getNome_azienda());
+            preparedStatement.setString(8, utente.getPartita_iva());
+            preparedStatement.setString(9, emailVecchia);
+
+            preparedStatement.executeUpdate();
+            connection.commit();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
 
     }
 
