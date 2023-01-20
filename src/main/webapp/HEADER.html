@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Header</title>
+  <script src="./jquery/jquery-3.6.3.min.js"></script>
+  <link href="./img/favicon.png" rel="icon">
+  <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+  <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
+  <link href="bootstrap-5.2.3-dist/css/style1.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+<div>
+<nav class="navbar navbar-light" style="background-color: #198754;">
+
+    <img src="img/zoomed_lg2.png" id="fotobrand" class="rounded float-start" alt="Brand"/>
+
+  <div class="centra">
+    <legend id="brand" >Green Monitoring</legend>
+      <form class="d-flex" role="search" id="barra_diricerca">
+      <input id="cerca" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button id="bottone_cerca" class="btn btn-light" type="submit">Search</button>
+    </form>
+  </div>
+  <span id="roba_a_destra" class="dropdown">
+
+    <a class="btn btn-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Registrazione / Profilo
+    </a>
+    <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="./RegistrazioneAzienda.jsp">Registrazione Azienda</a></li>
+    <li><a class="dropdown-item" href="#">Registrazione Dipendente</a></li>
+   </ul>
+    <button  class="btn btn-light" type="submit">Logout/Login</button>
+  </span>
+
+</nav>
+
+</div>
+
+<div class="dropdown">
+  <a class="btn btn-success btn-lg dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Menu
+  </a>
+
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="./Terreni.jsp">Gestione Terreno</a></li>
+    <li><a class="dropdown-item" href="#">Gestione Piante</a></li>
+    <li><a class="dropdown-item" href="#">Gestione Sensori</a></li>
+    <li><a class="dropdown-item" href="#">Gestione Dipendenti</a></li>
+  </ul>
+</div>
+</body>
+</html>
