@@ -254,6 +254,54 @@ public class DipendenteDAOImpl implements DipendenteDAO {
 
     }
     /**
+     * Metodo doUpdate che aggiorna i dati di un dipendente.
+     * @param dipendenteBean
+     */
+    public void doUpdate(DipendenteBean dipendenteBean) throws SQLException {
+        PreparedStatement preparedStatement = null;
+
+        String updateSQL = "UPDATE " + TABLE_NAME + " SET password = ?, telefono = ?, citta = ?, indirizzo = ?, provincia = ?, azienda = ?, nome = ?, cognome = ? WHERE email = ?";
+
+        try {
+            connection = ConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(updateSQL);
+
+            preparedStatement.setString(1, dipendenteBean.getPassword());
+            preparedStatement.setString(2, dipendenteBean.getTelefono());
+            preparedStatement.setString(3, dipendenteBean.getCitta());
+            preparedStatement.setString(4, dipendenteBean.getIndirizzo());
+            preparedStatement.setString(5, dipendenteBean.getProvincia());
+            preparedStatement.setString(6, dipendenteBean.getAzienda());
+            preparedStatement.setString(7, dipendenteBean.getNome());
+            preparedStatement.setString(8, dipendenteBean.getCognome());
+            preparedStatement.setString(9, dipendenteBean.getEmail());
+
+            preparedStatement.executeUpdate();
+            connection.commit();
+
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+    }
+
+    /**
+     * @param email
+     * @throws SQLException
+     */
+    @Override
+    public void updateAziendaToNull(String email) throws SQLException {
+
+    }
+
+    /**
      * Metodo delete che implementa una cancellazione dal sistema attraverso il passaggio di un ID.
      * @param email
      * @throws SQLException
