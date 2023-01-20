@@ -34,10 +34,12 @@ public interface DipendenteDAO {
 
     /**
      * Metodo update che permette di modificare dati già presenti nel DB.
-     * @param email
+     * @param dipendente
+     * @param emailVecchia
      * @throws SQLException
      */
-    void update(String email) throws SQLException;
+    void update(DipendenteBean dipendente, String emailVecchia) throws SQLException;
+
 
     /**
      * Metodo update che permette di modificare dati già presenti nel DB.
