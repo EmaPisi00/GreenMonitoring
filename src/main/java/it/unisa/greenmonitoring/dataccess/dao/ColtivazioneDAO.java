@@ -10,28 +10,29 @@ public interface ColtivazioneDAO {
      * Questo metodo crea un nuovo record nella tabella coltivazione.
      * @param t
      * @throws SQLException
+     * @return ColtivazioneBean
      */
-    void createcoltivazione(ColtivazioneBean t) throws SQLException;
+    ColtivazioneBean createColtivazione(ColtivazioneBean t) throws SQLException;
 
     /**
      * Questo metodo restituisce ogni coltivazione del DB.
      * @return ColtivazioneBean
      * @throws SQLException
      */
-    ArrayList<ColtivazioneBean> retrievecoltivazione() throws SQLException;
+    ArrayList<ColtivazioneBean> retrieveColtivazione() throws SQLException;
 
     /**
      * Questo metodo aggiorna un record nella tabella coltivazione.
      * @param id_coltivazione
      * @throws SQLException
      */
-    void updatecoltivazione(String id_coltivazione) throws SQLException;
+    void updateColtivazione(String id_coltivazione) throws SQLException;
 
     /**
      * Questo metodo distrugge un record nella tabella coltivazione.
      * @param id_coltivazione
      * @throws SQLException
      */
-    void deletecoltivazione(String id_coltivazione) throws SQLException;
+    void deleteColtivazione(String id_coltivazione) throws SQLException;
 }
 
