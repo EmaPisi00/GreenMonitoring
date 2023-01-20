@@ -83,57 +83,8 @@ public class DipendenteDAOImpl implements DipendenteDAO {
 
     }
 
-    @Override
-    public List<DipendenteBean> retrieveAll() throws SQLException {
-        PreparedStatement preparedStatement = null;
-
-        List<DipendenteBean> dipendente = new LinkedList<DipendenteBean>();
-
-        String retrieveSQL = "SELECT * FROM " + TABLE_NAME;
-
-        try {
-
-            connection = ConnectionPool.getConnection();
-
-            preparedStatement = connection.prepareStatement(retrieveSQL);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-
-                DipendenteBean bean = new DipendenteBean();
-
-                bean.setEmail(resultSet.getString("email"));
-                bean.setPassword(resultSet.getString("password"));
-                bean.setTelefono(resultSet.getString("telefono"));
-                bean.setCitta(resultSet.getString("citta"));
-                bean.setProvincia(resultSet.getString("provincia"));
-                bean.setIndirizzo(resultSet.getString("indirizzo"));
-                bean.setAzienda(resultSet.getString("azienda"));
-                bean.setNome(resultSet.getString("nome"));
-                bean.setCognome(resultSet.getString("cognome"));
-
-
-                dipendente.add(bean);
-            }
-
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-        }
-        return  dipendente;
-    }
-
-
     /**
-     * Metodo retrieve che restituisce di dati di un dipendente ad un bean di tipo UtenteBean.
+     * Metodo retrieve che restituisce di dati di un'azienda ad un bean di tipo UtenteBean.
      * @throws SQLException
      * @param beanInput
      * @return restituisce il bean diocane
@@ -189,7 +140,7 @@ public class DipendenteDAOImpl implements DipendenteDAO {
      * @throws SQLException
      */
     @Override
-    public List<DipendenteBean> retrieveAllForKey() throws SQLException {
+    public List<DipendenteBean> retrieveAll() throws SQLException {
 
         PreparedStatement preparedStatement = null;
 
@@ -237,35 +188,24 @@ public class DipendenteDAOImpl implements DipendenteDAO {
     }
 
     /**
-     * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
+     * Implementazione metodo che permette la ricerca di un dipendente in base alla sua email.
      * @param email
-     * @return List<AziendaBean>
-     * @throws SQLException
-     */
-    @Override
-    public List<DipendenteBean> retrieveForKey(String email) throws SQLException {
-        return null;
-    }
-
-    /**
-     * Implementazione metodo che permette la ricerca di un dipendente in base alla sua azienda.
-     * @param azienda
      * @return List <DipendenteBean>
      * @throws SQLException
      */
     @Override
-    public List<DipendenteBean> retrieveAllForKey(String azienda) throws SQLException {
+    public List<DipendenteBean> retrieveForKey(String email) throws SQLException {
 
-        List<DipendenteBean> dipendenti = new LinkedList<DipendenteBean>();
+        List<DipendenteBean> dipendente = new LinkedList<DipendenteBean>();
         PreparedStatement preparedStatement = null;
 
-        String retrieveSQL = "SELECT * FROM " + TABLE_NAME + " WHERE azienda = ?";
+        String retrieveSQL = "SELECT * FROM " + TABLE_NAME + "WHERE email = ?";
 
         try {
             connection = ConnectionPool.getConnection();
 
             preparedStatement = connection.prepareStatement(retrieveSQL);
-            preparedStatement.setString(1, azienda);
+            preparedStatement.setString(1, email);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -283,7 +223,7 @@ public class DipendenteDAOImpl implements DipendenteDAO {
                 bean.setNome(resultSet.getString("nome"));
                 bean.setCognome(resultSet.getString("cognome"));
 
-                dipendenti.add(bean);
+                dipendente.add(bean);
             }
 
         } finally {
@@ -297,10 +237,13 @@ public class DipendenteDAOImpl implements DipendenteDAO {
                 }
             }
         }
-        return  dipendenti;
+        return  dipendente;
 
 
     }
+
+
+
     /**
      * Metodo update che implementa un aggiornamento al DB attraverso il passaggio di un ID.
      * @param email
@@ -310,40 +253,6 @@ public class DipendenteDAOImpl implements DipendenteDAO {
     public void update(String email) throws SQLException {
 
     }
-
-
-
-    /**
-     * Metodo update che implementa un aggiornamento al DB attraverso il passaggio di un ID.
-     * @param email
-     * @throws SQLException
-     */
-
-    public void updateAziendaToNull(String email) throws SQLException {
-
-        PreparedStatement preparedStatement = null;
-        String insertSQL = "UPDATE " + TABLE_NAME + " SET azienda = null WHERE email = ?";
-
-        try {
-            connection = ConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(insertSQL);
-            preparedStatement.setString(1, email);
-
-            preparedStatement.executeUpdate();
-
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-        }
-    }
-
     /**
      * Metodo delete che implementa una cancellazione dal sistema attraverso il passaggio di un ID.
      * @param email
@@ -354,7 +263,7 @@ public class DipendenteDAOImpl implements DipendenteDAO {
 
         PreparedStatement preparedStatement = null;
 
-        String deleteSQL =  "DELETE * FROM " + TABLE_NAME + " where email = ?";
+        String deleteSQL =  "DELETE * FROM " + TABLE_NAME + "where email = ?";
 
         try {
             connection = ConnectionPool.getConnection();

@@ -33,6 +33,14 @@ public interface AziendaDAO {
      */
     List<AziendaBean> retrieveForKey(String email) throws SQLException;
 
+    /**
+     * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
+     * @param codice_associazione
+     * @return List<AziendaBean>
+     * @throws SQLException
+     */
+    AziendaBean retrieveByCode(String codice_associazione) throws SQLException;
+
 
     /**
      * Metodo update che permette di modificare dati già presenti nel DB.
