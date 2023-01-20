@@ -10,15 +10,14 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.DipendenteDAOImpl" %>
-
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.DipendenteDAO" %>
 
 
 <%
   UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
   if (u instanceof AziendaBean) {
-    AziendaBean azienda = (AziendaBean) u;
-    DipendenteDAOImpl d = new DipendenteDAOImpl();
-    List<DipendenteBean> dipendenti = d.retrieveAllForKey(u.getEmail());
+    DipendenteDAO d = new DipendenteDAOImpl();
+    List<DipendenteBean> dipendenti = d.retrieveAllByCode(u.getEmail());
 
 %>
   <html>

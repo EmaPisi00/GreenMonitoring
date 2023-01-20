@@ -51,7 +51,7 @@ public interface AziendaDAO {
     /**
      * Metodo update che permette di modificare dati già presenti nel DB anche l email.
      * @param utente
-     * @param VecchiEmail
+     * @param VecchiaEmail
      * @throws SQLException
      */
     void update(AziendaBean utente, String VecchiaEmail) throws SQLException;
@@ -63,6 +63,13 @@ public interface AziendaDAO {
      */
     void delete(String email) throws SQLException;
 
+    /**
+     * Metodo che permette la rimozione di una associazione.
+     * @param emailAzienda
+     * @param email
+     * @throws SQLException
+     */
+    void removeAssociation(String emailAzienda, String email) throws SQLException;
 }
 
 
