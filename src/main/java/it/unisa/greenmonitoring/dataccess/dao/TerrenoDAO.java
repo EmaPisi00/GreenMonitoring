@@ -25,12 +25,12 @@ public interface TerrenoDAO {
      * @param id_terreno
      * @throws SQLException
      */
-    void updateTerreno(String id_terreno) throws SQLException;
+    void updateTerreno(int id_terreno) throws SQLException;
 
     /**
      * Questo metodo distrugge un record nella tabella TERRENO.
      * @param id_terreno
      * @throws SQLException
      */
-    void deleteTerreno(String id_terreno) throws SQLException;
+    void deleteTerreno(int id_terreno) throws SQLException;
 }

@@ -72,7 +72,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
 
             while (rs.next()) {
                 TerrenoBean t = new TerrenoBean(null, null, null, null, null);
-                t.setId(rs.getString("id"));
+                t.setId(rs.getInt("id"));
                 t.setImmagine(rs.getString("immagine"));
                 t.setSuperficie(rs.getString("superfice"));
                 t.setLatitudine(rs.getFloat("latitudine"));
@@ -90,18 +90,18 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     }
 
     @Override
-    public synchronized void updateTerreno(String id_terreno) throws SQLException {
+    public synchronized void updateTerreno(int id_terreno) throws SQLException {
 
     }
 
     @Override
-    public synchronized void deleteTerreno(String id_terreno) throws SQLException {
+    public synchronized void deleteTerreno(int id_terreno) throws SQLException {
 
         String deleteSQL = "DELETE FROM Terreno WHERE Terreno.id = ?";
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setString(1, id_terreno);
+            preparedStatement.setInt(1, id_terreno);
             preparedStatement.executeUpdate();
             connection.commit();
 

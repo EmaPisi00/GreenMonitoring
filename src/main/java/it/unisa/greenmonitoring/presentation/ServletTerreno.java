@@ -52,7 +52,7 @@ public class ServletTerreno extends HttpServlet {
         } else if (request.getParameter("terreno0") != null) {
             Enumeration<String> parameters = request.getParameterNames();
             while (parameters.hasMoreElements()) {
-                String id = request.getParameter(parameters.nextElement());
+                int id = Integer.parseInt(request.getParameter(parameters.nextElement()));
                 tm.rimuoviTerreno(id);
             }
             response.sendRedirect("Terreni.jsp");

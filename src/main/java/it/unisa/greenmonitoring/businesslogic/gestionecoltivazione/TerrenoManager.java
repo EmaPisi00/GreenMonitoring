@@ -82,7 +82,7 @@ public class TerrenoManager {
      * @pre t ha un id che esiste nel database.
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      */
-    public void rimuoviTerreno(String id_terreno) {
+    public void rimuoviTerreno(int id_terreno) {
         try {
             TerrenoDAO td = new TerrenoDAOImpl();
             td.deleteTerreno(id_terreno);

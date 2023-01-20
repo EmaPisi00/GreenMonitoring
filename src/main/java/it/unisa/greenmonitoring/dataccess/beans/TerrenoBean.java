@@ -4,7 +4,7 @@ public class TerrenoBean {
     /**
      * Questo campo contiene l'id.
      */
-    private String id;
+    private int id;
     /**
      * Questo campo contiene la latitudine del terreno.
      */
@@ -46,7 +46,7 @@ public class TerrenoBean {
      *
      * @return String
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -54,7 +54,7 @@ public class TerrenoBean {
      *
      * @param given_id
      */
-    public void setId(String given_id) {
+    public void setId(int given_id) {
         this.id = given_id;
     }
 
