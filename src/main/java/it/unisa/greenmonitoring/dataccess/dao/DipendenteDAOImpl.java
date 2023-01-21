@@ -153,7 +153,7 @@ public class DipendenteDAOImpl implements DipendenteDAO {
         List<DipendenteBean> dipendente = new LinkedList<DipendenteBean>();
         PreparedStatement preparedStatement = null;
 
-        String retrieveSQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
+        String retrieveSQL = "SELECT * FROM " + TABLE_NAME + "WHERE email = ?";
 
         try {
             connection = ConnectionPool.getConnection();

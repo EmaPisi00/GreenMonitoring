@@ -7,43 +7,55 @@ import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAOImpl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
+
 
 public class TerrenoManager {
     /**
      * @param t
      * @throws SQLException
+     * @return List
      */
-    public void createTerreno(TerrenoBean t) throws SQLException {
+    public List<String> createTerreno(TerrenoBean t) throws SQLException {
         TerrenoDAO td = new TerrenoDAOImpl();
-        if ((t.getSuperficie().matches("[a-zA-Z]]"))) {
+        List<String> errori = new ArrayList<>();
+        if (!(t.getSuperficie().matches("^[0-9]+$"))) {
             System.out.println("errore nella superfice");
+            errori.add("erroreSuperfice");
         }
 
-        if (t.getLatitudine() < 0) {
+        if (t.getLatitudine() < 0 || t.getLatitudine() > 90) {
             System.out.println("errore: latitudine minore di 0 ");
-
-        } else if (t.getLatitudine() > 90) {
             System.out.println("errore: latitudine maggiore di 90");
+            errori.add("erroreLatitudine");
         }
-
-        if (t.getLongitudine() < 0) {
+        if (t.getLongitudine() < 0 || t.getLongitudine() > 180) {
             System.out.println("errore: longitudine minore di 0 ");
-
-        } else if (t.getLongitudine() > 180) {
             System.out.println("errore: longitudine maggiore di 180");
+            errori.add("erroreLongitudine");
         }
-
-        ListIterator<TerrenoBean> listaterreni = td.retrieveTerreno().listIterator();
-        if (listaterreni.hasNext()) {
-            TerrenoBean tt = listaterreni.next();
-            if ((tt.getLongitudine() == t.getLongitudine()) && (tt.getLatitudine() == t.getLatitudine())) {
-                System.out.println("esiste già un terreno in questa posizione");
+        List<TerrenoBean> listaterreni = td.retrieveTerreno();
+        for (TerrenoBean tt : listaterreni) {
+            System.out.println(tt.getId());
+            if (t.getLongitudine().compareTo(tt.getLongitudine()) == 0) {
+                if (t.getLatitudine().compareTo(tt.getLatitudine()) == 0) {
+                    System.out.println(tt.getLongitudine());
+                    System.out.println(t.getLongitudine());
+                    System.out.println("esiste già un terreno in questa posizione");
+                    errori.add("erroreTerreno");
+                    break;
+                }
             }
         }
-        td.createTerreno(t);
-
+        System.out.println(errori.size());
+        if (errori.isEmpty()) {
+            td.createTerreno(t);
+            return null;
+        }
+        return errori;
     }
+
+
+
 
 
     /**
@@ -71,7 +83,7 @@ public class TerrenoManager {
      * @pre t ha un id che esiste nel database.
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      */
-    public void rimuoviTerreno(String id_terreno) {
+    public void rimuoviTerreno(int id_terreno) {
         try {
             TerrenoDAO td = new TerrenoDAOImpl();
             td.deleteTerreno(id_terreno);
@@ -85,9 +97,9 @@ public class TerrenoManager {
      * @param id_azienda
      * @return List&ltTerrenoBean&gt
      */
-    public List<TerrenoBean> visualizzaListaTerreni(String id_azienda) {
+    public ArrayList<TerrenoBean> visualizzaListaTerreni(String id_azienda) {
         TerrenoDAO td = null;
-        List<TerrenoBean> list = new ArrayList<>();
+        ArrayList<TerrenoBean> list = new ArrayList<>();
         try {
             td = new TerrenoDAOImpl();
             td.retrieveTerreno().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));

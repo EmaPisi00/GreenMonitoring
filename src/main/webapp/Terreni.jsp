@@ -2,7 +2,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Random" %><%--
+<%@ page import="java.util.Random" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
+<%@ page import="java.lang.reflect.AnnotatedArrayType" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -12,7 +14,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-   <% if (session.getAttribute("currentUserSession") == null){ response.sendError(401); }  %>
     <title>Terreni</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
@@ -28,12 +29,6 @@
 <body>
 <div class="bd">
     <legend style="text-align:center;">Terreni</legend>
-    <!-- <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
-            <li class="breadcrumb-item active">Terreni</li>
-        </ol>
-    </nav> -->
 <form id="rimuovi_terreno" action="ServletTerreno" method="post">
     <div id="alrt" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1"> Selezionare almeno un terreno.</i>
@@ -44,6 +39,7 @@
             <thead>
             <tr>
                 <th scope="col"></th>
+                <th scope="col">#</th>
                 <th scope="col">Immagine</th>
                 <th scope="col">Latitudine</th>
                 <th scope="col">Longitudine</th>
@@ -52,22 +48,34 @@
             </thead>
             <tbody>
                 <%
-                    TerrenoManager t = new TerrenoManager();
+                    /* -- INIZIO AUTENTICAZIONE -- */
+                    Object seo = session.getAttribute("currentUserSession");
+                    if (seo == null) {
+                        response.sendError(401);
+                    } else if ( ! (session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                        response.sendError(401);
+                    }
+                    /* -- PASSATI I TEST, APRE IL RESTO DELLA PAGINA--*/
+                    else {
+                        AziendaBean a = (AziendaBean) seo;
 
-                    List<TerrenoBean> list = t.visualizzaListaTerreni( (String) session.getAttribute("currentUserSession"));
+                        TerrenoManager t = new TerrenoManager();
+                        List<TerrenoBean> list = t.visualizzaListaTerreni( a.getEmail() );
 
-                    int i = 0;
-                    for (TerrenoBean tb : list) {
-                        out.print("<tr>" +
-                                "<td>"+
-                                "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
-                                "</td>"+
-                                "<td>" + tb.getImmagine() + "</td>" +
-                                "<td>" + tb.getLatitudine()+ "</td>" +
-                                "<td>" + tb.getLongitudine() + "</td>" +
-                                "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
-                        );
-                    i++;
+                        int i = 0;
+                        for (TerrenoBean tb : list) {
+                            out.print("<tr>" +
+                                    "<td>"+
+                                    "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
+                                    "</td>"+
+                                    "<td>" + tb.getId() + "</td>" +
+                                    "<td>" + tb.getImmagine() + "</td>" +
+                                    "<td>" + tb.getLatitudine()+ "</td>" +
+                                    "<td>" + tb.getLongitudine() + "</td>" +
+                                    "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
+                            );
+                            i++;
+                        }
                     }
                 %>
             </tbody>

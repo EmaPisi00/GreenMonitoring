@@ -1,0 +1,152 @@
+package it.unisa.greenmonitoring.dataccess.beans;
+
+import java.sql.Date;
+
+public class ColtivazioneBean {
+    /**
+     * Questo campo contiene l'id.
+     */
+    private int id;
+    /**
+     * Questo campo contiene l'id della pianta.
+     */
+    private int pianta;
+    /**
+     * Questo campo contiene l'id del terreno.
+     */
+    private int terreno;
+    /**
+     * Questo campo contiene la data di fine della coltivazione.
+     */
+    private byte stato_archiviazione;
+    /**
+     * Questo campo contiene la data di inizio della coltivazione.
+     */
+    private Date data_inizio;
+    /**
+     * Questo campo contiene la data di fine della coltivazione.
+     */
+    private Date data_fine;
+
+    /**
+     * Questo è un costruttore vuoto per una coltivazione.
+     */
+    public ColtivazioneBean() {
+
+    }
+
+    /**
+     * Questo metodo è il costruttore di ColtivazioneBean.
+     * @param given_id
+     * @param given_pianta
+     * @param given_terreno
+     * @param given_stato_archiviazione
+     * @param given_data_inizio
+     * @param given_data_fine
+     */
+    public ColtivazioneBean(int given_id, int given_pianta, int given_terreno, byte given_stato_archiviazione, Date given_data_inizio, Date given_data_fine) {
+        this.id = given_id;
+        this.pianta = given_pianta;
+        this.terreno = given_terreno;
+        this.stato_archiviazione = given_stato_archiviazione;
+        this.data_inizio = given_data_inizio;
+        this.data_fine = given_data_fine;
+    }
+
+    /**
+     * Questo metodo restituisce l'id di una coltivazione.
+     * @return int
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Questo metodo restituisce l'id della pianta di una coltivazione.
+     * @return int
+     */
+    public int getPianta() {
+        return pianta;
+    }
+
+    /**
+     * Questo metodo restituisce l'id del terreno di una coltivazione.
+     * @return int
+     */
+    public int getTerreno() {
+        return terreno;
+    }
+
+    /**
+     * Questo metodo restituisce lo stato di una coltivazione.
+     * @return byte
+     */
+    public byte getStato_archiviazione() {
+        return stato_archiviazione;
+    }
+
+    /**
+     * Questo metodo restituisce la data di inizio di una coltivazione.
+     *
+     * @return Date
+     */
+    public Date getData_inizio() {
+        return data_inizio;
+    }
+
+    /**
+     * Questo metodo restituisce la data di fine di una coltivazione.
+     * @return Date
+     */
+    public Date getData_fine() {
+        return data_fine;
+    }
+
+    /**
+     * Questo metodo imposta l'id di una coltivazione.
+     * @param given_id
+     */
+    public void setId(int given_id) {
+        this.id = id;
+    }
+
+    /**
+     * Questo metodo imposta l'id di una pianta di una coltivazione.
+     * @param given_pianta
+     */
+    public void setPianta(int given_pianta) {
+        this.pianta = pianta;
+    }
+
+    /**
+     * Questo metodo imposta il terreno associato ad una coltivazione.
+     * @param given_terreno
+     */
+    public void setTerreno(int given_terreno) {
+        this.terreno = terreno;
+    }
+
+    /**
+     * Questo metodo imposta lo stato di una coltivazione.
+     * @param given_stato_archiviazione
+     */
+    public void setStato_archiviazione(byte given_stato_archiviazione) {
+        this.stato_archiviazione = given_stato_archiviazione;
+    }
+
+    /**
+     * Questo metodo imposta la data di inizio di una coltivazione.
+     * @param given_data_inizio
+     */
+    public void setData_inizio(Date given_data_inizio) {
+        this.data_inizio = data_inizio;
+    }
+
+    /**
+     * Questo metodo imposta la data di fine di coltivazione.
+     * @param given_data_fine
+     */
+    public void setData_fine(Date given_data_fine) {
+        this.data_fine = data_fine;
+    }
+}

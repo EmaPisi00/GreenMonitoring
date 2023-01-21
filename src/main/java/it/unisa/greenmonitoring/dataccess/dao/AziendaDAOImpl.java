@@ -143,12 +143,12 @@ public class AziendaDAOImpl implements AziendaDAO {
      * @throws SQLException
      */
     @Override
-    public AziendaBean retrieveForKey(String email) throws SQLException {
+    public List<AziendaBean> retrieveForKey(String email) throws SQLException {
 
+        List<AziendaBean> azienda = new LinkedList<AziendaBean>();
         PreparedStatement preparedStatement = null;
-        AziendaBean bean = new AziendaBean();
 
-        String retrieveSQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
+        String retrieveSQL = "SELECT * FROM " + TABLE_NAME + "WHERE email = ?";
 
         try {
             connection = ConnectionPool.getConnection();
@@ -160,6 +160,8 @@ public class AziendaDAOImpl implements AziendaDAO {
 
             while (resultSet.next()) {
 
+                AziendaBean bean = new AziendaBean();
+
                 bean.setEmail(resultSet.getString("email"));
                 bean.setPassword(resultSet.getString("password"));
                 bean.setTelefono(resultSet.getString("telefono"));
@@ -169,6 +171,7 @@ public class AziendaDAOImpl implements AziendaDAO {
                 bean.setNome_azienda(resultSet.getString("nome_azienda"));
                 bean.setPartita_iva(resultSet.getString("partita_iva"));
 
+                azienda.add(bean);
             }
 
         } finally {
@@ -182,7 +185,8 @@ public class AziendaDAOImpl implements AziendaDAO {
                 }
             }
         }
-        return  bean;
+        return  azienda;
+
 
             }
 
@@ -208,7 +212,7 @@ public class AziendaDAOImpl implements AziendaDAO {
 
         PreparedStatement preparedStatement = null;
 
-        String deleteSQL =  "DELETE * FROM " + TABLE_NAME + " where email = ?";
+        String deleteSQL =  "DELETE * FROM " + TABLE_NAME + "where email = ?";
 
         try {
             connection = ConnectionPool.getConnection();

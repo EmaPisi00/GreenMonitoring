@@ -18,13 +18,6 @@ public interface DipendenteDAO {
     void create(DipendenteBean registrazioneDipendenteBean) throws SQLException;
 
     /**
-     * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
-     * @return List<DipendenteBean>
-     * @throws SQLException
-     */
-    List<DipendenteBean> retrieve() throws SQLException;
-
-    /**
      * Metodo retrieve che permette di ricercare tutti i dati di tutti i dipendenti.
      * @return List<DipendenteBean>
      * @throws SQLException
@@ -37,14 +30,30 @@ public interface DipendenteDAO {
      * @return List<AziendaBean>
      * @throws SQLException
      */
-    List<DipendenteBean> retrieveForKey(String email) throws SQLException;
+    List<DipendenteBean> retrieveAllByCode(String email) throws SQLException;
 
     /**
      * Metodo update che permette di modificare dati già presenti nel DB.
+     * @param dipendente
+     * @param emailVecchia
+     * @throws SQLException
+     */
+    void update(DipendenteBean dipendente, String emailVecchia) throws SQLException;
+
+
+    /**
+     * Metodo update che permette di modificare dati già presenti nel DB.
+     * @param dipendenteBean
+     * @throws SQLException
+     */
+    void doUpdate(DipendenteBean dipendenteBean) throws SQLException;
+
+    /**
+     * non lo so.
      * @param email
      * @throws SQLException
      */
-    void update(String email) throws SQLException;
+    void updateAziendaToNull(String email) throws SQLException;
 
     /**
      * Metodo delete che permette di eliminare un dipendente dal sistema.

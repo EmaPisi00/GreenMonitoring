@@ -2,7 +2,7 @@ package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 
 public interface TerrenoDAO {
@@ -18,19 +18,19 @@ public interface TerrenoDAO {
      * @return TerrenoBean
      * @throws SQLException
      */
-    List<TerrenoBean> retrieveTerreno() throws SQLException;
+    ArrayList<TerrenoBean> retrieveTerreno() throws SQLException;
 
     /**
      * Questo metodo aggiorna un record nella tabella TERRENO.
      * @param id_terreno
      * @throws SQLException
      */
-    void updateTerreno(String id_terreno) throws SQLException;
+    void updateTerreno(int id_terreno) throws SQLException;
 
     /**
      * Questo metodo distrugge un record nella tabella TERRENO.
      * @param id_terreno
      * @throws SQLException
      */
-    void deleteTerreno(String id_terreno) throws SQLException;
+    void deleteTerreno(int id_terreno) throws SQLException;
 }

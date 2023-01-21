@@ -1,7 +1,12 @@
 package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.autenticazione.AutenticazioneManager;
+
+import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
+import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
+import it.unisa.greenmonitoring.dataccess.dao.AziendaDAO;
+import it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -69,7 +74,7 @@ public class ServletDipendente extends HttpServlet {
         }
 
     /**
-     * Metodo get.
+     * Metodo post.
      * @param request
      * @param response
      * @throws ServletException
@@ -77,6 +82,34 @@ public class ServletDipendente extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String[] idDipendente = request.getParameterValues("idDipendente");
+        HttpSession session = request.getSession();
+        UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
 
+        if (user instanceof AziendaBean) {
+            String emailAzienda = user.getEmail();
+
+            if (idDipendente != null) {
+                for (String id : idDipendente) {
+                    AziendaDAO aziendaDAO = null;
+                    try {
+                        aziendaDAO = new AziendaDAOImpl();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    try {
+                        aziendaDAO.removeAssociation(emailAzienda, id);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                response.sendRedirect("RimuoviDipendente.jsp");
+            } else {
+                response.sendRedirect("RimuoviDipendente.jsp");
+            }
+        } else {
+            response.sendRedirect("error.jsp");
+        }
     }
 }
+
