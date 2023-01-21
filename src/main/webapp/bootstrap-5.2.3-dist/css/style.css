@@ -1,13 +1,55 @@
-/**
-* Template Name: NiceAdmin - v2.5.0
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+@media only screen and (max-width:900px) {
+  /* For mobile phones: */
+  #cerca #brand #lenteDiIngrandimento{
+    display: none;
+  }
+}
 
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
+.centra {
+  align-content: center;
+  margin: auto;
+  /* width: 30%;
+   padding: 10px;*/
+}
+
+#fotobrand
+{
+  width: 8%;
+  height:8%;
+}
+
+#brand{
+  text-align: center;
+  color: white;
+}
+
+#roba_a_destra{
+  padding-right: 1%;
+  padding-left: 5%;
+}
+#Scritta_greenmonitoring{
+  text-align: center;
+  /*margin: 30px;*/
+}
+#barra_diricerca{
+  text-align: center;
+}
+#fotobrand
+{
+  width: 8%;
+  height:8%;
+}
+.centra {
+  align-content: center;
+  margin: auto;
+  /* width: 30%;
+   padding: 10px;*/
+}
+#brand{
+  text-align: center;
+  color: white;
+}
+
 :root {
   scroll-behavior: smooth;
 }
@@ -395,10 +437,10 @@ h6 {
 .header {
   transition: all 0.5s;
   z-index: 997;
-  height: 60px;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
   background-color: #fff;
   padding-left: 20px;
+  height: 20%;
   /* Toggle Sidebar Button */
   /* Search Bar */
 }
@@ -431,7 +473,6 @@ h6 {
   }
 
   .header .search-bar-show {
-    top: 60px;
     visibility: visible;
     opacity: 1;
   }
@@ -468,6 +509,10 @@ h6 {
 
 .header .search-form button i {
   color: #012970;
+}
+
+#header{
+  height: 100px;
 }
 
 /*--------------------------------------------------------------
@@ -701,7 +746,7 @@ h6 {
   font-size: 15px;
   font-weight: 600;
   color: #4154f1;
-  transition: 0.3;
+ /* transition: 0.3; */
   background: #f6f9ff;
   padding: 10px 15px;
   border-radius: 4px;
@@ -752,7 +797,7 @@ h6 {
   font-size: 14px;
   font-weight: 600;
   color: #012970;
-  transition: 0.3;
+ /* transition: 0.3; */
   padding: 10px 0 10px 40px;
   transition: 0.3s;
 }

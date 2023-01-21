@@ -28,6 +28,7 @@ public class UtenteManager {
     public List<DipendenteBean> retrieveAll(String email) throws SQLException {
         return null;
     }
+
     /**
      * Metodo che permette la rimozione di una associazione ad un'azienda.
      * @param email

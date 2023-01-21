@@ -29,12 +29,6 @@
 <body>
 <div class="bd">
     <legend style="text-align:center;">Terreni</legend>
-    <!-- <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
-            <li class="breadcrumb-item active">Terreni</li>
-        </ol>
-    </nav> -->
 <form id="rimuovi_terreno" action="ServletTerreno" method="post">
     <div id="alrt" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1"> Selezionare almeno un terreno.</i>
@@ -45,6 +39,7 @@
             <thead>
             <tr>
                 <th scope="col"></th>
+                <th scope="col">#</th>
                 <th scope="col">Immagine</th>
                 <th scope="col">Latitudine</th>
                 <th scope="col">Longitudine</th>
@@ -73,6 +68,7 @@
                                     "<td>"+
                                     "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
                                     "</td>"+
+                                    "<td>" + tb.getId() + "</td>" +
                                     "<td>" + tb.getImmagine() + "</td>" +
                                     "<td>" + tb.getLatitudine()+ "</td>" +
                                     "<td>" + tb.getLongitudine() + "</td>" +

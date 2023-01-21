@@ -1,0 +1,29 @@
+@media only screen and (max-width:900px) {
+    /* For mobile phones: */
+    #cerca #bottone_cerca{
+        display: none;
+    }
+    #fotobrand{
+        display: none;
+    }
+}
+#fotobrand
+{
+    width: 8%;
+    height:8%;
+}
+.centra {
+    align-content: center;
+    margin: auto;
+    /* width: 30%;
+     padding: 10px;*/
+}
+#brand{
+    text-align: center;
+    color: white;
+}
+
+#roba_a_destra{
+    padding-right: 1%;
+    padding-left: 5%;
+}

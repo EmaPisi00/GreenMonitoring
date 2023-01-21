@@ -146,9 +146,9 @@
                         type="text"
                         class="form-control"
                         id="inputAzienda"
-                        placeholder="***-***"
+                        placeholder=""
                         name="inputAzienda"
-                        required
+
                 />
             </div>
             <div class="col-12" style="text-align: center; ">

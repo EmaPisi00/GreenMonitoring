@@ -31,7 +31,7 @@ public interface AziendaDAO {
      * @return List<AziendaBean>
      * @throws SQLException
      */
-    List<AziendaBean> retrieveForKey(String email) throws SQLException;
+    AziendaBean retrieveForKey(String email) throws SQLException;
 
     /**
      * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
@@ -63,6 +63,13 @@ public interface AziendaDAO {
      */
     void delete(String email) throws SQLException;
 
+    /**
+     * Metodo che permette la rimozione di una associazione.
+     * @param emailAzienda
+     * @param email
+     * @throws SQLException
+     */
+    void removeAssociation(String emailAzienda, String email) throws SQLException;
 }
 
 
