@@ -37,21 +37,20 @@ public class AutenticazioneManager {
             System.out.println("\nErrore nella partita iva\n");
         }
 
-        ListIterator<AziendaBean> listaAziende = ad.retrieveAll().listIterator();
+       // ListIterator<AziendaBean> listaAziende = ad.retrieveAll().listIterator();
 
-        if (listaAziende.hasNext()) {
-            AziendaBean ab = listaAziende.next();
-            if ((ab.getNome_azienda().equals(aziendaBean.getNome_azienda()))  || (ab.getEmail().equals(aziendaBean.getEmail())) || (ab.getPartita_iva().equals(aziendaBean.getPartita_iva()))) {
-                System.out.println("Un'azienda con gli stessi campi è già presente nel database");
+        AziendaBean ricercaAzienda = ad.retrieveForKey(aziendaBean.getEmail());
+
+        if (ricercaAzienda.getEmail() != null) {
+
+                System.out.println("Errore");
             } else {
-                ad.create(aziendaBean);
-                System.out.println("Inserimento fatto con successo");
-            }
-        } else {
-            ad.create(aziendaBean);
-            System.out.println("Inserimento fatto con successo");
+             ad.create(aziendaBean);
+             System.out.println("Inserimento fatto con successo");
         }
-    }
+        }
+
+
 
     /**
      * Metodo che permette di inserire un nuovo dipendente nel DB.

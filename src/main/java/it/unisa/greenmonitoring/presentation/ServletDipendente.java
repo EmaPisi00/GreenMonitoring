@@ -47,7 +47,7 @@ public class ServletDipendente extends HttpServlet {
 
             DipendenteBean dipendenteBean = new DipendenteBean();
 
-            dipendenteBean.setAzienda(azienda);
+            dipendenteBean.setAzienda(null);
             dipendenteBean.setCognome(cognome);
             dipendenteBean.setNome(nome);
             dipendenteBean.setCitta(citta);

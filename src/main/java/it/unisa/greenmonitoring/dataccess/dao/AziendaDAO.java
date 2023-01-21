@@ -30,7 +30,7 @@ public interface AziendaDAO {
      * @return List<AziendaBean>
      * @throws SQLException
      */
-    List<AziendaBean> retrieveForKey(String email) throws SQLException;
+    AziendaBean retrieveForKey(String email) throws SQLException;
 
 
     /**
