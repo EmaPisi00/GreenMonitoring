@@ -60,8 +60,8 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     }
 
     @Override
-    public ArrayList<ColtivazioneBean> retrieveColtivazione() throws SQLException {
-        String selectSQL = "SELECT * FROM Coltivazione";
+    public ArrayList<ColtivazioneBean> retrieveColtivazione(String azienda) throws SQLException {
+        String selectSQL = "select * from coltivazione inner join terreno on terreno where azienda =" + azienda + ";";
         ArrayList<ColtivazioneBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();

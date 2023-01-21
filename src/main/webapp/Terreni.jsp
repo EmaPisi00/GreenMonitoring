@@ -39,6 +39,7 @@
             <thead>
             <tr>
                 <th scope="col"></th>
+                <th scope="col">#</th>
                 <th scope="col">Immagine</th>
                 <th scope="col">Latitudine</th>
                 <th scope="col">Longitudine</th>
@@ -67,6 +68,7 @@
                                     "<td>"+
                                     "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
                                     "</td>"+
+                                    "<td>" + tb.getId() + "</td>" +
                                     "<td>" + tb.getImmagine() + "</td>" +
                                     "<td>" + tb.getLatitudine()+ "</td>" +
                                     "<td>" + tb.getLongitudine() + "</td>" +
