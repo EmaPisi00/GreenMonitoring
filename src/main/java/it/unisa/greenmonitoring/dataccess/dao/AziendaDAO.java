@@ -51,7 +51,7 @@ public interface AziendaDAO {
     /**
      * Metodo update che permette di modificare dati già presenti nel DB anche l email.
      * @param utente
-     * @param VecchiEmail
+     * @param VecchiaEmail
      * @throws SQLException
      */
     void update(AziendaBean utente, String VecchiaEmail) throws SQLException;
