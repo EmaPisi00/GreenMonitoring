@@ -15,7 +15,7 @@ public class ColtivazioneManager {
     /**
      * Questa costante indica lo stato di una coltivazione avviata.
      */
-    private final int stato_coltivazione_avviata = 12;
+    private final int stato_coltivazione_avviata = 1;
 
     /**
      * Questo metodo crea una nuova coltivazione sul database.
@@ -42,6 +42,7 @@ public class ColtivazioneManager {
         ArrayList<ColtivazioneBean> l = new ArrayList<>();
         try {
             cd.retrieveColtivazione(id_azienda).stream().forEach(o -> l.add(o));
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -51,7 +52,7 @@ public class ColtivazioneManager {
     /**
      * Questo metodo restituisce una lista di coltivazioni avviate di una azienda.
      * @param id_azienda
-     * @return
+     * @return ArrayList of ColtivazioneBean
      */
     public ArrayList<ColtivazioneBean> visualizzaColtivazioniAvviate(String id_azienda) {
         cd = new ColtivazioneDAOImpl();

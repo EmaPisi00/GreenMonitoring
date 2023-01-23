@@ -1,6 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class ColtivazioneBean {
     /**
@@ -27,6 +28,16 @@ public class ColtivazioneBean {
      * Questo campo contiene la data di fine della coltivazione.
      */
     private Date data_fine;
+
+    /**
+     * Questo campo contiene i sensori associati alla coltivazione.
+     */
+    private ArrayList<SensoreBean> listaSensori;
+
+    /**
+     * Questo campo contiene le misurazioni effettuate da ogni sensore.
+     */
+    private ArrayList<MisurazioneSensoreBean> listaMisurazioni;
 
     /**
      * Questo è un costruttore vuoto per una coltivazione.
@@ -149,4 +160,30 @@ public class ColtivazioneBean {
     public void setData_fine(Date given_data_fine) {
         this.data_fine = data_fine;
     }
+
+    /**
+     * Questo metodo restituisce la lista di sensori.
+     * @return ArrayList'<SensoreBean>'
+     */
+    public ArrayList<SensoreBean> getListaSensori() {
+        return listaSensori;
+    }
+
+    /**
+     * Questo metodo restituisce la lista delle misurazioni.
+     * @return ArrayList'<MisurazioneSensoreBean>'
+     */
+    public ArrayList<MisurazioneSensoreBean> getListaMisurazioni() { return listaMisurazioni; }
+
+    /**
+     * Questo metodo aggiunge un sensore a SensoreBean.
+     * @param s
+     */
+    public void setInListaSensori(SensoreBean s){ this.listaSensori.add(s); }
+
+    /**
+     * Questo metodo aggiunge un sensore a SensoreBean.
+     * @param ms
+     */
+    public void setInListaMisurazioni(MisurazioneSensoreBean ms){ this.listaMisurazioni.add(ms); }
 }
