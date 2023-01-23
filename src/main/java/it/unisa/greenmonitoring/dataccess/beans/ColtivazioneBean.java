@@ -173,17 +173,22 @@ public class ColtivazioneBean {
      * Questo metodo restituisce la lista delle misurazioni.
      * @return ArrayList'<MisurazioneSensoreBean>'
      */
-    public ArrayList<MisurazioneSensoreBean> getListaMisurazioni() { return listaMisurazioni; }
+    public ArrayList<MisurazioneSensoreBean> getListaMisurazioni() {
+        return listaMisurazioni; }
 
     /**
      * Questo metodo aggiunge un sensore a SensoreBean.
      * @param s
      */
-    public void setInListaSensori(SensoreBean s){ this.listaSensori.add(s); }
+
+    public void setInListaSensori(SensoreBean s) {
+        this.listaSensori.add(s); }
 
     /**
      * Questo metodo aggiunge un sensore a SensoreBean.
      * @param ms
      */
-    public void setInListaMisurazioni(MisurazioneSensoreBean ms){ this.listaMisurazioni.add(ms); }
+
+    public void setInListaMisurazioni(MisurazioneSensoreBean ms) {
+        this.listaMisurazioni.add(ms); }
 }

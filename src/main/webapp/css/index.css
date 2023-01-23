@@ -1,0 +1,51 @@
+
+.Divisione{
+    display: block;
+    border-bottom: 3px solid darkolivegreen;
+}
+
+
+.linea{
+    background-color: aqua;
+    margin-top: 100px;
+}
+
+
+.container-fluid{
+    text-align: center;
+    width: 60%;
+}
+
+.display-3{
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+
+    color: darkolivegreen;
+}
+
+.chiSiamo{
+    font-size: 26px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.nomi{
+    font-size: 26px; margin-top: 20px;
+}
+
+.nomiObiettivi{
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+}
+
+
+
+@media screen and (max-width: 630px) {
+    .display-1{
+        text-align: center;
+        font-size: 100px;
+        padding: 40px;
+        margin: 10px;
+        font-family: 'Tangerine', serif;
+        color: darkolivegreen;
+    }
+}
