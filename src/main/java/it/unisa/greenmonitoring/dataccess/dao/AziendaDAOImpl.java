@@ -192,12 +192,12 @@ public class AziendaDAOImpl implements AziendaDAO {
      * @throws SQLException
      */
     @Override
-    public List<AziendaBean> retrieveForKey(String email) throws SQLException {
+    public AziendaBean retrieveForKey(String email) throws SQLException {
 
-        List<AziendaBean> azienda = new LinkedList<AziendaBean>();
+        AziendaBean bean = new AziendaBean();
         PreparedStatement preparedStatement = null;
 
-        String retrieveSQL = "SELECT * FROM " + TABLE_NAME + "WHERE email = ?";
+        String retrieveSQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
         //NON FUNZIONA PERCHé CI DEVI METTERE UNO SPAZIO PRIMA DEL WHERE
 
         try {
@@ -210,7 +210,6 @@ public class AziendaDAOImpl implements AziendaDAO {
 
             while (resultSet.next()) {
 
-                AziendaBean bean = new AziendaBean();
 
                 bean.setEmail(resultSet.getString("email"));
                 bean.setPassword(resultSet.getString("password"));
@@ -221,7 +220,6 @@ public class AziendaDAOImpl implements AziendaDAO {
                 bean.setNome_azienda(resultSet.getString("nome_azienda"));
                 bean.setPartita_iva(resultSet.getString("partita_iva"));
 
-                azienda.add(bean);
             }
 
         } finally {
@@ -235,7 +233,7 @@ public class AziendaDAOImpl implements AziendaDAO {
                 }
             }
         }
-        return  azienda;
+        return  bean;
 
 
     }
