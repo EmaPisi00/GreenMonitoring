@@ -21,19 +21,29 @@ public class SensoreBean {
      */
     private String azienda;
     /**
-     * Costruttore UtenteBean.
-     * @param give_id
-     * @param give_tipo
-     * @param give_coltivazione
-     * @param give_azienda
+     * Variabile locale idM.
      */
-    public SensoreBean(int give_id, String give_tipo, int give_coltivazione,
-                      String give_azienda) {
-        this.id = give_id;
-        this.tipo = give_tipo;
-        this.coltivazione = give_coltivazione;
-        this.azienda = give_azienda;
+    private int idM;
+    /**
+     * Costruttore SensoreBean.
+     * @param given_id
+     * @param given_tipo
+     * @param given_coltivazione
+     * @param given_azienda
+     * @param given_idM
+     */
+    public SensoreBean(int given_id, String given_tipo, int given_coltivazione,
+                      String given_azienda, int given_idM) {
+        this.id = given_id;
+        this.tipo = given_tipo;
+        this.coltivazione = given_coltivazione;
+        this.azienda = given_azienda;
+        this.idM = given_idM;
     }
+
+    /**
+     * Quello base.
+     */
     public SensoreBean() {
 
     }
@@ -50,10 +60,10 @@ public class SensoreBean {
     /**
      * Set di email.
      *
-     * @param give_id
+     * @param given_id
      */
-    public void setId(int give_id) {
-        this.id = give_id;
+    public void setId(int given_id) {
+        this.id = given_id;
     }
 
     /**
@@ -68,10 +78,10 @@ public class SensoreBean {
     /**
      * Set di tipo.
      *
-     * @param give_tipo
+     * @param given_tipo
      */
-    public void setTipo(String give_tipo) {
-        this.tipo = give_tipo;
+    public void setTipo(String given_tipo) {
+        this.tipo = given_tipo;
     }
 
     /**
@@ -86,10 +96,10 @@ public class SensoreBean {
     /**
      * Set di coltivazione.
      *
-     * @param give_coltivazione
+     * @param given_coltivazione
      */
-    public void setColtivazione(int give_coltivazione) {
-        this.coltivazione = give_coltivazione;
+    public void setColtivazione(int given_coltivazione) {
+        this.coltivazione = given_coltivazione;
     }
 
     /**
@@ -104,9 +114,26 @@ public class SensoreBean {
     /**
      * Set di azienda.
      *
-     * @param give_azienda
+     * @param given_azienda
      */
-    public void setAzienda(String give_azienda) {
-        this.azienda = give_azienda;
+    public void setAzienda(String given_azienda) {
+        this.azienda = given_azienda;
+    }
+    /**
+     * Get di idM.
+     *
+     * @return idM
+     */
+    public int getIdM() {
+        return idM;
+    }
+
+    /**
+     * Set di idM.
+     *
+     * @param given_idM
+     */
+    public void setIdM(int given_idM) {
+        this.idM = given_idM;
     }
 }

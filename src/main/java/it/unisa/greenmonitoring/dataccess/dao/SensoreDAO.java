@@ -1,6 +1,5 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
-import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 
 import java.sql.SQLException;
@@ -26,19 +25,13 @@ public interface SensoreDAO {
     List<SensoreBean> retrieveAll() throws SQLException;
 
     /**
-     * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
-     * @param email
-     * @return List<AziendaBean>
-     * @throws SQLException
-     */
-    List<SensoreBean> retrieveForKey(String email) throws SQLException;
-
-    /**
      * Metodo update che permette di modificare dati già presenti nel DB.
-     * @param sensore
+     * @param id_sensore
+     * @param s
      * @throws SQLException
      */
-    void update(SensoreBean sensore) throws SQLException;
+
+    void update(int id_sensore, SensoreBean s) throws SQLException;
 
     /**
      * Metodo delete che permette di eliminare un'azienda dal sistema.
