@@ -118,7 +118,7 @@ public class ColtivazioneBean {
      * @param given_id
      */
     public void setId(int given_id) {
-        this.id = id;
+        this.id = given_id;
     }
 
     /**
@@ -126,7 +126,7 @@ public class ColtivazioneBean {
      * @param given_pianta
      */
     public void setPianta(int given_pianta) {
-        this.pianta = pianta;
+        this.pianta = given_pianta;
     }
 
     /**
@@ -134,7 +134,7 @@ public class ColtivazioneBean {
      * @param given_terreno
      */
     public void setTerreno(int given_terreno) {
-        this.terreno = terreno;
+        this.terreno = given_terreno;
     }
 
     /**
@@ -150,7 +150,7 @@ public class ColtivazioneBean {
      * @param given_data_inizio
      */
     public void setData_inizio(Date given_data_inizio) {
-        this.data_inizio = data_inizio;
+        this.data_inizio = given_data_inizio;
     }
 
     /**
@@ -158,7 +158,7 @@ public class ColtivazioneBean {
      * @param given_data_fine
      */
     public void setData_fine(Date given_data_fine) {
-        this.data_fine = data_fine;
+        this.data_fine = given_data_fine;
     }
 
     /**
@@ -191,4 +191,9 @@ public class ColtivazioneBean {
 
     public void setInListaMisurazioni(MisurazioneSensoreBean ms) {
         this.listaMisurazioni.add(ms); }
+
+    @Override
+    public String toString() {
+        return "ColtivazioneBean{" + "id=" + id + ", pianta=" + pianta + ", terreno=" + terreno + ", stato_archiviazione=" + stato_archiviazione + ", data_inizio=" + data_inizio + ", data_fine=" + data_fine + ", listaSensori=" + listaSensori + ", listaMisurazioni=" + listaMisurazioni + '}';
+    }
 }

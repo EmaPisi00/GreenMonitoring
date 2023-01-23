@@ -30,68 +30,74 @@
 <body>
 <div class="bd">
     <legend style="text-align:center;">Coltivazioni</legend>
-</div>
-
+    <!-- Coltivazioni -->
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Coltivazioni</h5>
-                    <!-- List group with custom content -->
-                    <ul class="list-group list-group-numbered">
+
                 <%
                     /* -- INIZIO AUTENTICAZIONE -- */
-                    Object seo = session.getAttribute("currentUserSession");
-                    if (seo == null) {
+                    Object sa = session.getAttribute("currentUserSession");
+                    if (sa == null) {
                         response.sendError(401);
                     } else if ( ! (session.getAttribute("currentUserSession") instanceof AziendaBean)) {
                         response.sendError(401);
                     }
                     /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                     else {
-                        AziendaBean a = (AziendaBean) seo;
-
+                        AziendaBean a = (AziendaBean) sa;
                         ColtivazioneManager cm = new ColtivazioneManager();
                         List<ColtivazioneBean> list = cm.visualizzaStatoColtivazioni( a.getEmail() );
-
+                        System.out.println("sono prima del for");
+                        out.print("<ul class=\"list-group\">");
                         for (ColtivazioneBean cb : list) {
+                            System.out.println("sono nel for");
                             if (cb.getStato_archiviazione() == 0){
-                                out.print("<li class=\"list-group-item d-flex justify-content-between align-items-start disabled\">" +
-                                        "<div class=\"ms-2 me-auto\">\n" +
-                                        "<div class=\"fw-bold\">Coltivazione " +  cb.getId() + "</div>"+
-                                        cb.getTerreno() +
-                                        "<br>(Archiviata)</div>"+
-                                        "</li>"
+                                System.out.println("archiviata");
+                                out.print("<li class=\"list-group-item disabled\">" +
+                                         "Coltivazione " +  cb.getId() +
+                                        "<br>Terreno associato: " + cb.getTerreno() +
+                                        "   (Archiviata)</li>"
                                 );
                             } else {
-                                out.print("<li class=\"list-group-item d-flex justify-content-between align-items-start\">" +
-                                        "<div class=\"ms-2 me-auto\">\n" +
-                                        "<div class=\"fw-bold\">Coltivazione " + cb.getId() + "</div>"+
-                                        cb.getTerreno() +
-                                        "</div>"+
+                                System.out.println("non archiviata");
+                                out.print("<li class=\"list-group-item \">" +
+                                        "Coltivazione " +  "pianta"+cb.getPianta() +
+                                        "<br>id terreno associato: " + cb.getTerreno() +
                                         "</li>"
                                 );
                             }
 
                         }
+                        out.print("</ul>");
                     }
                 %>
-                    </ul><!-- End with custom content -->
         </div>
     </div>
-        </div>
-    </div>
+    <!-- Fine coltivazioni -->
 
-    <div class="card">
+    <!-- Inserisci coltivazione -->
+    <div class="card" style="width: 30rem;">
         <div class="card-body">
             <form action="" method="post" id="aggiungi_coltivazione">
                 <label>Inserire l'id (#) del terreno a cui associare la coltivazione</label><br>
                 <input type="text" name="terreno" required><br>
                 <label>Inserire il nome della pianta da inserire</label><br>
-                <input type="text" class="disabled" ><br><br>
-                <button onclick="$('#aggiungi_coltivazione').submit()" type="button" class="btn btn-primary">
+                <input type="text" class="disabled" required><br>
+                <label>Inserire il codice del sensore da inserire e selezionare il tipo di sensore</label><br>
+                <input type="text" class="disabled" required>
+                <select name="sensore" id="sensore_tipo">
+                    <option value="pH">Temperatura</option>
+                    <option value="temperatura">pH</option>
+                    <option value="umidità">Umidità</option>
+                </select><br><br>
+                <button type="submit" class="btn btn-primary">
                     Aggiungi coltivazione
                 </button>
             </form>
         </div>
     </div>
+    <!-- Fine inserisci coltivazione -->
+</div>
 </body>
 </html>

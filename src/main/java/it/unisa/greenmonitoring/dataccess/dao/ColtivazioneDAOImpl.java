@@ -68,7 +68,7 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
             preparedStatement.setString(1, id_azienda);
             ResultSet rs = preparedStatement.executeQuery();
-            //SELECT * FROM coltivazione join sensore on coltivazione.id = sensore.coltivazione join misurazione_sensore on sensore.id = misurazione_sensore.sensore_id;
+
             while (rs.next()) {
                 ColtivazioneBean c = new ColtivazioneBean();
                 c.setId(rs.getInt("id"));
@@ -82,6 +82,7 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
                 connection.commit();
                 list.add(c);
             }
+
         } catch (SQLException s) {
             s.printStackTrace();
         } finally {
@@ -92,11 +93,9 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
 
     @Override
     public void updateColtivazione(String id_coltivazione) throws SQLException {
-        //TO-DO
     }
 
     @Override
     public void deleteColtivazione(String id_coltivazione) throws SQLException {
-        //TO-DO
     }
 }
