@@ -16,11 +16,11 @@ public interface ColtivazioneDAO {
 
     /**
      * Questo metodo restituisce ogni coltivazione del DB a partire da una azienda.
-     * @param azienda
+     * @param id_azienda
      * @return ColtivazioneBean
      * @throws SQLException
      */
-    ArrayList<ColtivazioneBean> retrieveColtivazione(String azienda) throws SQLException;
+    ArrayList<ColtivazioneBean> retrieveColtivazione(String id_azienda) throws SQLException;
 
     /**
      * Questo metodo aggiorna un record nella tabella coltivazione.
