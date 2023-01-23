@@ -11,7 +11,7 @@ import java.util.List;
 public interface DipendenteDAO {
 
     /**
-     * Metodo create che permette di salvare i dati nel DB.
+     * Metodo create che permettee di salvare i dati nel DB.
      * @param registrazioneDipendenteBean
      * @throws SQLException
      */

@@ -285,7 +285,7 @@ public class AziendaDAOImpl implements AziendaDAO {
     }
 
     /**
-     * Metodo update che permette di modificare dati già presenti nel DB.
+     * Metodo update chee permette di modificare dati già presenti nel DB.
      *
      * @param utente
      * @throws SQLException
