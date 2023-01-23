@@ -1,81 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <style>
-        .bg {
-            background-color: green;
-        }
+    <!-- Link per l'importo del font  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
 
-        .form-complete {
-            width: 30%;
-            padding-top: 200px;
-            margin: 0 auto;
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
 
-        .button {
-            width: 27%;
-            padding-top: 20px;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .rounded
-        {
-            width: 8%;
-            height: 12%;
-        }
-
-
-        a:link {
-            text-decoration: none;
-            margin-bottom: 0;
-        }
-
-        .p{
-            text-align: center;
-            padding: 10px;
-        }
-
-        .p div{
-            margin:6px;
-            padding: 10px;
-            max-width: 200px;
-            display: inline-block;
-            text-align: left;
-        }
-
-
-    </style>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/headerHomePage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomePage</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
+<body>
+<%@include file="/fragments/headerHomePage.html" %>
 
-<body >
+<!-- Contenitore principale -->
+<div class="container-fluid">
+    <div style="margin-top: 30px;" class="Divisione"></div>
+    <div class="text-center">
+        <img src="img/prova.jpg" style="margin-top: 20px;" class="img-fluid" alt="...">
+    </div>
+    <!-- Chi Siamo -->
+    <div class="ChiSiamo">
+        <a name="ChiSiamo">
+            <h1 class="display-3">Chi Siamo</h1>
+        </a>
+        <span class="chiSiamo">La Cia-Agricoltori Italiani intende supportare le piccole e medie aziende agricole in
+        modo da
+        beneficiarne la
+        crescita e la competitività sul mercato, attraverso tecnologie come l’agricoltura di precisione. Punta su
+        un’agricoltura sostenibile con attenzione a qualità, sicurezza, tutela e valorizzazione dell’ambiente,
+        agricoltura
+        biologica, energie alternative. La Cia-Agricoltori Italiani guarda l’agricoltura del prossimo futuro con uno
+        slancio
+        particolare verso l’innovazione e sempre maggiore sostenibilità.​</span>
+    </div>
+    <div style="margin-top: 20px;" class="Divisione"></div>
+    <div class="text-center">
+        <img src="img/obiettivi.jpg" style="margin-top: 20px;" class="img-fluid" alt="...">
+    </div>
+    <div>
+        <!-- Obiettivi -->
+        <a name="Obiettivi">
+            <h1 class="display-3">I Nostri Obiettivi</h1>
+        </a>
+        <div class="container">
+            <div class="row align-items-start">
+                <div class="col-lg-6">
+                    <div class="nomiObiettivi"><a>Supporto piccole-medie Aziende</a></div>
+                    <p style="margin-top: 20px;">Il sistema supporta le attività delle piccole e medie aziende agricole,
+                        migliorando la gestione delle risorse e favorendo un’agricoltura più sostenibile.​</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="nomiObiettivi">
+                        <a>Controllo della qualità della salute</a>
+                    </div>
+                    <p style="margin-top: 20px;">Il sistema rileva se le condizioni ambientali possono nuocere alla
+                        crescita
+                        della pianta o favorire lo sviluppo di fisiopatie.​​</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="nomiObiettivi">
+                        <a>Monitoraggio delle Coltivazioni</a>
+                    </div>
+                    <p style="margin-top: 20px;">Il sistema monitora l’andamento delle coltivazioni attraverso la
+                        consultazione di dati specifici raccolti da sensori in tempo reale.​ </p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="nomiObiettivi">
+                        <a>Supporto e suggerimenti all'Irrigazione</a>
+                    </div>
+                    <p style="margin-top: 20px;">Il sistema offre la possibilità di migliorare l’attività di irrigazione
+                        fornendo dei suggerimenti alle aziende.​</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 20px;" class="Divisione"></div>
+    <div>
+        <!-- Contatti -->
+        <a name="Contatti">
+            <h1 class="display-3">Contatti</h1>
+        </a>
+        <!-- Footer -->
+        <footer class="text-center text-lg-start text-muted">
 
-<a href="index.jsp"><img src="img/lg.png" class="rounded float-start" alt="..."></a>
+            <section class="">
+                <div class="container text-center text-md-start mt-5">
+                    <div class="row mt-3">
 
+                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                            <h6 class="text-uppercase fw-bold mb-4">
+                                <i class="fas fa-gem me-3"></i>GreenMonitoring
+                            </h6>
+                            <p>
+                                BOOOHH
+                            </p>
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">
+                                Altri link
+                            </h6>
+                            <p>
+                                <a href="#!" class="text-reset">Altro</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Help</a>
+                            </p>
+                        </div>
 
-<form method="post" action="LoginServlet">
-    <label for="email">Username:</label>
-    <input type="text" id="email" name="email">
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                            <p><i class="fas fa-home me-3"></i> Italy Salerno, SA </p>
+                            <p>
+                                <i class="fas fa-envelope me-3"></i>
+                                info@example.com
+                            </p>
+                            <p><i class="fas fa-phone me-3"></i> + 39 334 567 3488</p>
+                            <p><i class="fas fa-print me-3"></i> + 39 312 200 3924</p>
+                        </div>
+                    </div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password">
+                </div>
+            </section>
+            <!-- Copyright -->
+            <div class="text-center p-4">
+                © 2021 Copyright: GreenMonitoring
+            </div>
+        </footer>
+        <!-- Footer -->
 
-    <input type="submit" value="Login" name="Login">
-</form>
-
-<div class="p">
-    <div class="register" > <form action="RegistrazioneAzienda.jsp"><input class="btn btn-primary" type="submit" value="Registra Azienda"></form></div>
-
-
-    <div class="dip" ><form action="Dipendente.jsp"><input  class="btn btn-primary" type="submit" value="Registra Dipendente"></form></div>
+    </div>
+</div>
 
 </div>
+
+
+<div>
+    <a href="#Login"><img src="img/frecciaSu.png" style="margin-top: -20%; margin-right: 5%;" class="rounded float-end"
+                          alt="..."></a>
+
+</div>
+
 </body>
+
 </html>
