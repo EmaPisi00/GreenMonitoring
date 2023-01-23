@@ -144,7 +144,7 @@ public class DipendenteDAOImpl implements DipendenteDAO {
 
 
     /**
-     * Metodo retrieve che implementa la ricerca di un dipendente attraverso il passaggio di un ID.
+     * Metodo retrieve che implesmenta la ricerca di un dipendente attraverso il passaggio di un ID.
      * @return
      * @throws SQLException
      */

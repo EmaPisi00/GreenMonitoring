@@ -57,7 +57,7 @@ public interface AziendaDAO {
     void update(AziendaBean utente, String VecchiaEmail) throws SQLException;
 
     /**
-     * Metodo delete che permette di eliminare un'azienda dal sistema.
+     * Metodo delete chee permette di eliminare un'azienda dal sistema.
      * @param email
      * @throws SQLException
      */
