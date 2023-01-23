@@ -29,20 +29,6 @@ public class UtenteManager {
         return null;
     }
 
-    /**
-     * Metodo che permette la rimozione di una associazione ad un'azienda.
-     * @param email
-     * @return dipendente
-     * @throws SQLException
-     */
-    /*public boolean rimuoviDipendente(String email) throws SQLException {
-        DipendenteBean dipendente = (DipendenteBean) dipendenteDAO.retrieveAllForKey(email);
-        if (dipendente != null) {
-            dipendenteDAO.updateAziendaToNull(email);
-            return true;
-        }
-        return false;
-    }*/
 
     /**
      * Metodo che permette di aggiornare un dipendente.
