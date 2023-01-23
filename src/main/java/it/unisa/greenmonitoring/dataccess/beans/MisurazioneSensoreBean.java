@@ -7,7 +7,7 @@ public class MisurazioneSensoreBean {
     /**
      * Questo campo contiene l'id della misurazione.
      */
-    public int id;
+    private int id;
     /**
      * Questo campo contiene la data della misurazione.
      */
@@ -17,7 +17,7 @@ public class MisurazioneSensoreBean {
      */
     private Time ora;
     /**
-     * Questo campo contiene il tipo di sensore
+     * Questo campo contiene il tipo di sensore.
      */
     private String tipo;
 
@@ -25,46 +25,51 @@ public class MisurazioneSensoreBean {
      * Questo è il costruttore vuoto.
      */
     public MisurazioneSensoreBean() { }
+
     /**
-     * Questo è il costruttore con tutti i campi.
+     * Questo è il costruttore con i campi.
+     * @param given_id
+     * @param given_data
+     * @param given_ora
+     * @param given_tipo
      */
-    public MisurazioneSensoreBean(int id, Date data, Time ora, String tipo) {
-        this.id = id;
-        this.data = data;
-        this.ora = ora;
-        this.tipo = tipo;
+    public MisurazioneSensoreBean(int given_id, Date given_data, Time given_ora, String given_tipo) {
+        this.id = given_id;
+        this.data = given_data;
+        this.ora = given_ora;
+        this.tipo = given_tipo;
     }
 
     /**
      * Questo è il setter per l'id.
-     * @param id
+     * @param given_id
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int given_id) {
+        this.id = given_id;
     }
 
     /**
      * Questo è il setter per la data.
-     * @param data
+     * @param given_data
      */
-    public void setData(Date data) {
-        this.data = data;
+    public void setData(Date given_data) {
+        this.data = given_data;
     }
 
     /**
      * Questo è il setter per l'ora.
-     * @param ora
+     * @param given_ora
      */
-    public void setOra(Time ora) {
-        this.ora = ora;
+    public void setOra(Time given_ora) {
+        this.ora = given_ora;
     }
 
     /**
      * Questo è il setter per il tipo.
-     * @param tipo
+     * @param given_tipo
      */
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipo(String given_tipo) {
+        this.tipo = given_tipo;
     }
 
     /**
