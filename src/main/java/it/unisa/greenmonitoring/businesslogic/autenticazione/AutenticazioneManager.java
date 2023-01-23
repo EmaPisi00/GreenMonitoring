@@ -46,6 +46,7 @@ public class AutenticazioneManager {
 
                 System.out.println("Errore");
             } else {
+
              ad.create(aziendaBean);
              System.out.println("Inserimento fatto con successo");
         }
