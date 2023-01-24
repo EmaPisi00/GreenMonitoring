@@ -21,8 +21,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-    <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
+    <!-- <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet"> -->
+    <!-- link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet"> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
@@ -40,17 +40,21 @@
                         response.sendError(401);
                     } else if ( ! (session.getAttribute("currentUserSession") instanceof UtenteBean)) {
                         response.sendError(401);
-                    } else if ( (session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
-                        DipendenteBean a = (DipendenteBean) sa;
-                        ColtivazioneManager cm = new ColtivazioneManager();
-                        List<ColtivazioneBean> list = cm.visualizzaStatoColtivazioni( a.getAzienda() );
                     }
                     /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                     else {
-                        AziendaBean a = (AziendaBean) sa;
-                        ColtivazioneManager cm = new ColtivazioneManager();
-                        List<ColtivazioneBean> list = cm.visualizzaStatoColtivazioni( a.getEmail() );
-                        System.out.println("sono prima del for");
+                        List<ColtivazioneBean> list = null;
+
+                        if ( (session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
+                            DipendenteBean a = (DipendenteBean) sa;
+                            ColtivazioneManager cm = new ColtivazioneManager();
+                            list = cm.visualizzaStatoColtivazioni( a.getAzienda() );
+                        } else {
+                            AziendaBean a = (AziendaBean) sa;
+                            ColtivazioneManager cm = new ColtivazioneManager();
+                            list = cm.visualizzaStatoColtivazioni( a.getEmail() );
+                        }
+
                         out.print("<ul class=\"list-group\">");
                         for (ColtivazioneBean cb : list) {
                             System.out.println("sono nel for");
@@ -71,6 +75,7 @@
                             }
 
                         }
+                        if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
                         out.print("</ul>");
                         out.print("        </div>\n" +
                                 "    </div>\n" +
@@ -78,6 +83,7 @@
                         out.print("    <!-- Inserisci coltivazione -->\n" +
                                 "    <div class=\"card\" style=\"width: 30rem;\">\n" +
                                 "        <div class=\"card-body\">\n" +
+                                "<h5 class=\"card-title\">Modulo inserimento coltivazione</h5>" +
                                 "            <form action=\"\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
                                 "                <label>Inserire l'id (#) del terreno a cui associare la coltivazione</label><br>\n" +
                                 "                <input type=\"text\" name=\"terreno\" required><br>\n" +
@@ -97,6 +103,7 @@
                                 "        </div>\n" +
                                 "    </div>\n" +
                                 "    <!-- Fine inserisci coltivazione --> </div>");
+                        }
                     }
                 %>
 </body>

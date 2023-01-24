@@ -14,6 +14,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <style>
+        @media screen and (max-width:768px) {
+            .tohide { display: none; }
+        }
+    </style>
     <title>Terreni</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
@@ -40,7 +45,7 @@
             <tr>
                 <th scope="col"></th>
                 <th scope="col">#</th>
-                <th scope="col">Immagine</th>
+                <th scope="col" class="tohide">Immagine</th>
                 <th scope="col">Latitudine</th>
                 <th scope="col">Longitudine</th>
                 <th scope="col">Superfice</th>
@@ -69,7 +74,7 @@
                                     "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
                                     "</td>"+
                                     "<td>" + tb.getId() + "</td>" +
-                                    "<td>" + tb.getImmagine() + "</td>" +
+                                    "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
                                     "<td>" + tb.getLatitudine()+ "</td>" +
                                     "<td>" + tb.getLongitudine() + "</td>" +
                                     "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
