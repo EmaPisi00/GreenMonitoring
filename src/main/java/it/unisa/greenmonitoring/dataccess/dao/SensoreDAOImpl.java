@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SensoreDAOImpl implements SensoreDAO {
     /**
@@ -35,13 +36,12 @@ public class SensoreDAOImpl implements SensoreDAO {
     @Override
     public void create(SensoreBean s) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT " + TABLE_NAME + " (azienda,tipo,idM) VALUES (?,?,?)";
+        String insertSQL = "INSERT " + TABLE_NAME + " (azienda,tipo) VALUES (?,?)";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setString(1, s.getAzienda());
             preparedStatement.setString(2, s.getTipo());
-            preparedStatement.setString(3, s.getIdM());
             preparedStatement.executeUpdate();
             connection.commit();
         } finally {
@@ -83,6 +83,36 @@ public class SensoreDAOImpl implements SensoreDAO {
             connection.close();
         }
         return list;
+    }
+    @Override
+    public List<SensoreBean> retrieveAllByAzienda(String azienda) throws SQLException {
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE azienda = ?";
+        List<SensoreBean> list = new ArrayList<>();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, azienda);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                SensoreBean s = new SensoreBean();
+                s.setId(rs.getInt("id"));
+                s.setTipo(rs.getString("tipo"));
+                s.setColtivazione(rs.getInt("coltivazione"));
+                s.setAzienda(rs.getString("azienda"));
+                s.setIdM(rs.getString("idM"));
+
+                list.add(s);
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            return list;
+        }
     }
 
     @Override
