@@ -23,7 +23,7 @@ public class SensoreBean {
     /**
      * Variabile locale idM.
      */
-    private int idM;
+    private String idM;
     /**
      * Costruttore SensoreBean.
      * @param given_id
@@ -33,7 +33,7 @@ public class SensoreBean {
      * @param given_idM
      */
     public SensoreBean(int given_id, String given_tipo, int given_coltivazione,
-                      String given_azienda, int given_idM) {
+                      String given_azienda, String given_idM) {
         this.id = given_id;
         this.tipo = given_tipo;
         this.coltivazione = given_coltivazione;
@@ -124,7 +124,7 @@ public class SensoreBean {
      *
      * @return idM
      */
-    public int getIdM() {
+    public String getIdM() {
         return idM;
     }
 
@@ -133,7 +133,7 @@ public class SensoreBean {
      *
      * @param given_idM
      */
-    public void setIdM(int given_idM) {
+    public void setIdM(String given_idM) {
         this.idM = given_idM;
     }
 }

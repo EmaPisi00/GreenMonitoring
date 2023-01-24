@@ -1,12 +1,10 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Random" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
 <%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.autenticazione.ColtivazioneManager" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean" %><%--
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -40,8 +38,12 @@
                     Object sa = session.getAttribute("currentUserSession");
                     if (sa == null) {
                         response.sendError(401);
-                    } else if ( ! (session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                    } else if ( ! (session.getAttribute("currentUserSession") instanceof UtenteBean)) {
                         response.sendError(401);
+                    } else if ( (session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
+                        DipendenteBean a = (DipendenteBean) sa;
+                        ColtivazioneManager cm = new ColtivazioneManager();
+                        List<ColtivazioneBean> list = cm.visualizzaStatoColtivazioni( a.getAzienda() );
                     }
                     /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                     else {
@@ -70,34 +72,32 @@
 
                         }
                         out.print("</ul>");
+                        out.print("        </div>\n" +
+                                "    </div>\n" +
+                                "    <!-- Fine coltivazioni -->");
+                        out.print("    <!-- Inserisci coltivazione -->\n" +
+                                "    <div class=\"card\" style=\"width: 30rem;\">\n" +
+                                "        <div class=\"card-body\">\n" +
+                                "            <form action=\"\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
+                                "                <label>Inserire l'id (#) del terreno a cui associare la coltivazione</label><br>\n" +
+                                "                <input type=\"text\" name=\"terreno\" required><br>\n" +
+                                "                <label>Inserire il nome della pianta da inserire</label><br>\n" +
+                                "                <input type=\"text\" class=\"disabled\" required><br>\n" +
+                                "                <label>Inserire il codice del sensore da inserire e selezionare il tipo di sensore</label><br>\n" +
+                                "                <input type=\"text\" class=\"disabled\" required>\n" +
+                                "                <select name=\"sensore\" id=\"sensore_tipo\">\n" +
+                                "                    <option value=\"pH\">Temperatura</option>\n" +
+                                "                    <option value=\"temperatura\">pH</option>\n" +
+                                "                    <option value=\"umidità\">Umidità</option>\n" +
+                                "                </select><br><br>\n" +
+                                "                <button type=\"submit\" class=\"btn btn-primary\">\n" +
+                                "                    Aggiungi coltivazione\n" +
+                                "                </button>\n" +
+                                "            </form>\n" +
+                                "        </div>\n" +
+                                "    </div>\n" +
+                                "    <!-- Fine inserisci coltivazione --> </div>");
                     }
                 %>
-        </div>
-    </div>
-    <!-- Fine coltivazioni -->
-
-    <!-- Inserisci coltivazione -->
-    <div class="card" style="width: 30rem;">
-        <div class="card-body">
-            <form action="" method="post" id="aggiungi_coltivazione">
-                <label>Inserire l'id (#) del terreno a cui associare la coltivazione</label><br>
-                <input type="text" name="terreno" required><br>
-                <label>Inserire il nome della pianta da inserire</label><br>
-                <input type="text" class="disabled" required><br>
-                <label>Inserire il codice del sensore da inserire e selezionare il tipo di sensore</label><br>
-                <input type="text" class="disabled" required>
-                <select name="sensore" id="sensore_tipo">
-                    <option value="pH">Temperatura</option>
-                    <option value="temperatura">pH</option>
-                    <option value="umidità">Umidità</option>
-                </select><br><br>
-                <button type="submit" class="btn btn-primary">
-                    Aggiungi coltivazione
-                </button>
-            </form>
-        </div>
-    </div>
-    <!-- Fine inserisci coltivazione -->
-</div>
 </body>
 </html>

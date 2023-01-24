@@ -35,12 +35,13 @@ public class SensoreDAOImpl implements SensoreDAO {
     @Override
     public void create(SensoreBean s) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT " + TABLE_NAME + " (azienda,tipo) VALUES (?,?)";
+        String insertSQL = "INSERT " + TABLE_NAME + " (azienda,tipo,idM) VALUES (?,?,?)";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setString(1, s.getAzienda());
             preparedStatement.setString(2, s.getTipo());
+            preparedStatement.setString(3, s.getIdM());
             preparedStatement.executeUpdate();
             connection.commit();
         } finally {
@@ -66,12 +67,12 @@ public class SensoreDAOImpl implements SensoreDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                SensoreBean s = new SensoreBean(-1, null, -1, null, -1);
+                SensoreBean s = new SensoreBean(-1, null, -1, null, null);
                 s.setId(rs.getInt("id"));
                 s.setTipo(rs.getString("tipo"));
                 s.setColtivazione(rs.getInt("coltivazione"));
                 s.setAzienda(rs.getString("azienda"));
-                s.setIdM(rs.getInt("idM"));
+                s.setIdM(rs.getString("idM"));
 
                 connection.commit();
                 list.add(s);
@@ -92,7 +93,7 @@ public class SensoreDAOImpl implements SensoreDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
             preparedStatement.setString(1, s.getTipo());
             preparedStatement.setString(2, s.getAzienda());
-            preparedStatement.setInt(3, s.getIdM());
+            preparedStatement.setString(3, s.getIdM());
             preparedStatement.setInt(4, id_sensore);
             preparedStatement.executeUpdate();
             connection.commit();
