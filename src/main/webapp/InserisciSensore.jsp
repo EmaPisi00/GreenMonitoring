@@ -26,7 +26,7 @@
     <label for="tipo">tipo sensore:</label>
     <input type="text" id="tipo" name="tipo">
 
-    <label for="id_mosquitto">Password:</label>
+    <label for="id_mosquitto">ID Mosquitto:</label>
     <input type="id_mosquitto" id="id_mosquitto" name="id_mosquitto">
 
     <input type="submit" value="RegistraSensore" name="RegistraSensore">
