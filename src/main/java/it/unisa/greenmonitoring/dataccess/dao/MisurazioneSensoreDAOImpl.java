@@ -25,7 +25,6 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
     /**
      * Costruttore di MisurazioneSensoreDAOImpl.
      */
-
     @Override
     public MisurazioneSensoreBean createMisurazione(MisurazioneSensoreBean msb, ColtivazioneBean cb, SensoreBean sb) throws SQLException, Exception {
         PreparedStatement preparedStatement = null;

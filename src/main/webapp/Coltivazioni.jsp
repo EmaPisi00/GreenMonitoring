@@ -42,10 +42,6 @@
                         response.sendError(401);
                     } else if ( ! (session.getAttribute("currentUserSession") instanceof UtenteBean)) {
                         response.sendError(401);
-                    } else if ( (session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
-                        DipendenteBean a = (DipendenteBean) sa;
-                        ColtivazioneManager cm = new ColtivazioneManager();
-                        List<ColtivazioneBean> list = cm.visualizzaStatoColtivazioni( a.getAzienda() );
                     }
                     /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                     else {
@@ -74,8 +70,12 @@
                             } else {
                                 System.out.println("non archiviata");
                                 out.print("<li class=\"list-group-item \">" +
-                                        "Coltivazione " +  "pianta"+cb.getPianta() +
+                                        "Coltivazione " + cb.getId() +
                                         "<br>id terreno associato: " + cb.getTerreno() +
+                                        "<form action=\"ServletColtivazioni\" method=\"get\">\n" +
+                                        "<input type=\"hidden\" name=\"coltivazione\" value=\""+ cb.getId() +"\">" +
+                                        "<button type=\"submit\" class=\"btn btn-success\" >Visualizza stato</button>"
+                                        +"</form>"+
                                         "</li>"
                                 );
                             }
@@ -90,7 +90,7 @@
                                 "    <div class=\"card\" style=\"width: 30rem;\">\n" +
                                 "        <div class=\"card-body\">\n" +
                                 "<h5 class=\"card-title\">Modulo inserimento coltivazione</h5>" +
-                                "            <form action=\"\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
+                                "            <form action=\"ServletColtivazioni\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
                                 "                <label>Inserire l'id (#) del terreno a cui associare la coltivazione</label><br>\n" +
                                 "                <input type=\"text\" name=\"terreno\" required><br>\n" +
                                 "                <label>Inserire il nome della pianta da inserire</label><br>\n" +
