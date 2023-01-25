@@ -1,0 +1,93 @@
+header{
+    background-color: #8fbc8f;
+    width: 100%;
+    min-height: 130px;
+}
+
+
+.logo{
+    width: 6%;
+    height: 6%;
+    margin-top: -1%;
+    position:absolute;
+}
+
+.title{
+    text-align: center;
+    width: 40%;
+    height: 10%;
+    display:inline;
+    margin-top: 100%;
+    font-family: 'Anton', sans-serif;
+    color: rgb(255, 255, 255);
+}
+
+
+.register{
+
+    margin-top: -2%;
+
+}
+
+.btn1{
+    float: right;
+    margin: 0px 10px;
+}
+
+.reg{
+    color: rgb(255, 255, 255);
+    background-color: darkseagreen;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    font-size: 26px;
+    font-family: 'Anton', sans-serif;
+
+}
+
+.log{
+    color: rgb(255, 255, 255);
+    background-color: darkseagreen;
+    border: 2px solid rgb(255, 255, 255);
+    font-size: 26px;
+    font-family: 'Anton', sans-serif;
+    border-radius: 10px;
+
+}
+
+.reg:hover , .log:hover{
+    color: darkseagreen;
+
+    background-color: rgb(255, 255, 255);
+}
+
+.dropdown-item:hover  {
+    color: white;
+    font-family: 'Anton', sans-serif;
+    background-color: darkseagreen;
+}
+
+.carousel{
+    width: auto;
+    height: auto;
+
+    /*margin-top: 30px;*/
+
+}
+
+.carousel img{
+    border-radius: 4px;
+}
+
+.carousel-caption h5{
+    text-align: center;
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    font-style: normal;
+}
+
+.carousel-caption p{
+    text-align:center;
+    color: rgb(255, 255, 255);
+    font-style: normal;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
