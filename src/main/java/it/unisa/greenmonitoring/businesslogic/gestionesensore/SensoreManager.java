@@ -1,4 +1,4 @@
-package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
+package it.unisa.greenmonitoring.businesslogic.gestionesensore;
 
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import it.unisa.greenmonitoring.dataccess.dao.SensoreDAO;

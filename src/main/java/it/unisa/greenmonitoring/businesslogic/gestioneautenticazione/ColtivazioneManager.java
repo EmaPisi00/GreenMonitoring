@@ -1,4 +1,4 @@
-package it.unisa.greenmonitoring.businesslogic.autenticazione;
+package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
 import it.unisa.greenmonitoring.dataccess.dao.ColtivazioneDAO;

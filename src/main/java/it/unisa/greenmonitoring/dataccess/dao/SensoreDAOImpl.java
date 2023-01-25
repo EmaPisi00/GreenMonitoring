@@ -24,13 +24,6 @@ public class SensoreDAOImpl implements SensoreDAO {
      * Classe per l'implementazione di SensoreDAOImpl.
      */
     public SensoreDAOImpl() throws SQLException {
-        try {
-            connection = ConnectionPool.getConnection();
-        } catch (SQLException s) {
-            System.out.println("errore nel creare la connessione: " + s);
-        } finally {
-            connection.close();
-        }
     }
 
     @Override

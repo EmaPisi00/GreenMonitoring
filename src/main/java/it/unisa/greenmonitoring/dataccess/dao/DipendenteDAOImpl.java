@@ -31,13 +31,6 @@ public class DipendenteDAOImpl implements DipendenteDAO {
      * @throws SQLException
      */
     public DipendenteDAOImpl() throws SQLException {
-        try {
-            connection = ConnectionPool.getConnection();
-        } catch (SQLException e) {
-            System.out.println("\nErrore nessuna connessione: +" + e);
-        } finally {
-            connection.close();
-        }
     }
 
 

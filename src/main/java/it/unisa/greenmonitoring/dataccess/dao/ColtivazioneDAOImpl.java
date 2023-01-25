@@ -20,13 +20,6 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
      * Costruttore di ColtivazioneDAOImpl.
      */
     public void ColtivazioneDAOImpl() throws SQLException {
-        try {
-            connection = ConnectionPool.getConnection();
-        } catch (SQLException s) {
-            System.out.println("errore nel creare la connessione: " + s);
-        } finally {
-            connection.close();
-        }
 
     }
 
