@@ -26,15 +26,14 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     @Override
     public ColtivazioneBean createColtivazione(ColtivazioneBean c) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT Coltivazione" + "(id,pianta,terreno,stato_archiviazione,data_inizio,data_fine)" + " VALUES (?,?,?,?,?,?)";
+        String insertSQL = "INSERT Coltivazione" + "(pianta,terreno,stato_archiviazione,data_inizio,data_fine)" + " VALUES (?,?,?,?,?)";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
-            preparedStatement.setInt(1, c.getId());
-            preparedStatement.setInt(2, c.getPianta());
-            preparedStatement.setInt(3, c.getTerreno());
-            preparedStatement.setByte(4, c.getStato_archiviazione());
-            preparedStatement.setDate(5, c.getData_inizio());
+            preparedStatement.setInt(1, c.getPianta());
+            preparedStatement.setInt(2, c.getTerreno());
+            preparedStatement.setByte(3, c.getStato_archiviazione());
+            preparedStatement.setDate(4, c.getData_inizio());
             preparedStatement.setDate(5, c.getData_fine());
             preparedStatement.executeUpdate();
             connection.commit();

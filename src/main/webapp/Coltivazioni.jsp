@@ -92,11 +92,12 @@
                                 "<h5 class=\"card-title\">Modulo inserimento coltivazione</h5>" +
                                 "            <form action=\"ServletColtivazioni\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
                                 "                <label>Inserire l'id (#) del terreno a cui associare la coltivazione</label><br>\n" +
+                                "                <input type=\"hidden\" name=\"moduloInserimentoColtivazione\" required><br>\n" +
                                 "                <input type=\"text\" name=\"terreno\" required><br>\n" +
                                 "                <label>Inserire il nome della pianta da inserire</label><br>\n" +
-                                "                <input type=\"text\" class=\"disabled\" required><br>\n" +
+                                "                <input type=\"text\" name=\"nomepianta\" required><br>\n" +
                                 "                <label>Inserire il codice del sensore da inserire e selezionare il tipo di sensore</label><br>\n" +
-                                "                <input type=\"text\" class=\"disabled\" required>\n" +
+                                "                <input type=\"text\" name=\"codiceSensore\" required>\n" +
                                 "                <select name=\"sensore\" id=\"sensore_tipo\">\n" +
                                 "                    <option value=\"pH\">Temperatura</option>\n" +
                                 "                    <option value=\"temperatura\">pH</option>\n" +

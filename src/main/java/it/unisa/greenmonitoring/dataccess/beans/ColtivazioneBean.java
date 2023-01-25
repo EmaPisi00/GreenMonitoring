@@ -65,6 +65,20 @@ public class ColtivazioneBean {
     }
 
     /**
+     * Questo metodo è il costruttore di ColtivazioneBean. Non ha nè id né data in quanto sono generati direttamente dal DAO.
+     * @param given_pianta
+     * @param given_terreno
+     * @param given_stato_archiviazione
+
+     */
+    public ColtivazioneBean(int given_pianta, int given_terreno, byte given_stato_archiviazione) {
+        this.pianta = given_pianta;
+        this.terreno = given_terreno;
+        this.stato_archiviazione = given_stato_archiviazione;
+    }
+
+
+    /**
      * Questo metodo restituisce l'id di una coltivazione.
      * @return int
      */
