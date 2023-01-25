@@ -14,6 +14,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
     <style>
         @media screen and (max-width:768px) {
             .tohide { display: none; }
@@ -112,5 +120,7 @@
         </div>
     </div>
 </div>
+
+<%@include file="fragments/footer.html"%>
 </body>
 </html>

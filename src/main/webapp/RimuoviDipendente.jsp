@@ -14,6 +14,16 @@
 
 %>
   <html>
+  <head>
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
+  </head>
   <body>
   <h1>Gestione dipendenti</h1>
   <form action="ServletDipendente" method="post">
@@ -39,5 +49,7 @@
     response.sendRedirect("error.jsp");
     //mettere il popup della conferma rimozione con Modal (su bootstrap)
   }  %>
+  
+  <%@include file="fragments/footer.html"%>
   </body>
   </html>
