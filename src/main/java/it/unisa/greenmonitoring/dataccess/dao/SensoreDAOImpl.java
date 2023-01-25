@@ -23,7 +23,7 @@ public class SensoreDAOImpl implements SensoreDAO {
     /**
      * Classe per l'implementazione di SensoreDAOImpl.
      */
-    public SensoreDAOImpl() throws SQLException {
+    public SensoreDAOImpl() {
     }
 
     @Override

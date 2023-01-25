@@ -92,11 +92,7 @@ public class ServletDipendente extends HttpServlet {
             if (idDipendente != null) {
                 for (String id : idDipendente) {
                     AziendaDAO aziendaDAO = null;
-                    try {
-                        aziendaDAO = new AziendaDAOImpl();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    aziendaDAO = new AziendaDAOImpl();
                     try {
                         aziendaDAO.removeAssociation(emailAzienda, id);
                     } catch (SQLException e) {

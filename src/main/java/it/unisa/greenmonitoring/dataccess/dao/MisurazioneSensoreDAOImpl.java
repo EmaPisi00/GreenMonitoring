@@ -19,7 +19,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
      * Costruttore di MisurazioneSensoreDAOImpl.
      * @throws SQLException
      */
-    public MisurazioneSensoreDAOImpl() throws SQLException {
+    public MisurazioneSensoreDAOImpl() {
     }
 
     /**

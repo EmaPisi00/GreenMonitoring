@@ -26,7 +26,7 @@ public class PiantaDAOImpl implements PiantaDAO {
     /**
      * costruttore connessione PiantaDAOImpl.
      */
-    public PiantaDAOImpl() throws SQLException {
+    public PiantaDAOImpl() {
     }
     @Override
     public void aggiungiPiantaPersonalizzata(PiantaBean p) throws SQLException {

@@ -30,7 +30,7 @@ public class DipendenteDAOImpl implements DipendenteDAO {
      * Costruttore di DipendenteDAOImpl.
      * @throws SQLException
      */
-    public DipendenteDAOImpl() throws SQLException {
+    public DipendenteDAOImpl() {
     }
 
 

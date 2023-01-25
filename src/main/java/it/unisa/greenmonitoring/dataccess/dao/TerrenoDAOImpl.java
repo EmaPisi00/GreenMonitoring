@@ -23,7 +23,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     /**
      * Classe per l'implementazione di TerrenoDAOImpl.
      */
-    public TerrenoDAOImpl() throws SQLException {
+    public TerrenoDAOImpl() {
     }
     @Override
     public void createTerreno(TerrenoBean t) throws SQLException {

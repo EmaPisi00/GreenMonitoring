@@ -19,7 +19,7 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     /**
      * Costruttore di ColtivazioneDAOImpl.
      */
-    public void ColtivazioneDAOImpl() throws SQLException {
+    public void ColtivazioneDAOImpl() {
 
     }
 

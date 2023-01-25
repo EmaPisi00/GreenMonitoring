@@ -27,7 +27,7 @@ public class AziendaDAOImpl implements AziendaDAO {
      * Costruttore di AziendaDAOImpl.
      * @throws SQLException
      */
-    public AziendaDAOImpl() throws SQLException {
+    public AziendaDAOImpl() {
     }
 
 
