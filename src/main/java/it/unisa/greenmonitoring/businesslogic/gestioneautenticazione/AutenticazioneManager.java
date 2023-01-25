@@ -15,6 +15,7 @@ public class AutenticazioneManager {
     /**
      * Metodo registraAzienda che attraverso i controlli sugli inserimenti e il richiamo dei metodi implementati nel DAO inserisce una nuova azienda nel DB.
      * @param aziendaBean
+     * @return aziendaBean
      * @throws SQLException
      */
 
@@ -59,6 +60,7 @@ public class AutenticazioneManager {
     /**
      * Metodo che permette di inserire un nuovo dipendente nel DB.
      * @param dipendenteBean
+     * @return dipendenteBean
      * @throws SQLException
      */
 
