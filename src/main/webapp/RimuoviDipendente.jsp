@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: franc
-  Date: 19/01/2023
-  Time: 11:40
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
@@ -44,6 +37,7 @@
   </form>
   <% } else {
     response.sendRedirect("error.jsp");
+    //mettere il popup della conferma rimozione con Modal (su bootstrap)
   }  %>
   </body>
   </html>

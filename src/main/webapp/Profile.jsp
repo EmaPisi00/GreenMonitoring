@@ -14,7 +14,7 @@
 
 <% UtenteBean user= (UtenteBean) session.getAttribute("currentUserSession");
     if (user == null)  { %>
-    <% response.sendRedirect("error.jsp"); } %>
+<% response.sendRedirect("error.jsp"); } %>
 <html>
 <body>
 
@@ -46,33 +46,34 @@
         <td><%= user.getIndirizzo() %></td>
     </tr>
 
-        <%  if (user instanceof DipendenteBean)  {
-        %>
+    <%  if (user instanceof DipendenteBean)  {
+    %>
 
-        <tr>
-            <td>Nome:</td>
-            <td><%= ((DipendenteBean) user).getNome() %></td>
-        </tr>
-        <tr>
-            <td>Cognome:</td>
-            <td><%= ((DipendenteBean) user).getCognome() %></td>
-        </tr>
-        <tr>
-            <td>Azienda:</td>
-            <td><%= ((DipendenteBean) user).getAzienda() %></td>
-        </tr>
-<% } else if (user instanceof AziendaBean) { %>
-        <tr>
-            <td>Nome Azienda:</td>
-            <td><%= ((AziendaBean) user).getNome_azienda() %></td>
-        </tr>
-        <tr>
-            <td>Partita IVA:</td>
-            <td><%= ((AziendaBean) user).getPartita_iva() %></td>
-        </tr>
+    <tr>
+        <td>Nome:</td>
+        <td><%= ((DipendenteBean) user).getNome() %></td>
+    </tr>
+    <tr>
+        <td>Cognome:</td>
+        <td><%= ((DipendenteBean) user).getCognome() %></td>
+    </tr>
+    <tr>
+        <td>Azienda:</td>
+        <td><%= ((DipendenteBean) user).getAzienda() %></td>
+    </tr>
+    <% } else if (user instanceof AziendaBean) { %>
+    <tr>
+        <td>Nome Azienda:</td>
+        <td><%= ((AziendaBean) user).getNome_azienda() %></td>
+    </tr>
+    <tr>
+        <td>Partita IVA:</td>
+        <td><%= ((AziendaBean) user).getPartita_iva() %></td>
+    </tr>
     <% } %>
-    </table>
-    <button id="registratiButton" onclick="javascript:location.href='${pageContext.request.contextPath}/EditProfile.jsp'">Modifica profilo</button></p>
+</table>
+<button id="registratiButton" onclick="javascript:location.href='${pageContext.request.contextPath}/ModificaProfilo.jsp'">Modifica profilo</button></p>
 </body>
 </html>
+
 

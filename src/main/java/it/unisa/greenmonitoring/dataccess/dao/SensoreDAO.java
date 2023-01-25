@@ -25,6 +25,14 @@ public interface SensoreDAO {
     List<SensoreBean> retrieveAll() throws SQLException;
 
     /**
+     * Metodo retrieve che permette di ricercare tutti i sensori di un'azienda.
+     * @param azienda
+     * @return List<SensoreBean>
+     * @throws SQLException
+     */
+    List<SensoreBean> retrieveAllByAzienda(String azienda) throws SQLException;
+
+    /**
      * Metodo update che permette di modificare dati già presenti nel DB.
      * @param id_sensore
      * @param s

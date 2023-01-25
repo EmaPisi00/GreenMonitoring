@@ -1,4 +1,4 @@
-package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
+package it.unisa.greenmonitoring.businesslogic.gestionesensore;
 
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import it.unisa.greenmonitoring.dataccess.dao.SensoreDAO;
@@ -7,7 +7,6 @@ import it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SensoreManager {
@@ -17,11 +16,8 @@ public class SensoreManager {
      */
     public static void createSensore(SensoreBean s) throws SQLException {
         SensoreDAO sns = new SensoreDAOImpl();
-        List<SensoreBean> listaSensori = sns.retrieveAll();
         sns.create(s);
-        for (SensoreBean sns2 : listaSensori) {
-            System.out.println(sns2.getId());
-        }
+
     }
 
     /**

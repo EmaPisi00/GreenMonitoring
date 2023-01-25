@@ -27,14 +27,7 @@ public class AziendaDAOImpl implements AziendaDAO {
      * Costruttore di AziendaDAOImpl.
      * @throws SQLException
      */
-    public AziendaDAOImpl() throws SQLException {
-        try {
-            connection = ConnectionPool.getConnection();
-        } catch (SQLException e) {
-            System.out.println("\nErrore nessuna connessione: +" + e);
-        } finally {
-            connection.close();
-        }
+    public AziendaDAOImpl() {
     }
 
 

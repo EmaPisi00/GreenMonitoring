@@ -30,14 +30,7 @@ public class DipendenteDAOImpl implements DipendenteDAO {
      * Costruttore di DipendenteDAOImpl.
      * @throws SQLException
      */
-    public DipendenteDAOImpl() throws SQLException {
-        try {
-            connection = ConnectionPool.getConnection();
-        } catch (SQLException e) {
-            System.out.println("\nErrore nessuna connessione: +" + e);
-        } finally {
-            connection.close();
-        }
+    public DipendenteDAOImpl() {
     }
 
 
@@ -84,13 +77,56 @@ public class DipendenteDAOImpl implements DipendenteDAO {
     }
 
     /**
-     * @return
+     * Metodo che implementa la ricerca di tutti i dipendenti.
+     * @return dipendente
      * @throws SQLException
      */
     @Override
     public List<DipendenteBean> retrieveAll() throws SQLException {
-        return null;
+        PreparedStatement preparedStatement = null;
+
+        List<DipendenteBean> dipendente = new LinkedList<>();
+
+        String retrieveSQL = "SELECT * FROM " + TABLE_NAME;
+
+        try {
+
+            connection = ConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(retrieveSQL);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                DipendenteBean bean = new DipendenteBean();
+
+                bean.setEmail(resultSet.getString("email"));
+                bean.setPassword(resultSet.getString("password"));
+                bean.setTelefono(resultSet.getString("telefono"));
+                bean.setCitta(resultSet.getString("citta"));
+                bean.setProvincia(resultSet.getString("provincia"));
+                bean.setIndirizzo(resultSet.getString("indirizzo"));
+                bean.setAzienda(resultSet.getString("azienda"));
+                bean.setNome(resultSet.getString("nome"));
+                bean.setCognome(resultSet.getString("cognome"));
+
+                dipendente.add(bean);
+            }
+
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return  dipendente;
     }
+
 
     /**
      * Metodo retrieve che restituisce di dati di un'azienda ad un bean di tipo UtenteBean.

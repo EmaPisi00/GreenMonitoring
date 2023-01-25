@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SensoreDAOImpl implements SensoreDAO {
     /**
@@ -22,14 +23,7 @@ public class SensoreDAOImpl implements SensoreDAO {
     /**
      * Classe per l'implementazione di SensoreDAOImpl.
      */
-    public SensoreDAOImpl() throws SQLException {
-        try {
-            connection = ConnectionPool.getConnection();
-        } catch (SQLException s) {
-            System.out.println("errore nel creare la connessione: " + s);
-        } finally {
-            connection.close();
-        }
+    public SensoreDAOImpl() {
     }
 
     @Override
@@ -66,12 +60,12 @@ public class SensoreDAOImpl implements SensoreDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                SensoreBean s = new SensoreBean(-1, null, -1, null, -1);
+                SensoreBean s = new SensoreBean(-1, null, -1, null, null);
                 s.setId(rs.getInt("id"));
                 s.setTipo(rs.getString("tipo"));
                 s.setColtivazione(rs.getInt("coltivazione"));
                 s.setAzienda(rs.getString("azienda"));
-                s.setIdM(rs.getInt("idM"));
+                s.setIdM(rs.getString("idM"));
 
                 connection.commit();
                 list.add(s);
@@ -83,6 +77,36 @@ public class SensoreDAOImpl implements SensoreDAO {
         }
         return list;
     }
+    @Override
+    public List<SensoreBean> retrieveAllByAzienda(String azienda) throws SQLException {
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE azienda = ?";
+        List<SensoreBean> list = new ArrayList<>();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, azienda);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                SensoreBean s = new SensoreBean();
+                s.setId(rs.getInt("id"));
+                s.setTipo(rs.getString("tipo"));
+                s.setColtivazione(rs.getInt("coltivazione"));
+                s.setAzienda(rs.getString("azienda"));
+                s.setIdM(rs.getString("idM"));
+
+                list.add(s);
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            return list;
+        }
+    }
 
     @Override
     public synchronized void update(int id_sensore, SensoreBean s) throws SQLException {
@@ -92,7 +116,7 @@ public class SensoreDAOImpl implements SensoreDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
             preparedStatement.setString(1, s.getTipo());
             preparedStatement.setString(2, s.getAzienda());
-            preparedStatement.setInt(3, s.getIdM());
+            preparedStatement.setString(3, s.getIdM());
             preparedStatement.setInt(4, id_sensore);
             preparedStatement.executeUpdate();
             connection.commit();

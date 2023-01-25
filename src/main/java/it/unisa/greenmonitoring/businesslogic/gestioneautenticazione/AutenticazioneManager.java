@@ -1,4 +1,4 @@
-package it.unisa.greenmonitoring.businesslogic.autenticazione;
+package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
@@ -13,17 +13,34 @@ import java.util.ListIterator;
 
 public class AutenticazioneManager {
     /**
+     * Oggetto di tipo AziendaDAOImpl.
+     */
+    private AziendaDAO aziendaDao;
+    /**
+     * Oggetto di tipo DipendenteDAOImpl.
+     */
+    private DipendenteDAO dipendenteDao;
+
+    /**
+     * Costruttore di AutenticazioneManager.
+     */
+    public AutenticazioneManager() {
+        this.aziendaDao = new AziendaDAOImpl();
+        this.dipendenteDao = new DipendenteDAOImpl();
+    }
+
+    /**
      * Metodo registraAzienda che attraverso i controlli sugli inserimenti e il richiamo dei metodi implementati nel DAO inserisce una nuova azienda nel DB.
      * @param aziendaBean
+     * @return aziendaBean
      * @throws SQLException
      */
 
-    public void registraAzienda(AziendaBean aziendaBean) throws SQLException {
+    public AziendaBean registraAzienda(AziendaBean aziendaBean) throws SQLException {
 
-        AziendaDAO ad = new AziendaDAOImpl();
-
-        if ((aziendaBean.getNome_azienda().matches("[a-zA-Z]"))) {
+        if (!(aziendaBean.getNome_azienda().matches("^[a-zA-Z]+$"))) {
             System.out.println("\nErrore nel nome dell'azienda\n");
+            return null;
         }
         if ((aziendaBean.getCitta().matches("[a-zA-Z]"))) {
             System.out.println("\nErrore nel nome della città\n");
@@ -37,18 +54,21 @@ public class AutenticazioneManager {
         if ((aziendaBean.getPartita_iva().matches("0-9]{11}"))) {
             System.out.println("\nErrore nella partita iva\n");
         }
+        System.out.println(aziendaBean.getNome_azienda());
 
        // ListIterator<AziendaBean> listaAziende = ad.retrieveAll().listIterator();
 
-        AziendaBean ricercaAzienda = ad.retrieveForKey(aziendaBean.getEmail());
+        AziendaBean ricercaAzienda = aziendaDao.retrieveForKey(aziendaBean.getEmail());
 
         if (ricercaAzienda.getEmail() != null) {
 
                 System.out.println("Errore");
+                return null;
             } else {
 
-             ad.create(aziendaBean);
+             aziendaDao.create(aziendaBean);
              System.out.println("Inserimento fatto con successo");
+            return aziendaBean;
         }
         }
 
@@ -57,23 +77,27 @@ public class AutenticazioneManager {
     /**
      * Metodo che permette di inserire un nuovo dipendente nel DB.
      * @param dipendenteBean
+     * @return dipendenteBean
      * @throws SQLException
      */
 
-    public void registraDipendente(DipendenteBean dipendenteBean) throws SQLException {
+    public DipendenteBean registraDipendente(DipendenteBean dipendenteBean) throws SQLException {
 
-        DipendenteDAO dp = new DipendenteDAOImpl();
 
-        ListIterator<DipendenteBean> listaDipendenti = dp.retrieveAll().listIterator();
+
+        ListIterator<DipendenteBean> listaDipendenti = dipendenteDao.retrieveAll().listIterator();
 
         if (listaDipendenti.hasNext()) {
             DipendenteBean bean = listaDipendenti.next();
                 if ((bean.getNome().equals(dipendenteBean.getNome())) && (bean.getCognome().equals(dipendenteBean.getCognome())) && (bean.getAzienda().equals(dipendenteBean.getAzienda()))) {
                     System.out.println("\nDipendente già presente\n");
+
                 }
+            return null;
         } else {
-            dp.create(dipendenteBean);
+            dipendenteDao.create(dipendenteBean);
             System.out.println("Inserimento fatto con successo");
+            return dipendenteBean;
         }
 
     }
@@ -85,17 +109,15 @@ public class AutenticazioneManager {
      * @return il tipo di utente se le credenziali sono corrette, altrimenti null
      * @throws SQLException
      */
-    public String CheckData(String email, String password) throws SQLException {
-        AziendaDAOImpl aziendaDao = new AziendaDAOImpl();
+    public String CheckData(String email, String password) throws SQLException { //chiamalo login
         List<AziendaBean> listAziende = aziendaDao.retrieveAll();
         for (AziendaBean azienda : listAziende) {
             if (azienda.getEmail().matches(email)) {
                 if (azienda.getPassword().matches(password)) {
-                    return "azienda";
+                    return "azienda"; //return oggetto azienda
                 }
             }
         }
-        DipendenteDAOImpl dipendenteDao = new DipendenteDAOImpl();
         List<DipendenteBean> listDipendenti = dipendenteDao.retrieveAll();
         for (DipendenteBean dipendente : listDipendenti) {
             if (dipendente.getEmail().matches(email)) {
