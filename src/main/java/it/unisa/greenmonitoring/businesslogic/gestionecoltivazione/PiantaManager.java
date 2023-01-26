@@ -16,7 +16,7 @@ public class PiantaManager {
      */
     private  PiantaBean errori;
     /**
-     * piantadao
+     * piantadao.
      */
     private PiantaDAO td;
     //TO-DO implementare i metodi di pianta manager
@@ -146,7 +146,7 @@ public class PiantaManager {
     }
 
     /**
-     * ritorna la lista delle piante per utente
+     * ritorna la lista delle piante per utente.
      * @param email
      * @return List
      * @throws SQLException

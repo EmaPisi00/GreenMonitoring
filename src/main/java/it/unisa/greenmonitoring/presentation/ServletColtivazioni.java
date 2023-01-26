@@ -5,7 +5,6 @@ import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager
 import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
 import it.unisa.greenmonitoring.dataccess.beans.PiantaBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
-import it.unisa.greenmonitoring.dataccess.dao.PiantaDAO;
 import it.unisa.greenmonitoring.dataccess.dao.PiantaDAOImpl;
 
 import javax.servlet.ServletException;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
@@ -47,7 +45,7 @@ public class ServletColtivazioni extends HttpServlet {
                 response.sendError(501);
                 String utente = (String) request.getSession().getAttribute("currentUserSession");
                 String nomepianta = request.getParameter("nomepianta");
-                PiantaBean pb = new PiantaBean( utente,
+                PiantaBean pb = new PiantaBean(utente,
                         nomepianta,
                         nomepianta,
                         "0", "9", "0", "9");
@@ -57,7 +55,7 @@ public class ServletColtivazioni extends HttpServlet {
                     pm.CreaPiantaManager(pb);
                     // -1 perchè sarebbe ottimo avere un retreive pianta nel manager, in modo da averne l'id.
                     int id = 0;
-                    List<PiantaBean> ap = pdao.RetriveAllPianta();
+                    List<PiantaBean> ap = pdao.RetriveAllPiantaDefault();
                     for (int i = 0; i < ap.size(); i++) {
                         if (ap.get(i).getNome().equals(nomepianta)) {
                             if (ap.get(i).getAzienda() == null) {
@@ -66,7 +64,7 @@ public class ServletColtivazioni extends HttpServlet {
                             }
                         }
                     }
-                    ColtivazioneBean cb = new ColtivazioneBean( id, Integer.parseInt(request.getParameter("terreno")), Byte.parseByte("0"));
+                    ColtivazioneBean cb = new ColtivazioneBean(id, Integer.parseInt(request.getParameter("terreno")), Byte.parseByte("0"));
                     ColtivazioneManager cm = new ColtivazioneManager();
                     cm.avvioColtivazione(cb);
                 } catch (SQLException e) {
