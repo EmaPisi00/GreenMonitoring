@@ -16,9 +16,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 
-import java.util.HashMap;
 
-import java.util.Map;
+
+
 
 @WebServlet(name = "ServletPianta", value = "/ServletPianta")
 @MultipartConfig
@@ -48,13 +48,25 @@ public class ServletPianta extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("inserisciPianta_submit") != null) {
-            gestioneErrori(inserisciPiantaServlet(request, response), request, response);
+            PiantaBean errori = inserisciPiantaServlet(request, response);
+            request.setAttribute("erroriPiantaBean", errori);
+            if (errori == null) {
+                response.sendRedirect("Piante.jsp");
+            } else {
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciPianta.jsp");
+                dispatcher.forward(request, response);
+            }
         }
-        response.sendRedirect("index.jsp");
+        if (request.getParameter("ListaPiante") != null) {
+            System.out.println("eccoim");
+            String projectPath = request.getServletContext().getRealPath("/");
+            System.out.println(projectPath);
+            response.sendRedirect("Piante.jsp");
+        }
 
     }
 
-    private HashMap<String, String> inserisciPiantaServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private PiantaBean inserisciPiantaServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession();
         UtenteBean utente = (UtenteBean) session.getAttribute("currentUserSession");
@@ -92,17 +104,4 @@ public class ServletPianta extends HttpServlet {
         }
     }
 
-    private void gestioneErrori(HashMap<String, String> errore, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (errore != null) {
-            for (Map.Entry<String, String> entry : errore.entrySet()) {
-                System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-                request.setAttribute(entry.getKey(), entry.getValue());
-            }
-        }
-            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciTerreno.jsp");
-            dispatcher.forward(request, response);
-
-
-
-        }
     }

@@ -32,25 +32,28 @@
 
 <form action="ServletPianta" method="post" enctype="multipart/form-data">
     <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome"><br>
+    <input type="text" id="nome" name="nome" required><br>
     <label for="descrizione">Descrizione:</label>
     <textarea id="descrizione" name="descrizione"></textarea><br>
     <label for="ph_min">pH minimo:</label>
-    <input type="text" id="ph_min" name="ph_min"><br>
+    <input type="text" id="ph_min" name="ph_min" required><br>
     <label for="ph_max">pH massimo:</label>
-    <input type="text" id="ph_max" name="ph_max"><br>
+    <input type="text" id="ph_max" name="ph_max" required><br>
     <label for="temperatura_min">Temperatura minima:</label>
-    <input type="text" id="temperatura_min" name="temperatura_min"><br>
+    <input type="text" id="temperatura_min" name="temperatura_min" required><br>
     <label for="temperatura_max">Temperatura massima:</label>
-    <input type="text" id="temperatura_max" name="temperatura_max"><br>
+    <input type="text" id="temperatura_max" name="temperatura_max" required><br>
     <label for="umidita_min">Umidità minima:</label>
-    <input type="text" id="umidita_min" name="umidita_min"><br>
+    <input type="text" id="umidita_min" name="umidita_min" required><br>
     <label for="umidita_max">Umidità massima:</label>
-    <input type="text" id="umidita_max" name="umidita_max"><br>
+    <input type="text" id="umidita_max" name="umidita_max" required><br>
     <label for="immagine">Immagine:</label>
-    <input type="file" id="immagine" name="immagine"><br>
+    <input type="file" id="immagine" name="immagine" ><br>
     <input type="hidden" id="azienda" name="azienda" value="<%=u.getEmail()%>">
     <input type="submit" value="inserisciPianta_submit" name="inserisciPianta_submit">
+</form>
+<form action="Piante.jsp">
+    <input type="submit" value="bottone">
 </form>
 
 <%@include file="fragments/footer.html"%>
