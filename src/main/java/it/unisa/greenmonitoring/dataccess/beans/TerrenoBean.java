@@ -4,7 +4,7 @@ public class TerrenoBean {
     /**
      * Questo campo contiene l'id.
      */
-    private int id;
+    private Integer id;
     /**
      * Questo campo contiene la latitudine del terreno.
      */
@@ -43,10 +43,16 @@ public class TerrenoBean {
     }
 
     /**
+     * niente.
+     */
+    public TerrenoBean() {
+    }
+
+    /**
      *
      * @return String
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -54,7 +60,7 @@ public class TerrenoBean {
      *
      * @param given_id
      */
-    public void setId(int given_id) {
+    public void setId(Integer given_id) {
         this.id = given_id;
     }
 
@@ -128,6 +134,19 @@ public class TerrenoBean {
     public void setAzienda(String given_azienda) {
         this.azienda = given_azienda;
     }
+
+    @Override
+    public String toString() {
+        return "TerrenoBean{"
+                + "id=" + id
+                + ", latitudine=" + latitudine
+                + ", longitudine=" + longitudine
+                + ", superficie='" + superficie + '\''
+                + ", immagine='" + immagine + '\''
+                + ", azienda='" + azienda + '\''
+                + '}';
+    }
+
     /**
      *
      * @return String

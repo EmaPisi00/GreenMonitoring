@@ -24,14 +24,6 @@ public class TerrenoDAOImpl implements TerrenoDAO {
      * Classe per l'implementazione di TerrenoDAOImpl.
      */
     public TerrenoDAOImpl() throws SQLException {
-        try {
-            connection = ConnectionPool.getConnection();
-        } catch (SQLException s) {
-            System.out.println("errore nel creare la connessione: " + s);
-        } finally {
-            connection.close();
-        }
-
     }
     @Override
     public void createTerreno(TerrenoBean t) throws SQLException {
