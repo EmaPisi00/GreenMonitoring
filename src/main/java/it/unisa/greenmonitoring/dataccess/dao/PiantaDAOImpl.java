@@ -68,8 +68,8 @@ public class PiantaDAOImpl implements PiantaDAO {
      * @throws SQLException
      */
     @Override
-    public List<PiantaBean> RetriveAllPianta() throws SQLException {
-        String selectSQL = "SELECT * FROM " + TABLE_NAME;
+    public List<PiantaBean> RetriveAllPiantaDefault() throws SQLException {
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE azienda is null";
         ArrayList<PiantaBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
@@ -111,5 +111,46 @@ public class PiantaDAOImpl implements PiantaDAO {
     @Override
     public void removePianta() throws SQLException {
 
+    }
+
+    /**
+     * @param email
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<PiantaBean> RetriveAllPiantaAzienda(String email) throws SQLException {
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE azienda= ?";
+        ArrayList<PiantaBean> list = new ArrayList<>();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, email);
+            ResultSet rs = preparedStatement.executeQuery();
+            System.out.println("va bene");
+            while (rs.next()) {
+                PiantaBean t = new PiantaBean();
+                t.setId(rs.getInt("id"));
+                t.setAzienda(rs.getString("azienda"));
+                t.setNome(rs.getString("nome"));
+                t.setDescrizione(rs.getString("descrizione"));
+
+                t.setPh_min(Float.toString(rs.getFloat("ph_min")));
+                t.setPh_max(rs.getString("ph_max"));
+                t.setTemperatura_min(rs.getString("temperatura_min"));
+                t.setTemperatura_max(rs.getString("temperatura_max"));
+                t.setUmidita_min(rs.getString("umidita_min"));
+                t.setUmidita_max(rs.getString("umidita_max"));
+                t.setImmagine(rs.getString("immagine"));
+                System.out.println(t);
+                connection.commit();
+                list.add(t);
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        return list;
     }
 }

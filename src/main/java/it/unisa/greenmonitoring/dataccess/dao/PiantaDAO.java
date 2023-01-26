@@ -20,11 +20,19 @@ public interface PiantaDAO {
      * @return TerrenoBean
      * @throws SQLException
      */
-    List<PiantaBean> RetriveAllPianta() throws SQLException;
+    List<PiantaBean> RetriveAllPiantaDefault() throws SQLException;
 
     /**
      * Questo metodo restituisce ogni terreno del DB.
      * @throws SQLException
      */
    void removePianta() throws SQLException;
+
+    /**
+     *
+     * @param email
+     * @return List
+     * @throws SQLException
+     */
+    List<PiantaBean> RetriveAllPiantaAzienda(String email) throws SQLException;
 }

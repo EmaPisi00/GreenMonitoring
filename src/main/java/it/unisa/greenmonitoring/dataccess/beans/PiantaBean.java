@@ -5,7 +5,7 @@ public class PiantaBean {
     /**
      * Questo campo contiene la longitudine del terreno.
      */
-    private int id;
+    private Integer id;
     /**
      * Questo campo contiene la longitudine del terreno.
      */
@@ -78,14 +78,14 @@ public class PiantaBean {
      *
      * @return Float
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     /**
      *
      * @param Pid
      */
-    public void setId(int Pid) {
+    public void setId(Integer Pid) {
         this.id = Pid;
     }
     /**
