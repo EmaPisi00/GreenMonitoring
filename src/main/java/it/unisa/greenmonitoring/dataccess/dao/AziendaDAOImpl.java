@@ -41,7 +41,7 @@ public class AziendaDAOImpl implements AziendaDAO {
 
         PreparedStatement preparedStatement = null;
 
-        String insertSQL = "Insert Into " + TABLE_NAME + "(email, password, telefono, citta, indirizzo,provincia, nome_azienda,partita_iva)" + "Values (?,?,?,?,?,?,?,?)";
+        String insertSQL = "Insert Into " + TABLE_NAME + "(email, password, telefono, citta, indirizzo,provincia, nome_azienda,codice_associazione,partita_iva)" + "Values (?,?,?,?,?,?,?,?,?)";
 
         try {
 
@@ -55,7 +55,8 @@ public class AziendaDAOImpl implements AziendaDAO {
             preparedStatement.setString(5, aziendaBean.getIndirizzo());
             preparedStatement.setString(6, aziendaBean.getProvincia());
             preparedStatement.setString(7, aziendaBean.getNome_azienda());
-            preparedStatement.setString(8, aziendaBean.getPartita_iva());
+            preparedStatement.setString(8, aziendaBean.getCodice_associazione());
+            preparedStatement.setString(9, aziendaBean.getPartita_iva());
 
             preparedStatement.executeUpdate();
             connection.commit();

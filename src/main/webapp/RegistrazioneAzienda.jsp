@@ -72,7 +72,7 @@
             </div>
             <div class="col-md-6">
                 <label for="inputPassword" class="form-label">Conferma Password</label>
-                <input type="password" class="form-control" id="confermaInputPassword" placeholder="*****"
+                <input type="password" class="form-control" id="confermaInputPassword" placeholder="*****" max="15" min="8"
                        name="confermaInputPassword" required=""/>
             </div>
             <div class="col-12">
@@ -131,7 +131,7 @@
                         name="inputPartitaIva"
                 />
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <label for="inputAzienda" class="form-label">Nome Azienda</label>
                 <input
                         type="text"
@@ -140,6 +140,17 @@
                         placeholder="Montenegro"
                         required=""
                         name="inputAzienda"
+                />
+            </div>
+            <div class="col-md-6">
+                <label for="codiceAzienda" class="form-label">Codice Azienda</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="codiceAzienda"
+                        placeholder="Montenegro"
+                        required=""
+                        name="codiceAzienda"
                 />
             </div>
             <div class="col-12" style="text-align: center; ">

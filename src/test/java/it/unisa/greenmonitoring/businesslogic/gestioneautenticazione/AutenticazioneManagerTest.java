@@ -36,7 +36,7 @@ public class AutenticazioneManagerTest {
         aziendaBean.setEmail("SVN@gmail.com");
         aziendaBean.setCitta("Battipaglia");
         aziendaBean.setIndirizzo("via roma");
-        aziendaBean.setPassword("ciao123");
+        aziendaBean.setPassword("SVNuduj156@");
         aziendaBean.setCodice_associazione("AZ456562");
         aziendaBean.setProvincia("SA");
         aziendaBean.setTelefono("23458246");

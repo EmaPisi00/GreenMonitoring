@@ -42,21 +42,23 @@ public class AutenticazioneManager {
             System.out.println("\nErrore nel nome dell'azienda\n");
             return null;
         }
-        if ((aziendaBean.getCitta().matches("[a-zA-Z]"))) {
+        if (!(aziendaBean.getCitta().matches("^[a-zA-Z]+$"))) {
             System.out.println("\nErrore nel nome della città\n");
+            return null;
         }
-        if ((aziendaBean.getProvincia().matches("[a-zA-Z]"))) {
+        if (!(aziendaBean.getProvincia().matches("^[a-zA-Z]+$"))) {
             System.out.println("\nErrore nel nome della Provincia\n");
+            return null;
         }
-        if ((aziendaBean.getPassword().matches(" [0-9a-zA-Z]{8,30} "))) {
-            System.out.println("\nErrore nella password\n");
+        if (!(aziendaBean.getNome_azienda().matches("^[a-zA-Z0-9!@#$%^&*]+$"))) {
+            /*Inserisci una password di lunghezza max 15 caratteri e minimo 8 con almeno un carattere speciale,un numero e una maiuscola*/
+            System.out.println("\nErrore nella password \n");
+            return null;
         }
-        if ((aziendaBean.getPartita_iva().matches("0-9]{11}"))) {
+        if ((aziendaBean.getPartita_iva().matches("^[0-11]+$"))) {
             System.out.println("\nErrore nella partita iva\n");
+            return null;
         }
-        System.out.println(aziendaBean.getNome_azienda());
-
-       // ListIterator<AziendaBean> listaAziende = ad.retrieveAll().listIterator();
 
         AziendaBean ricercaAzienda = aziendaDao.retrieveForKey(aziendaBean.getEmail());
 
@@ -82,6 +84,29 @@ public class AutenticazioneManager {
      */
 
     public DipendenteBean registraDipendente(DipendenteBean dipendenteBean) throws SQLException {
+
+
+        if (!(dipendenteBean.getCitta().matches("^[a-zA-Z]+$"))) {
+            System.out.println("\nErrore nel nome della città\n");
+            return null;
+        }
+        if (!(dipendenteBean.getProvincia().matches("^[a-zA-Z]+$"))) {
+            System.out.println("\nErrore nel nome della Provincia\n");
+            return null;
+        }
+        if (!(dipendenteBean.getPassword().matches("^[a-zA-Z0-9!@#$%^&*]+$"))) {
+            System.out.println("\nErrore nella password\n");
+            return null;
+        }
+        if (!(dipendenteBean.getNome().matches("^[a-zA-Z]+$"))) {
+            System.out.println("\nErrore nel nome");
+            return null;
+        }
+        if (!(dipendenteBean.getCognome().matches("^[a-zA-Z]+$"))) {
+            System.out.println("\nErrore nel nome");
+            return null;
+        }
+
 
 
 

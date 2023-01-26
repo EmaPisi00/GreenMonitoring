@@ -36,6 +36,7 @@ public class ServletAzienda extends HttpServlet {
         String citta = request.getParameter("inputCitta");
         String provincia = request.getParameter("inputProvincia");
         String nome_azienda = request.getParameter("inputAzienda");
+        String codice_associazione = request.getParameter("codiceAzienda");
         String partita_iva = request.getParameter("inputPartitaIva");
 
         if (!(password.equals(confermPassword)) || !(email.equals(confermEmail))) {
@@ -52,6 +53,7 @@ public class ServletAzienda extends HttpServlet {
             aziendaBean.setProvincia(provincia);
             aziendaBean.setCitta(citta);
             aziendaBean.setNome_azienda(nome_azienda);
+            aziendaBean.setCodice_associazione(codice_associazione);
             aziendaBean.setPartita_iva(partita_iva);
 
             try {
