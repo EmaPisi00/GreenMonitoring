@@ -8,51 +8,137 @@ import it.unisa.greenmonitoring.dataccess.dao.PiantaDAOImpl;
 
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 public class PiantaManager {
     /**
-     * contiene l'errore e la descrizione.
+     * contiene gli errori e la descrizione.
      */
-    private HashMap<String, String> errori = new HashMap<String, String>();
+    private  PiantaBean errori;
+    /**
+     * piantadao
+     */
+    private PiantaDAO td;
     //TO-DO implementare i metodi di pianta manager
     /**
      * @param t
      * @throws SQLException
      * @return List
      */
-    public HashMap<String, String> CreaPiantaManager(PiantaBean t) throws SQLException {
-        PiantaDAO td = new PiantaDAOImpl();
+    public PiantaBean CreaPiantaManager(PiantaBean t) throws SQLException {
+        td = new PiantaDAOImpl();
+        errori = new PiantaBean("a", "a", "a", "a", "a", "a", "a");
+        errori.setId(1);
+        errori.setUmidita_min("a");
+        errori.setUmidita_max("a");
+        errori.setImmagine("a");
+        int countErrori = 0;
 
         //errori Nome
         if ((t.getNome().length() < 3 || t.getNome().length() > 30)) {
             System.out.println("errore nella dimensione del nome. Deve essere compresa tra 3 e 30" + t.getNome());
-            errori.put("erroreDimensioneNome", "errore nella dimensione del nome. Deve essere compresa tra 3 e 30");
+            errori.setNome(null);
+            countErrori++;
         }
 
-        check(t.getTemperatura_max(), t.getTemperatura_min(), 10, 100, "Temperatura");
-        check(t.getPh_max(), t.getPh_min(), 1, 14, "Ph");
-        check(t.getUmidita_max(), t.getUmidita_min(), 1, 100, "Umidita");
+        //Controllo PH
+        if (t.getPh_min().matches("^[0-9]+$") && t.getPh_max().matches("^[0-9]+$")) {
+            Float phMaxFloat = Float.parseFloat(t.getPh_max());
+            Float phMinFloat = Float.parseFloat(t.getPh_min());
+            // controlla che sia rispettato il range
+            if (phMinFloat < 1 || phMinFloat > 14
+                    || phMaxFloat < 1 || phMaxFloat > 14) {
+                System.out.println("ph min o max minore di 1 o maggiore di 14");
+                //setto ph max a null per indicare che il range di uno tra max e min è errato
+                errori.setPh_max(null);
+                countErrori++;
+            }
+            // se ph max è minore di minima
+            if (phMaxFloat < phMinFloat) {
+                System.out.println("errore,ph min maggiore di max");
+                errori.setPh_max(null);
+                countErrori++;
+            }
+        } else {
+            System.out.println("errore: phmin e max non sono numeri");
+            //setto phmin a null se non sono numeri phmax e min
+            errori.setPh_min(null);
+            countErrori++;
+        }
+
+        // controllo Temperatura
+        if (t.getTemperatura_min().matches("^[0-9]+$") && t.getTemperatura_max().matches("^[0-9]+$")) {
+            Float TempMaxFloat = Float.parseFloat(t.getTemperatura_max());
+            Float TempMinFloat = Float.parseFloat(t.getTemperatura_min());
+            // controlla che sia rispettato il range
+            if (TempMinFloat < 10 || TempMinFloat > 100
+                    || TempMaxFloat < 10 || TempMaxFloat > 100) {
+                System.out.println("temperatura min o max minore di 10 o maggiore di 100");
+                //setto temperatura max a null per indicare che il range di uno tra max e min è errato
+                errori.setTemperatura_max(null);
+                countErrori++;
+            }
+            // se temp max è minore di minima
+            if (TempMaxFloat < TempMinFloat) {
+                System.out.println("errore,temp  min maggiore di max");
+                errori.setTemperatura_max(null);
+                countErrori++;
+            }
+        } else {
+            System.out.println("errore: temp min e max non sono numeri");
+            //setto temp min a null se non sono numeri tempmin e min
+            errori.setTemperatura_min(null);
+            countErrori++;
+        }
+
+        // controllo Umidità
+        if (t.getUmidita_min().matches("^[0-9]+$") && t.getUmidita_max().matches("^[0-9]+$")) {
+            Float umidMaxFloat = Float.parseFloat(t.getUmidita_max());
+            Float umidMinFloat = Float.parseFloat(t.getUmidita_min());
+            // controlla che sia rispettato il range
+            if (umidMinFloat < 1 || umidMinFloat > 100
+                    || umidMaxFloat < 1 || umidMaxFloat > 100) {
+                System.out.println("umidita min o max minore di 1 o maggiore di 100");
+                //setto umidita max a null per indicare che il range di uno tra max e min è errato
+                errori.setUmidita_max(null);
+                countErrori++;
+            }
+            // se umidita max è minore di minima
+            if (umidMaxFloat < umidMinFloat) {
+                System.out.println("errore,umidita  min maggiore di max");
+                errori.setUmidita_max(null);
+                countErrori++;
+            }
+        } else {
+            System.out.println("errore: umidita min e max non sono numeri");
+            //setto umidita min a null se non sono numeri umidita min e min
+            errori.setUmidita_min(null);
+            countErrori++;
+        }
+
+
         if (t.getDescrizione().length() < 1 || t.getDescrizione().length() > 255) {
             System.out.println("la lunghezza descrizione deve essere >1 e <255");
-            errori.put("erroreDescrizioneLunghezza", "la lunghezza descrizione deve essere >1 e <255");
+            errori.setDescrizione(null);
+            countErrori++;
 
         }
 
-        List<PiantaBean> listaPiante = td.RetriveAllPianta();
+        List<PiantaBean> listaPiante = td.RetriveAllPiantaDefault();
+        listaPiante.addAll(td.RetriveAllPiantaAzienda(t.getAzienda()));
         for (PiantaBean tt : listaPiante) {
 
             if (tt.getNome().matches(t.getNome())) {
                 System.out.println("simili= " + tt + "\n" + t);
                     System.out.println("esiste già una pianta con questo nome ");
-                    errori.put("errorePianta", "esiste già una pianta con questo nome ");
+                    errori.setId(null);
+                    countErrori++;
                     break;
                 }
             }
 
-        System.out.println(errori.size() + " " + t);
-        if (errori.isEmpty()) {
+        System.out.println("count = " + countErrori + " pianta " + errori);
+        if (countErrori++ == 0) {
             td.aggiungiPiantaPersonalizzata(t);
             return null;
         }
@@ -60,42 +146,17 @@ public class PiantaManager {
     }
 
     /**
-     * @param valore_max
-     * @param valore_min
-     * @param range_min
-     * @param range_max
-     * @param testo
+     * ritorna la lista delle piante per utente
+     * @param email
+     * @return List
+     * @throws SQLException
      */
-    public void check(String valore_max, String valore_min, int range_min, int range_max, String testo) {
-        //valore minima
-        if (valore_min.matches("^[0-9]+$")) {
-            if (Float.parseFloat(valore_min) < range_min || Float.parseFloat(valore_min) > range_max) {
-                System.out.println(testo + " minima è minore di" + range_min + " o maggiore di " + valore_max);
-                errori.put("errore" + testo + "MinDimensione", testo + " minima è minore di" + range_min + " o maggiore di " + valore_max);
-            }
-        } else {
-            System.out.println("errore: non è un numero");
-            errori.put("errore" + testo + "MinFormato", "errore: non è un numero");
-        }
-        //valore massimo
-        if (valore_max.matches("^[0-9]+$")) {
-            if (Float.parseFloat(valore_max) < range_min || Float.parseFloat(valore_max) > range_max) {
-                System.out.println("temperatura massima è minore di 10 o maggiore di 100");
-                errori.put("errore" + testo + "MaxDim", "temperatura massima è minore di 10 o maggiore di 100");
-            }
-        } else {
-            System.out.println("errore: non è un numero");
-            errori.put("errore" + testo + "MaxFormato", "errore: non è un numero");
-        }
-        //val_masisma minore di minima
-        if ((valore_max.matches("^[0-9]+$")) && (valore_min.matches("^[0-9]+$"))) {
-            Float TempMaxFloat = Float.parseFloat(valore_max);
-            Float TempMinFloat = Float.parseFloat(valore_min);
-            if (TempMaxFloat < TempMinFloat) {
-                System.out.println("errore," + testo + " min maggiore di max");
-                errori.put("errore" + testo + "MinMax", "errore," + testo + " min maggiore di max");
-            }
-        }
+    public List<PiantaBean> ListaPianteManager(String email) throws SQLException {
+        td = new PiantaDAOImpl();
+        List<PiantaBean> listaPiante = td.RetriveAllPiantaDefault();
+        listaPiante.addAll(td.RetriveAllPiantaAzienda(email));
+        return (!listaPiante.isEmpty()) ? listaPiante : null;
     }
+
 }
 
