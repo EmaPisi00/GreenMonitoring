@@ -18,7 +18,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.Enumeration;
-import java.util.List;
 
 @WebServlet(name = "ServletTerreno", value = "/ServletTerreno")
 @MultipartConfig
@@ -48,7 +47,18 @@ public class ServletTerreno extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("inserisciTerreno_submit") != null) {
-            gestioneErrori(inserisciTerreno(request, response), request, response);
+            TerrenoBean errori = inserisciTerreno(request, response);
+            System.out.println("serv" + errori);
+            if (errori != null) {
+                request.setAttribute("erroriTerrenoBean", errori);
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciTerreno.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Terreni.jsp");
+                dispatcher.forward(request, response);
+            }
+
+
         } else if (request.getParameter("terreno0") != null) {
             Enumeration<String> parameters = request.getParameterNames();
             while (parameters.hasMoreElements()) {
@@ -58,11 +68,11 @@ public class ServletTerreno extends HttpServlet {
             response.sendRedirect("Terreni.jsp");
         }
 
-        //response.sendRedirect("index.jsp");
+        response.sendRedirect("index.jsp");
 
     }
 
-    private List<String> inserisciTerreno(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private TerrenoBean inserisciTerreno(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String azienda = request.getParameter("azienda");
 
@@ -91,33 +101,5 @@ public class ServletTerreno extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
-    private void gestioneErrori(List<String> errore, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (errore != null) {
-                if (errore.contains("erroreLatitudine")) {
-                    System.out.println("1111");
-                    request.setAttribute("erroreLatitudine", "latitudine errata");
-                }
-                if (errore.contains("erroreLongitudine")) {
-                    System.out.println("222");
-                    request.setAttribute("erroreLongitudine", "longitudine errore");
-                }
-                if (errore.contains("erroreSuperfice")) {
-                    System.out.println("33");
-                    request.setAttribute("erroreSuperfice", "superfice errore");
-                }
-                if (errore.contains("erroreTerreno")) {
-                    System.out.println("44");
-                    request.setAttribute("erroreTerreno", "terreni errore");
-                }
-            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciTerreno.jsp");
-            dispatcher.forward(request, response);
-
-
-
-        }
-    }
-
-
 
 }
