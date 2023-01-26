@@ -10,6 +10,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
     <title>Title</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
@@ -21,11 +29,12 @@
     <link href="bootstrap-5.2.3-dist/css/testCSS.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<% UtenteBean user= (UtenteBean) session.getAttribute("currentUserSession");
-    System.out.println(user.getClass());
-    if (user == null)  {
-        response.sendRedirect("error.jsp");
-    }%>
+<% UtenteBean user= (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if (user == null)  { %>
+<%@include file="/fragments/headerLogin.html" %>
+<%} else{ %>
+<%@ include file="/fragments/headerLogged.html" %>
+<%}%>
 <body>
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
@@ -113,5 +122,8 @@
     </div>
 </div>
 </div>
+
+
+<%@include file="fragments/footer.html"%>
 </body>
 </html>

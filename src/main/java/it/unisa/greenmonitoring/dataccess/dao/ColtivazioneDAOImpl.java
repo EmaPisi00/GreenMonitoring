@@ -19,29 +19,21 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     /**
      * Costruttore di ColtivazioneDAOImpl.
      */
-    public void ColtivazioneDAOImpl() throws SQLException {
-        try {
-            connection = ConnectionPool.getConnection();
-        } catch (SQLException s) {
-            System.out.println("errore nel creare la connessione: " + s);
-        } finally {
-            connection.close();
-        }
+    public void ColtivazioneDAOImpl() {
 
     }
 
     @Override
     public ColtivazioneBean createColtivazione(ColtivazioneBean c) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT Coltivazione" + "(id,pianta,terreno,stato_archiviazione,data_inizio,data_fine)" + " VALUES (?,?,?,?,?,?)";
+        String insertSQL = "INSERT Coltivazione" + "(pianta,terreno,stato_archiviazione,data_inizio,data_fine)" + " VALUES (?,?,?,?,?)";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
-            preparedStatement.setInt(1, c.getId());
-            preparedStatement.setInt(2, c.getPianta());
-            preparedStatement.setInt(3, c.getTerreno());
-            preparedStatement.setByte(4, c.getStato_archiviazione());
-            preparedStatement.setDate(5, c.getData_inizio());
+            preparedStatement.setInt(1, c.getPianta());
+            preparedStatement.setInt(2, c.getTerreno());
+            preparedStatement.setByte(3, c.getStato_archiviazione());
+            preparedStatement.setDate(4, c.getData_inizio());
             preparedStatement.setDate(5, c.getData_fine());
             preparedStatement.executeUpdate();
             connection.commit();
@@ -68,7 +60,7 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
             preparedStatement.setString(1, id_azienda);
             ResultSet rs = preparedStatement.executeQuery();
-            //SELECT * FROM coltivazione join sensore on coltivazione.id = sensore.coltivazione join misurazione_sensore on sensore.id = misurazione_sensore.sensore_id;
+
             while (rs.next()) {
                 ColtivazioneBean c = new ColtivazioneBean();
                 c.setId(rs.getInt("id"));
@@ -82,6 +74,7 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
                 connection.commit();
                 list.add(c);
             }
+
         } catch (SQLException s) {
             s.printStackTrace();
         } finally {
@@ -92,11 +85,9 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
 
     @Override
     public void updateColtivazione(String id_coltivazione) throws SQLException {
-        //TO-DO
     }
 
     @Override
     public void deleteColtivazione(String id_coltivazione) throws SQLException {
-        //TO-DO
     }
 }

@@ -1,6 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
-import it.unisa.greenmonitoring.businesslogic.autenticazione.AutenticazioneManager;
+import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.AutenticazioneManager;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
@@ -92,11 +92,7 @@ public class ServletDipendente extends HttpServlet {
             if (idDipendente != null) {
                 for (String id : idDipendente) {
                     AziendaDAO aziendaDAO = null;
-                    try {
-                        aziendaDAO = new AziendaDAOImpl();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    aziendaDAO = new AziendaDAOImpl();
                     try {
                         aziendaDAO.removeAssociation(emailAzienda, id);
                     } catch (SQLException e) {

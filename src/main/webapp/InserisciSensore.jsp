@@ -4,6 +4,15 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Import Bootstrap -->
+  <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Import css -->
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/headerLogin.css">
+
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -19,17 +28,24 @@
 <% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
   if (!(u instanceof AziendaBean))  { %>
   <% response.sendRedirect("error.jsp"); %>
-<% } %>
+<% } else{  %>
+<%@include file="fragments/headerLogged.html"%>
+<%}%>
+
   <body >
 
   <form method="post" action="SensorServlet">
     <label for="tipo">tipo sensore:</label>
     <input type="text" id="tipo" name="tipo">
 
-    <label for="id_mosquitto">Password:</label>
+    <label for="id_mosquitto">ID Mosquitto:</label>
     <input type="id_mosquitto" id="id_mosquitto" name="id_mosquitto">
 
     <input type="submit" value="RegistraSensore" name="RegistraSensore">
   </form>
+
+  <%@include file="/fragments/footer.html"%>
+
+
   </body>
 </html>

@@ -10,11 +10,26 @@
   Time: 18:23
   To change this template use File | Settings | File Templates.
 --%>
+
+<head>
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
+</head>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<% UtenteBean user= (UtenteBean) session.getAttribute("currentUserSession");
+
+<% UtenteBean user= (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (user == null)  { %>
-    <% response.sendRedirect("error.jsp"); } %>
+<%@include file="/fragments/headerLogin.html" %>
+<%} else{ %>
+<%@ include file="/fragments/headerLogged.html" %>
+<%}%>
 <html>
 <body>
 
@@ -46,33 +61,36 @@
         <td><%= user.getIndirizzo() %></td>
     </tr>
 
-        <%  if (user instanceof DipendenteBean)  {
-        %>
+    <%  if (user instanceof DipendenteBean)  {
+    %>
 
-        <tr>
-            <td>Nome:</td>
-            <td><%= ((DipendenteBean) user).getNome() %></td>
-        </tr>
-        <tr>
-            <td>Cognome:</td>
-            <td><%= ((DipendenteBean) user).getCognome() %></td>
-        </tr>
-        <tr>
-            <td>Azienda:</td>
-            <td><%= ((DipendenteBean) user).getAzienda() %></td>
-        </tr>
-<% } else if (user instanceof AziendaBean) { %>
-        <tr>
-            <td>Nome Azienda:</td>
-            <td><%= ((AziendaBean) user).getNome_azienda() %></td>
-        </tr>
-        <tr>
-            <td>Partita IVA:</td>
-            <td><%= ((AziendaBean) user).getPartita_iva() %></td>
-        </tr>
+    <tr>
+        <td>Nome:</td>
+        <td><%= ((DipendenteBean) user).getNome() %></td>
+    </tr>
+    <tr>
+        <td>Cognome:</td>
+        <td><%= ((DipendenteBean) user).getCognome() %></td>
+    </tr>
+    <tr>
+        <td>Azienda:</td>
+        <td><%= ((DipendenteBean) user).getAzienda() %></td>
+    </tr>
+    <% } else if (user instanceof AziendaBean) { %>
+    <tr>
+        <td>Nome Azienda:</td>
+        <td><%= ((AziendaBean) user).getNome_azienda() %></td>
+    </tr>
+    <tr>
+        <td>Partita IVA:</td>
+        <td><%= ((AziendaBean) user).getPartita_iva() %></td>
+    </tr>
     <% } %>
-    </table>
-    <button id="registratiButton" onclick="javascript:location.href='${pageContext.request.contextPath}/EditProfile.jsp'">Modifica profilo</button></p>
+</table>
+
+<%@include file="fragments/footer.html"%>
+
 </body>
 </html>
+
 

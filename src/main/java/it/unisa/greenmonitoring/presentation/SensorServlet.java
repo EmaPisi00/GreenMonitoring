@@ -1,6 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
-import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.SensoreManager;
+import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
@@ -38,7 +38,7 @@ public class SensorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String tipo = request.getParameter("tipo");
-        int id_mosquitto = Integer.parseInt(request.getParameter("id_mosquitto"));
+        String id_mosquitto = request.getParameter("id_mosquitto");
         UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
         AziendaBean azienda = (AziendaBean) u;
         SensoreBean sns = new SensoreBean();
@@ -50,7 +50,7 @@ public class SensorServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        response.sendRedirect("GestioneSensori.jsp");
+        response.sendRedirect("InserisciSensore.jsp");
     }
 
 }

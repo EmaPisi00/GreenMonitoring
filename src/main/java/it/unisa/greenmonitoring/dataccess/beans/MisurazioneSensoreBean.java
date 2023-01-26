@@ -20,6 +20,10 @@ public class MisurazioneSensoreBean {
      * Questo campo contiene il tipo di sensore.
      */
     private String tipo;
+    /**
+     * Questo campo contiene il valore misurato dal sensore.
+     */
+    private int valore;
 
     /**
      * Questo è il costruttore vuoto.
@@ -32,12 +36,14 @@ public class MisurazioneSensoreBean {
      * @param given_data
      * @param given_ora
      * @param given_tipo
+     * @param given_valore
      */
-    public MisurazioneSensoreBean(int given_id, Date given_data, Time given_ora, String given_tipo) {
+    public MisurazioneSensoreBean(int given_id, Date given_data, Time given_ora, String given_tipo, int given_valore) {
         this.id = given_id;
         this.data = given_data;
         this.ora = given_ora;
         this.tipo = given_tipo;
+        this.valore = given_valore;
     }
 
     /**
@@ -102,5 +108,20 @@ public class MisurazioneSensoreBean {
      */
     public String getTipo() {
         return tipo;
+    }
+
+    /**
+     * Questo è il getter del valore misurato.
+     * @return int
+     */
+    public int getValore() {
+        return valore;
+    }
+    /**
+     * Questo è il setter del valore misurato.
+     * @param given_valore
+     */
+    public void setValore(int given_valore) {
+        this.valore = given_valore;
     }
 }

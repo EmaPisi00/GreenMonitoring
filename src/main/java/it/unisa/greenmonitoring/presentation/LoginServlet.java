@@ -1,6 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
-import it.unisa.greenmonitoring.businesslogic.autenticazione.AutenticazioneManager;
+import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.AutenticazioneManager;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
@@ -47,6 +47,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession sessione = request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        //mettere tutti i controlli in autenticazioneManager dove restituisci un oggetto utenteBean
         try {
             String checkRole = lm.CheckData(email, password);
             if (checkRole.matches("azienda")) {
@@ -59,7 +60,7 @@ public class LoginServlet extends HttpServlet {
                 for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((AziendaBean) user).getPartita_iva(), ((AziendaBean) user).getNome_azienda())) {
                     System.out.println(s);
                 }
-                response.sendRedirect("Profile.jsp");
+                response.sendRedirect("HomePage.jsp");
             } else if (checkRole.matches("dipendente")) {
                 UtenteBean user = new DipendenteBean();
                 user.setEmail(request.getParameter("email"));
@@ -70,9 +71,10 @@ public class LoginServlet extends HttpServlet {
                 for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((DipendenteBean) user).getNome(), ((DipendenteBean) user).getCognome(), ((DipendenteBean) user).getAzienda())) {
                     System.out.println(s);
                 }
-                response.sendRedirect("Profile.jsp");
+                response.sendRedirect("HomePage.jsp");
             } else {
                 response.sendRedirect("index.jsp?error=true");
+                //fare un response.setParameter per dare un valore ad error
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

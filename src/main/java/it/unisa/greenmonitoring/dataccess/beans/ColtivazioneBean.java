@@ -65,6 +65,20 @@ public class ColtivazioneBean {
     }
 
     /**
+     * Questo metodo è il costruttore di ColtivazioneBean. Non ha nè id né data in quanto sono generati direttamente dal DAO.
+     * @param given_pianta
+     * @param given_terreno
+     * @param given_stato_archiviazione
+
+     */
+    public ColtivazioneBean(int given_pianta, int given_terreno, byte given_stato_archiviazione) {
+        this.pianta = given_pianta;
+        this.terreno = given_terreno;
+        this.stato_archiviazione = given_stato_archiviazione;
+    }
+
+
+    /**
      * Questo metodo restituisce l'id di una coltivazione.
      * @return int
      */
@@ -118,7 +132,7 @@ public class ColtivazioneBean {
      * @param given_id
      */
     public void setId(int given_id) {
-        this.id = id;
+        this.id = given_id;
     }
 
     /**
@@ -126,7 +140,7 @@ public class ColtivazioneBean {
      * @param given_pianta
      */
     public void setPianta(int given_pianta) {
-        this.pianta = pianta;
+        this.pianta = given_pianta;
     }
 
     /**
@@ -134,7 +148,7 @@ public class ColtivazioneBean {
      * @param given_terreno
      */
     public void setTerreno(int given_terreno) {
-        this.terreno = terreno;
+        this.terreno = given_terreno;
     }
 
     /**
@@ -150,7 +164,7 @@ public class ColtivazioneBean {
      * @param given_data_inizio
      */
     public void setData_inizio(Date given_data_inizio) {
-        this.data_inizio = data_inizio;
+        this.data_inizio = given_data_inizio;
     }
 
     /**
@@ -158,7 +172,7 @@ public class ColtivazioneBean {
      * @param given_data_fine
      */
     public void setData_fine(Date given_data_fine) {
-        this.data_fine = data_fine;
+        this.data_fine = given_data_fine;
     }
 
     /**
@@ -191,4 +205,9 @@ public class ColtivazioneBean {
 
     public void setInListaMisurazioni(MisurazioneSensoreBean ms) {
         this.listaMisurazioni.add(ms); }
+
+    @Override
+    public String toString() {
+        return "ColtivazioneBean{" + "id=" + id + ", pianta=" + pianta + ", terreno=" + terreno + ", stato_archiviazione=" + stato_archiviazione + ", data_inizio=" + data_inizio + ", data_fine=" + data_fine + ", listaSensori=" + listaSensori + ", listaMisurazioni=" + listaMisurazioni + '}';
+    }
 }

@@ -32,20 +32,20 @@
     </style>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-    />
-    <link
-            href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
-            rel="stylesheet"
-    />
-    <title>Registrazione Azienda</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<body class="p-3 m-0 border-0 bd-example">
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
 
-<a href="index.jsp"><img src="img/lg.png" class="rounded float-start" alt="..."></a>
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
+    <title>Registrazione Azienda</title>
+</head>
+<body >
+
+
+<%@include file="/fragments/headerLogin.html"%>
 
 <fieldset>
     <div class="bd">
@@ -72,7 +72,7 @@
             </div>
             <div class="col-md-6">
                 <label for="inputPassword" class="form-label">Conferma Password</label>
-                <input type="password" class="form-control" id="confermaInputPassword" placeholder="*****"
+                <input type="password" class="form-control" id="confermaInputPassword" placeholder="*****" max="15" min="8"
                        name="confermaInputPassword" required=""/>
             </div>
             <div class="col-12">
@@ -131,7 +131,7 @@
                         name="inputPartitaIva"
                 />
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <label for="inputAzienda" class="form-label">Nome Azienda</label>
                 <input
                         type="text"
@@ -140,6 +140,17 @@
                         placeholder="Montenegro"
                         required=""
                         name="inputAzienda"
+                />
+            </div>
+            <div class="col-md-6">
+                <label for="codiceAzienda" class="form-label">Codice Azienda</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="codiceAzienda"
+                        placeholder="Montenegro"
+                        required=""
+                        name="codiceAzienda"
                 />
             </div>
             <div class="col-12" style="text-align: center; ">
@@ -153,6 +164,8 @@
 
 </div>
 
+
+<%@include file="/fragments/footer.html"%>
 
 </body>
 </html>

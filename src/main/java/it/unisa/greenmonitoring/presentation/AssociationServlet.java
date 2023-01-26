@@ -47,18 +47,13 @@ public class AssociationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        //
         String codiceAzienda = request.getParameter("codiceAzienda");
         HttpSession session = request.getSession();
         UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
 
         if (user instanceof DipendenteBean && ((DipendenteBean) user).getAzienda() == null) {
-            AziendaDAO aziendaDAO = null;
-            try {
-                aziendaDAO = new AziendaDAOImpl();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            AziendaDAO aziendaDAO = new AziendaDAOImpl();
             AziendaBean azienda;
             try {
                 azienda = aziendaDAO.retrieveByCode(codiceAzienda);
@@ -70,11 +65,7 @@ public class AssociationServlet extends HttpServlet {
                 DipendenteBean dipendente = (DipendenteBean) user;
                 dipendente.setAzienda(azienda.getEmail());
                 DipendenteDAO dipendenteDAO = null;
-                try {
-                    dipendenteDAO = new DipendenteDAOImpl();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                dipendenteDAO = new DipendenteDAOImpl();
                 try {
                     dipendenteDAO.doUpdate(dipendente);
                 } catch (SQLException e) {
