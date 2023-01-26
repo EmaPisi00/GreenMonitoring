@@ -1,4 +1,6 @@
-<%--
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %><%--
   Created by IntelliJ IDEA.
   User: emanu
   Date: 23/01/2023
@@ -20,8 +22,13 @@
     <title>Title</title>
 </head>
 <body>
-<%@include file="/fragments/headerLogin.html"%>
 
+<% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if (!(u instanceof AziendaBean) )  { %>
+<%@include file="/fragments/headerLogin.html" %>
+<%} else{ %>
+<%@ include file="/fragments/headerLogged.html" %>
+<%}%>
 <form method="post" action="LoginServlet">
     <div class="container" style="width: 100px; height: auto">
     <label for="email">Username:</label>

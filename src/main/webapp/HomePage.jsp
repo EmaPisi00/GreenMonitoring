@@ -1,3 +1,5 @@
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
 <%--
   Created by IntelliJ IDEA.
   User: emanu
@@ -20,8 +22,12 @@
 </head>
 <body>
 
+<% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if (u == null)  { %>
 <%@include file="/fragments/headerLogin.html" %>
-
+<%} else{ %>
+<%@ include file="/fragments/headerLogged.html" %>
+<%}%>
 <!-- Div principale -->
 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
     <div class="carousel-indicators">

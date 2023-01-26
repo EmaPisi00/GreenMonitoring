@@ -10,11 +10,26 @@
   Time: 18:23
   To change this template use File | Settings | File Templates.
 --%>
+
+<head>
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
+</head>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<% UtenteBean user= (UtenteBean) session.getAttribute("currentUserSession");
+
+<% UtenteBean user= (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (user == null)  { %>
-<% response.sendRedirect("error.jsp"); } %>
+<%@include file="/fragments/headerLogin.html" %>
+<%} else{ %>
+<%@ include file="/fragments/headerLogged.html" %>
+<%}%>
 <html>
 <body>
 
@@ -72,7 +87,9 @@
     </tr>
     <% } %>
 </table>
-<button id="registratiButton" onclick="javascript:location.href='${pageContext.request.contextPath}/ModificaProfilo.jsp'">Modifica profilo</button></p>
+
+<%@include file="fragments/footer.html"%>
+
 </body>
 </html>
 

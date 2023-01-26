@@ -1,5 +1,6 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %><%--
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
+<%--
   Created by IntelliJ IDEA.
   User: stefa
   Date: 22/01/2023
@@ -9,13 +10,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
     <title>Title</title>
 </head>
+
+<body>
+
 <% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
     if (!(u instanceof AziendaBean))  { %>
 <% response.sendRedirect("error.jsp"); %>
-<% } %>
-<body>
+<% } else{  %>
+<%@include file="fragments/headerLogged.html"%>
+<%}%>
+
 <form action="ServletPianta" method="post" enctype="multipart/form-data">
     <label for="nome">Nome:</label>
     <input type="text" id="nome" name="nome"><br>
@@ -38,5 +52,8 @@
     <input type="hidden" id="azienda" name="azienda" value="<%=u.getEmail()%>">
     <input type="submit" value="inserisciPianta_submit" name="inserisciPianta_submit">
 </form>
+
+<%@include file="fragments/footer.html"%>
+
 </body>
 </html>

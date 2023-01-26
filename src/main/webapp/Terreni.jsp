@@ -40,6 +40,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+
 <div class="bd">
     <legend style="text-align:center;">Terreni</legend>
 <form id="rimuovi_terreno" action="ServletTerreno" method="post">

@@ -4,10 +4,14 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Import Bootstrap -->
   <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
   <!-- Import css -->
   <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/headerLogin.css">
+
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +28,10 @@
 <% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
   if (!(u instanceof AziendaBean))  { %>
   <% response.sendRedirect("error.jsp"); %>
-<% } %>
+<% } else{  %>
+<%@include file="fragments/headerLogged.html"%>
+<%}%>
+
   <body >
 
   <form method="post" action="SensorServlet">

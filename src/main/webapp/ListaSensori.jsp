@@ -13,13 +13,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
     <title>Lista Sensori</title>
 </head>
 <body>
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    if (u instanceof AziendaBean) {
-        SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
+    if (u instanceof AziendaBean) { %>
+            <%@include file="fragments/headerLogged.html"%>
+      <%  SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
         List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
 %>
 <table>

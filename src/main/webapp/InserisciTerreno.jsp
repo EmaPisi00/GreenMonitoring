@@ -10,6 +10,7 @@
 
   <!-- Import css -->
   <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/headerLogin.css">
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +27,9 @@
 <% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
   if (!(u instanceof AziendaBean))  { %>
   <% response.sendRedirect("error.jsp"); %>
-<% } %>
+<% } else{  %>
+<%@include file="fragments/headerLogged.html"%>
+<%}%>
 <body >
 
 <form id="inserisci_terreno" action="ServletTerreno" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>

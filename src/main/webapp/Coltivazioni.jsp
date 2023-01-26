@@ -14,6 +14,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
     <title>Coltivazioni</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
@@ -28,6 +37,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+
+
+<% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
+    if (!(u instanceof AziendaBean))  { %>
+<% response.sendRedirect("error.jsp"); %>
+<% } else{  %>
+<%@include file="fragments/headerLogged.html"%>
+<%}%>
 <div class="bd">
     <legend style="text-align:center;">Coltivazioni</legend>
     <!-- Coltivazioni -->
@@ -113,6 +130,8 @@
                         }
                     }
                 %>
+            
+            <%@include file="fragments/footer.html"%>
 </body>
 </html>
 

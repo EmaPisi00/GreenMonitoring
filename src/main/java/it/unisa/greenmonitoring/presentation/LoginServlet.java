@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
                 for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((AziendaBean) user).getPartita_iva(), ((AziendaBean) user).getNome_azienda())) {
                     System.out.println(s);
                 }
-                response.sendRedirect("Profile.jsp");
+                response.sendRedirect("HomePage.jsp");
             } else if (checkRole.matches("dipendente")) {
                 UtenteBean user = new DipendenteBean();
                 user.setEmail(request.getParameter("email"));
@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
                 for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((DipendenteBean) user).getNome(), ((DipendenteBean) user).getCognome(), ((DipendenteBean) user).getAzienda())) {
                     System.out.println(s);
                 }
-                response.sendRedirect("Profile.jsp");
+                response.sendRedirect("HomePage.jsp");
             } else {
                 response.sendRedirect("index.jsp?error=true");
                 //fare un response.setParameter per dare un valore ad error
