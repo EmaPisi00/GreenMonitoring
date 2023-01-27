@@ -1,6 +1,8 @@
 package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
+import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
+import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 import it.unisa.greenmonitoring.dataccess.dao.AziendaDAO;
 import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAO;
 import org.junit.After;
@@ -17,11 +19,15 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AutenticazioneManagerTest {
 
     private AziendaBean aziendaBean;
+
+    private DipendenteBean dipendenteBean;
     @Mock
     private AziendaDAO aziendaDao;
     @Mock
@@ -65,6 +71,23 @@ public class AutenticazioneManagerTest {
     }
 
     @Test
-    public void checkData() {
+    public void loginAzienda() throws SQLException {
+        List<AziendaBean> listaziende  = new ArrayList<>();
+        listaziende.add(aziendaBean);
+        Mockito.when(aziendaDao.retrieveAll()).thenReturn(listaziende);
+        UtenteBean a = autenticazioneManager.Login(aziendaBean.getEmail(), aziendaBean.getPassword());
+        assertEquals(a, aziendaBean);
+
+    }
+
+    @Test
+    public void loginAzienda2() throws SQLException {
+        List<AziendaBean> listaziende  = new ArrayList<>();
+        listaziende.add(aziendaBean);
+        Mockito.when(aziendaDao.retrieveAll()).thenReturn(listaziende);
+        Mockito.when(dipendenteDAO.retrieveAll()).thenReturn(new ArrayList<DipendenteBean>());
+        UtenteBean a = autenticazioneManager.Login("prova@gmai.com", aziendaBean.getPassword());
+        assertNull(a);
+
     }
 }
