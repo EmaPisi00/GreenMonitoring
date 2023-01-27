@@ -33,7 +33,9 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
             preparedStatement.setInt(1, c.getPianta());
             preparedStatement.setInt(2, c.getTerreno());
             preparedStatement.setByte(3, c.getStato_archiviazione());
-            preparedStatement.setDate(4, c.getData_inizio());
+            long millis = System.currentTimeMillis();
+            java.sql.Date date = new java.sql.Date(millis);
+            preparedStatement.setDate(4, date);
             preparedStatement.setDate(5, c.getData_fine());
             preparedStatement.executeUpdate();
             connection.commit();

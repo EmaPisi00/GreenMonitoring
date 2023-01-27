@@ -38,13 +38,8 @@
 </head>
 <body>
 
-
-<% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
-    if (!(u instanceof AziendaBean))  { %>
-<% response.sendRedirect("error.jsp"); %>
-<% } else{  %>
 <%@include file="fragments/headerLogged.html"%>
-<%}%>
+
 <div class="bd">
     <legend style="text-align:center;">Coltivazioni</legend>
     <!-- Coltivazioni -->
@@ -57,21 +52,21 @@
                     Object sa = session.getAttribute("currentUserSession");
                     if (sa == null) {
                         response.sendError(401);
-                    } else if ( ! (session.getAttribute("currentUserSession") instanceof UtenteBean)) {
+                    } else if (!(session.getAttribute("currentUserSession") instanceof UtenteBean)) {
                         response.sendError(401);
                     }
                     /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                     else {
                         List<ColtivazioneBean> list = null;
 
-                        if ( (session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
+                        if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                             DipendenteBean a = (DipendenteBean) sa;
                             ColtivazioneManager cm = new ColtivazioneManager();
-                            list = cm.visualizzaStatoColtivazioni( a.getAzienda() );
+                            list = cm.visualizzaStatoColtivazioni(a.getAzienda());
                         } else {
                             AziendaBean a = (AziendaBean) sa;
                             ColtivazioneManager cm = new ColtivazioneManager();
-                            list = cm.visualizzaStatoColtivazioni( a.getEmail() );
+                            list = cm.visualizzaStatoColtivazioni(a.getEmail());
                         }
 
                         out.print("<ul class=\"list-group\">");
@@ -98,6 +93,7 @@
                             }
 
                         }
+                        /* Stampa il form per inserire la coltivazione solo se ad accedere alla pagina è un'azienda */
                         if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
                         out.print("</ul>");
                         out.print("        </div>\n" +
@@ -115,11 +111,11 @@
                                 "                <input type=\"text\" name=\"nomepianta\" required><br>\n" +
                                 "                <label>Inserire il codice del sensore da inserire e selezionare il tipo di sensore</label><br>\n" +
                                 "                <input type=\"text\" name=\"codiceSensore\" required>\n" +
-                                "                <select name=\"sensore\" id=\"sensore_tipo\">\n" +
+                                "               <!-- <select name=\"sensore\" id=\"sensore_tipo\">\n" +
                                 "                    <option value=\"pH\">Temperatura</option>\n" +
                                 "                    <option value=\"temperatura\">pH</option>\n" +
                                 "                    <option value=\"umidità\">Umidità</option>\n" +
-                                "                </select><br><br>\n" +
+                                "                </select> --> <br><br>\n" +
                                 "                <button type=\"submit\" class=\"btn btn-primary\">\n" +
                                 "                    Aggiungi coltivazione\n" +
                                 "                </button>\n" +
@@ -130,7 +126,7 @@
                         }
                     }
                 %>
-            
+            </div>
             <%@include file="fragments/footer.html"%>
 </body>
 </html>
