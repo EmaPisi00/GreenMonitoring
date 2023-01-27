@@ -1,9 +1,10 @@
 package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.ColtivazioneManager;
-import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager;
+import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
 import it.unisa.greenmonitoring.dataccess.beans.PiantaBean;
+import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 import it.unisa.greenmonitoring.dataccess.dao.PiantaDAOImpl;
 
@@ -45,16 +46,16 @@ public class ServletColtivazioni extends HttpServlet {
                 response.sendError(501);
                 String utente = (String) request.getSession().getAttribute("currentUserSession");
                 String nomepianta = request.getParameter("nomepianta");
-                PiantaBean pb = new PiantaBean(utente,
-                        nomepianta,
-                        nomepianta,
-                        "0", "9", "0", "9");
-                PiantaManager pm = new PiantaManager();
+                String sensoreid = request.getParameter("sensore");
                 PiantaDAOImpl pdao = new PiantaDAOImpl();
                 try {
-                    pm.CreaPiantaManager(pb);
-                    // -1 perchè sarebbe ottimo avere un retreive pianta nel manager, in modo da averne l'id.
+                    SensoreManager sm = new SensoreManager();
+                    SensoreBean sb = sm.retrieveSensore(sensoreid);
+                    sb.setAzienda(utente);
+                    //sm.updateSensore();
                     int id = 0;
+
+                    //qui usa il dao ma quando sarà implementata la funzione utilizzerà il manager.
                     List<PiantaBean> ap = pdao.RetriveAllPiantaDefault();
                     for (int i = 0; i < ap.size(); i++) {
                         if (ap.get(i).getNome().equals(nomepianta)) {
