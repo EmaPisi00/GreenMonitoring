@@ -65,15 +65,15 @@ public class AutenticazioneManager {
 
         if (ricercaAzienda.getEmail() != null) {
 
-                System.out.println("Errore");
-                return null;
-            } else {
+            System.out.println("Errore");
+            return null;
+        } else {
 
-             aziendaDao.create(aziendaBean);
-             System.out.println("Inserimento fatto con successo");
+            aziendaDao.create(aziendaBean);
+            System.out.println("Inserimento fatto con successo");
             return aziendaBean;
         }
-        }
+    }
 
 
 
@@ -115,10 +115,10 @@ public class AutenticazioneManager {
 
         if (listaDipendenti.hasNext()) {
             DipendenteBean bean = listaDipendenti.next();
-                if ((bean.getNome().equals(dipendenteBean.getNome())) && (bean.getCognome().equals(dipendenteBean.getCognome())) && (bean.getAzienda().equals(dipendenteBean.getAzienda()))) {
-                    System.out.println("\nDipendente già presente\n");
+            if ((bean.getNome().equals(dipendenteBean.getNome())) && (bean.getCognome().equals(dipendenteBean.getCognome())) && (bean.getAzienda().equals(dipendenteBean.getAzienda()))) {
+                System.out.println("\nDipendente già presente\n");
 
-                }
+            }
             return null;
         } else {
             dipendenteDao.create(dipendenteBean);
@@ -135,7 +135,7 @@ public class AutenticazioneManager {
      * @return il tipo di utente se le credenziali sono corrette, altrimenti null
      * @throws SQLException
      */
-    public UtenteBean Login(String email, String password) throws SQLException { //chiamalo login
+    public UtenteBean Login(String email, String password) throws SQLException { //da modificare (anche il test)
         List<AziendaBean> listAziende = aziendaDao.retrieveAll();
         for (AziendaBean azienda : listAziende) {
             if (azienda.getEmail().matches(email)) {

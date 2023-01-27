@@ -14,10 +14,9 @@ public class SensoreManager {
      * @param s
      * @throws SQLException
      */
-    public static void createSensore(SensoreBean s) throws SQLException {
+    public static void creaSensore(SensoreBean s) throws SQLException {
         SensoreDAO sns = new SensoreDAOImpl();
         sns.create(s);
-
     }
 
     /**
@@ -26,30 +25,49 @@ public class SensoreManager {
      * @return SensoreBean
      * @throws SQLException
      */
-    public SensoreBean retrieveSensore(String id_sensore) throws SQLException {
-        return null;
+    public static SensoreBean retrieveSensore(int id_sensore) throws SQLException {
+        SensoreDAO sns = new SensoreDAOImpl();
+        return sns.retrieveByKey(id_sensore);
     }
 
     /**
      * Questo metodo aggiorna una riga in Sensore in corrispondenza ad id.
-     * @param id_sensore
+     * @param sensore
      * @throws SQLException
      */
-    public void updateSensore(String id_sensore) throws SQLException {
-
+    public void cancellaSensore(SensoreBean sensore) throws SQLException {
+        try {
+            SensoreDAO td = new SensoreDAOImpl();
+            td.update(sensore.getId(), sensore);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /**
+     * Metodo usato per associare un sensore.
+     * @param sensore
+     * @param id_coltivazione
+     * @post la relazione tra t e la coltivazione nel database non esiste più.
+     */
+    public static void aggiungiAssociazioneSensore(int id_coltivazione, SensoreBean sensore) {
+        try {
+            SensoreDAO td = new SensoreDAOImpl();
+            sensore.setColtivazione(id_coltivazione);
+            td.update(sensore.getId(), sensore);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * Metodo usato per rimuovere un sensore.
-     * @param id_sensore
-     * @param email
-     * @pre t ha un id che esiste nel database.
+     * Metodo usato per rimuovere l'associazione di un sensore.
+     * @param sensore
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      */
-    public void rimuoviSensore(String email, int id_sensore) {
+    public static void cancellaAssociazioneSensore(SensoreBean sensore) {
         try {
             SensoreDAO td = new SensoreDAOImpl();
-            td.removeAssociation(email, id_sensore);
+            td.update(sensore.getId(), sensore);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

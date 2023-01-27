@@ -78,7 +78,7 @@ public class ServletColtivazioni extends HttpServlet {
                     //qui usa il dao ma quando sarà implementata la funzione utilizzerà il manager.
                     SensoreManager sm = new SensoreManager();
                     SensoreDAOImpl sdao = new SensoreDAOImpl();
-                    SensoreBean sb = sm.retrieveSensore(sensoreid); //cerco il sensore in base all'id passato dal form.
+                    SensoreBean sb = sm.retrieveSensore(Integer.parseInt(sensoreid)); //cerco il sensore in base all'id passato dal form.
                     sb.setColtivazione(id_nuovaColtivazione); //ora il sensore è associato a quella coltivazione
                     sdao.update(sb.getId(), sb);
                 } catch (SQLException e) {
