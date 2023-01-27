@@ -1,8 +1,11 @@
-package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
+package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
 import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
+import it.unisa.greenmonitoring.dataccess.beans.MisurazioneSensoreBean;
 import it.unisa.greenmonitoring.dataccess.dao.ColtivazioneDAO;
 import it.unisa.greenmonitoring.dataccess.dao.ColtivazioneDAOImpl;
+import it.unisa.greenmonitoring.dataccess.dao.MisurazioneSensoreDAO;
+import it.unisa.greenmonitoring.dataccess.dao.MisurazioneSensoreDAOImpl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -65,5 +68,27 @@ public class ColtivazioneManager {
             throw new RuntimeException(e);
         }
         return l;
+    }
+
+    /**
+     * Questo metodo calcola la media per ogni tipo di sensore.
+     * @param id_coltivazione
+     * @return ms
+     */
+    public int[] visualizzaMediaSensori(String id_coltivazione) throws SQLException {
+        MisurazioneSensoreDAO msdao = new MisurazioneSensoreDAOImpl();
+        ArrayList<MisurazioneSensoreBean> msbList = msdao.retreive(id_coltivazione);
+        int[] media = new int[3];
+        for (int i = 0; i < msbList.size(); i++) {
+            MisurazioneSensoreBean msb = msbList.get(i);
+            if (msb.getTipo().equals("pH")) {
+                media[0] = media[0] + msb.getValore();
+            } else if (msb.getTipo().equals("temperatura")) {
+                media[1] = media[1] + msb.getValore();
+            } else if (msb.getTipo().equals("umidità")) {
+                media[2] = media[2] + msb.getValore();
+            }
+        }
+        return media;
     }
 }

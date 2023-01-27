@@ -4,8 +4,7 @@
 <%@ page import="java.util.Random" %>
 <%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.ColtivazioneManager" %>
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.MisurazioneSensoreManager" %><%--
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -51,18 +50,16 @@
                 /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                 else {
                     List<ColtivazioneBean> list = null;
+                    ColtivazioneManager cm = new ColtivazioneManager();
 
                     if ( (session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                         DipendenteBean a = (DipendenteBean) sa;
-                        ColtivazioneManager cm = new ColtivazioneManager();
                         list = cm.visualizzaStatoColtivazioni( a.getAzienda() );
                     } else {
                         AziendaBean a = (AziendaBean) sa;
-                        ColtivazioneManager cm = new ColtivazioneManager();
                         list = cm.visualizzaStatoColtivazioni( a.getEmail() );
                     }
-                    MisurazioneSensoreManager msm = new MisurazioneSensoreManager();
-                    int[] valoriMisurati = msm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
+                    int[] valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
                             out.print("<li class=\"list-group-item \">" +
                                     "Coltivazione "+ session.getAttribute("coltivazioneID") + "<br>" +
                                     "<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +

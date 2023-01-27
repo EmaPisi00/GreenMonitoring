@@ -4,7 +4,7 @@
 <%@ page import="java.util.Random" %>
 <%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.ColtivazioneManager" %><%--
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023

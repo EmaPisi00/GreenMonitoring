@@ -1,6 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
-import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.ColtivazioneManager;
+import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.*;
 import it.unisa.greenmonitoring.dataccess.dao.PiantaDAOImpl;
