@@ -29,12 +29,13 @@ public class SensoreDAOImpl implements SensoreDAO {
     @Override
     public void create(SensoreBean s) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT " + TABLE_NAME + " (azienda,tipo) VALUES (?,?)";
+        String insertSQL = "INSERT " + TABLE_NAME + " (azienda,tipo,idM) VALUES (?,?,?)";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setString(1, s.getAzienda());
             preparedStatement.setString(2, s.getTipo());
+            preparedStatement.setString(3, s.getIdM());
             preparedStatement.executeUpdate();
             connection.commit();
         } finally {
