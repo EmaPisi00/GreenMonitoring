@@ -7,6 +7,7 @@ import it.unisa.greenmonitoring.dataccess.beans.PiantaBean;
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 import it.unisa.greenmonitoring.dataccess.dao.PiantaDAOImpl;
+import it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,10 +50,12 @@ public class ServletColtivazioni extends HttpServlet {
                 String sensoreid = request.getParameter("sensore");
                 PiantaDAOImpl pdao = new PiantaDAOImpl();
                 try {
+                    //qui usa il dao ma quando sarà implementata la funzione utilizzerà il manager.
                     SensoreManager sm = new SensoreManager();
+                    SensoreDAOImpl sdao = new SensoreDAOImpl();
                     SensoreBean sb = sm.retrieveSensore(sensoreid);
                     sb.setAzienda(utente);
-                    //sm.updateSensore();
+                    sdao.update(sb.getId(), sb);
                     int id = 0;
 
                     //qui usa il dao ma quando sarà implementata la funzione utilizzerà il manager.
