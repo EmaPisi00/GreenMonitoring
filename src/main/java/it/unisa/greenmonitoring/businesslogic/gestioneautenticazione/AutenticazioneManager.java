@@ -2,6 +2,7 @@ package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
+import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 import it.unisa.greenmonitoring.dataccess.dao.AziendaDAO;
 import it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl;
 import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAO;
@@ -134,12 +135,12 @@ public class AutenticazioneManager {
      * @return il tipo di utente se le credenziali sono corrette, altrimenti null
      * @throws SQLException
      */
-    public String CheckData(String email, String password) throws SQLException { //chiamalo login
+    public UtenteBean Login(String email, String password) throws SQLException { //chiamalo login
         List<AziendaBean> listAziende = aziendaDao.retrieveAll();
         for (AziendaBean azienda : listAziende) {
             if (azienda.getEmail().matches(email)) {
                 if (azienda.getPassword().matches(password)) {
-                    return "azienda"; //return oggetto azienda
+                    return azienda;
                 }
             }
         }
@@ -147,10 +148,10 @@ public class AutenticazioneManager {
         for (DipendenteBean dipendente : listDipendenti) {
             if (dipendente.getEmail().matches(email)) {
                 if (dipendente.getPassword().matches(password)) {
-                    return "dipendente";
+                    return dipendente;
                 }
             }
         }
-        return "null";
+        return null;
     }
 }
