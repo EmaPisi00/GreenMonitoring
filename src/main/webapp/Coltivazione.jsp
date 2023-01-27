@@ -27,6 +27,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<%  UtenteBean ut = (UtenteBean) session.getAttribute("currentUserSession");
+    if (!(ut instanceof AziendaBean) || ut == null)  { %>
+<% response.sendRedirect("error.jsp"); %>
+<% } else{  %>
+<%@include file="fragments/headerLogged.html"%>
+<%}%>
 <div class="bd">
     <legend style="text-align:center;"></legend>
     <!-- Coltivazioni -->

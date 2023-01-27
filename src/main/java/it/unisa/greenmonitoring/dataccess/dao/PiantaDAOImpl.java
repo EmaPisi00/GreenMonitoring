@@ -89,7 +89,7 @@ public class PiantaDAOImpl implements PiantaDAO {
                 t.setTemperatura_max(rs.getString("temperatura_max"));
                 t.setUmidita_min(rs.getString("umidita_min"));
                 t.setUmidita_max(rs.getString("umidita_max"));
-                t.setImmagine(rs.getString("immagine"));
+                //t.setImmagine(rs.getString("immagine"));
                 System.out.println(t);
                 connection.commit();
                 list.add(t);

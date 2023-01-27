@@ -2,10 +2,7 @@ package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.ColtivazioneManager;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
-import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
-import it.unisa.greenmonitoring.dataccess.beans.PiantaBean;
-import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
-import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
+import it.unisa.greenmonitoring.dataccess.beans.*;
 import it.unisa.greenmonitoring.dataccess.dao.PiantaDAOImpl;
 import it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl;
 
@@ -44,33 +41,46 @@ public class ServletColtivazioni extends HttpServlet {
             if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
                 response.sendError(401);
             } else {
-                response.sendError(501);
-                String utente = (String) request.getSession().getAttribute("currentUserSession");
+                AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
+                String utente = aziendaBean.getEmail();
                 String nomepianta = request.getParameter("nomepianta");
                 String sensoreid = request.getParameter("sensore");
+                int terreno = Integer.parseInt(request.getParameter("terreno"));
                 PiantaDAOImpl pdao = new PiantaDAOImpl();
                 try {
-                    //qui usa il dao ma quando sarà implementata la funzione utilizzerà il manager.
-                    SensoreManager sm = new SensoreManager();
-                    SensoreDAOImpl sdao = new SensoreDAOImpl();
-                    SensoreBean sb = sm.retrieveSensore(sensoreid);
-                    sb.setAzienda(utente);
-                    sdao.update(sb.getId(), sb);
-                    int id = 0;
+                    int id = 0; //questo id serve per trovare l'id della prima occorrenza, senza azienda di una certa pianta
 
                     //qui usa il dao ma quando sarà implementata la funzione utilizzerà il manager.
                     List<PiantaBean> ap = pdao.RetriveAllPiantaDefault();
                     for (int i = 0; i < ap.size(); i++) {
                         if (ap.get(i).getNome().equals(nomepianta)) {
+                            System.out.println("ServletColtivazioni: nome della pianta " + ap.get(i).getNome());
                             if (ap.get(i).getAzienda() == null) {
                                 id = ap.get(i).getId();
                                 break;
                             }
                         }
                     }
-                    ColtivazioneBean cb = new ColtivazioneBean(id, Integer.parseInt(request.getParameter("terreno")), Byte.parseByte("0"));
+                    System.out.println("ServletColtivazioni: id della pianta: " + id);
+                    ColtivazioneBean cb = new ColtivazioneBean(id, terreno, Byte.parseByte("0"));
                     ColtivazioneManager cm = new ColtivazioneManager();
                     cm.avvioColtivazione(cb);
+                    /* Prendo l'id della coltivazione appena generata */
+                    int id_nuovaColtivazione = 0;
+                    List<ColtivazioneBean> listColtivazioni = cm.visualizzaColtivazioniAvviate(utente);
+                    for (int i = 0; i < listColtivazioni.size(); i++) {
+                        if (listColtivazioni.get(i).getData_inizio().equals(cb.getData_inizio()) && listColtivazioni.get(i).getTerreno() == terreno) {
+                            id_nuovaColtivazione = listColtivazioni.get(i).getId();
+                        }
+                    }
+                    /* Procedo ad associare la coltivazione al sensore*/
+
+                    //qui usa il dao ma quando sarà implementata la funzione utilizzerà il manager.
+                    SensoreManager sm = new SensoreManager();
+                    SensoreDAOImpl sdao = new SensoreDAOImpl();
+                    SensoreBean sb = sm.retrieveSensore(sensoreid); //cerco il sensore in base all'id passato dal form.
+                    sb.setColtivazione(id_nuovaColtivazione); //ora il sensore è associato a quella coltivazione
+                    sdao.update(sb.getId(), sb);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
