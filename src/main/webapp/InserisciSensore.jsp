@@ -34,7 +34,7 @@
 
   <body >
 
-  <form method="post" action="SensorServlet">
+  <form method="post" action="ServletSensore">
     <label for="tipo">tipo sensore:</label>
     <input type="text" id="tipo" name="tipo">
 

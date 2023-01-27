@@ -29,7 +29,7 @@
 <%} else{ %>
 <%@ include file="/fragments/headerLogged.html" %>
 <%}%>
-<form method="post" action="LoginServlet">
+<form method="post" action="ServletLogin">
     <div class="container" style="width: 100px; height: auto">
     <label for="email">Username:</label>
     <input type="text" id="email" name="email">

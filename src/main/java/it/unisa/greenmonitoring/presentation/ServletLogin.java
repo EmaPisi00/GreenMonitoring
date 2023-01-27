@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-@WebServlet(name = "LoginServlet", value = "/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "ServletLogin", value = "/ServletLogin")
+public class ServletLogin extends HttpServlet {
     /**
      * Object that provides the methods to manage the Login.
      */
