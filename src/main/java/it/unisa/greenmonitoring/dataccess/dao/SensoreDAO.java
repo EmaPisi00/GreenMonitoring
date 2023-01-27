@@ -18,11 +18,19 @@ public interface SensoreDAO {
     void create(SensoreBean registrazioneSensoreBean) throws SQLException;
 
     /**
-     * Metodo retrieve che permette di ricercare tutti i dati di tutte le aziende.
+     * Metodo retrieve che permette di ricercare tutti i dati di tutti i sensori.
      * @return List<SensoreBean>
      * @throws SQLException
      */
     List<SensoreBean> retrieveAll() throws SQLException;
+
+    /**
+     * Metodo retrieve che permette di ricercare un sensore in base all'id.
+     * @param id_sensore
+     * @return SensoreBean
+     * @throws SQLException
+     */
+    SensoreBean retrieveByKey(int id_sensore) throws SQLException;
 
     /**
      * Metodo retrieve che permette di ricercare tutti i sensori di un'azienda.
@@ -42,18 +50,9 @@ public interface SensoreDAO {
     void update(int id_sensore, SensoreBean s) throws SQLException;
 
     /**
-     * Metodo delete che permette di eliminare un'azienda dal sistema.
-     * @param id
+     * Metodo delete che permette di eliminare un sensore di una azienda dal db.
+     * @param sensore
      * @throws SQLException
      */
-    void delete(int id) throws SQLException;
-
-    /**
-     * Metodo che permette la rimozione di una associazione.
-     * @param emailAzienda
-     * @param id
-     * @throws SQLException
-     */
-    void removeAssociation(String emailAzienda, int id) throws SQLException;
+    void delete(SensoreBean sensore) throws SQLException;
 }
-

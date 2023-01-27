@@ -29,13 +29,12 @@ public class SensoreDAOImpl implements SensoreDAO {
     @Override
     public void create(SensoreBean s) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT " + TABLE_NAME + " (azienda,tipo,idM) VALUES (?,?,?)";
+        String insertSQL = "INSERT " + TABLE_NAME + " (azienda,tipo) VALUES (?,?)";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setString(1, s.getAzienda());
             preparedStatement.setString(2, s.getTipo());
-            preparedStatement.setString(3, s.getIdM());
             preparedStatement.executeUpdate();
             connection.commit();
         } finally {
@@ -79,6 +78,30 @@ public class SensoreDAOImpl implements SensoreDAO {
         return list;
     }
     @Override
+    public SensoreBean retrieveByKey(int id_sensore) throws SQLException {
+        String selectSQL = "SELECT * FROM Sensore WHERE id = ?";
+        SensoreBean s = new SensoreBean();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, id_sensore);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                s.setId(rs.getInt("id"));
+                s.setTipo(rs.getString("tipo"));
+                s.setColtivazione(rs.getInt("coltivazione"));
+                s.setAzienda(rs.getString("azienda"));
+                s.setIdM(rs.getString("idM"));
+
+                connection.commit();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        connection.close();
+        return s;
+    }
+    @Override
     public List<SensoreBean> retrieveAllByAzienda(String azienda) throws SQLException {
         String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE azienda = ?";
         List<SensoreBean> list = new ArrayList<>();
@@ -111,14 +134,15 @@ public class SensoreDAOImpl implements SensoreDAO {
 
     @Override
     public synchronized void update(int id_sensore, SensoreBean s) throws SQLException {
-        String updateSQL = "UPDATE Sensore SET tipo = ?, azienda = ?, idM = ? WHERE id = ?";
+        String updateSQL = "UPDATE Sensore SET tipo = ?, azienda = ?, idM = ?, coltivazione = ? WHERE id = ?";
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
             preparedStatement.setString(1, s.getTipo());
             preparedStatement.setString(2, s.getAzienda());
             preparedStatement.setString(3, s.getIdM());
-            preparedStatement.setInt(4, id_sensore);
+            preparedStatement.setInt(4, s.getColtivazione());
+            preparedStatement.setInt(5, id_sensore);
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -129,29 +153,13 @@ public class SensoreDAOImpl implements SensoreDAO {
     }
 
     @Override
-    public void delete(int id_sensore) throws SQLException {
-        String deleteSQL = "DELETE FROM Sensore WHERE Sensore.id = ?";
-        try {
-            connection = ConnectionPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setInt(1, id_sensore);
-            preparedStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connection.close();
-        }
-    }
-
-    @Override
-    public void removeAssociation(String email_azienda, int id_sensore) throws SQLException {
+    public void delete(SensoreBean sensore) throws SQLException {
         String deleteSQL = "DELETE FROM Sensore WHERE Sensore id = ? AND azienda = ?";
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setInt(1, id_sensore);
-            preparedStatement.setString(2, email_azienda);
+            preparedStatement.setInt(1, sensore.getId());
+            preparedStatement.setString(2, sensore.getAzienda());
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -160,5 +168,4 @@ public class SensoreDAOImpl implements SensoreDAO {
             connection.close();
         }
     }
-
 }

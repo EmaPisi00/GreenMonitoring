@@ -37,20 +37,39 @@ public class SensorServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String tipo = request.getParameter("tipo");
-        String id_mosquitto = request.getParameter("id_mosquitto");
-        UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
-        AziendaBean azienda = (AziendaBean) u;
         SensoreBean sns = new SensoreBean();
-        sns.setTipo(tipo);
-        sns.setAzienda(azienda.getEmail());
-        sns.setIdM(id_mosquitto);
-        try {
-            SensoreManager.createSensore(sns);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (request.getParameter("RegistraSensore") != null) {
+            String tipo = request.getParameter("tipo");
+            String id_mosquitto = request.getParameter("id_mosquitto");
+            UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
+            AziendaBean azienda = (AziendaBean) u;
+            sns.setTipo(tipo);
+            sns.setAzienda(azienda.getEmail());
+            sns.setIdM(id_mosquitto);
+            try {
+                SensoreManager.creaSensore(sns);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            response.sendRedirect("InserisciSensore.jsp");
+        } else if (request.getParameter("AssociaSensore") != null) {
+            int coltivazione = Integer.parseInt(request.getParameter("id_coltivazione"));
+            int id_sensore = Integer.parseInt(request.getParameter("id_sensore"));
+            try {
+                sns = SensoreManager.retrieveSensore(id_sensore);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            SensoreManager.aggiungiAssociazioneSensore(coltivazione, sns);
+        } else if (request.getParameter("CancellaAssociazioneSensore") != null) {
+            int id_sensore = Integer.parseInt(request.getParameter("id_sensore"));
+            try {
+                sns = SensoreManager.retrieveSensore(id_sensore);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            SensoreManager.cancellaAssociazioneSensore(sns);
         }
-        response.sendRedirect("InserisciSensore.jsp");
     }
 
 }
