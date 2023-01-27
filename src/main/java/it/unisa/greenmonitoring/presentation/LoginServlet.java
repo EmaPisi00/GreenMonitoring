@@ -4,8 +4,7 @@ import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.Autenticazi
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
-import it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl;
-import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAOImpl;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,25 +46,16 @@ public class LoginServlet extends HttpServlet {
         HttpSession sessione = request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        //mettere tutti i controlli in autenticazioneManager dove restituisci un oggetto utenteBean
         try {
-            String checkRole = lm.CheckData(email, password);
-            if (checkRole.matches("azienda")) {
-                UtenteBean user = new AziendaBean();
-                user.setEmail(request.getParameter("email"));
-                user.setPassword(request.getParameter("password"));
-                user = AziendaDAOImpl.doRetrieve(user);
+            UtenteBean user = lm.Login(email, password);
+            if (user instanceof AziendaBean) {
                 sessione.setAttribute("currentUserSession", user);
                 //ciclo for per la verifica del corretto retrieve delle informazioni dello user corrente
                 for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((AziendaBean) user).getPartita_iva(), ((AziendaBean) user).getNome_azienda())) {
                     System.out.println(s);
                 }
                 response.sendRedirect("HomePage.jsp");
-            } else if (checkRole.matches("dipendente")) {
-                UtenteBean user = new DipendenteBean();
-                user.setEmail(request.getParameter("email"));
-                user.setPassword(request.getParameter("password"));
-                user = DipendenteDAOImpl.doRetrieve(user);
+            } else if (user instanceof DipendenteBean) {
                 sessione.setAttribute("currentUserSession", user);
                 //ciclo for per la verifica del corretto retrieve delle informazioni dello user corrente
                 for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((DipendenteBean) user).getNome(), ((DipendenteBean) user).getCognome(), ((DipendenteBean) user).getAzienda())) {
