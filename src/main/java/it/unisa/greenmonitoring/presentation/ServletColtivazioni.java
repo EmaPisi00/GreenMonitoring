@@ -44,7 +44,9 @@ public class ServletColtivazioni extends HttpServlet {
                 AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
                 String utente = aziendaBean.getEmail();
                 String nomepianta = request.getParameter("nomepianta");
-                String sensoreid = request.getParameter("sensore");
+                String sensorePhid = request.getParameter("sensorePh");
+                String sensoreTemperatura = request.getParameter("sensoreTemperatura");
+                String sensoreUmidita = request.getParameter("sensoreUmidita");
                 int terreno = Integer.parseInt(request.getParameter("terreno"));
                 PiantaDAOImpl pdao = new PiantaDAOImpl();
                 try {
@@ -78,7 +80,7 @@ public class ServletColtivazioni extends HttpServlet {
                     //qui usa il dao ma quando sarà implementata la funzione utilizzerà il manager.
                     SensoreManager sm = new SensoreManager();
                     SensoreDAOImpl sdao = new SensoreDAOImpl();
-                    SensoreBean sb = sm.retrieveSensore(Integer.parseInt(sensoreid)); //cerco il sensore in base all'id passato dal form.
+                    SensoreBean sb = sm.retrieveSensore(Integer.parseInt(sensorePhid)); //cerco il sensore in base all'id passato dal form.
                     sb.setColtivazione(id_nuovaColtivazione); //ora il sensore è associato a quella coltivazione
                     sdao.update(sb.getId(), sb);
                 } catch (SQLException e) {
