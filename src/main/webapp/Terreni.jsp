@@ -4,7 +4,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Random" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
-<%@ page import="java.lang.reflect.AnnotatedArrayType" %><%--
+<%@ page import="java.lang.reflect.AnnotatedArrayType" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -74,21 +76,40 @@
                         AziendaBean a = (AziendaBean) seo;
 
                         TerrenoManager t = new TerrenoManager();
-                        List<TerrenoBean> list = t.visualizzaListaTerreni( a.getEmail() );
-
+                        List<TerrenoBean> list = t.visualizzaListaTerreni(a.getEmail());
                         int i = 0;
+                        ColtivazioneManager cm = new ColtivazioneManager();
+                        List<ColtivazioneBean> clist = cm.visualizzaColtivazioniAvviate(a.getEmail());
+                        List<Integer> ids = new ArrayList<>();
+                        for (ColtivazioneBean cb : clist) {
+                            if (cb.getTerreno() == null){
+                                ids.add(cb.getTerreno());
+                            }
+                        }
                         for (TerrenoBean tb : list) {
-                            out.print("<tr>" +
-                                    "<td>"+
-                                    "<input id=\"chk\" name=\"terreno"+i+"\" type=\"checkbox\" value=\""+ tb.getId() +"\"></input>" +
-                                    "</td>"+
-                                    "<td>" + tb.getId() + "</td>" +
-                                    "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
-                                    "<td>" + tb.getLatitudine()+ "</td>" +
-                                    "<td>" + tb.getLongitudine() + "</td>" +
-                                    "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
-                            );
-                            i++;
+                            if (ids.contains(tb.getId())) {
+                                out.print("<tr>" +
+                                        "<td>" +
+                                        "<input id=\"chk\" name=\"terreno" + i + "\" type=\"checkbox\" value=\"" + tb.getId() + "\"></input>" +
+                                        "</td>" +
+                                        "<td>" + tb.getId() + "</td>" +
+                                        "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
+                                        "<td>" + tb.getLatitudine() + "</td>" +
+                                        "<td>" + tb.getLongitudine() + "</td>" +
+                                        "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
+                                );
+                                i++;
+                            } else {
+                                out.print("<tr>" +
+                                        "<td>Coltivazione avviata" +
+                                        "</td>" +
+                                        "<td>" + tb.getId() + "</td>" +
+                                        "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
+                                        "<td>" + tb.getLatitudine() + "</td>" +
+                                        "<td>" + tb.getLongitudine() + "</td>" +
+                                        "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
+                                );
+                            }
                         }
                     }
                 %>
