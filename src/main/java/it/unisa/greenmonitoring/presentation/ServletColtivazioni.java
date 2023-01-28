@@ -1,11 +1,8 @@
 package it.unisa.greenmonitoring.presentation;
 
-import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager;
 import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.*;
-import it.unisa.greenmonitoring.dataccess.dao.PiantaDAOImpl;
-import it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")

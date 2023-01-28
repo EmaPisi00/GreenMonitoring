@@ -163,8 +163,7 @@
                             out.print("                </select><br>");
 
 
-                            out.print("<label>Scegliere i sensori da associare alla coltivazione</label><br>" +
-                                    "<label>pH</label><br>");
+                            out.print("<label>Umidità</label><br>");
                             out.print("                <select type=\"text\" name=\"sensoreUmidita\" required><br>\n");
 
                             for (int i = 0; i < sbList.size(); i++) {
