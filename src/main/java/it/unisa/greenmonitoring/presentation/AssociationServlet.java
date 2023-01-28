@@ -1,12 +1,8 @@
 package it.unisa.greenmonitoring.presentation;
 
-import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
+import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.UtenteManager;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
-import it.unisa.greenmonitoring.dataccess.dao.AziendaDAO;
-import it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl;
-import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAO;
-import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAOImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,31 +49,17 @@ public class AssociationServlet extends HttpServlet {
         UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
 
         if (user instanceof DipendenteBean && ((DipendenteBean) user).getAzienda() == null) {
-            AziendaDAO aziendaDAO = new AziendaDAOImpl();
-            AziendaBean azienda;
             try {
-                azienda = aziendaDAO.retrieveByCode(codiceAzienda);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (azienda != null) {
-                DipendenteBean dipendente = (DipendenteBean) user;
-                dipendente.setAzienda(azienda.getEmail());
-                DipendenteDAO dipendenteDAO = null;
-                dipendenteDAO = new DipendenteDAOImpl();
-                try {
-                    dipendenteDAO.doUpdate(dipendente);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                response.sendRedirect("Profile.jsp");
+                if (UtenteManager.associazioneDipendente((DipendenteBean) user, codiceAzienda)) {
+                    response.sendRedirect("Profile.jsp");
             } else {
                 response.sendRedirect("Associazione.jsp");
+            }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         } else {
             response.sendRedirect("Associazione.jsp");
         }
     }
-
 }
