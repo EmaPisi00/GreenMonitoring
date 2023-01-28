@@ -62,13 +62,5 @@ public interface AziendaDAO {
      * @throws SQLException
      */
     void delete(String email) throws SQLException;
-
-    /**
-     * Metodo che permette la rimozione di una associazione.
-     * @param emailAzienda
-     * @param email
-     * @throws SQLException
-     */
-    void removeAssociation(String emailAzienda, String email) throws SQLException;
 }
 

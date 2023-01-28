@@ -1,6 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
+import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,6 +19,14 @@ public interface DipendenteDAO {
     void create(DipendenteBean registrazioneDipendenteBean) throws SQLException;
 
     /**
+     * Metodo retrieve che permette di ricercare un dipendente.
+     * @param email
+     * @return DipendenteBean
+     * @throws SQLException
+     */
+     UtenteBean doRetrieve(String email);
+
+    /**
      * Metodo retrieve che permette di ricercare tutti i dati di tutti i dipendenti.
      * @return List<DipendenteBean>
      * @throws SQLException
@@ -25,9 +34,9 @@ public interface DipendenteDAO {
     List<DipendenteBean> retrieveAll() throws SQLException;
 
     /**
-     * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
+     * Metodo retrieve che permette di ottenere tutti i dipendenti di una singola azienda.
      * @param email
-     * @return List<AziendaBean>
+     * @return List<DipendenteBean>
      * @throws SQLException
      */
     List<DipendenteBean> retrieveAllByCode(String email) throws SQLException;
@@ -42,18 +51,11 @@ public interface DipendenteDAO {
 
 
     /**
-     * Metodo update che permette di modificare dati già presenti nel DB.
+     * Metodo update che permette di modificare dati già presenti nel DB (senza modificare l'email).
      * @param dipendenteBean
      * @throws SQLException
      */
     void doUpdate(DipendenteBean dipendenteBean) throws SQLException;
-
-    /**
-     * non lo so.
-     * @param email
-     * @throws SQLException
-     */
-    void updateAziendaToNull(String email) throws SQLException;
 
     /**
      * Metodo delete che permette di eliminare un dipendente dal sistema.

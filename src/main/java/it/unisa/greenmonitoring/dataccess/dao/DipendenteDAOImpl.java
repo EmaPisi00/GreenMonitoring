@@ -129,37 +129,22 @@ public class DipendenteDAOImpl implements DipendenteDAO {
 
 
     /**
-     * Metodo retrieve che restituisce di dati di un'azienda ad un bean di tipo UtenteBean.
+     * Metodo retrieve che restituisce di dati di dipendente..
      * @throws SQLException
-     * @param beanInput
+     * @param email
      * @return restituisce il bean diocane
      */
-    public static UtenteBean doRetrieve(UtenteBean beanInput) {
+    @Override
+    public UtenteBean doRetrieve(String email) {
 
         connection = null;
-        PreparedStatement preparedStatement = null;
-
-        String email = beanInput.getEmail();
-        String password = beanInput.getPassword();
-
-        String searchQuery =
-                "select * from " + TABLE_NAME + " where email = ? and password = ?";
-
-
-
+        String searchQuery = "select * from " + TABLE_NAME + " where email = ?";
         UtenteBean bean = new DipendenteBean();
-
         try {
             connection = ConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(searchQuery);
+            PreparedStatement preparedStatement = connection.prepareStatement(searchQuery);
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
-
-
-
             ResultSet rs = preparedStatement.executeQuery();
-
-
             if (rs.next()) {
                 bean.setEmail(rs.getString("email"));
                 bean.setPassword(rs.getString("password"));
@@ -174,7 +159,6 @@ public class DipendenteDAOImpl implements DipendenteDAO {
         } catch (Exception ex) {
             System.out.println("Log In failed: An Exception has occurred! " + ex);
         }
-
         return bean;
     }
 
@@ -314,14 +298,6 @@ public class DipendenteDAOImpl implements DipendenteDAO {
         }
     }
 
-    /**
-     * @param email
-     * @throws SQLException
-     */
-    @Override
-    public void updateAziendaToNull(String email) throws SQLException {
-
-    }
 
     /**
      * Metodo delete che implementa una cancellazione dal sistema attraverso il passaggio di un ID.

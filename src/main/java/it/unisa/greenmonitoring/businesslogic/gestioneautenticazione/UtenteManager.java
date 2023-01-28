@@ -56,6 +56,16 @@ public class UtenteManager {
     }
 
     /**
+     * Metodo che permette la cancellazione dell'associazione di un dipendente ad un'azienda.
+     * @param id
+     */
+    public static void rimuoviAssociazioneDipendente(String id) throws SQLException {
+        DipendenteBean user = (DipendenteBean) dipendenteDAO.doRetrieve(id);
+        user.setAzienda(null);
+        dipendenteDAO.doUpdate(user);
+    }
+
+    /**
      * Metodo che permette di aggiornare un dipendente.
      * @param utenteNuovo
      * @param vecchioUtente
