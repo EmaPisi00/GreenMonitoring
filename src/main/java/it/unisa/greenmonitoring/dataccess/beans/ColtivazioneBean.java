@@ -11,11 +11,11 @@ public class ColtivazioneBean {
     /**
      * Questo campo contiene l'id della pianta.
      */
-    private int pianta;
+    private Integer pianta;
     /**
      * Questo campo contiene l'id del terreno.
      */
-    private int terreno;
+    private Integer terreno;
     /**
      * Questo campo contiene la data di fine della coltivazione.
      */
@@ -55,7 +55,7 @@ public class ColtivazioneBean {
      * @param given_data_inizio
      * @param given_data_fine
      */
-    public ColtivazioneBean(int given_id, int given_pianta, int given_terreno, byte given_stato_archiviazione, Date given_data_inizio, Date given_data_fine) {
+    public ColtivazioneBean(int given_id, int given_pianta, Integer given_terreno, byte given_stato_archiviazione, Date given_data_inizio, Date given_data_fine) {
         this.id = given_id;
         this.pianta = given_pianta;
         this.terreno = given_terreno;
@@ -71,7 +71,7 @@ public class ColtivazioneBean {
      * @param given_stato_archiviazione
 
      */
-    public ColtivazioneBean(int given_pianta, int given_terreno, byte given_stato_archiviazione) {
+    public ColtivazioneBean(int given_pianta, Integer given_terreno, byte given_stato_archiviazione) {
         this.pianta = given_pianta;
         this.terreno = given_terreno;
         this.stato_archiviazione = given_stato_archiviazione;
@@ -90,7 +90,7 @@ public class ColtivazioneBean {
      * Questo metodo restituisce l'id della pianta di una coltivazione.
      * @return int
      */
-    public int getPianta() {
+    public Integer getPianta() {
         return pianta;
     }
 
@@ -98,7 +98,7 @@ public class ColtivazioneBean {
      * Questo metodo restituisce l'id del terreno di una coltivazione.
      * @return int
      */
-    public int getTerreno() {
+    public Integer getTerreno() {
         return terreno;
     }
 
@@ -147,7 +147,7 @@ public class ColtivazioneBean {
      * Questo metodo imposta il terreno associato ad una coltivazione.
      * @param given_terreno
      */
-    public void setTerreno(int given_terreno) {
+    public void setTerreno(Integer given_terreno) {
         this.terreno = given_terreno;
     }
 

@@ -4,7 +4,9 @@
 <%@ page import="java.util.Random" %>
 <%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %><%--
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -108,15 +110,23 @@
                                 "                <input type=\"hidden\" name=\"moduloInserimentoColtivazione\" required><br>\n" +
                                 "                <input type=\"text\" name=\"terreno\" required><br>\n" +
                                 "                <label>Inserire il nome della pianta da inserire</label><br>\n" +
-                                "                <input type=\"text\" name=\"nomepianta\" required><br>\n" +
-                                "                <label>Inserire il codice del sensore da inserire e selezionare il tipo di sensore</label><br>\n" +
-                                "                <input type=\"text\" name=\"codiceSensore\" required>\n" +
-                                "               <!-- <select name=\"sensore\" id=\"sensore_tipo\">\n" +
-                                "                    <option value=\"pH\">Temperatura</option>\n" +
-                                "                    <option value=\"temperatura\">pH</option>\n" +
-                                "                    <option value=\"umidità\">Umidità</option>\n" +
-                                "                </select> --> <br><br>\n" +
-                                "                <button type=\"submit\" class=\"btn btn-primary\">\n" +
+                                "                <select type=\"text\" name=\"nomepianta\" required><br>\n");
+                                PiantaManager pm = new PiantaManager();
+                                AziendaBean ab = (AziendaBean) session.getAttribute("currentUserSession");
+                                List<PiantaBean> pList = pm.ListaPianteManager(ab.getEmail());
+                                ColtivazioneManager cm = new ColtivazioneManager();
+                                List<ColtivazioneBean> cList = cm.visualizzaStatoColtivazioni(ab.getEmail());
+                                List<Integer> ids = new ArrayList<>();
+                                for (int i = 0; i < cList.size(); i++) {
+                                        ids.add(cList.get(i).getPianta());
+                                }
+                                for (int i = 0; i < pList.size(); i++) {
+                                    if(!(ids.contains(pList.get(i).getId()))) {
+                                        out.print("<option value=\"" + pList.get(i).getId() + "\" nome=\"sensore\">");
+                                    }
+                                }
+                                out.print("                </select>");
+                                out.print("                <button type=\"submit\" class=\"btn btn-primary\">\n" +
                                 "                    Aggiungi coltivazione\n" +
                                 "                </button>\n" +
                                 "            </form>\n" +
