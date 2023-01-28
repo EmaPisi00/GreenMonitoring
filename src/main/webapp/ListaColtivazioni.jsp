@@ -97,6 +97,7 @@
                         }
                         /* Stampa il form per inserire la coltivazione solo se ad accedere alla pagina è un'azienda */
                         if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                        AziendaBean ab = (AziendaBean) session.getAttribute("currentUserSession");
                         out.print("</ul>");
                         out.print("        </div>\n" +
                                 "    </div>\n" +
@@ -106,27 +107,75 @@
                                 "        <div class=\"card-body\">\n" +
                                 "<h5 class=\"card-title\">Modulo inserimento coltivazione</h5>" +
                                 "            <form action=\"ServletColtivazioni\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
-                                "                <label>Inserire l'id (#) del terreno a cui associare la coltivazione</label><br>\n" +
                                 "                <input type=\"hidden\" name=\"moduloInserimentoColtivazione\" required><br>\n" +
-                                "                <input type=\"text\" name=\"terreno\" required><br>\n" +
-                                "                <label>Inserire il nome della pianta da inserire</label><br>\n" +
-                                "                <select type=\"text\" name=\"nomepianta\" required><br>\n");
-                                PiantaManager pm = new PiantaManager();
-                                AziendaBean ab = (AziendaBean) session.getAttribute("currentUserSession");
-                                List<PiantaBean> pList = pm.ListaPianteManager(ab.getEmail());
+                                "                <label>Scegliere il terreno di cui avviare una coltivazione</label><br>" +
+                                "                <select type=\"text\" name=\"terreno\" required><br>\n");
+                                TerrenoManager tm = new TerrenoManager();
+                                List<TerrenoBean> tbList = tm.visualizzaListaTerreni(ab.getEmail());
+                                List<Integer> ids = new ArrayList<>();
+                                for (int i = 0; i < tbList.size(); i++) {
+                                    ids.add(tbList.get(i).getId());
+                                }
                                 ColtivazioneManager cm = new ColtivazioneManager();
                                 List<ColtivazioneBean> cList = cm.visualizzaStatoColtivazioni(ab.getEmail());
-                                List<Integer> ids = new ArrayList<>();
+                                for (int i = 0; i < tbList.size(); i++){
+                                    if (!ids.contains(cList.get(i).getTerreno())){
+                                        out.print("<option value=" + cList.get(i) + ">");
+                                    }
+                                }
+                                out.print("</select><br>");
+                                out.print("<label>Scegliere la pianta di cui avviare una coltivazione</label><br>" +
+                                "                <select type=\"text\" name=\"nomepianta\" required><br>\n");
+                                PiantaManager pm = new PiantaManager();
+                                List<PiantaBean> pList = pm.ListaPianteManager(ab.getEmail());
+                                ids = new ArrayList<>();
                                 for (int i = 0; i < cList.size(); i++) {
                                         ids.add(cList.get(i).getPianta());
                                 }
                                 for (int i = 0; i < pList.size(); i++) {
                                     if(!(ids.contains(pList.get(i).getId()))) {
-                                        out.print("<option value=\"" + pList.get(i).getId() + "\" nome=\"sensore\">");
+                                        out.print("<option value=\"" + pList.get(i).getId() + "\">");
                                     }
                                 }
-                                out.print("                </select>");
-                                out.print("                <button type=\"submit\" class=\"btn btn-primary\">\n" +
+                            out.print("                </select><br>");
+
+                            out.print("<label>Scegliere i sensori da associare alla coltivazione</label><br>" +
+                                    "<label>pH</label><br>");
+                            out.print("                <select type=\"text\" name=\"sensorePh\" required><br>\n");
+                            SensoreManager sm = new SensoreManager();
+                            List<SensoreBean> sbList = sm.visualizzaListaSensori(ab.getEmail());
+
+                            for (int i = 0; i < sbList.size(); i++) {
+                                /*if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
+                                    out.print("<option value=\"" + pList.get(i).getId() + "\">");
+                                }*/
+                            }
+                            out.print("                </select><br>");
+
+                            out.print("<label>Temperatura</label><br>");
+                            out.print("                <select type=\"text\" name=\"sensoreTemperatura\" required><br>\n");
+
+                            for (int i = 0; i < sbList.size(); i++) {
+                                /*if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
+                                    out.print("<option value=\"" + pList.get(i).getId() + "\">");
+                                }*/
+                            }
+                            out.print("                </select><br>");
+
+
+                            out.print("<label>Scegliere i sensori da associare alla coltivazione</label><br>" +
+                                    "<label>pH</label><br>");
+                            out.print("                <select type=\"text\" name=\"sensoreUmidita\" required><br>\n");
+
+                            for (int i = 0; i < sbList.size(); i++) {
+                                /*if (sbList.get(i).getColtivazione() == null && (sbList.get(i).getTipo().toLowerCase().contains("umidit"))) {
+                                    out.print("<option value=\"" + pList.get(i).getId() + "\">");
+                                }*/
+                            }
+                            out.print("                </select><br>");
+
+
+                            out.print("                <button type=\"submit\" class=\"btn btn-primary\">\n" +
                                 "                    Aggiungi coltivazione\n" +
                                 "                </button>\n" +
                                 "            </form>\n" +
