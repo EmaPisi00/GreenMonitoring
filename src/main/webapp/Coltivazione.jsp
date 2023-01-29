@@ -65,8 +65,6 @@
                             );
                             //session.removeAttribute("coltivazioneID");
 
-                    out.print("<div class=\"card\">");
-                    out.print("<div class=\"card\">");
                     out.print("<ul class=\"list-group\">\n");
                     if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
                         out.print("<form id=\"rimuoviSensore\" action=\"ServletColtivazione\" method=\"post\">");
@@ -85,9 +83,6 @@
                         out.print("<button type=\"button\" class=\"btn btn-light\" href=\"./InserisciSensore\">Aggiungi sensore +</button>");
                     }
                     out.print("</ul>");
-                    out.print("</div>");
-                    out.print("</div>");
-
                     }
             %>
         </div>
