@@ -38,7 +38,7 @@ public class ServletColtivazioni extends HttpServlet {
             if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
                 response.sendError(401);
             } else {
-                if (request.getParameter("nomepianta") == null || request.getParameter("sensorePh") == null || request.getParameter("sensoreTemperatura") == null || request.getParameter("sensoreUmidita") == null || request.getParameter("terreno") == null){
+                if (request.getParameter("nomepianta") == null || request.getParameter("sensorePh") == null || request.getParameter("sensoreTemperatura") == null || request.getParameter("sensoreUmidita") == null || request.getParameter("terreno") == null) {
                     response.sendRedirect("ListaColtivazioni.jsp");
                 } else {
                     AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));

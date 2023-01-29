@@ -120,7 +120,7 @@
         </div>
     </div>
     <!-- Button trigger modal -->
-    <button onclick="location.href='TerrenoInsert.jsp'" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter">
+    <button onclick="location.href='InserisciTerreno.jsp'" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter">
         Aggiungi terreno
     </button>
     <!-- Button trigger modal -->
