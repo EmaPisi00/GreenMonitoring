@@ -1,13 +1,15 @@
 package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
 
+import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
+import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
 import it.unisa.greenmonitoring.dataccess.beans.PiantaBean;
 
 import it.unisa.greenmonitoring.dataccess.dao.PiantaDAO;
 import it.unisa.greenmonitoring.dataccess.dao.PiantaDAOImpl;
 
 
-
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PiantaManager {
@@ -18,7 +20,11 @@ public class PiantaManager {
     /**
      * piantadao.
      */
-    private PiantaDAO td;
+    private PiantaDAO pd;
+    /**
+     * coltivazionemanager.
+     */
+    private ColtivazioneManager cm;
     //TO-DO implementare i metodi di pianta manager
     /**
      * @param t
@@ -26,7 +32,7 @@ public class PiantaManager {
      * @return List
      */
     public PiantaBean CreaPiantaManager(PiantaBean t) throws SQLException {
-        td = new PiantaDAOImpl();
+        pd = new PiantaDAOImpl();
         errori = new PiantaBean("a", "a", "a", "a", "a", "a", "a");
         errori.setId(1);
         errori.setUmidita_min("a");
@@ -124,8 +130,8 @@ public class PiantaManager {
 
         }
 
-        List<PiantaBean> listaPiante = td.RetriveAllPiantaDefault();
-        listaPiante.addAll(td.RetriveAllPiantaAzienda(t.getAzienda()));
+        List<PiantaBean> listaPiante = pd.RetriveAllPiantaDefault();
+        listaPiante.addAll(pd.RetriveAllPiantaAzienda(t.getAzienda()));
         for (PiantaBean tt : listaPiante) {
 
             if (tt.getNome().matches(t.getNome())) {
@@ -139,7 +145,7 @@ public class PiantaManager {
 
         System.out.println("count = " + countErrori + " pianta " + errori);
         if (countErrori++ == 0) {
-            td.aggiungiPiantaPersonalizzata(t);
+            pd.aggiungiPiantaPersonalizzata(t);
             return null;
         }
         return errori;
@@ -152,10 +158,28 @@ public class PiantaManager {
      * @throws SQLException
      */
     public List<PiantaBean> ListaPianteManager(String email) throws SQLException {
-        td = new PiantaDAOImpl();
-        List<PiantaBean> listaPiante = td.RetriveAllPiantaDefault();
-        listaPiante.addAll(td.RetriveAllPiantaAzienda(email));
+        pd = new PiantaDAOImpl();
+        List<PiantaBean> listaPiante = pd.RetriveAllPiantaDefault();
+        listaPiante.addAll(pd.RetriveAllPiantaAzienda(email));
         return (!listaPiante.isEmpty()) ? listaPiante : null;
+    }
+    /**
+     * @param emailAzienda
+     * @param id_pianta
+     * @throws SQLException
+     */
+    public void rimuoviPiantaManager(int id_pianta, String emailAzienda) throws SQLException {
+        cm = new ColtivazioneManager();
+        ArrayList<ColtivazioneBean> c = cm.visualizzaColtivazioniAvviate(emailAzienda);
+        for (ColtivazioneBean colti : c) {
+            if (colti.getPianta() == id_pianta) {
+                    System.out.println("sono uguali errore");
+                    return;
+            }
+        }
+        pd = new PiantaDAOImpl();
+        pd.deletePianta(id_pianta);
+        System.out.println("fatto elimitato");
     }
 
 }
