@@ -44,26 +44,26 @@
                     List<SensoreBean> sList = null;
                     ColtivazioneManager cm = new ColtivazioneManager();
                     SensoreManager sm = new SensoreManager();
-                    if ( (session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
+                    if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                         DipendenteBean a = (DipendenteBean) sa;
                         Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
                         sList = sm.visualizzaListaSensori(a.getAzienda()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
                         list = cm.visualizzaStatoColtivazioni(a.getAzienda());
                     } else {
                         AziendaBean a = (AziendaBean) sa;
-                        list = cm.visualizzaStatoColtivazioni( a.getEmail() );
+                        list = cm.visualizzaStatoColtivazioni(a.getEmail());
                         Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
                         sList = sm.visualizzaListaSensori(a.getEmail()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
                     }
                     int[] valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
-                            out.print("<ul><li class=\"list-group-item \">" +
-                                    "Coltivazione "+ session.getAttribute("coltivazioneID") + "<br>" +
-                                    "<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
-                                    "<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
-                                    "<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
-                                    "</li></ul>"
-                            );
-                            //session.removeAttribute("coltivazioneID");
+                    out.print("<ul><li class=\"list-group-item \">" +
+                            "Coltivazione " + session.getAttribute("coltivazioneID") + "<br>" +
+                            "<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
+                            "<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
+                            "<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
+                            "</li></ul>"
+                    );
+                    //session.removeAttribute("coltivazioneID");
 
                     out.print("<ul class=\"list-group\">\n");
                     if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
@@ -71,19 +71,20 @@
                     }
 
                     out.print("<li class=\"list-group-item-success\" aria-current=\"true\">Sensori</li>\n");
-
-                    for (int i = 0; i < sList.size(); i++) {
-                        out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getId());
-                        if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
-                            out.print("<a></a><button type=\"button\" class=\"btn btn-link\" onclick=\"$(#rimuoviSensore).submit()\">Rimuovi</button>");
+                    if (sList != null) {
+                        for (int i = 0; i < sList.size(); i++) {
+                            out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getId());
+                            if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                                out.print("<a></a><button type=\"button\" class=\"btn btn-link\" onclick=\"$(#rimuoviSensore).submit()\">Rimuovi</button>");
+                            }
                         }
+                        if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                            out.print("</form><br>");
+                            out.print("<button type=\"button\" class=\"btn btn-light\" href=\"./InserisciSensore\">Aggiungi sensore +</button>");
+                        }
+                        out.print("</ul>");
                     }
-                    if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
-                        out.print("</form><br>");
-                        out.print("<button type=\"button\" class=\"btn btn-light\" href=\"./InserisciSensore\">Aggiungi sensore +</button>");
-                    }
-                    out.print("</ul>");
-                    }
+                }
             %>
         </div>
     </div>

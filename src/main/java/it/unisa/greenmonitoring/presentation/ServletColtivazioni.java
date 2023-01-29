@@ -38,17 +38,19 @@ public class ServletColtivazioni extends HttpServlet {
             if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
                 response.sendError(401);
             } else {
-                AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
-                String utente = aziendaBean.getEmail();
-                String nomepianta = request.getParameter("nomepianta"); //id
-                String sensorePh = request.getParameter("sensorePh"); //id
-                String sensoreTemperatura = request.getParameter("sensoreTemperatura"); //id
-                String sensoreUmidita = request.getParameter("sensoreUmidita"); //id
-                int terreno = Integer.parseInt(request.getParameter("terreno")); //id
-                ColtivazioneBean cb = new ColtivazioneBean(Integer.valueOf(nomepianta), terreno, Byte.parseByte("0"));
-                ColtivazioneManager cm = new ColtivazioneManager();
-                cm.avvioColtivazione(cb);
-
+                if (request.getParameter("nomepianta") == null || request.getParameter("sensorePh") == null || request.getParameter("sensoreTemperatura") == null || request.getParameter("sensoreUmidita") == null || request.getParameter("terreno") == null){
+                    response.sendRedirect("ListaColtivazioni.jsp");
+                } else {
+                    AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
+                    String utente = aziendaBean.getEmail();
+                    String nomepianta = request.getParameter("nomepianta"); //id
+                    String sensorePh = request.getParameter("sensorePh"); //id
+                    String sensoreTemperatura = request.getParameter("sensoreTemperatura"); //id
+                    String sensoreUmidita = request.getParameter("sensoreUmidita"); //id
+                    int terreno = Integer.parseInt(request.getParameter("terreno")); //id
+                    ColtivazioneBean cb = new ColtivazioneBean(Integer.valueOf(nomepianta), terreno, Byte.parseByte("0"));
+                    ColtivazioneManager cm = new ColtivazioneManager();
+                    cm.avvioColtivazione(cb);
                 List<ColtivazioneBean> cblist = cm.visualizzaColtivazioniAvviate(aziendaBean.getEmail());
                 int id_coltivazione = 0;
                 for (int i = 0; i < cblist.size(); i++) {
@@ -57,25 +59,26 @@ public class ServletColtivazioni extends HttpServlet {
                         break;
                     }
                 }
-
-                SensoreManager sm = new SensoreManager();
-                List<SensoreBean> slist = sm.visualizzaListaSensori(aziendaBean.getEmail());
-                SensoreBean s = new SensoreBean();
-             /*   for (int i = 0; i < slist.size(); i++) {
-                    if (slist.get(i).getId().equals(sensorePh)) {
-                        s = slist.get(i);
-                        s.setColtivazione(id_coltivazione);
-                        sm.updateSensore(s);
-                    } else if (slist.get(i).getId().equals(sensoreTemperatura)) {
-                        s = slist.get(i);
-                        s.setColtivazione(id_coltivazione);
-                        sm.updateSensore(s);
-                    } else if (slist.get(i).getId().equals(sensoreUmidita)) {
-                        s = slist.get(i);
-                        s.setColtivazione(id_coltivazione);
-                        sm.updateSensore(s);
-                    }
-                }     */
+                    SensoreManager sm = new SensoreManager();
+                    List<SensoreBean> slist = sm.visualizzaListaSensori(aziendaBean.getEmail());
+                    SensoreBean s = new SensoreBean();
+                    /*
+                    for (int i = 0; i < slist.size(); i++) {
+                        if (slist.get(i).getId().equals(sensorePh)) {
+                            s = slist.get(i);
+                            s.setColtivazione(id_coltivazione);
+                            sm.updateSensore(s);
+                        } else if (slist.get(i).getId().equals(sensoreTemperatura)) {
+                            s = slist.get(i);
+                            s.setColtivazione(id_coltivazione);
+                            sm.updateSensore(s);
+                        } else if (slist.get(i).getId().equals(sensoreUmidita)) {
+                            s = slist.get(i);
+                            s.setColtivazione(id_coltivazione);
+                            sm.updateSensore(s);
+                        }
+                    }     */
+                }
             }
         }
     }

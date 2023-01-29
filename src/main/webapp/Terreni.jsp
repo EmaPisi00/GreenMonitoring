@@ -81,34 +81,36 @@
                         ColtivazioneManager cm = new ColtivazioneManager();
                         List<ColtivazioneBean> clist = cm.visualizzaColtivazioniAvviate(a.getEmail());
                         List<Integer> ids = new ArrayList<>();
-                        for (ColtivazioneBean cb : clist) {
-                            if (cb.getTerreno() == null){
-                                ids.add(cb.getTerreno());
+                        if (list != null) {
+                            for (ColtivazioneBean cb : clist) {
+                                if (cb.getTerreno() == null) {
+                                    ids.add(cb.getTerreno());
+                                }
                             }
-                        }
-                        for (TerrenoBean tb : list) {
-                            if (ids.contains(tb.getId())) {
-                                out.print("<tr>" +
-                                        "<td>" +
-                                        "<input id=\"chk\" name=\"terreno" + i + "\" type=\"checkbox\" value=\"" + tb.getId() + "\"></input>" +
-                                        "</td>" +
-                                        "<td>" + tb.getId() + "</td>" +
-                                        "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
-                                        "<td>" + tb.getLatitudine() + "</td>" +
-                                        "<td>" + tb.getLongitudine() + "</td>" +
-                                        "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
-                                );
-                                i++;
-                            } else {
-                                out.print("<tr>" +
-                                        "<td>Coltivazione avviata" +
-                                        "</td>" +
-                                        "<td>" + tb.getId() + "</td>" +
-                                        "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
-                                        "<td>" + tb.getLatitudine() + "</td>" +
-                                        "<td>" + tb.getLongitudine() + "</td>" +
-                                        "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
-                                );
+                            for (TerrenoBean tb : list) {
+                                if (ids.contains(tb.getId())) {
+                                    out.print("<tr>" +
+                                            "<td>" +
+                                            "<input id=\"chk\" name=\"terreno" + i + "\" type=\"checkbox\" value=\"" + tb.getId() + "\"></input>" +
+                                            "</td>" +
+                                            "<td>" + tb.getId() + "</td>" +
+                                            "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
+                                            "<td>" + tb.getLatitudine() + "</td>" +
+                                            "<td>" + tb.getLongitudine() + "</td>" +
+                                            "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
+                                    );
+                                    i++;
+                                } else {
+                                    out.print("<tr>" +
+                                            "<td>Coltivazione avviata" +
+                                            "</td>" +
+                                            "<td>" + tb.getId() + "</td>" +
+                                            "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
+                                            "<td>" + tb.getLatitudine() + "</td>" +
+                                            "<td>" + tb.getLongitudine() + "</td>" +
+                                            "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
+                                    );
+                                }
                             }
                         }
                     }
