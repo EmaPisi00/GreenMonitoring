@@ -118,20 +118,20 @@
                                     out.print("<h7>Non ci sono terreni.</h7>");
                                 } else {
                                     out.print("<select type=\"text\" name=\"terreno\" required><br>\n");
-
                                     List<Integer> ids = new ArrayList<>();
-
                                     for (int i = 0; i < tbList.size(); i++) {
                                         ids.add(tbList.get(i).getId());
                                     }
                                     ColtivazioneManager cm = new ColtivazioneManager();
                                     List<ColtivazioneBean> cList = cm.visualizzaStatoColtivazioni(ab.getEmail());
-                                    for (int i = 0; i < tbList.size(); i++) {
-                                        if (!ids.contains(cList.get(i).getTerreno())) {
-                                            out.print("<option value=" + cList.get(i) + ">");
+                                    if (cList != null) {
+                                        for (int i = 0; i < cList.size(); i++) {
+                                            if (!ids.contains(cList.get(i).getTerreno())) {
+                                                out.print("<option value=" + cList.get(i) + ">");
+                                            }
                                         }
+                                        out.print("</select><br>");
                                     }
-                                    out.print("</select><br>");
                                 }
                                 out.print("<label>Scegliere la pianta di cui avviare una coltivazione</label><br>");
 

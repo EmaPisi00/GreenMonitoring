@@ -79,16 +79,16 @@
                         List<TerrenoBean> list = t.visualizzaListaTerreni(a.getEmail());
                         int i = 0;
                         ColtivazioneManager cm = new ColtivazioneManager();
-                        List<ColtivazioneBean> clist = cm.visualizzaColtivazioniAvviate(a.getEmail());
+                        List<ColtivazioneBean> clist = cm.visualizzaStatoColtivazioni(a.getEmail());
                         List<Integer> ids = new ArrayList<>();
-                        if (list != null) {
+                        if (list != null || clist != null) {
                             for (ColtivazioneBean cb : clist) {
                                 if (cb.getTerreno() == null) {
                                     ids.add(cb.getTerreno());
                                 }
                             }
                             for (TerrenoBean tb : list) {
-                                if (ids.contains(tb.getId())) {
+                                if (!ids.contains(tb.getId())) {
                                     out.print("<tr>" +
                                             "<td>" +
                                             "<input id=\"chk\" name=\"terreno" + i + "\" type=\"checkbox\" value=\"" + tb.getId() + "\"></input>" +
