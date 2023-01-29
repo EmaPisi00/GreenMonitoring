@@ -6,6 +6,7 @@ $(document).ready(function() {
         $("#associa_dipendente").submit();
     });
 
+
     $("#showModal").click(function() {
                 $("#alrt").fadeOut();
                 $('#Modal').modal('toggle');
