@@ -1,6 +1,7 @@
 package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager;
+import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.PiantaBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
@@ -15,9 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
-
-
-
+import java.util.Enumeration;
 
 
 @WebServlet(name = "ServletPianta", value = "/ServletPianta")
@@ -56,14 +55,31 @@ public class ServletPianta extends HttpServlet {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
             }
-        }
-        if (request.getParameter("ListaPiante") != null) {
+        } else if (request.getParameter("ListaPiante") != null) {
             System.out.println("eccoim");
             String projectPath = request.getServletContext().getRealPath("/");
             System.out.println(projectPath);
             response.sendRedirect("Piante.jsp");
-        }
+        } else if (request.getParameter("rimuoviPianta_submit") != null) {
+            HttpSession session = request.getSession();
+            AziendaBean utente = (AziendaBean) session.getAttribute("currentUserSession");
+            Enumeration<String> parameters = request.getParameterNames();
+            while (parameters.hasMoreElements()) {
+                String parametro = request.getParameter(parameters.nextElement());
+                if (!parametro.matches("rimuoviPianta_submit")) {
+                    int id = Integer.parseInt(parametro);
+                    try {
+                        pm.rimuoviPiantaManager(id, utente.getEmail());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
 
+            }
+            System.out.println(request.getParameter("sono nella rimozione prima del sendredirect"));
+        response.sendRedirect("RimuoviPianta.jsp");
+    }
+            System.out.println(request.getParameter("sono nella servletPianta"));
     }
 
     private PiantaBean inserisciPiantaServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
