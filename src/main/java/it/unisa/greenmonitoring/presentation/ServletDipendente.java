@@ -2,11 +2,10 @@ package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.AutenticazioneManager;
 
+import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.UtenteManager;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
-import it.unisa.greenmonitoring.dataccess.dao.AziendaDAO;
-import it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -87,14 +86,10 @@ public class ServletDipendente extends HttpServlet {
         UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
 
         if (user instanceof AziendaBean) {
-            String emailAzienda = user.getEmail();
-
             if (idDipendente != null) {
                 for (String id : idDipendente) {
-                    AziendaDAO aziendaDAO = null;
-                    aziendaDAO = new AziendaDAOImpl();
                     try {
-                        aziendaDAO.removeAssociation(emailAzienda, id);
+                        UtenteManager.rimuoviAssociazioneDipendente(id);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }

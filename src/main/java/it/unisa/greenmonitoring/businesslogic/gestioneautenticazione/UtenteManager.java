@@ -4,6 +4,7 @@ import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
+import it.unisa.greenmonitoring.dataccess.dao.AziendaDAO;
 import it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl;
 
 import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAO;
@@ -17,7 +18,7 @@ public class UtenteManager {
     /**
      * DipendenteDao.
      */
-    private DipendenteDAO dipendenteDAO;
+    private static final DipendenteDAO dipendenteDAO = new DipendenteDAOImpl();
 
     /**
      * Metodo che permette la rimozione di una associazione ad un'azienda.
@@ -28,7 +29,41 @@ public class UtenteManager {
     public List<DipendenteBean> retrieveAll(String email) throws SQLException {
         return null;
     }
+    /**
+     * Metodo che permette l'associazione di un dipendente ad un'azienda.
+     * @param user
+     * @param codiceAzienda
+     * @return true/false
+     */
+    public static boolean associazioneDipendente(DipendenteBean user, String codiceAzienda) throws SQLException {
+        AziendaDAO aziendaDAO = new AziendaDAOImpl();
+        AziendaBean azienda;
+        try {
+            azienda = aziendaDAO.retrieveByCode(codiceAzienda);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (azienda != null) {
+            user.setAzienda(azienda.getEmail());
+            try {
+                dipendenteDAO.doUpdate(user);
+                return true;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
+    }
 
+    /**
+     * Metodo che permette la cancellazione dell'associazione di un dipendente ad un'azienda.
+     * @param id
+     */
+    public static void rimuoviAssociazioneDipendente(String id) throws SQLException {
+        DipendenteBean user = (DipendenteBean) dipendenteDAO.doRetrieve(id);
+        user.setAzienda(null);
+        dipendenteDAO.doUpdate(user);
+    }
 
     /**
      * Metodo che permette di aggiornare un dipendente.

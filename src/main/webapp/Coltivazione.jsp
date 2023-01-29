@@ -1,16 +1,7 @@
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Random" %>
-<%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
-  Created by IntelliJ IDEA.
-  User: Nicola
-  Date: 16/01/2023
-  Time: 16:40
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -50,24 +41,48 @@
                 /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                 else {
                     List<ColtivazioneBean> list = null;
+                    List<SensoreBean> sList = null;
                     ColtivazioneManager cm = new ColtivazioneManager();
-
+                    SensoreManager sm = new SensoreManager();
                     if ( (session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                         DipendenteBean a = (DipendenteBean) sa;
-                        list = cm.visualizzaStatoColtivazioni( a.getAzienda() );
+                        Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
+                        sList = sm.visualizzaListaSensori(a.getAzienda()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
+                        list = cm.visualizzaStatoColtivazioni(a.getAzienda());
                     } else {
                         AziendaBean a = (AziendaBean) sa;
                         list = cm.visualizzaStatoColtivazioni( a.getEmail() );
+                        Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
+                        sList = sm.visualizzaListaSensori(a.getEmail()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
                     }
                     int[] valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
-                            out.print("<li class=\"list-group-item \">" +
+                            out.print("<ul><li class=\"list-group-item \">" +
                                     "Coltivazione "+ session.getAttribute("coltivazioneID") + "<br>" +
                                     "<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
                                     "<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
                                     "<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
-                                    "</li>"
+                                    "</li></ul>"
                             );
-                            session.removeAttribute("coltivazioneID");
+                            //session.removeAttribute("coltivazioneID");
+
+                    out.print("<ul class=\"list-group\">\n");
+                    if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                        out.print("<form id=\"rimuoviSensore\" action=\"ServletColtivazione\" method=\"post\">");
+                    }
+
+                    out.print("<li class=\"list-group-item-success\" aria-current=\"true\">Sensori</li>\n");
+
+                    for (int i = 0; i < sList.size(); i++) {
+                        out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getId());
+                        if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                            out.print("<a></a><button type=\"button\" class=\"btn btn-link\" onclick=\"$(#rimuoviSensore).submit()\">Rimuovi</button>");
+                        }
+                    }
+                    if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                        out.print("</form><br>");
+                        out.print("<button type=\"button\" class=\"btn btn-light\" href=\"./InserisciSensore\">Aggiungi sensore +</button>");
+                    }
+                    out.print("</ul>");
                     }
             %>
         </div>

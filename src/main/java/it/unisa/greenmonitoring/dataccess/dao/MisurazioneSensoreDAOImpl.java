@@ -66,7 +66,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
 
     @Override
     public ArrayList<MisurazioneSensoreBean> retreive(String id) throws SQLException {
-        String selectSQL = "SELECT misurazione_sensore.id, misurazione_sensore.coltivazione, misurazione_sensore.valore, misurazione_sensore.data, misurazione_sensore.ora, sensore.tipo, misurazione_sensore.sensore_id FROM \n"
+            String selectSQL = "SELECT misurazione_sensore.id, misurazione_sensore.coltivazione, misurazione_sensore.valore, misurazione_sensore.data, misurazione_sensore.ora, sensore.tipo, misurazione_sensore.sensore_id FROM \n"
                 + "misurazione_sensore join sensore on misurazione_sensore.sensore_id = sensore.id WHERE sensore.coltivazione = ?;";
         ArrayList<MisurazioneSensoreBean> list = new ArrayList<>();
         try {

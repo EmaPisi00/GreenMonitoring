@@ -360,40 +360,5 @@ public class AziendaDAOImpl implements AziendaDAO {
                 }
             }
         }
-
-
-    }
-
-    /**
-     * Metodo dis-associazione.
-     * @param emailAzienda
-     * @param emailDipendente
-     *
-     */
-    @Override
-    public void removeAssociation(String emailAzienda, String emailDipendente) throws SQLException {
-        PreparedStatement preparedStatement = null;
-
-        final String TABLE_NAME2 = "dipendente";
-        String removeSQL = "UPDATE " + TABLE_NAME2 + " SET azienda = null WHERE email = ? and azienda = ?";
-        try {
-            connection = ConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(removeSQL);
-
-            preparedStatement.setString(1, emailDipendente);
-            preparedStatement.setString(2, emailAzienda);
-            preparedStatement.executeUpdate();
-            connection.commit();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-        }
     }
 }
