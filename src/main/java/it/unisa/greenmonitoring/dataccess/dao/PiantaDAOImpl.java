@@ -105,11 +105,24 @@ public class PiantaDAOImpl implements PiantaDAO {
 
     /**
      * Questo metodo restituisce ogni terreno del DB.
-     *
+     * @param id_pianta
      * @throws SQLException
      */
     @Override
-    public void removePianta() throws SQLException {
+    public void deletePianta(int id_pianta) throws SQLException {
+        String deleteSQL = "DELETE FROM Pianta WHERE id = ?";
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setInt(1, id_pianta);
+            preparedStatement.executeUpdate();
+            connection.commit();
+            System.out.println("sono in dao rimuovo");
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            connection.close();
+        }
 
     }
 

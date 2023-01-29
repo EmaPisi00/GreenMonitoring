@@ -24,9 +24,10 @@ public interface PiantaDAO {
 
     /**
      * Questo metodo restituisce ogni terreno del DB.
+     * @param id
      * @throws SQLException
      */
-   void removePianta() throws SQLException;
+   void deletePianta(int id) throws SQLException;
 
     /**
      *
