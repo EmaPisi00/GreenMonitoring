@@ -76,8 +76,6 @@
                         email = ((DipendenteBean) seo).getAzienda();
                     }
 
-
-
                         PiantaManager p = new PiantaManager();
                         List<PiantaBean> list = p.ListaPianteManager(email);
 
