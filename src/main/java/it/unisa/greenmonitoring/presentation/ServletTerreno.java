@@ -47,8 +47,33 @@ public class ServletTerreno extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("inserisciTerreno_submit") != null) {
-            TerrenoBean errori = inserisciTerreno(request, response);
+            //setta i parametri
+            String azienda = request.getParameter("azienda");
+            String fileName = null;
+            Part immagine = request.getPart("immagine");
+            if (immagine.getSize() > 0) {
+                fileName = Paths.get(immagine.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                InputStream fileContent = immagine.getInputStream();
+                // Salva l'immagine su disco
+                String path = "C:\\Users\\stefa\\IdeaProjects\\GreenMonitoring\\src\\main\\webapp\\img\\" + fileName;
+                Files.copy(fileContent, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+                fileContent.close();
+            }
+            Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
+            Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
+            String superfice = request.getParameter("superfice");
+            //creo il bean da inserire
+            TerrenoBean terreno = new TerrenoBean(latitudine, longitudine, superfice, fileName, azienda);
+            //errori ritorna il bean terreno con i parametri settati null se ci sono errori
+            TerrenoBean errori = null;
+            try {
+                errori = tm.createTerreno(terreno);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
             System.out.println("serv" + errori);
+            // se ci sono errori, allora passali alla jsp
             if (errori != null) {
                 request.setAttribute("erroriTerrenoBean", errori);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciTerreno.jsp");
@@ -57,9 +82,8 @@ public class ServletTerreno extends HttpServlet {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Terreni.jsp");
                 dispatcher.forward(request, response);
             }
-
-
-        } else if (request.getParameter("terreno0") != null) {
+        }
+        if (request.getParameter("pianta0") != null) {
             Enumeration<String> parameters = request.getParameterNames();
             while (parameters.hasMoreElements()) {
                 int id = Integer.parseInt(request.getParameter(parameters.nextElement()));
@@ -70,36 +94,6 @@ public class ServletTerreno extends HttpServlet {
 
         response.sendRedirect("index.jsp");
 
-    }
-
-    private TerrenoBean inserisciTerreno(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        String azienda = request.getParameter("azienda");
-
-        Part immagine = request.getPart("immagine");
-        String fileName = null;
-
-        if (immagine.getSize() > 0) {
-        fileName = Paths.get(immagine.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-        InputStream fileContent = immagine.getInputStream();
-        // Salva l'immagine su disco
-        String path = "C:\\Users\\stefa\\IdeaProjects\\GreenMonitoring\\src\\main\\webapp\\img\\" + fileName;
-        Files.copy(fileContent, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
-        fileContent.close();
-        }
-
-        Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
-        System.out.println("latitudine=" + latitudine);
-        Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
-        System.out.println("latitudine=" + longitudine);
-        String superfice = request.getParameter("superfice");
-        TerrenoBean terreno = new TerrenoBean(latitudine, longitudine, superfice, fileName, azienda);
-        try {
-            return tm.createTerreno(terreno);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }
