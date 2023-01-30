@@ -14,7 +14,7 @@ public class SensoreBean {
     /**
      * Variabile locale coltivazione.
      */
-    private int coltivazione;
+    private Integer coltivazione;
 
     /**
      * Variabile locale azienda.
@@ -32,7 +32,7 @@ public class SensoreBean {
      * @param given_azienda
      * @param given_idM
      */
-    public SensoreBean(int given_id, String given_tipo, int given_coltivazione,
+    public SensoreBean(int given_id, String given_tipo, Integer given_coltivazione,
                       String given_azienda, String given_idM) {
         this.id = given_id;
         this.tipo = given_tipo;
@@ -98,7 +98,7 @@ public class SensoreBean {
      *
      * @param given_coltivazione
      */
-    public void setColtivazione(int given_coltivazione) {
+    public void setColtivazione(Integer given_coltivazione) {
         this.coltivazione = given_coltivazione;
     }
 
