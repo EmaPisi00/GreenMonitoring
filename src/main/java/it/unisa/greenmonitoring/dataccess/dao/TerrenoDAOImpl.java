@@ -63,7 +63,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                TerrenoBean t = new TerrenoBean(null, null, null, null, null);
+                TerrenoBean t = new TerrenoBean();
                 t.setId(rs.getInt("id"));
                 t.setImmagine(rs.getString("immagine"));
                 t.setSuperficie(rs.getString("superfice"));
