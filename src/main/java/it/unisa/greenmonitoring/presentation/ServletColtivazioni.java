@@ -52,7 +52,7 @@ public class ServletColtivazioni extends HttpServlet {
                     ColtivazioneManager cm = new ColtivazioneManager();
                     cm.avvioColtivazione(cb);
                 List<ColtivazioneBean> cblist = cm.visualizzaColtivazioniAvviate(aziendaBean.getEmail());
-                int id_coltivazione = 0;
+                Integer id_coltivazione = 0;
                 for (int i = 0; i < cblist.size(); i++) {
                     if (cblist.get(i).getTerreno().equals(terreno)) {
                         id_coltivazione = cblist.get(i).getTerreno();
@@ -77,7 +77,9 @@ public class ServletColtivazioni extends HttpServlet {
                             s.setColtivazione(id_coltivazione);
                             sm.updateSensore(s);
                         }
-                    }     */
+                    }
+                request.getSession().setAttribute("coltivazioneID", String.valueOf(id_coltivazione));
+                response.sendRedirect("Coltivazione.jsp");*/
                 }
             }
         }
