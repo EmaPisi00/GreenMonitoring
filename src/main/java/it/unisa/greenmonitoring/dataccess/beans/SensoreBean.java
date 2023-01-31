@@ -89,7 +89,7 @@ public class SensoreBean {
      *
      * @return coltivazione
      */
-    public int getColtivazione() {
+    public Integer getColtivazione() {
         return coltivazione;
     }
 
@@ -136,4 +136,5 @@ public class SensoreBean {
     public void setIdM(String given_idM) {
         this.idM = given_idM;
     }
+
 }

@@ -81,6 +81,7 @@ public class ServletDipendente extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UtenteManager utenteManager = new UtenteManager();
         String[] idDipendente = request.getParameterValues("idDipendente");
         HttpSession session = request.getSession();
         UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
@@ -89,7 +90,7 @@ public class ServletDipendente extends HttpServlet {
             if (idDipendente != null) {
                 for (String id : idDipendente) {
                     try {
-                        UtenteManager.rimuoviAssociazioneDipendente(id);
+                        utenteManager.rimuoviAssociazioneDipendente(id);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }

@@ -44,13 +44,14 @@ public class AssociationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //
+        UtenteManager utenteManager = new UtenteManager();
         String codiceAzienda = request.getParameter("codiceAzienda");
         HttpSession session = request.getSession();
         UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
 
         if (user instanceof DipendenteBean && ((DipendenteBean) user).getAzienda() == null) {
             try {
-                if (UtenteManager.associazioneDipendente((DipendenteBean) user, codiceAzienda)) {
+                if (utenteManager.associazioneDipendente((DipendenteBean) user, codiceAzienda)) {
                     response.sendRedirect("Profile.jsp");
             } else {
                 response.sendRedirect("Associazione.jsp");
