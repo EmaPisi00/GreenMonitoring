@@ -70,21 +70,18 @@
                             ColtivazioneManager cm = new ColtivazioneManager();
                             list = cm.visualizzaStatoColtivazioni(a.getEmail());
                         }
-                        if (list == null){
-                            out.print("<h7>Non ci sono coltivazioni</h7>");
+                        if (list.size() == 0){
+                            out.print("<h7>Non ci sono coltivazioni.</h7>");
                         } else {
                             out.print("<ul class=\"list-group\">");
                             for (ColtivazioneBean cb : list) {
-                                System.out.println("sono nel for");
                                 if (cb.getStato_archiviazione() == 0) {
-                                    System.out.println("archiviata");
                                     out.print("<li class=\"list-group-item disabled\">" +
                                             "Coltivazione " + cb.getId() +
                                             "<br>Terreno associato: " + cb.getTerreno() +
                                             "   (Archiviata)</li>"
                                     );
                                 } else {
-                                    System.out.println("non archiviata");
                                     out.print("<li class=\"list-group-item \">" +
                                             "Coltivazione " + cb.getId() +
                                             "<br>id terreno associato: " + cb.getTerreno() +
@@ -114,8 +111,8 @@
                                 "                <label>Scegliere il terreno di cui avviare una coltivazione</label><br>");
                                 TerrenoManager tm = new TerrenoManager();
                                 List<TerrenoBean> tbList = tm.visualizzaListaTerreni(ab.getEmail());
-                                if (tbList == null) {
-                                    out.print("<h7>Non ci sono terreni.</h7>");
+                                if (tbList == null || tbList.size() == 0) {
+                                    out.print("<label>Non ci sono terreni.</label>");
                                 } else {
                                     out.print("<select type=\"text\" name=\"terreno\" required><br>\n");
                                     List<Integer> ids = new ArrayList<>();
@@ -124,14 +121,19 @@
                                     }
                                     ColtivazioneManager cm = new ColtivazioneManager();
                                     List<ColtivazioneBean> cList = cm.visualizzaStatoColtivazioni(ab.getEmail());
-                                    if (cList != null) {
+                                    if (cList != null && cList.size() > 0) {
                                         for (int i = 0; i < cList.size(); i++) {
                                             if (!ids.contains(cList.get(i).getTerreno())) {
-                                                out.print("<option value=" + cList.get(i) + ">");
+                                                out.print("<option value=" + cList.get(i).getTerreno() + ">"+ "id: "+ cList.get(i).getTerreno() + "<img src=\""+ tm.retrieveTerreno(String.valueOf(cList.get(i).getTerreno())).getImmagine() +"\" alt=\"immagine di terreno"+ cList.get(i).getTerreno() +"\">" +"</option>");
                                             }
                                         }
-                                        out.print("</select><br>");
+                                    } else {
+                                        for (int i = 0; i < ids.size(); i++) {
+                                            TerrenoBean tb = tm.retrieveTerreno(String.valueOf(ids.get(i))); //così posso controllare il contenuto del terreno
+                                            out.print("<option value=" + ids.get(i) + ">"+ "id: "+ ids.get(i) + "<img src=\""+ tm.retrieveTerreno(String.valueOf(ids.get(i))).getImmagine() +"\" alt=\"immagine di terreno"+ ids.get(i)+"\">");
+                                        }
                                     }
+                                    out.print("</select><br>");
                                 }
                                 out.print("<label>Scegliere la pianta di cui avviare una coltivazione</label><br>");
 
@@ -140,7 +142,7 @@
                                 PiantaManager pm = new PiantaManager();
                                 List<PiantaBean> pList = pm.ListaPianteManager(ab.getEmail());
                                 List<Integer> ids = new ArrayList<>();
-                                if (cList == null || pList == null) {
+                                if (pList == null) {
                                     out.print("<h7>Non ci sono piante.</h7>");
                                 } else {
                                     out.print("<select type=\"text\" name=\"nomepianta\" required><br>\n");
@@ -149,10 +151,10 @@
                                     }
                                     for (int i = 0; i < pList.size(); i++) {
                                         if (!(ids.contains(pList.get(i).getId()))) {
-                                            out.print("<option value=\"" + pList.get(i).getId() + "\">");
+                                            out.print("<option value=\"" + pList.get(i).getId() + "\"> "+ pList.get(i).getNome() + "</option");
                                         }
                                     }
-                                    out.print("                </select><br>");
+                                    out.print("</select><br>");
                                 }
                             out.print("<label>Scegliere i sensori da associare alla coltivazione</label><br>" +
                                     "<label>pH</label><br>");
@@ -164,7 +166,7 @@
                                 out.print("<select type=\"text\" name=\"sensorePh\" required><br>\n");
                                 for (int i = 0; i < sbList.size(); i++) {
                                 /*if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
-                                    out.print("<option value=\"" + pList.get(i).getId() + "\">");
+                                    out.print("<option value=\"" + pList.get(i).getId() + "\"></option>");
                                 }*/
                                 }
                                 out.print("                </select><br>");
@@ -174,7 +176,7 @@
 
                                 for (int i = 0; i < sbList.size(); i++) {
                                 /*if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
-                                    out.print("<option value=\"" + pList.get(i).getId() + "\">");
+                                    out.print("<option value=\"" + pList.get(i).getId() + "\"></option>");
                                 }*/
                                 }
                                 out.print("                </select><br>");
@@ -185,7 +187,7 @@
 
                                 for (int i = 0; i < sbList.size(); i++) {
                                 /*if (sbList.get(i).getColtivazione() == null && (sbList.get(i).getTipo().toLowerCase().contains("umidit"))) {
-                                    out.print("<option value=\"" + pList.get(i).getId() + "\">");
+                                    out.print("<option value=\"" + pList.get(i).getId() + "\"></option>");
                                 }*/
                                 }
                                 out.print("                </select><br>");

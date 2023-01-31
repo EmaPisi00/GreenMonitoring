@@ -78,7 +78,14 @@ public class TerrenoManager {
      * @throws SQLException
      */
     public TerrenoBean retrieveTerreno(String id_terreno) throws SQLException {
-        return null;
+        List<TerrenoBean> terrenoBeanList = td.retrieveTerreno();
+        TerrenoBean result = new TerrenoBean();
+        for (int i = 0; i < terrenoBeanList.size(); i++) {
+            if (terrenoBeanList.get(i).getId().equals(id_terreno)) {
+                result = terrenoBeanList.get(i);
+            }
+        }
+        return result;
     }
 
     /**
