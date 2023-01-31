@@ -1,6 +1,5 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
-import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 
 import java.sql.Connection;

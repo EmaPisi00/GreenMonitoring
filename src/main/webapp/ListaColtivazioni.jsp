@@ -128,7 +128,7 @@
                                     if (tbList != null && tbList.size() > 0) {
                                         for (int i = 0; i < tbList.size(); i++) {
                                             if (!ids.contains(tbList.get(i).getId())) {
-                                                out.print("<option value=" + tbList.get(i).getId() + ">"+"id: "+ tbList.get(i).getId() + "lat"+ tbList.get(i).getLatitudine() + "long"+ tbList.get(i).getLongitudine() +"</option>");
+                                                out.print("<option value=" + tbList.get(i).getId() + ">"+"id: "+ tbList.get(i).getId() + "lat: "+ tbList.get(i).getLatitudine() + "long: "+ tbList.get(i).getLongitudine() +"</option>");
                                             }
                                         }
                                     } else {
@@ -137,7 +137,7 @@
                                     out.print("</select><br>");
                                 } else {
                                     for (int i = 0; i < ids.size(); i++) {
-                                        out.print("<option value=" + ids.get(i) + ">"+"id: "+ ids.get(i) + "lat"+ tm.retrieveTerreno(ids.get(i).toString()).getLatitudine() + "long"+ tm.retrieveTerreno(ids.get(i).toString()).getLongitudine() +"</option>");
+                                        out.print("<option value=" + ids.get(i) + ">"+"id: "+ ids.get(i) + "lat: "+ tm.retrieveTerreno(ids.get(i).toString()).getLatitudine() + "long: "+ tm.retrieveTerreno(ids.get(i).toString()).getLongitudine() +"</option>");
                                     }
                                 }
                                 out.print("<label>Scegliere la pianta di cui avviare una coltivazione</label><br>");
@@ -165,20 +165,20 @@
                             } else {
                                 for (int i = 0; i < sbList.size(); i++) {
                                     if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
-                                        out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensorePh\" value=\"" + sbList.get(i).getId() + "\">codice sensore: "+ sbList.get(i).getId() + "<br>");
+                                        out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensorePh\" value=\"" + sbList.get(i).getId() + "\"> Codice sensore: "+ sbList.get(i).getId() + "<br>");
                                     }
                                 }
                                 out.print("<label>Temperatura</label><br>");
                                 for (int i = 0; i < sbList.size(); i++) {
                                     if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
-                                        out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreTemperatura\" value=\"" + sbList.get(i).getId() + "\">codice sensore: "+ sbList.get(i).getId() + "<br>");
+                                        out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreTemperatura\" value=\"" + sbList.get(i).getId() + "\"> Codice sensore: "+ sbList.get(i).getId() + "<br>");
 
                                     }
                                 }
                                 out.print("<label>Umidità</label><br>");
                                 for (int i = 0; i < sbList.size(); i++) {
                                     if (sbList.get(i).getColtivazione() == 0 && (sbList.get(i).getTipo().toLowerCase().contains("umidit"))) {
-                                        out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreUmidita\" value=\" + sbList.get(i).getId() + \">codice sensore: "+ sbList.get(i).getId() + "<br>");
+                                        out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreUmidita\" value=\" + sbList.get(i).getId() + \"> Codice sensore: "+ sbList.get(i).getId() + "<br>");
                                     }
                                 }
                                 out.print("<br><br><button type=\"button\" id=\"summit\" class=\"btn btn-primary\">"+
