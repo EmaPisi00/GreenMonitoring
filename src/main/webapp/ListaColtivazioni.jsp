@@ -27,6 +27,7 @@
 
     <title>Coltivazioni</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
+    <script src="bootstrap-5.2.3-dist/js/ListaColtivazioni.js"></script>
     <link href="/img/favicon.png" rel="icon">
     <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <meta charset="utf-8">
@@ -106,7 +107,7 @@
                                 "    <div class=\"card\" style=\"width: 30rem;\">\n" +
                                 "        <div class=\"card-body\">\n" +
                                 "<h5 class=\"card-title\">Modulo inserimento coltivazione</h5>" +
-           "                     <div id=\"alrt\" class=\"alert alert-warning fade show\" role=\"alert\" hidden>" +
+           "                     <div id=\"alrt\" class=\"alert alert-warning fade show\" role=\"alert\">" +
                                 "   <i class=\"bi bi-exclamation-triangle me-1\"> Selezionare almeno un sensore.</i>" +
                                 "</div>"+
                                 "            <form action=\"ServletColtivazioni\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
@@ -127,7 +128,7 @@
                                     if (tbList != null && tbList.size() > 0) {
                                         for (int i = 0; i < tbList.size(); i++) {
                                             if (!ids.contains(tbList.get(i).getId())) {
-                                                out.print("<option value=" + tbList.get(i).getId() + ">"+ "<img src=\""+ tm.retrieveTerreno(String.valueOf(tbList.get(i).getId())).getImmagine() +"\" alt=\"immagine di terreno"+ tbList.get(i).getImmagine() +"\">" +"id: "+ tbList.get(i).getId() + "</option>");
+                                                out.print("<option value=" + tbList.get(i).getId() + ">"+"id: "+ tbList.get(i).getId() + "lat"+ tbList.get(i).getLatitudine() + "long"+ tbList.get(i).getLongitudine() +"</option>");
                                             }
                                         }
                                     } else {
@@ -136,7 +137,7 @@
                                     out.print("</select><br>");
                                 } else {
                                     for (int i = 0; i < ids.size(); i++) {
-                                        out.print("<option value=" + ids.get(i) + ">"+ "<img src=\""+ tm.retrieveTerreno(String.valueOf(ids.get(i))).getImmagine() +"\" alt=\"immagine di terreno"+ ids.get(i)+"\">"+ "id: "+ ids.get(i) +"</option>");
+                                        out.print("<option value=" + ids.get(i) + ">"+"id: "+ ids.get(i) + "lat"+ tm.retrieveTerreno(ids.get(i).toString()).getLatitudine() + "long"+ tm.retrieveTerreno(ids.get(i).toString()).getLongitudine() +"</option>");
                                     }
                                 }
                                 out.print("<label>Scegliere la pianta di cui avviare una coltivazione</label><br>");
@@ -144,17 +145,12 @@
                                 cList = cm.visualizzaStatoColtivazioni(ab.getEmail());
                                 PiantaManager pm = new PiantaManager();
                                 List<PiantaBean> pList = pm.ListaPianteManager(ab.getEmail());
-                                if (pList == null) {
+                                if (pList == null || pList.size() == 0) {
                                     out.print("<h7>Non ci sono piante.</h7>");
                                 } else {
                                     out.print("<select type=\"text\" name=\"nomepianta\" required><br>\n");
-                                    for (int i = 0; i < cList.size(); i++) {
-                                        ids.add(cList.get(i).getPianta());
-                                    }
                                     for (int i = 0; i < pList.size(); i++) {
-                                        if (!(ids.contains(pList.get(i).getId()))) {
-                                            out.print("<option value=\"" + pList.get(i).getId() + "\"> "+ pList.get(i).getNome() + "</option>");
-                                        }
+                                        out.print("<option value=\"" + pList.get(i).getId() + "\"> "+ pList.get(i).getNome() + "</option>");
                                     }
                                     out.print("</select><br>");
                                 }
@@ -167,46 +163,25 @@
                             if (sbList == null || sbList.size() == 0) {
                                 out.print("<h7>Non ci sono sensori.</h7>");
                             } else {
-                                out.print("<select type=\"text\" name=\"sensorePh\" required><br>\n");
                                 for (int i = 0; i < sbList.size(); i++) {
-                                if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
-                                    out.print("<option value=\"" + pList.get(i).getId() + "\">"+ sbList.get(i).getId() +"</option>");
-                                    out.print("<input type=\"checkbox\" id=\"chk\" name=\"pH\" value=\"true\"><br>");
+                                    if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
+                                        out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensorePh\" value=\"" + sbList.get(i).getId() + "\">codice sensore: "+ sbList.get(i).getId() + "<br>");
+                                    }
                                 }
-                                }
-                                out.print("                </select><br>");
-
                                 out.print("<label>Temperatura</label><br>");
-                                out.print("                <select type=\"text\" name=\"sensoreTemperatura\" required><br>\n");
                                 for (int i = 0; i < sbList.size(); i++) {
-                                if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
-                                    out.print("<option value=\"" + sbList.get(i).getId() + "\">"+ sbList.get(i).getId() +"</option>");
-                                    out.print("<input type=\"checkbox\" id=\"chk\" name=\"temperatura\" value=\"true\"><br>");
-                                }
-                                }
-                                out.print("                </select><br>");
+                                    if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
+                                        out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreTemperatura\" value=\"" + sbList.get(i).getId() + "\">codice sensore: "+ sbList.get(i).getId() + "<br>");
 
-
+                                    }
+                                }
                                 out.print("<label>Umidità</label><br>");
-                                out.print("                <select type=\"text\" name=\"sensoreUmidita\" required><br>\n");
-
                                 for (int i = 0; i < sbList.size(); i++) {
-                                if (sbList.get(i).getColtivazione() == null && (sbList.get(i).getTipo().toLowerCase().contains("umidit"))) {
-                                    out.print("<option value=\"" + pList.get(i).getId() + "\">"+ sbList.get(i).getId() +"</option><input type=\"checkbox\" id=\"chk\" name=\"umidita\" value=\"true\"><br>");
+                                    if (sbList.get(i).getColtivazione() == 0 && (sbList.get(i).getTipo().toLowerCase().contains("umidit"))) {
+                                        out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreUmidita\" value=\" + sbList.get(i).getId() + \">codice sensore: "+ sbList.get(i).getId() + "<br>");
+                                    }
                                 }
-                                }
-                                out.print("                </select><br>");
-
-
-                                out.print("<br><br><button type=\"button\" class=\"btn btn-primary\" onclick=\"$(\"#aggiungi_coltivazione\").click(function() {\n" +
-                                        "            if ($('#chk:checked').length == 0) {\n" +
-                                        "                $(\"#alrt\").fadeIn();\n" +
-                                        "                return false;\n" +
-                                        "            }\n" +
-                                        "            else {\n" +
-                                        "                $(\"#alrt\").fadeOut();\n" +
-                                        "            }\n" +
-                                        "        });\">\n" +
+                                out.print("<br><br><button type=\"button\" id=\"summit\" class=\"btn btn-primary\">"+
                                         "                    Aggiungi coltivazione\n" +
                                         "                </button>\n" +
                                         "            </form>\n" +

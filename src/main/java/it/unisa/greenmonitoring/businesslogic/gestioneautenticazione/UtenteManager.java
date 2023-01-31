@@ -19,8 +19,14 @@ public class UtenteManager {
      * DipendenteDao.
      */
     private DipendenteDAO dipendenteDAO;
+    /**
+     * AziendaDao.
+     */
     private AziendaDAO aziendaDAO;
 
+    /**
+     * Costruttore di UtenteManager.
+     */
     public UtenteManager() {
         this.dipendenteDAO = new DipendenteDAOImpl();
         this.aziendaDAO = new AziendaDAOImpl();
