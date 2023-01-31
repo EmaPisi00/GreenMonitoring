@@ -89,7 +89,7 @@ public class SensoreBean {
      *
      * @return coltivazione
      */
-    public int getColtivazione() {
+    public Integer getColtivazione() {
         return coltivazione;
     }
 

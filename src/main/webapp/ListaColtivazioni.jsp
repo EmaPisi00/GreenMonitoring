@@ -44,11 +44,6 @@
 
 <div class="bd">
     <legend style="text-align:center;">Coltivazioni</legend>
-
-    <div id="alrt" class="alert alert-warning fade show" role="alert" hidden>
-        <i class="bi bi-exclamation-triangle me-1"> Selezionare almeno un sensore.</i>
-    </div>
-
     <!-- Coltivazioni -->
     <div class="card">
         <div class="card-body">
@@ -80,7 +75,7 @@
                         } else {
                             out.print("<ul class=\"list-group\">");
                             for (ColtivazioneBean cb : list) {
-                                if (cb.getStato_archiviazione() == 0) {
+                                if (cb.getStato_archiviazione() == 1) {
                                     out.print("<li class=\"list-group-item disabled\">" +
                                             "Coltivazione " + cb.getId() +
                                             "<br>Terreno associato: " + cb.getTerreno() +
@@ -111,6 +106,9 @@
                                 "    <div class=\"card\" style=\"width: 30rem;\">\n" +
                                 "        <div class=\"card-body\">\n" +
                                 "<h5 class=\"card-title\">Modulo inserimento coltivazione</h5>" +
+           "                     <div id=\"alrt\" class=\"alert alert-warning fade show\" role=\"alert\" hidden>" +
+                                "   <i class=\"bi bi-exclamation-triangle me-1\"> Selezionare almeno un sensore.</i>" +
+                                "</div>"+
                                 "            <form action=\"ServletColtivazioni\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
                                 "                <input type=\"hidden\" name=\"moduloInserimentoColtivazione\" required><br>\n" +
                                 "                <label>Scegliere il terreno di cui avviare una coltivazione</label><br>");
@@ -171,21 +169,20 @@
                             } else {
                                 out.print("<select type=\"text\" name=\"sensorePh\" required><br>\n");
                                 for (int i = 0; i < sbList.size(); i++) {
-                                /*if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
-                                    out.print("<option value=\"" + pList.get(i).getId() + "\"></option>");
-                                    out.print("<input type="checkbox" id="chk" name="pH" value="true"><br>");
-                                }*/
+                                if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
+                                    out.print("<option value=\"" + pList.get(i).getId() + "\">"+ sbList.get(i).getId() +"</option>");
+                                    out.print("<input type=\"checkbox\" id=\"chk\" name=\"pH\" value=\"true\"><br>");
+                                }
                                 }
                                 out.print("                </select><br>");
 
                                 out.print("<label>Temperatura</label><br>");
                                 out.print("                <select type=\"text\" name=\"sensoreTemperatura\" required><br>\n");
-
                                 for (int i = 0; i < sbList.size(); i++) {
-                                /*if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
-                                    out.print("<option value=\"" + pList.get(i).getId() + "\"></option>");
-                                    out.print("<input type="checkbox" id="chk" name="temperatura" value="true"><br>")
-                                }*/
+                                if (sbList.get(i).getColtivazione() == null && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
+                                    out.print("<option value=\"" + sbList.get(i).getId() + "\">"+ sbList.get(i).getId() +"</option>");
+                                    out.print("<input type=\"checkbox\" id=\"chk\" name=\"temperatura\" value=\"true\"><br>");
+                                }
                                 }
                                 out.print("                </select><br>");
 
@@ -194,10 +191,9 @@
                                 out.print("                <select type=\"text\" name=\"sensoreUmidita\" required><br>\n");
 
                                 for (int i = 0; i < sbList.size(); i++) {
-                                /*if (sbList.get(i).getColtivazione() == null && (sbList.get(i).getTipo().toLowerCase().contains("umidit"))) {
-                                    out.print("<option value=\"" + pList.get(i).getId() + "\"></option>");
-                                    out.print("<input type="checkbox" id="chk" name="umidita" value="true"><br>");
-                                }*/
+                                if (sbList.get(i).getColtivazione() == null && (sbList.get(i).getTipo().toLowerCase().contains("umidit"))) {
+                                    out.print("<option value=\"" + pList.get(i).getId() + "\">"+ sbList.get(i).getId() +"</option><input type=\"checkbox\" id=\"chk\" name=\"umidita\" value=\"true\"><br>");
+                                }
                                 }
                                 out.print("                </select><br>");
 
