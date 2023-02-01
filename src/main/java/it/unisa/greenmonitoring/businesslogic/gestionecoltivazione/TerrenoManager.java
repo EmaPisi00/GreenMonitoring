@@ -30,7 +30,6 @@ public class TerrenoManager {
      * @return List
      */
     public TerrenoBean createTerreno(TerrenoBean t) throws SQLException {
-         td = new TerrenoDAOImpl();
         TerrenoBean errore = new TerrenoBean(0F, 0F, "a", "a", "a");
         errore.setId(0);
         int numeroErrori = 0;
@@ -69,7 +68,7 @@ public class TerrenoManager {
         System.out.println(numeroErrori);
         if (numeroErrori == 0) {
             td.createTerreno(t);
-            return null;
+            return t;
         }
             return errore;
 
@@ -113,7 +112,6 @@ public class TerrenoManager {
      */
     public void rimuoviTerreno(int id_terreno) {
         try {
-             td = new TerrenoDAOImpl();
             td.deleteTerreno(id_terreno);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -128,7 +126,6 @@ public class TerrenoManager {
     public ArrayList<TerrenoBean> visualizzaListaTerreni(String id_azienda) {
         ArrayList<TerrenoBean> list = new ArrayList<>();
         try {
-            td = new TerrenoDAOImpl();
             td.retrieveTerreno().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
 
         } catch (SQLException e) {

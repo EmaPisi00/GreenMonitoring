@@ -12,6 +12,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.OpenMeteoApiAdapterImpl" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.DatiMeteoBean" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.MeteoApiAdapter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -28,7 +29,7 @@
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession"); %>
             <%@include file="fragments/headerLogged.html" %>
-      <% OpenMeteoApiAdapterImpl datimeteoDAO = new OpenMeteoApiAdapterImpl(); %>
+      <% MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl(); %>
 <table>
     <tr>
         <th>Temperatura minima</th>
@@ -36,12 +37,12 @@
         <th>Pioggia</th>
         <th>Codice Meteo</th>
     </tr>
-    <%  DatiMeteoBean datimeteo = datimeteoDAO.getTomorrowRain(14.6005,40.7389);{ %>
+    <%  DatiMeteoBean meteo = meteoApi.getTomorrowRain(40.7389,14.6005);{ %>
     <tr>
-        <td><%= datimeteo.getTemperatura_min() %></td>
-        <td><%= datimeteo.getTemperatura_max() %></td>
-        <td><%= datimeteo.getRain() %></td>
-        <td><%= datimeteo.getWeather_code() %></td>
+        <td><%= meteo.getTemperatura_min() %></td>
+        <td><%= meteo.getTemperatura_max() %></td>
+        <td><%= meteo.getRain() %></td>
+        <td><%= meteo.getWeather_code() %></td>
     </tr>
     <% } %>
 </table>
