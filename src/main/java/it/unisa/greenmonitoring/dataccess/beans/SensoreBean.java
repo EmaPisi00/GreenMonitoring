@@ -1,5 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
+import java.util.Objects;
+
 public class SensoreBean {
     /**
      * Variabile locale id.
@@ -137,4 +139,19 @@ public class SensoreBean {
         this.idM = given_idM;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SensoreBean that)) {
+            return false;
+        }
+        return id == that.id && tipo.equals(that.tipo) && Objects.equals(coltivazione, that.coltivazione) && azienda.equals(that.azienda) && idM.equals(that.idM);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, tipo, coltivazione, azienda, idM);
+    }
 }

@@ -49,6 +49,9 @@ public class UtenteManager {
      */
     public boolean associazioneDipendente(DipendenteBean user, String codiceAzienda) throws SQLException {
         AziendaBean azienda;
+        if (!(codiceAzienda.matches("^\\d{8}$"))) { //mettere string
+            return false;
+        }
         try {
             azienda = aziendaDAO.retrieveByCode(codiceAzienda);
         } catch (SQLException e) {
