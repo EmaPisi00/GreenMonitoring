@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
@@ -47,8 +51,13 @@ public class ServletColtivazioni extends HttpServlet {
                     String sensorePh = request.getParameter("sensorePh"); //id
                     String sensoreTemperatura = request.getParameter("sensoreTemperatura"); //id
                     String sensoreUmidita = request.getParameter("sensoreUmidita"); //id
+                    String dataInizio = request.getParameter("datainizio");
+                    java.sql.Date dataInizioDate = java.sql.Date.valueOf(dataInizio);
                     int terreno = Integer.parseInt(request.getParameter("terreno")); //id
-                    ColtivazioneBean cb = new ColtivazioneBean(Integer.valueOf(nomepianta), terreno, Byte.parseByte("0"));
+                    ColtivazioneBean cb = new ColtivazioneBean();
+                    cb.setPianta(Integer.valueOf(nomepianta));
+                    cb.setStato_archiviazione(Byte.parseByte("0"));
+                    cb.setTerreno(terreno);
                     SensoreManager sm = new SensoreManager();
                     List<SensoreBean> slist = sm.visualizzaListaSensori(aziendaBean.getEmail());
                     for(int i = 0; i < slist.size(); i++) {
@@ -59,6 +68,7 @@ public class ServletColtivazioni extends HttpServlet {
                         }
                     }
                     ColtivazioneManager cm = new ColtivazioneManager();
+                    cb.setData_inizio(dataInizioDate);
                     try {
                         cm.avvioColtivazione(cb, utente);
                     } catch (Exception e) {

@@ -45,7 +45,7 @@ public class ColtivazioneBean {
      */
     public ColtivazioneBean() {
     listaSensori = new ArrayList<SensoreBean>();
-    listaMisurazioni = new ArrayList<>();
+    listaMisurazioni = new ArrayList<MisurazioneSensoreBean>();
     }
 
     /**
