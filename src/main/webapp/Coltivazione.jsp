@@ -2,6 +2,7 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -17,16 +18,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<%  UtenteBean ut = (UtenteBean) session.getAttribute("currentUserSession");
-    if (!(ut instanceof AziendaBean) || ut == null)  { %>
-<% response.sendRedirect("error.jsp"); %>
-<% } else{  %>
+
 <%@include file="fragments/headerLogged.html"%>
-<%}%>
+
 <div class="bd">
     <div class="row">
         <div class="col-sm-6 mb-3 mb-sm-0">
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 30rem;">
         <div class="card-body">
             <h5 class="card-title">Info coltivazione</h5>
 
@@ -42,22 +40,44 @@
                 else {
                     List<ColtivazioneBean> list = null;
                     List<SensoreBean> sList = null;
+                    List<PiantaBean> piantaBeanList = null;
                     ColtivazioneManager cm = new ColtivazioneManager();
+                    PiantaManager pm = new PiantaManager();
                     SensoreManager sm = new SensoreManager();
+                    String nomePianta = new String();
                     if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                         DipendenteBean a = (DipendenteBean) sa;
                         Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
                         sList = sm.visualizzaListaSensori(a.getAzienda()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
                         list = cm.visualizzaStatoColtivazioni(a.getAzienda());
+                        piantaBeanList = pm.ListaPianteManager(a.getAzienda());
+                        for (int i = 0; i < piantaBeanList.size(); i++) {
+                            for (int j = 0; j < list.size(); j++) {
+                                if (piantaBeanList.get(i).getId().equals(list.get(j).getPianta())) {
+                                    nomePianta = piantaBeanList.get(i).getNome();
+                                    break;
+                                }
+                            }
+                        }
                     } else {
                         AziendaBean a = (AziendaBean) sa;
                         list = cm.visualizzaStatoColtivazioni(a.getEmail());
                         Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
                         sList = sm.visualizzaListaSensori(a.getEmail()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
+                        piantaBeanList = pm.ListaPianteManager(a.getEmail());
+                        for (int i = 0; i < piantaBeanList.size(); i++) {
+                            for (int j = 0; j < list.size(); j++) {
+                                if (piantaBeanList.get(i).getId().equals(list.get(j).getPianta())) {
+                                    nomePianta = piantaBeanList.get(i).getNome();
+                                    break;
+                                }
+                            }
+                        }
                     }
                     int[] valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
                     out.print("<ul><li class=\"list-group-item \">" +
-                            "Coltivazione " + session.getAttribute("coltivazioneID") + "<br>" +
+                            "Coltivazione di " + nomePianta + "<br>" +
+                            "id Coltivazione: " + session.getAttribute("coltivazioneID") + "<br>" +
                             "<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
                             "<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
                             "<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
@@ -66,9 +86,10 @@
                 }%>
         </div>
     </div>
+            <button type="button" class="btn btn-light" href="./SuggerimentiColtivazione">Suggerimenti</button>
         </div>
             <div class="col-sm-6">
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 30rem;">
                 <div class="card-body">
                     <h5 class="card-title">Sensori</h5>
 
@@ -89,8 +110,6 @@
                             sList = sm.visualizzaListaSensori(a.getEmail()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
                             out.print("<form id=\"rimuoviSensore\" action=\"ServletColtivazione\" method=\"post\">");
                         }
-                        out.print("<li class=\"list-group-item-success\" aria-current=\"true\">Sensori</li>\n");
-
                         if (sList != null) {
                                 for (int i = 0; i < sList.size(); i++) {
                                     out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getId());

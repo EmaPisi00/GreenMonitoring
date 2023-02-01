@@ -49,9 +49,22 @@ public class ServletColtivazioni extends HttpServlet {
                     String sensoreUmidita = request.getParameter("sensoreUmidita"); //id
                     int terreno = Integer.parseInt(request.getParameter("terreno")); //id
                     ColtivazioneBean cb = new ColtivazioneBean(Integer.valueOf(nomepianta), terreno, Byte.parseByte("0"));
+                    SensoreManager sm = new SensoreManager();
+                    List<SensoreBean> slist = sm.visualizzaListaSensori(aziendaBean.getEmail());
+                    for(int i = 0; i < slist.size(); i++) {
+                        SensoreBean s = null;
+                        if (slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensoreTemperatura)) {
+                            s = slist.get(i);
+                            cb.getListaSensori().add(s);
+                        }
+                    }
                     ColtivazioneManager cm = new ColtivazioneManager();
-                    cm.avvioColtivazione(cb);
-                List<ColtivazioneBean> cblist = cm.visualizzaColtivazioniAvviate(aziendaBean.getEmail());
+                    try {
+                        cm.avvioColtivazione(cb, utente);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    List<ColtivazioneBean> cblist = cm.visualizzaColtivazioniAvviate(aziendaBean.getEmail());
                 Integer id_coltivazione = 0;
                 for (int i = 0; i < cblist.size(); i++) {
                     if (cblist.get(i).getTerreno().equals(terreno)) {
@@ -59,8 +72,6 @@ public class ServletColtivazioni extends HttpServlet {
                         break;
                     }
                 }
-                    SensoreManager sm = new SensoreManager();
-                    List<SensoreBean> slist = sm.visualizzaListaSensori(aziendaBean.getEmail());
                     SensoreBean s = new SensoreBean();
                     /*
                     for (int i = 0; i < slist.size(); i++) {
