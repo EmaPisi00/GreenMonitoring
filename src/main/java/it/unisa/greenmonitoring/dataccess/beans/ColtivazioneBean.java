@@ -2,6 +2,7 @@ package it.unisa.greenmonitoring.dataccess.beans;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ColtivazioneBean {
     /**
@@ -43,7 +44,8 @@ public class ColtivazioneBean {
      * Questo è un costruttore vuoto per una coltivazione.
      */
     public ColtivazioneBean() {
-
+    listaSensori = new ArrayList<SensoreBean>();
+    listaMisurazioni = new ArrayList<>();
     }
 
     /**
@@ -209,5 +211,21 @@ public class ColtivazioneBean {
     @Override
     public String toString() {
         return "ColtivazioneBean{" + "id=" + id + ", pianta=" + pianta + ", terreno=" + terreno + ", stato_archiviazione=" + stato_archiviazione + ", data_inizio=" + data_inizio + ", data_fine=" + data_fine + ", listaSensori=" + listaSensori + ", listaMisurazioni=" + listaMisurazioni + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ColtivazioneBean that)) {
+            return false;
+        }
+        return id == that.id && stato_archiviazione == that.stato_archiviazione && pianta.equals(that.pianta) && terreno.equals(that.terreno) && data_inizio.equals(that.data_inizio) && Objects.equals(data_fine, that.data_fine) && listaSensori.equals(that.listaSensori);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, pianta, terreno, stato_archiviazione, data_inizio, data_fine, listaSensori);
     }
 }

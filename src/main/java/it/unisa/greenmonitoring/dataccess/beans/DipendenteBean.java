@@ -1,5 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
+import java.util.Objects;
+
 public class DipendenteBean extends UtenteBean implements Comparable<DipendenteBean> {
 
     /**
@@ -167,5 +169,21 @@ public class DipendenteBean extends UtenteBean implements Comparable<DipendenteB
             return 1;
         }
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DipendenteBean that)) {
+            return false;
+        }
+        return Objects.equals(azienda, that.azienda) && nome.equals(that.nome) && cognome.equals(that.cognome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(azienda, nome, cognome);
     }
 }

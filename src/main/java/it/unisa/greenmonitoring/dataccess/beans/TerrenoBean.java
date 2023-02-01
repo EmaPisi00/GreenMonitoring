@@ -1,5 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
+import java.util.Objects;
+
 public class TerrenoBean {
     /**
      * Questo campo contiene l'id.
@@ -153,5 +155,21 @@ public class TerrenoBean {
      */
     public String getAzienda() {
         return azienda;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof TerrenoBean that)) {
+            return false;
+        }
+        return id.equals(that.id) && latitudine.equals(that.latitudine) && longitudine.equals(that.longitudine) && superficie.equals(that.superficie) && immagine.equals(that.immagine) && azienda.equals(that.azienda);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, latitudine, longitudine, superficie, immagine, azienda);
     }
 }

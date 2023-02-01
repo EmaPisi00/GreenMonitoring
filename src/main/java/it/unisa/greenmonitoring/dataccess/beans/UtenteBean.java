@@ -1,5 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
+import java.util.Objects;
+
 public class UtenteBean {
     /**
      * Variabile locale email.
@@ -167,5 +169,21 @@ public class UtenteBean {
      */
     public void setProvincia(String give_provincia) {
         this.provincia = give_provincia;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof UtenteBean that)) {
+            return false;
+        }
+        return email.equals(that.email) && password.equals(that.password) && telefono.equals(that.telefono) && citta.equals(that.citta) && indirizzo.equals(that.indirizzo) && provincia.equals(that.provincia);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, password, telefono, citta, indirizzo, provincia);
     }
 }

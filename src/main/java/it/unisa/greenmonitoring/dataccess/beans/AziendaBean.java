@@ -1,5 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
+import java.util.Objects;
+
 /**
  * Registrazione di un'azienda bean.
  */
@@ -153,5 +155,21 @@ public class AziendaBean extends UtenteBean implements Comparable<AziendaBean> {
             return 1;
         }
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AziendaBean that)) {
+            return false;
+        }
+        return nome_azienda.equals(that.nome_azienda) && partita_iva.equals(that.partita_iva) && codice_associazione.equals(that.codice_associazione);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome_azienda, partita_iva, codice_associazione);
     }
 }
