@@ -24,9 +24,9 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     }
 
     @Override
-    public ColtivazioneBean createColtivazione(ColtivazioneBean c) throws SQLException {
+    public void createColtivazione(ColtivazioneBean c) throws SQLException {
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT Coltivazione" + "(pianta,terreno,stato_archiviazione,data_inizio,data_fine)" + " VALUES (?,?,?,?,?)";
+        String insertSQL = "INSERT INTO Coltivazione (pianta,terreno,stato_archiviazione,data_inizio,data_fine) VALUES (?,?,?,?,?)";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
@@ -50,7 +50,6 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
                 }
             }
         }
-        return c;
     }
 
     @Override
@@ -83,6 +82,32 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
             connection.close();
         }
         return list;
+    }
+
+    @Override
+    public ColtivazioneBean retrieveByKey(int id_coltivazione) throws SQLException {
+        String selectSQL = "SELECT * FROM coltivazione WHERE id = ?";
+        ColtivazioneBean s = new ColtivazioneBean();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, id_coltivazione);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                s.setId(rs.getInt("id"));
+                s.setPianta(rs.getInt("pianta"));
+                s.setTerreno(rs.getInt("terreno"));
+                s.setStato_archiviazione(rs.getByte("stato_archiviazione"));
+                s.setData_inizio(rs.getDate("dato_inizio"));
+                s.getData_fine();
+
+                connection.commit();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        connection.close();
+        return s;
     }
 
     @Override
