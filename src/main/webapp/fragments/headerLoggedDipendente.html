@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Link per l'importo del font  -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+
+  <link href="/bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/bootstrap-5.2.3-dist/js/bootstrap.bundle.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="/css/headerLogin.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<!-- Header -->
+<header>
+
+  <!-- Logo e titolo -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1 col-md-1 col-xs-12">
+        <!-- Logo -->
+        <div style="position: absolute;" class="logo">
+          <img src="/img/logo.png" class="img-fluid rounded-top" alt="">
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-xs-12">
+        <!-- Titolo -->
+        <div class="title">
+          <h1 class="display-4">Green Monitoring</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Dropdow profilo o login -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="btn1">
+          <div class="dropdown">
+            <button class="reg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+              Profilo
+            </button>
+            <ul style="text-align: center; font-size: 20px; font-family: 'Anton' sans-serif;"
+                class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Modifica Profilo</a></li>
+              <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-6">
+
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-light fixed-top">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                 aria-labelledby="offcanvasNavbarLabel">
+              <div style="background: linear-gradient(to bottom,rgb(221, 203, 203) , rgb(221,203,203))"
+                   class="offcanvas-header">
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3"
+                    style="line-height: 108px;">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="HomePage.jsp">Home</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId"
+                       data-bs-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">Gestione Autenticazione</a>
+                    <div class="dropdown-content" aria-labelledby="dropdownId">
+                      <a class="" style="display: none" href="">Rimozione Dipendente</a>
+                      <a class=""  href="#">Associazione ad azienda</a>
+                    </div>
+                  </li>
+                  <li style="display: none" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId"
+                       data-bs-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">Gestione Coltivazione</a>
+                    <div class="dropdown-content" aria-labelledby="dropdownId">
+                      <a class="" style="display: none" href="Terreni.jsp">Visualizzazione Terreni</a>
+                      <a class="" style="display: none" href="InserisciTerreno.jsp">Inserimento Terreno</a>
+                      <a class="" style="display: none" href="">Rimozione Terreno</a>
+                      <a class="" style="display: none" href="InserisciPianta.jsp">Aggiunta pianta</a>
+                      <a class="" style="display: none" href="">Modifica pianta</a>
+                      <a class="" style="display: none" href="Piante.jsp">Visualizzazione piante</a>
+                      <a class="" style="display: none" href="RimuoviPianta.jsp">Rimozione pianta</a>
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId"
+                       data-bs-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">Gestione Monitoraggio</a>
+                    <div class="dropdown-content" aria-labelledby="dropdownId">
+                      <a class="" style="display: none" href="Coltivazione.jsp">Avvio Coltivazione</a>
+                      <a class="" style="display: none" href="">Archivio Coltivazione</a>
+                      <a class="" href="">Visualizzazione notifiche</a>
+                      <a class="" href="">Consultazione fisiopatie</a>
+                      <a class="" href="SuggerimentiColtivazione.jsp">Visualizzazione suggerimenti irrigazione</a>
+                      <a class="" href="">Visualizzazione stato coltivazione</a>
+                      <a class="" href="ListaColtivazioni.jsp">Visualizzazione lista coltivazioni</a>
+                    </div>
+                  </li>
+                  <li style="display: none" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId"
+                       data-bs-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">Gestione Sensori</a>
+                    <div class="dropdown-content" aria-labelledby="dropdownId">
+                      <a class="" style="display: none" href="InserisciSensore.jsp">Registrazione Sensore</a>
+                      <a class="" style="display: none" href="">Associazione Sensore</a>
+                      <a class="" style="display: none" href="">Rimozione Sensore</a>
+                      <a class="" style="display: none" href="ListaSensori.jsp">Visualizzazione Sensori</a>
+                    </div>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+</header>
+
+
+</body>
+</html>
