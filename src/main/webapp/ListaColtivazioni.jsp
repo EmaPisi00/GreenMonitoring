@@ -6,7 +6,8 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %><%--
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
+<%@ page import="java.sql.Date" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -181,6 +182,7 @@
                                         out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreUmidita\" value=\" + sbList.get(i).getId() + \"> Codice sensore: "+ sbList.get(i).getId() + "<br>");
                                     }
                                 }
+                                    out.print("  <input type=\"date\" id=\"dataInizio\" name=\"datainizio\" required>");
                                 out.print("<br><br><button type=\"button\" id=\"summit\" class=\"btn btn-primary\">"+
                                         "                    Aggiungi coltivazione\n" +
                                         "                </button>\n" +
