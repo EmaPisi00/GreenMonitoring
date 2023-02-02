@@ -60,7 +60,7 @@ public class ServletColtivazioni extends HttpServlet {
                     cb.setTerreno(terreno);
                     SensoreManager sm = new SensoreManager();
                     List<SensoreBean> slist = sm.visualizzaListaSensori(aziendaBean.getEmail());
-                    for(int i = 0; i < slist.size(); i++) {
+                    for (int i = 0; i < slist.size(); i++) {
                         SensoreBean s = null;
                         if (slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensoreTemperatura)) {
                             s = slist.get(i);

@@ -30,7 +30,7 @@
 <% response.sendRedirect("error.jsp"); %>
 <% } else {
 %>
-<%@include file="fragments/headerLogged.html"%>
+<%@include file="fragments/headerLoggedAzienda.html"%>
 <%}%>
 <body >
 <br>

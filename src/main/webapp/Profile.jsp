@@ -28,7 +28,7 @@
     if (user == null)  { %>
 <%@include file="/fragments/headerLogin.html" %>
 <%} else{ %>
-<%@ include file="/fragments/headerLogged.html" %>
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
 <%}%>
 <html>
 <body>

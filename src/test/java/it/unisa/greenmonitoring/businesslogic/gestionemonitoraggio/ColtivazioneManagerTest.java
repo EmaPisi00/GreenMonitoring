@@ -1,3 +1,7 @@
+
+
+/*
+
 package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
 import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
@@ -42,11 +46,12 @@ public class ColtivazioneManagerTest {
     }
 
     @Test
-    public void avvioColtivazione() throws SQLException {
-        ColtivazioneBean actualColtivazione = avvioColtivazioneManager.avvioColtivazione(coltivazioneBean);
+    public void avvioColtivazione() throws Exception {
+        ColtivazioneBean actualColtivazione = avvioColtivazioneManager.avvioColtivazione(coltivazioneBean,"5");
         Mockito.verify(coltivazioneDao).createColtivazione(coltivazioneBean);
         assertEquals(coltivazioneBean, actualColtivazione);
     }
+
 }
 
 

@@ -28,7 +28,7 @@
 <body>
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession"); %>
-            <%@include file="fragments/headerLogged.html" %>
+            <%@include file="fragments/headerLoggedAzienda.html" %>
       <% MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl(); %>
 <table>
     <tr>
@@ -46,5 +46,7 @@
     </tr>
     <% } %>
 </table>
+
+<%@include file="fragments/footer.html"%>
 </body>
 </html>

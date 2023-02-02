@@ -26,7 +26,7 @@
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
     if (u instanceof AziendaBean) { %>
-            <%@include file="fragments/headerLogged.html"%>
+            <%@include file="fragments/headerLoggedAzienda.html"%>
       <%  SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
         List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
 %>

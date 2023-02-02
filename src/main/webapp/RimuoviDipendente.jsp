@@ -29,12 +29,22 @@
   <script src="bootstrap-5.2.3-dist/js/RimuoviDipendente.js"></script>
   <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <!-- Import Bootstrap -->
+  <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Import css -->
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/headerLogin.css">
+
 </head>
 
 <%
   UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
   if (u instanceof AziendaBean) { %>
-<%@include file="fragments/footer.html"%>
+<%@include file="fragments/headerLoggedAzienda.html"%>
 <%
   DipendenteDAO d = new DipendenteDAOImpl();
   List<DipendenteBean> dipendenti = d.retrieveAllByCode(u.getEmail());

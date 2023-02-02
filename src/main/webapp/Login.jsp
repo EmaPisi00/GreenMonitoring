@@ -27,7 +27,7 @@
     if (!(u instanceof AziendaBean) )  { %>
 <%@include file="/fragments/headerLogin.html" %>
 <%} else{ %>
-<%@ include file="/fragments/headerLogged.html" %>
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
 <%}%>
 <form method="post" action="ServletLogin">
     <div class="container" style="width: 100px; height: auto">

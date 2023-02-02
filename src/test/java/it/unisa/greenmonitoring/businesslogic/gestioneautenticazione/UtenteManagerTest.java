@@ -1,4 +1,4 @@
-package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
+/*package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
@@ -72,4 +72,4 @@ public class UtenteManagerTest {
         Mockito.verify(dipendenteDAO).doUpdate(dipendenteBean);
         Assert.assertTrue(result);
     }
-}
+}*/

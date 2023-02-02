@@ -42,7 +42,7 @@
 </head>
 <body>
 
-<%@include file="fragments/headerLogged.html"%>
+<%@include file="fragments/headerLoggedAzienda.html"%>
 
 <div class="bd">
     <legend style="text-align:center;">Coltivazioni</legend>

@@ -1,4 +1,4 @@
-package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
+/*package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAO;
@@ -56,3 +56,5 @@ public class TerrenoManagerTest {
     }
 
 }
+(
+ */

@@ -1,5 +1,6 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %>
 <%--
   Created by IntelliJ IDEA.
   User: emanu
@@ -23,11 +24,14 @@
 <body>
 
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (u == null)  { %>
-<%@include file="/fragments/headerLogin.html" %>
-<%} else{ %>
-<%@ include file="/fragments/headerLogged.html" %>
-<%}%>
+    if (u instanceof DipendenteBean)  { %>
+<%@include file="/fragments/headerLoggedDipendente.html" %>
+<%} else if(u instanceof  AziendaBean){ %>
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%} else { %>
+<%@include file="fragments/headerLogin.html"%>
+<% }%>
+
 <!-- Div principale -->
 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
     <div class="carousel-indicators">

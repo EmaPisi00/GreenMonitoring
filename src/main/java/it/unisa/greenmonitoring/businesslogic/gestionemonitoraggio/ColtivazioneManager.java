@@ -1,15 +1,11 @@
 package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
-import com.mysql.cj.result.LocalDateTimeValueFactory;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.*;
 import it.unisa.greenmonitoring.dataccess.dao.*;
 
-import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,13 +33,14 @@ public class ColtivazioneManager {
     /**
      * Questo metodo crea una nuova coltivazione sul database.
      * @param c
+     * @param id_azienda
      * @return ColtivazioneBean
      */
-    public ColtivazioneBean avvioColtivazione(ColtivazioneBean c, String id_azienda) throws Exception{
+    public ColtivazioneBean avvioColtivazione(ColtivazioneBean c, String id_azienda) throws Exception {
         cd = new ColtivazioneDAOImpl();
         pd = new PiantaDAOImpl();
         td = new TerrenoDAOImpl();
-        try {
+         try {
 
             /* Verifico l'esistenza della pianta associata a una certa coltivazione c */
             List<Integer> piantaBeanList = pd.RetriveAllPiantaDefault().stream().map(o -> o.getId()).toList();
@@ -80,14 +77,14 @@ public class ColtivazioneManager {
             }
 
             /* Verifico che i sensori associati siano > 0, presenti nel db e non occupati */
-            if (c.getListaSensori().size() == 0 || c.getListaSensori() == null){
+            if (c.getListaSensori().size() == 0 || c.getListaSensori() == null) {
                 throw new Exception("Non ci sono sensori");
             } else {
                 SensoreManager sm = new SensoreManager();
                 List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(id_azienda);
                 for (int i = 0; i < sensoreBeanList.size(); i++) {
                     for (int j = 0; j < c.getListaSensori().size(); j++) {
-                        if (c.getListaSensori().get(j).equals(sensoreBeanList.get(i)) && sensoreBeanList.get(i).getColtivazione() == null){
+                        if (c.getListaSensori().get(j).equals(sensoreBeanList.get(i)) && sensoreBeanList.get(i).getColtivazione() == null) {
                             throw new Exception("Sensore occupato");
                         }
                     }
