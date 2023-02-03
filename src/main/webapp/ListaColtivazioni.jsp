@@ -61,6 +61,12 @@
                     }
                     /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                     else {
+                        if (session.getAttribute("errore") != null){
+                            out.print("<div id=\"alrt\" class=\"alert alert-warning alert-dismissible fade show\" role=\\\"alert\\\">\" +\n" +
+                                    "<i class=\"bi bi-exclamation-triangle me-1\">" + session.getAttribute("errore").toString() + "</i>\" +\n" +
+                                    "</div>");
+                        }
+
                         List<ColtivazioneBean> list = null;
 
                         if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
@@ -40,6 +39,7 @@ public class ServletColtivazioni extends HttpServlet {
                 response.sendError(401);
             } else {
                 if (request.getParameter("nomepianta") == null || request.getParameter("terreno") == null) {
+                    request.getSession().setAttribute("errore", "L'operazione non è stata eseguita: La pianta o il terreno sono vuoti");
                     response.sendRedirect("ListaColtivazioni.jsp");
                 } else {
                     AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
@@ -72,13 +72,13 @@ public class ServletColtivazioni extends HttpServlet {
                         throw new RuntimeException(e);
                     }
                     List<ColtivazioneBean> cblist = cm.visualizzaColtivazioniAvviate(aziendaBean.getEmail());
-                Integer id_coltivazione = 0;
-                for (int i = 0; i < cblist.size(); i++) {
-                    if (cblist.get(i).getTerreno().equals(terreno)) {
-                        id_coltivazione = cblist.get(i).getTerreno();
-                        break;
+                    Integer id_coltivazione = 0;
+                    for (int i = 0; i < cblist.size(); i++) {
+                        if (cblist.get(i).getTerreno().equals(terreno)) {
+                            id_coltivazione = cblist.get(i).getTerreno();
+                            break;
+                        }
                     }
-                }
                     SensoreBean s = new SensoreBean();
                     /*
                     for (int i = 0; i < slist.size(); i++) {

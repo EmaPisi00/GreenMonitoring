@@ -6,8 +6,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
+
     <title>Coltivazione</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
+    <script src="path/to/chartjs/dist/chart.umd.js">
+
+
+    </script>
     <link href="/img/favicon.png" rel="icon">
     <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <meta charset="utf-8">
@@ -39,6 +45,7 @@
             <%
                 /* -- INIZIO AUTENTICAZIONE -- */
                 Object sa = session.getAttribute("currentUserSession");
+                int[] valoriMisurati = {0, 0, 0};
                 if (sa == null) {
                     response.sendError(401);
                 } else if ( ! (session.getAttribute("currentUserSession") instanceof UtenteBean)) {
@@ -82,7 +89,7 @@
                             }
                         }
                     }
-                    int[] valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
+                    valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
                     out.print("<ul><li class=\"list-group-item \">" +
                             "Coltivazione di " + nomePianta + "<br>" +
                             "id Coltivazione: " + session.getAttribute("coltivazioneID") + "<br>" +
@@ -96,6 +103,44 @@
     </div>
             <button type="button" class="btn btn-light" href="./SuggerimentiColtivazione">Suggerimenti</button>
         </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sunto delle misurazioni (media)</h5>
+
+                    <!-- Pie Chart -->
+                    <canvas id="pieChart" style="max-height: 400px;"></canvas>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            new Chart(document.querySelector('#pieChart'), {
+                                type: 'pie',
+                                data: {
+                                    labels: [
+                                        'media pH',
+                                        'media Temperatura',
+                                        'media Umidità'
+                                    ],
+                                    datasets: [{
+                                        label: 'My First Dataset',
+                                        data: [<%=valoriMisurati[0]%>>, <%=valoriMisurati[1]%>, <%=valoriMisurati[2]%>],
+                                        backgroundColor: [
+                                            'rgb(255, 99, 132)',
+                                            'rgb(54, 162, 235)',
+                                            'rgb(255, 205, 86)'
+                                        ],
+                                        hoverOffset: 4
+                                    }]
+                                }
+                            });
+                        });
+                    </script>
+                    <!-- End Pie CHart -->
+
+                </div>
+            </div>
+        </div>
+
             <div class="col-sm-6">
             <div class="card" style="width: 30rem;">
                 <div class="card-body">
