@@ -1,5 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
+import java.util.Objects;
+
 public class PiantaBean {
 
     /**
@@ -242,5 +244,21 @@ public class PiantaBean {
                 + ", temperatura_min='" + temperatura_min + '\'' + ", temperatura_max='" + temperatura_max + '\'' + ", umidita_min='" + umidita_min + '\''
                 + ", umidita_max='" + umidita_max + '\'' + ", immagine='" + immagine + '\''
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PiantaBean that)) {
+            return false;
+        }
+        return id.equals(that.id) && Objects.equals(azienda, that.azienda) && nome.equals(that.nome) && descrizione.equals(that.descrizione) && ph_min.equals(that.ph_min) && ph_max.equals(that.ph_max) && temperatura_min.equals(that.temperatura_min) && temperatura_max.equals(that.temperatura_max) && umidita_min.equals(that.umidita_min) && umidita_max.equals(that.umidita_max) && immagine.equals(that.immagine);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, azienda, nome, descrizione, ph_min, ph_max, temperatura_min, temperatura_max, umidita_min, umidita_max, immagine);
     }
 }

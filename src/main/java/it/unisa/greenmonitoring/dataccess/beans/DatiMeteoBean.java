@@ -1,5 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
+import java.util.Objects;
+
 public class DatiMeteoBean {
     /**
      * Temperatura massima.
@@ -91,5 +93,21 @@ public class DatiMeteoBean {
                 + ", rain=" + rain
                 + ", weather_code=" + weather_code
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DatiMeteoBean that)) {
+            return false;
+        }
+        return Double.compare(that.temperatura_max, temperatura_max) == 0 && Double.compare(that.temperatura_min, temperatura_min) == 0 && Double.compare(that.rain, rain) == 0 && weather_code == that.weather_code;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(temperatura_max, temperatura_min, rain, weather_code);
     }
 }

@@ -30,13 +30,17 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
+
+  <body >
+
   <% UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
     if (user instanceof AziendaBean && ((DipendenteBean)user).getAzienda() != null)  {
       //l'if controlla se l'utente è un dipendente e se è già associato ad un'azienda
       response.sendRedirect("Profile.jsp");
-    } %>
-  <body >
+    } else { %>
+  <%@include file="fragments/headerLoggedDipendente.html" %>
 
+  <%} %>
 
 <div class="container">
     <form method="post" action="AssociationServlet" id="associa_dipendente">

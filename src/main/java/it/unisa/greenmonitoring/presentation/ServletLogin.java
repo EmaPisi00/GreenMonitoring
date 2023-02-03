@@ -55,13 +55,17 @@ public class ServletLogin extends HttpServlet {
                     System.out.println(s);
                 }
                 response.sendRedirect("HomePage.jsp");
-            } else if (user instanceof DipendenteBean) {
+            } else if (user instanceof DipendenteBean)  {
                 sessione.setAttribute("currentUserSession", user);
-                //ciclo for per la verifica del corretto retrieve delle informazioni dello user corrente
-                for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((DipendenteBean) user).getNome(), ((DipendenteBean) user).getCognome(), ((DipendenteBean) user).getAzienda())) {
-                    System.out.println(s);
+                if (((DipendenteBean) user).getAzienda() != null) {
+                    //ciclo for per la verifica del corretto retrieve delle informazioni dello user corrente
+                    for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((DipendenteBean) user).getNome(), ((DipendenteBean) user).getCognome(), ((DipendenteBean) user).getAzienda())) {
+                        System.out.println(s);
+                    }
+                    response.sendRedirect("HomePage.jsp");
+                } else {
+                    response.sendRedirect("Associazione.jsp");
                 }
-                response.sendRedirect("HomePage.jsp");
             } else {
                 response.sendRedirect("index.jsp?error=true");
                 //fare un response.setParameter per dare un valore ad error

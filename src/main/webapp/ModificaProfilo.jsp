@@ -33,7 +33,7 @@
     if (user == null)  { %>
 <%@include file="/fragments/headerLogin.html" %>
 <%} else{ %>
-<%@ include file="/fragments/headerLogged.html" %>
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
 <%}%>
 <body>
 <div class="container rounded bg-white mt-5 mb-5">

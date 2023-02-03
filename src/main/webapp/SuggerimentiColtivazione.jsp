@@ -10,6 +10,9 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.SensoreBean" %>
 <%@ page import="java.util.List" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.OpenMeteoApiAdapterImpl" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.DatiMeteoBean" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.MeteoApiAdapter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,35 +23,30 @@
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
-    <title>Lista Sensori</title>
+    <title>Suggerimenti Coltivazione</title>
 </head>
 <body>
 <%
-    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    if (u instanceof AziendaBean) { %>
-            <%@include file="fragments/headerLoggedAzienda.html"%>
-      <%  SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
-        List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
-%>
+    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession"); %>
+            <%@include file="fragments/headerLoggedAzienda.html" %>
+      <% MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl(); %>
 <table>
     <tr>
-        <th>ID</th>
-        <th>Tipo</th>
-        <th>ID Mosquitto</th>
-        <th>Azienda</th>
+        <th>Temperatura minima</th>
+        <th>Temperatura massima</th>
+        <th>Pioggia</th>
+        <th>Codice Meteo</th>
     </tr>
-    <% for (SensoreBean sensore : sensori) { %>
+    <%  DatiMeteoBean meteo = meteoApi.getTomorrowRain(40.7389,14.6005);{ %>
     <tr>
-        <td><%= sensore.getId() %></td>
-        <td><%= sensore.getTipo() %></td>
-        <td><%= sensore.getIdM() %></td>
-        <td><%= sensore.getAzienda() %></td>
+        <td><%= meteo.getTemperatura_min() %></td>
+        <td><%= meteo.getTemperatura_max() %></td>
+        <td><%= meteo.getRain() %></td>
+        <td><%= meteo.getWeather_code() %></td>
     </tr>
     <% } %>
 </table>
-<a href="InserisciSensore.jsp" class="button">Inserisci sensore</a>
-<% } else { %>
-<p>Accesso negato, non sei autorizzato a visualizzare questa pagina</p>
-<% } %>
+
+<%@include file="fragments/footer.html"%>
 </body>
 </html>

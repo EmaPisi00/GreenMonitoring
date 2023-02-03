@@ -129,10 +129,10 @@ public class DipendenteDAOImpl implements DipendenteDAO {
 
 
     /**
-     * Metodo retrieve che restituisce di dati di dipendente..
+     * Metodo retrieve che restituisce di dati di dipendente.
      * @throws SQLException
      * @param email
-     * @return restituisce il bean diocane
+     * @return restituisce il bean.
      */
     @Override
     public UtenteBean doRetrieve(String email) {

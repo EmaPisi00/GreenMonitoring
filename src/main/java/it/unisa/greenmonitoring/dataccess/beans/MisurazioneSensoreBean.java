@@ -2,6 +2,7 @@ package it.unisa.greenmonitoring.dataccess.beans;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.Objects;
 
 public class MisurazioneSensoreBean {
     /**
@@ -123,5 +124,21 @@ public class MisurazioneSensoreBean {
      */
     public void setValore(int given_valore) {
         this.valore = given_valore;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof MisurazioneSensoreBean that)) {
+            return false;
+        }
+        return id == that.id && valore == that.valore && data.equals(that.data) && ora.equals(that.ora) && tipo.equals(that.tipo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, data, ora, tipo, valore);
     }
 }

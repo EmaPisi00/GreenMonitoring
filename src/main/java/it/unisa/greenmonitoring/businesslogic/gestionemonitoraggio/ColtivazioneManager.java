@@ -1,40 +1,108 @@
 package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
-import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
-import it.unisa.greenmonitoring.dataccess.beans.MisurazioneSensoreBean;
-import it.unisa.greenmonitoring.dataccess.dao.ColtivazioneDAO;
-import it.unisa.greenmonitoring.dataccess.dao.ColtivazioneDAOImpl;
-import it.unisa.greenmonitoring.dataccess.dao.MisurazioneSensoreDAO;
-import it.unisa.greenmonitoring.dataccess.dao.MisurazioneSensoreDAOImpl;
+import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
+import it.unisa.greenmonitoring.dataccess.beans.*;
+import it.unisa.greenmonitoring.dataccess.dao.*;
 
 import java.sql.SQLException;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class ColtivazioneManager {
     /**
      * ColtivazioneDAO.
      */
     private ColtivazioneDAO cd;
+
+    /**
+     * PiantaDAO.
+     */
+    private PiantaDAO pd;
+
+    /**
+     * PiantaDAO.
+     */
+    private TerrenoDAO td;
+
     /**
      * Questa costante indica lo stato di una coltivazione avviata.
      */
     private final int stato_coltivazione_avviata = 1;
+    /**
+     * Costruttore ColtivazioneManager.
+     */
+    public ColtivazioneManager() {
+        cd = new ColtivazioneDAOImpl();
+        pd = new PiantaDAOImpl();
+        td = new TerrenoDAOImpl();
+    }
 
     /**
      * Questo metodo crea una nuova coltivazione sul database.
      * @param c
+     * @param id_azienda
      * @return ColtivazioneBean
      */
-    public ColtivazioneBean avvioColtivazione(ColtivazioneBean c) {
-        cd = new ColtivazioneDAOImpl();
-        try {
+
+    public ColtivazioneBean avvioColtivazione(ColtivazioneBean c, String id_azienda) throws Exception {
+         try {
+
+            /* Verifico l'esistenza della pianta associata a una certa coltivazione c */
+            List<Integer> piantaBeanList = pd.RetriveAllPiantaDefault().stream().map(o -> o.getId()).toList();
+            if (!piantaBeanList.contains(c.getPianta())) {
+                throw new Exception("Pianta inesistente");
+            }
+
+
+            /* Verifico l'esistenza del terreno e che questo non sia già occupato */
+            List<TerrenoBean> terrenoBeanList = td.retrieveTerreno();
+            List<Integer> terrenoBeanIdList = terrenoBeanList.stream().map(o -> o.getId()).toList();
+            List<ColtivazioneBean> coltivazioneBeans = this.visualizzaStatoColtivazioni(id_azienda);
+            if (terrenoBeanIdList.contains(c.getTerreno())) {
+                for (int i = 0; i < terrenoBeanIdList.size(); i++) {
+                    for (int j = 0; j < coltivazioneBeans.size(); j++) {
+                        if (terrenoBeanIdList.get(i).equals(coltivazioneBeans.get(j).getTerreno())) {
+                            throw new Exception("Terreno occupato");
+                        }
+                    }
+                }
+            } else {
+                throw new Exception("Terreno inesistente");
+            }
+
+            /* Verifico il formato della data */
+            if (c.getData_inizio().toString().matches("/^[0-9]{2,4}-((([1-9]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|(([469]|11)-([1-9]|[1-2][0-9]|30|31)))$/")) {
+                long millis = System.currentTimeMillis();
+                java.sql.Date date = new java.sql.Date(millis);
+                if (java.sql.Date.valueOf(c.getData_inizio().toString()).before(date)) {
+                    throw new Exception("La data è futura rispetto ad oggi.");
+                }
+            } else {
+                throw new Exception("La data non corrisponde al formato YY-MM-DD o YYYY-MM-DD.");
+            }
+
+            /* Verifico che i sensori associati siano > 0, presenti nel db e non occupati */
+            if (c.getListaSensori().size() == 0 || c.getListaSensori() == null) {
+                throw new Exception("Non ci sono sensori");
+            } else {
+                SensoreManager sm = new SensoreManager();
+                List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(id_azienda);
+                for (int i = 0; i < sensoreBeanList.size(); i++) {
+                    for (int j = 0; j < c.getListaSensori().size(); j++) {
+                        if (c.getListaSensori().get(j).equals(sensoreBeanList.get(i)) && sensoreBeanList.get(i).getColtivazione() == null) {
+                            throw new Exception("Sensore occupato");
+                        }
+                    }
+                }
+            }
+
             cd.createColtivazione(c);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return c;
     }
-
     /**
      * Questo metodo restituisce una lista di coltivazioni di una azienda.
      * @param id_azienda

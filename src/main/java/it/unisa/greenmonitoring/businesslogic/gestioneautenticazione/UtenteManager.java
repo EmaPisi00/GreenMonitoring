@@ -18,7 +18,19 @@ public class UtenteManager {
     /**
      * DipendenteDao.
      */
-    private static final DipendenteDAO dipendenteDAO = new DipendenteDAOImpl();
+    private DipendenteDAO dipendenteDAO;
+    /**
+     * AziendaDao.
+     */
+    private AziendaDAO aziendaDAO;
+
+    /**
+     * Costruttore di UtenteManager.
+     */
+    public UtenteManager() {
+        this.dipendenteDAO = new DipendenteDAOImpl();
+        this.aziendaDAO = new AziendaDAOImpl();
+    }
 
     /**
      * Metodo che permette la rimozione di una associazione ad un'azienda.
@@ -35,9 +47,11 @@ public class UtenteManager {
      * @param codiceAzienda
      * @return true/false
      */
-    public static boolean associazioneDipendente(DipendenteBean user, String codiceAzienda) throws SQLException {
-        AziendaDAO aziendaDAO = new AziendaDAOImpl();
+    public boolean associazioneDipendente(DipendenteBean user, String codiceAzienda) throws SQLException {
         AziendaBean azienda;
+        if (!(codiceAzienda.matches("^\\d{8}$"))) { //mettere string
+            return false;
+        }
         try {
             azienda = aziendaDAO.retrieveByCode(codiceAzienda);
         } catch (SQLException e) {
@@ -59,7 +73,7 @@ public class UtenteManager {
      * Metodo che permette la cancellazione dell'associazione di un dipendente ad un'azienda.
      * @param id
      */
-    public static void rimuoviAssociazioneDipendente(String id) throws SQLException {
+    public void rimuoviAssociazioneDipendente(String id) throws SQLException {
         DipendenteBean user = (DipendenteBean) dipendenteDAO.doRetrieve(id);
         user.setAzienda(null);
         dipendenteDAO.doUpdate(user);

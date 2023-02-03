@@ -6,7 +6,8 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
 <%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean" %><%--
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -40,9 +41,24 @@
     <script src="bootstrap-5.2.3-dist/js/TerreniJS.js"></script>
     <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
 </head>
 <body>
 
+<%
+    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+    if (u instanceof AziendaBean) { %>
+<%@include file="fragments/headerLoggedAzienda.html"%>
+
+<%}%>
 <div class="bd">
     <legend style="text-align:center;">Terreni</legend>
 <form id="rimuovi_terreno" action="ServletTerreno" method="post">

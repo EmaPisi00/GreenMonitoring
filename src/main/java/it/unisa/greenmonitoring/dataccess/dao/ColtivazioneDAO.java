@@ -10,10 +10,16 @@ public interface ColtivazioneDAO {
      * Questo metodo crea un nuovo record nella tabella coltivazione.
      * @param t
      * @throws SQLException
+     */
+    void createColtivazione(ColtivazioneBean t) throws SQLException;
+
+    /**
+     * Questo metodo crea un nuovo record nella tabella coltivazione.
+     * @param id_coltivazione
+     * @throws SQLException
      * @return ColtivazioneBean
      */
-    ColtivazioneBean createColtivazione(ColtivazioneBean t) throws SQLException;
-
+    ColtivazioneBean retrieveByKey(int id_coltivazione) throws SQLException;
     /**
      * Questo metodo restituisce ogni coltivazione del DB a partire da una azienda.
      * @param id_azienda
