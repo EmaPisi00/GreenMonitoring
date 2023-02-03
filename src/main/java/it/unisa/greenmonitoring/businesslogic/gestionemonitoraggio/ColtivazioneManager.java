@@ -29,6 +29,14 @@ public class ColtivazioneManager {
      * Questa costante indica lo stato di una coltivazione avviata.
      */
     private final int stato_coltivazione_avviata = 1;
+    /**
+     * Costruttore ColtivazioneManager.
+     */
+    public ColtivazioneManager() {
+        cd = new ColtivazioneDAOImpl();
+        pd = new PiantaDAOImpl();
+        td = new TerrenoDAOImpl();
+    }
 
     /**
      * Questo metodo crea una nuova coltivazione sul database.
@@ -36,10 +44,8 @@ public class ColtivazioneManager {
      * @param id_azienda
      * @return ColtivazioneBean
      */
+
     public ColtivazioneBean avvioColtivazione(ColtivazioneBean c, String id_azienda) throws Exception {
-        cd = new ColtivazioneDAOImpl();
-        pd = new PiantaDAOImpl();
-        td = new TerrenoDAOImpl();
          try {
 
             /* Verifico l'esistenza della pianta associata a una certa coltivazione c */

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
@@ -100,6 +101,22 @@ public class ServletColtivazioni extends HttpServlet {
                 response.sendRedirect("Coltivazione.jsp");*/
                 }
             }
+        } else if (request.getParameter("sensoreDaRimuovere") != null) {
+            String sensoreDaRimuovere = request.getParameter("sensoreDaRimuovere");
+            AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
+            SensoreManager sm = new SensoreManager();
+            List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(aziendaBean.getEmail());
+            for (int i = 0; i < sensoreBeanList.size(); i++) {
+                if (sensoreBeanList.get(i).getId() == Integer.valueOf(sensoreDaRimuovere)) {
+                    try {
+                        sm.cancellaSensore(sensoreBeanList.get(i));
+                        break;
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
         }
     }
 }

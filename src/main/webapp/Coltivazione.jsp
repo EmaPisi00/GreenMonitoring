@@ -10,9 +10,7 @@
 
     <title>Coltivazione</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
-    <script src="path/to/chartjs/dist/chart.umd.js">
-
-
+    <script src="./canvas/canvasjs.min.js" >
     </script>
     <link href="/img/favicon.png" rel="icon">
     <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -53,6 +51,7 @@
                 }
                 /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                 else {
+                    String urlImmagine = new String("Foto coltivazione");
                     List<ColtivazioneBean> list = null;
                     List<SensoreBean> sList = null;
                     List<PiantaBean> piantaBeanList = null;
@@ -84,6 +83,7 @@
                             for (int j = 0; j < list.size(); j++) {
                                 if (piantaBeanList.get(i).getId().equals(list.get(j).getPianta())) {
                                     nomePianta = piantaBeanList.get(i).getNome();
+                                    urlImmagine = piantaBeanList.get(i).getImmagine();
                                     break;
                                 }
                             }
@@ -92,7 +92,7 @@
                     valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
                     out.print("<ul><li class=\"list-group-item \">" +
                             "Coltivazione di " + nomePianta + "<br>" +
-                            "id Coltivazione: " + session.getAttribute("coltivazioneID") + "<br>" +
+                            "<img src=\"" + urlImmagine +"\" alt=\"Foto coltivazione\">"  + "<br>" +
                             "<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
                             "<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
                             "<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
@@ -108,35 +108,32 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Sunto delle misurazioni (media)</h5>
+                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                    <script type="text/javascript">
+                        window.onload = function () {
 
-                    <!-- Pie Chart -->
-                    <canvas id="pieChart" style="max-height: 400px;"></canvas>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                            new Chart(document.querySelector('#pieChart'), {
-                                type: 'pie',
-                                data: {
-                                    labels: [
-                                        'media pH',
-                                        'media Temperatura',
-                                        'media Umidità'
-                                    ],
-                                    datasets: [{
-                                        label: 'My First Dataset',
-                                        data: [<%=valoriMisurati[0]%>>, <%=valoriMisurati[1]%>, <%=valoriMisurati[2]%>],
-                                        backgroundColor: [
-                                            'rgb(255, 99, 132)',
-                                            'rgb(54, 162, 235)',
-                                            'rgb(255, 205, 86)'
-                                        ],
-                                        hoverOffset: 4
-                                    }]
-                                }
+                            var chart = new CanvasJS.Chart("chartContainer", {
+                                theme: "light1", // "light2", "dark1", "dark2"
+                                animationEnabled: false, // change to true
+                                title:{
+                                    text: "Basic Column Chart"
+                                },
+                                data: [
+                                    {
+                                        // Change type to "bar", "area", "spline", "pie",etc.
+                                        type: "pie",
+                                        dataPoints: [
+                                            { label: "pH",  y: <%=valoriMisurati[0]%>  },
+                                            { label: "Temperatura", y:  <%=valoriMisurati[1]%>  },
+                                            { label: "Umidità", y: <%=valoriMisurati[2]%>  }
+                                        ]
+                                    }
+                                ]
                             });
-                        });
-                    </script>
-                    <!-- End Pie CHart -->
+                            chart.render();
 
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -172,7 +169,7 @@
                             }
                         if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
                             out.print("</form><br>");
-                            out.print("<button type=\"button\" class=\"btn btn-light\" href=\"./InserisciSensore\">Aggiungi sensore +</button>");
+                            out.print("<button type=\"button\" class=\"btn btn-light\" href=\"./InserisciSensore.jsp\">Aggiungi sensore +</button>");
                         }
                         out.print("</ul>");
                 }
