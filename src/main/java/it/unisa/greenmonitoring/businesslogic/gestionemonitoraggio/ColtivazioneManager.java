@@ -157,4 +157,12 @@ public class ColtivazioneManager {
         }
         return media;
     }
+    /**
+     * Questo metodo restituisce esattamente una coltivazione.
+     * @param id
+     * @return coltivazioneBean
+     */
+    public ColtivazioneBean retrieveColtivazioneSingola(int id) throws SQLException {
+        return cd.retrieveByKey(id);
+    }
 }
