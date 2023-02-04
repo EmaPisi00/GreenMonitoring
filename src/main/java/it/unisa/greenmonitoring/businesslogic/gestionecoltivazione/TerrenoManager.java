@@ -75,7 +75,15 @@ public class TerrenoManager {
     }
 
 
-
+    /**
+     * Questo metodo restituisce un terreno a partire da un id.
+     * @param id_terreno
+     * @return TerrenoBean
+     * @throws SQLException
+     */
+    public TerrenoBean retrieveTerrenoVero(int id_terreno) throws SQLException {
+        return td.retrieveByKey(id_terreno);
+    }
 
 
     /**
