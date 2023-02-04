@@ -59,9 +59,10 @@
                     PiantaManager pm = new PiantaManager();
                     SensoreManager sm = new SensoreManager();
                     String nomePianta = new String();
+                    Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
                     if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                         DipendenteBean a = (DipendenteBean) sa;
-                        Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
+                        
                         sList = sm.visualizzaListaSensori(a.getAzienda()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
                         list = cm.visualizzaStatoColtivazioni(a.getAzienda());
                         piantaBeanList = pm.ListaPianteManager(a.getAzienda());
@@ -76,7 +77,6 @@
                     } else {
                         AziendaBean a = (AziendaBean) sa;
                         list = cm.visualizzaStatoColtivazioni(a.getEmail());
-                        Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
                         sList = sm.visualizzaListaSensori(a.getEmail()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
                         piantaBeanList = pm.ListaPianteManager(a.getEmail());
                         for (int i = 0; i < piantaBeanList.size(); i++) {
@@ -96,12 +96,21 @@
                             "<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
                             "<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
                             "<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
+
+
+                            // ho aggiunto questo form, poi te lo gestisci tu, basta che chiama servletSuggerimenti e c'è l'id della coltivazione
+                                    "<form action=\"ServletSuggerimenti\" method=\"get\">\n" +
+                                    "<input type=\"hidden\" name=\"coltivazione\" value=\"" + coltivazioneID + "\">" +
+                                    "<button type=\"submit\" class=\"btn btn-success\" >Suggerimenti</button>"
+                                    + "</form>" +
+
+                            //fino a qui
                             "</li></ul>"
                     );
                 }%>
         </div>
     </div>
-            <button type="button" class="btn btn-light" href="./SuggerimentiColtivazione">Suggerimenti</button>
+            <button type="button" class="btn btn-light" href="./ServletSuggerimenti.java">Suggerimenti</button>
         </div>
 
         <div class="col-lg-6">

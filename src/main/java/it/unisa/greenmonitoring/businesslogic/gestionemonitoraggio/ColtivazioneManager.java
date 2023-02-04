@@ -47,7 +47,6 @@ public class ColtivazioneManager {
 
     public ColtivazioneBean avvioColtivazione(ColtivazioneBean c, String id_azienda) throws Exception {
          try {
-
             /* Verifico l'esistenza della pianta associata a una certa coltivazione c */
             List<Integer> piantaBeanList = pd.RetriveAllPiantaDefault().stream().map(o -> o.getId()).toList();
             if (!piantaBeanList.contains(c.getPianta())) {
@@ -58,7 +57,7 @@ public class ColtivazioneManager {
             /* Verifico l'esistenza del terreno e che questo non sia già occupato */
             List<TerrenoBean> terrenoBeanList = td.retrieveTerreno();
             List<Integer> terrenoBeanIdList = terrenoBeanList.stream().map(o -> o.getId()).toList();
-            List<ColtivazioneBean> coltivazioneBeans = this.visualizzaStatoColtivazioni(id_azienda);
+            List<ColtivazioneBean> coltivazioneBeans = cd.retrieveColtivazione(id_azienda);
             if (terrenoBeanIdList.contains(c.getTerreno())) {
                 for (int i = 0; i < terrenoBeanIdList.size(); i++) {
                     for (int j = 0; j < coltivazioneBeans.size(); j++) {
@@ -72,10 +71,10 @@ public class ColtivazioneManager {
             }
 
             /* Verifico il formato della data */
-            if (c.getData_inizio().toString().matches("/^[0-9]{2,4}-((([1-9]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|(([469]|11)-([1-9]|[1-2][0-9]|30|31)))$/")) {
+            if (c.getData_inizio().toString().matches("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$")) {
                 long millis = System.currentTimeMillis();
                 java.sql.Date date = new java.sql.Date(millis);
-                if (java.sql.Date.valueOf(c.getData_inizio().toString()).before(date)) {
+                if (!(java.sql.Date.valueOf(c.getData_inizio().toString()).before(date))) {
                     throw new Exception("La data è futura rispetto ad oggi.");
                 }
             } else {
@@ -109,7 +108,6 @@ public class ColtivazioneManager {
      * @return ArrayList of ColtivazioneBean
      */
     public ArrayList<ColtivazioneBean> visualizzaStatoColtivazioni(String id_azienda) {
-        cd = new ColtivazioneDAOImpl();
         ArrayList<ColtivazioneBean> l = new ArrayList<>();
         try {
             cd.retrieveColtivazione(id_azienda).stream().forEach(o -> l.add(o));
@@ -158,5 +156,13 @@ public class ColtivazioneManager {
             }
         }
         return media;
+    }
+    /**
+     * Questo metodo restituisce esattamente una coltivazione.
+     * @param id
+     * @return coltivazioneBean
+     */
+    public ColtivazioneBean retrieveColtivazioneSingola(int id) throws SQLException {
+        return cd.retrieveByKey(id);
     }
 }

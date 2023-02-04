@@ -49,7 +49,9 @@ public class UtenteManager {
      */
     public boolean associazioneDipendente(DipendenteBean user, String codiceAzienda) throws SQLException {
         AziendaBean azienda;
-        if (!(codiceAzienda.matches("^\\d{8}$"))) { //mettere string
+        if (user.getAzienda() != null) { //controlla se l'utente è già associato
+            return false;
+        } else if (!(codiceAzienda.matches("^\\w{8}$"))) { //stringa di 8 char, es: ASDdd234
             return false;
         }
         try {

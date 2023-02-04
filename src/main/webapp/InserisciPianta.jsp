@@ -24,13 +24,22 @@
 <body>
 
 <% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
+    String errori = (String)request.getAttribute("erroriPiantaBean");
     if (!(u instanceof AziendaBean))  { %>
 <% response.sendRedirect("error.jsp"); %>
 <% } else{  %>
-<%@include file="fragments/headerLoggedAzienda.html"%>
+
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
 <%}%>
 
 <form action="ServletPianta" method="post" enctype="multipart/form-data">
+
+    <%
+        if (errori != null) { %>
+    <div class="text-danger"> <%= errori%> </div>
+    <% } %>
+
+    </div>
     <label for="nome">Nome:</label>
     <input type="text" id="nome" name="nome" required><br>
     <label for="descrizione">Descrizione:</label>
@@ -56,7 +65,7 @@
     <input type="submit" value="bottone">
 </form>
 
-<%@include file="fragments/footer.html"%>
+<%@include file="/fragments/footer.html" %>
 
 </body>
 </html>

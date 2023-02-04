@@ -11,14 +11,14 @@ public interface TerrenoDAO {
      * @param t
      * @throws SQLException
      */
-    void createTerreno(TerrenoBean t) throws SQLException;
+    void createTerreno(TerrenoBean t);
 
     /**
      * Questo metodo restituisce ogni terreno del DB.
      * @return TerrenoBean
      * @throws SQLException
      */
-    ArrayList<TerrenoBean> retrieveTerreno() throws SQLException;
+    ArrayList<TerrenoBean> retrieveTerreno();
 
     /**
      * Questo metodo ricerca un terreno in base all'id.
