@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "AssociationServlet", value = "/AssociationServlet")
+@WebServlet(name = "ServletAssociazione", value = "/ServletAssociazione")
 public class AssociationServlet extends HttpServlet {
 
     /** Non lo so, l'ha messa intellij sta roba sotto.
@@ -49,7 +49,7 @@ public class AssociationServlet extends HttpServlet {
         HttpSession session = request.getSession();
         UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
 
-        if (user instanceof DipendenteBean && ((DipendenteBean) user).getAzienda() == null) {
+        if (user instanceof DipendenteBean) {
             try {
                 if (utenteManager.associazioneDipendente((DipendenteBean) user, codiceAzienda)) {
                     response.sendRedirect("Profile.jsp");
@@ -60,7 +60,7 @@ public class AssociationServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
         } else {
-            response.sendRedirect("Associazione.jsp");
+            response.sendRedirect("Profile.jsp");
         }
     }
 }
