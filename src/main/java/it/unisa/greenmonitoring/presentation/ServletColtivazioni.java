@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
@@ -39,9 +39,14 @@ public class ServletColtivazioni extends HttpServlet {
             if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
                 response.sendError(401);
             } else {
+                java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
                 if (request.getParameter("nomepianta") == null || request.getParameter("terreno") == null) {
-                    request.getSession().setAttribute("errore", "L'operazione non è stata eseguita: La pianta o il terreno sono vuoti");
+                    String errore = "L'operazione non è stata eseguita: La pianta o il terreno sono vuoti.";
+                    request.getSession().setAttribute("errore", errore);
                     response.sendRedirect("ListaColtivazioni.jsp");
+                } else if (java.sql.Date.valueOf(request.getParameter("datainizio")).after(date)) {
+                    String errore = "La data non è corretta.";
+                    request.getSession().setAttribute("errore", errore);
                 } else {
                     AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
                     String utente = aziendaBean.getEmail();
@@ -103,7 +108,8 @@ public class ServletColtivazioni extends HttpServlet {
             }
         } else if (request.getParameter("sensoreDaRimuovere") != null) {
             String sensoreDaRimuovere = request.getParameter("sensoreDaRimuovere");
-            AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
+            System.out.println(sensoreDaRimuovere);
+            /*AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
             SensoreManager sm = new SensoreManager();
             List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(aziendaBean.getEmail());
             for (int i = 0; i < sensoreBeanList.size(); i++) {
@@ -115,7 +121,7 @@ public class ServletColtivazioni extends HttpServlet {
                         throw new RuntimeException(e);
                     }
                 }
-            }
+            } */
 
         }
     }

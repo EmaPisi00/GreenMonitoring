@@ -61,12 +61,6 @@
                     }
                     /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                     else {
-                        if (session.getAttribute("errore") != null){
-                            out.print("<div id=\"alrt\" class=\"alert alert-warning alert-dismissible fade show\" role=\\\"alert\\\">\" +\n" +
-                                    "<i class=\"bi bi-exclamation-triangle me-1\">" + session.getAttribute("errore").toString() + "</i>\" +\n" +
-                                    "</div>");
-                        }
-
                         List<ColtivazioneBean> list = null;
 
                         if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
@@ -113,13 +107,21 @@
                         out.print("    <!-- Inserisci coltivazione -->\n" +
                                 "    <div class=\"card\" style=\"width: 30rem;\">\n" +
                                 "        <div class=\"card-body\">\n" +
-                                "<h5 class=\"card-title\">Modulo inserimento coltivazione</h5>" +
-           "                     <div id=\"alrt\" class=\"alert alert-warning fade show\" role=\"alert\">" +
+                                "<h5 class=\"card-title\">Modulo inserimento coltivazione</h5>");
+                        if (session.getAttribute("errore") != null){
+                                out.print("<div id=\"alert\" class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">" +
+                                        "<i class=\"bi bi-exclamation-triangle me-1\"> " + session.getAttribute("errore") + "</i>" +
+                                        "</div>");
+                                session.removeAttribute("errore");
+                        }
+                        out.print("<div id=\"alrt\" class=\"alert alert-warning fade show\" role=\"alert\">" +
                                 "   <i class=\"bi bi-exclamation-triangle me-1\"> Selezionare almeno un sensore.</i>" +
-                                "</div>"+
-                                "            <form action=\"ServletColtivazioni\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
+                                "</div>");
+                            out.print("          <form action=\"ServletColtivazioni\" method=\"post\" id=\"aggiungi_coltivazione\">\n" +
                                 "                <input type=\"hidden\" name=\"moduloInserimentoColtivazione\" required><br>\n" +
                                 "                <label>Scegliere il terreno di cui avviare una coltivazione</label><br>");
+
+                            //Se servletColtivazione invia un errore viene stampato un alert
                                 TerrenoManager tm = new TerrenoManager();
                                 List<TerrenoBean> tbList = tm.visualizzaListaTerreni(ab.getEmail());
                                 ColtivazioneManager cm = new ColtivazioneManager();
@@ -188,7 +190,9 @@
                                         out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreUmidita\" value=\" + sbList.get(i).getId() + \"> Codice sensore: "+ sbList.get(i).getId() + "<br>");
                                     }
                                 }
-                                    out.print("  <input type=\"date\" id=\"dataInizio\" name=\"datainizio\" required>");
+                                    java.sql.Date todayDate = new java.sql.Date(System.currentTimeMillis());
+                                    out.print("<label>Inserire la data di inizio della coltivazione</label><br>");
+                                    out.print("  <input type=\"date\" id=\"dataInizio\" name=\"datainizio\" min=\"" + todayDate + "\" required>");
                                 out.print("<br><br><button type=\"button\" id=\"summit\" class=\"btn btn-primary\">"+
                                         "                    Aggiungi coltivazione\n" +
                                         "                </button>\n" +
