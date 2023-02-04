@@ -1,17 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: franc
-  Date: 24/01/2023
-  Time: 15:21
-  To change this template use File | Settings | File Templates.
---%>
+
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.SensoreBean" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.dao.OpenMeteoApiAdapterImpl" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.dao.MeteoApiAdapter" %>
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,38 +14,57 @@
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
-    <title>Suggerimenti Coltivazione</title>
+    <title>Lista Sensori</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            font-family: monospace;
+            font-size: 18px;
+            text-align: left;
+        }
+        th {
+            background-color: #588c7e;
+            color: white;
+            padding: 12px;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #588c7e;
+        }
+    </style>
 </head>
 <body>
 <%
-    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession"); %>
-            <%@include file="fragments/headerLoggedAzienda.html" %>
-      <%MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl();
-      ColtivazioneManager cm = new ColtivazioneManager();
-          TerrenoManager tm = new TerrenoManager();
-      Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
-      ColtivazioneBean coltivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);
-      TerrenoBean terrenoBean = tm.retrieveTerrenoVero(coltivazioneBean.getTerreno());
-
-      %>
-
+    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+    if (u instanceof AziendaBean) { %>
+<%@include file="fragments/headerLoggedAzienda.html"%>
+<%  SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
+    List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
+%>
 <table>
     <tr>
-        <th>Temperatura minima</th>
-        <th>Temperatura massima</th>
-        <th>Pioggia</th>
-        <th>Codice Meteo</th>
+        <th>ID</th>
+        <th>Tipo</th>
+        <th>ID Mosquitto</th>
+        <th>Azienda</th>
     </tr>
-    <%  DatiMeteoBean meteo = meteoApi.getTomorrowRain(terrenoBean.getLatitudine(), terrenoBean.getLongitudine());{ %>
+    <% for (SensoreBean sensore : sensori) { %>
     <tr>
-        <td><%= meteo.getTemperatura_min() %></td>
-        <td><%= meteo.getTemperatura_max() %></td>
-        <td><%= meteo.getRain() %></td>
-        <td><%= meteo.getWeather_code() %></td>
+        <td><%= sensore.getId() %></td>
+        <td><%= sensore.getTipo() %></td>
+        <td><%= sensore.getIdM() %></td>
+        <td><%= sensore.getAzienda() %></td>
     </tr>
     <% } %>
 </table>
-
-<%@include file="fragments/footer.html"%>
+<a href="InserisciSensore.jsp" class="button">Inserisci sensore</a>
+<% } else { %>
+<p>Accesso negato, non sei autorizzato a visualizzare questa pagina</p>
+<% } %>
 </body>
 </html>
