@@ -9,7 +9,6 @@ import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAO;
 import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAOImpl;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ListIterator;
 
 public class AutenticazioneManager {
@@ -135,22 +134,16 @@ public class AutenticazioneManager {
      * @return il tipo di utente se le credenziali sono corrette, altrimenti null
      * @throws SQLException
      */
-    public UtenteBean Login(String email, String password) throws SQLException { //da modificare (anche il test)
-        List<AziendaBean> listAziende = aziendaDao.retrieveAll();
-        for (AziendaBean azienda : listAziende) {
-            if (azienda.getEmail().matches(email)) {
-                if (azienda.getPassword().matches(password)) {
-                    return azienda;
-                }
-            }
+    public UtenteBean Login(String email, String password) throws SQLException {
+        AziendaBean azienda = aziendaDao.retrieveForKey(email);
+        String pass = azienda.getPassword();
+        if (pass != null && pass.matches(password)) {
+            return azienda;
         }
-        List<DipendenteBean> listDipendenti = dipendenteDao.retrieveAll();
-        for (DipendenteBean dipendente : listDipendenti) {
-            if (dipendente.getEmail().matches(email)) {
-                if (dipendente.getPassword().matches(password)) {
-                    return dipendente;
-                }
-            }
+        DipendenteBean dipendente = dipendenteDao.doRetrieve(email);
+        pass = dipendente.getPassword();
+        if (pass != null && pass.matches(password)) {
+            return dipendente;
         }
         return null;
     }

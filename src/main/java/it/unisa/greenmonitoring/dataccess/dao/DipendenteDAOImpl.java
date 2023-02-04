@@ -2,7 +2,6 @@ package it.unisa.greenmonitoring.dataccess.dao;
 
 
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
-import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -135,11 +134,11 @@ public class DipendenteDAOImpl implements DipendenteDAO {
      * @return restituisce il bean.
      */
     @Override
-    public UtenteBean doRetrieve(String email) {
+    public DipendenteBean doRetrieve(String email) {
 
         connection = null;
         String searchQuery = "select * from " + TABLE_NAME + " where email = ?";
-        UtenteBean bean = new DipendenteBean();
+        DipendenteBean bean = new DipendenteBean();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(searchQuery);
@@ -152,9 +151,9 @@ public class DipendenteDAOImpl implements DipendenteDAO {
                 bean.setCitta(rs.getString("citta"));
                 bean.setProvincia(rs.getString("provincia"));
                 bean.setIndirizzo(rs.getString("indirizzo"));
-                ((DipendenteBean) bean).setAzienda(rs.getString("azienda"));
-                ((DipendenteBean) bean).setNome(rs.getString("nome"));
-                ((DipendenteBean) bean).setCognome(rs.getString("cognome"));
+                bean.setAzienda(rs.getString("azienda"));
+                bean.setNome(rs.getString("nome"));
+                bean.setCognome(rs.getString("cognome"));
             }
         } catch (Exception ex) {
             System.out.println("Log In failed: An Exception has occurred! " + ex);

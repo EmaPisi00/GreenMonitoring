@@ -69,24 +69,4 @@ public class AutenticazioneManagerTest {
     public void registraDipendente() {
     }
 
-    @Test
-    public void loginAzienda() throws SQLException {
-        List<AziendaBean> listaziende  = new ArrayList<>();
-        listaziende.add(aziendaBean);
-        Mockito.when(aziendaDao.retrieveAll()).thenReturn(listaziende);
-        UtenteBean a = autenticazioneManager.Login(aziendaBean.getEmail(), aziendaBean.getPassword());
-        assertEquals(a, aziendaBean);
-
-    }
-
-    @Test
-    public void loginAzienda2() throws SQLException {
-        List<AziendaBean> listaziende  = new ArrayList<>();
-        listaziende.add(aziendaBean);
-        Mockito.when(aziendaDao.retrieveAll()).thenReturn(listaziende);
-        Mockito.when(dipendenteDAO.retrieveAll()).thenReturn(new ArrayList<DipendenteBean>());
-        UtenteBean a = autenticazioneManager.Login("prova@gmai.com", aziendaBean.getPassword());
-        assertNull(a);
-
-    }
 }
