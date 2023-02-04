@@ -21,14 +21,36 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
     <title>Lista Sensori</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            font-family: monospace;
+            font-size: 18px;
+            text-align: left;
+        }
+        th {
+            background-color: #588c7e;
+            color: white;
+            padding: 12px;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #588c7e;
+        }
+    </style>
 </head>
 <body>
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
     if (u instanceof AziendaBean) { %>
-            <%@include file="fragments/headerLoggedAzienda.html"%>
-      <%  SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
-        List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
+<%@include file="fragments/headerLoggedAzienda.html"%>
+<%  SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
+    List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
 %>
 <table>
     <tr>
