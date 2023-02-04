@@ -26,7 +26,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     public TerrenoDAOImpl() {
     }
     @Override
-    public void createTerreno(TerrenoBean t) throws SQLException {
+    public void createTerreno(TerrenoBean t) {
         PreparedStatement preparedStatement = null;
         String insertSQL = "INSERT " + TABLE_NAME + "(azienda,immagine,latitudine,longitudine,superfice)" + " VALUES (?,?,?,?,?)";
         try {
@@ -39,21 +39,19 @@ public class TerrenoDAOImpl implements TerrenoDAO {
             preparedStatement.setString(5, t.getSuperficie());
             preparedStatement.executeUpdate();
             connection.commit();
+        } catch (SQLException s) {
+            s.printStackTrace();
         } finally {
             try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e);
             }
         }
     }
 
     @Override
-    public ArrayList<TerrenoBean> retrieveTerreno() throws SQLException {
+    public ArrayList<TerrenoBean> retrieveTerreno() {
 
         String selectSQL = "SELECT * FROM Terreno";
         ArrayList<TerrenoBean> list = new ArrayList<>();
@@ -76,7 +74,11 @@ public class TerrenoDAOImpl implements TerrenoDAO {
         } catch (SQLException s) {
             s.printStackTrace();
         } finally {
-            connection.close();
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
         return list;
     }
