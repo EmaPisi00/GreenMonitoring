@@ -25,12 +25,12 @@
 </head>
 
 <% UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-  TerrenoBean t= (TerrenoBean) request.getAttribute("erroriTerrenoBean");;
+  String errore= (String) request.getAttribute("erroriTerrenoBean");
   if (!(u instanceof AziendaBean)) { %>
 <% response.sendRedirect("error.jsp"); %>
 <% } else {
 %>
-<%@include file="fragments/headerLoggedAzienda.html"%>
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
 <%}%>
 <body >
 <br>
@@ -42,34 +42,23 @@
           class="needs-validation" >
 
           <input type="text" id="azienda" name="azienda" value="<%=u.getEmail()%>"  style="display: none">
-          <% if (t != null && t.getId() == null) { %>
-          <div class="text-danger"> esiste già un terreno con questa latitudine e longitudine </div>
+          <% if (errore != null) { %>
+          <div class="text-danger"> <%= errore%> </div>
           <% } %>
 
           <div>
-            <% if (t != null && t.getLatitudine() == null) { %>
-            <div class="text-danger text-center">
-              Errore latitudine
-            </div>
-            <% } %>
             <label for="latitudine"  class="text-left-label">latitudine</label>
             <input type="text" class="form-control" id="latitudine" name="latitudine" placeholder="Inserisci latitudine" required>
           </div>
 
 
           <div>
-          <% if (t != null && t.getLongitudine() == null) { %>
-            <div class="text-danger" >Errore longitudine</div>
-          <% } %>
             <label for="longitudine" class="form-label" >longitudine:</label>
             <input type="text" class="form-control" id="longitudine" name="longitudine" placeholder="Inserisci longitudine" required>
           </div>
 
 
           <div>
-          <% if (t != null && t.getSuperficie() == null) { %>
-            <div class="text-danger">Errore superfice</div>
-          <% } %>
             <label for="superfice" class="form-label" >superfice:</label>
             <input type="text" class="form-control" id="superfice" name="superfice" required>
           </div>

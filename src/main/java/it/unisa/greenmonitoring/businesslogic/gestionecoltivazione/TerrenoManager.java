@@ -29,28 +29,22 @@ public class TerrenoManager {
      * @throws SQLException
      * @return List
      */
-    public TerrenoBean createTerreno(TerrenoBean t) throws SQLException {
-        TerrenoBean errore = new TerrenoBean(0F, 0F, "a", "a", "a");
-        errore.setId(0);
-        int numeroErrori = 0;
-        System.out.println("vov" + t);
+    public TerrenoBean createTerreno(TerrenoBean t)  {
+
         if (!(t.getSuperficie().matches("^[0-9]+$"))) {
             System.out.println("errore nella superfice");
-            errore.setSuperficie(null);
-            numeroErrori++;
+            return null;
         }
 
         if (t.getLatitudine() < 0 || t.getLatitudine() > 90) {
             System.out.println("errore: latitudine minore di 0 ");
             System.out.println("errore: latitudine maggiore di 90");
-            errore.setLatitudine(null);
-            numeroErrori++;
+            return null;
         }
         if (t.getLongitudine() < 0 || t.getLongitudine() > 180) {
             System.out.println("errore: longitudine minore di 0 ");
             System.out.println("errore: longitudine maggiore di 180");
-            errore.setLongitudine(null);
-            numeroErrori++;
+            return null;
         }
         List<TerrenoBean> listaterreni = td.retrieveTerreno();
         for (TerrenoBean tt : listaterreni) {
@@ -59,30 +53,11 @@ public class TerrenoManager {
                 System.out.println(tt.getLongitudine());
                 System.out.println(t.getLongitudine());
                 System.out.println("esiste già un terreno in questa posizione");
-                errore.setId(null);
-                numeroErrori++;
-                break;
+                return null;
             }
         }
-        System.out.println(errore);
-        System.out.println(numeroErrori);
-        if (numeroErrori == 0) {
             td.createTerreno(t);
             return t;
-        }
-            return errore;
-
-    }
-
-
-    /**
-     * Questo metodo restituisce un terreno a partire da un id.
-     * @param id_terreno
-     * @return TerrenoBean
-     * @throws SQLException
-     */
-    public TerrenoBean retrieveTerrenoVero(int id_terreno) throws SQLException {
-        return td.retrieveByKey(id_terreno);
     }
 
 
@@ -133,12 +108,7 @@ public class TerrenoManager {
      */
     public ArrayList<TerrenoBean> visualizzaListaTerreni(String id_azienda) {
         ArrayList<TerrenoBean> list = new ArrayList<>();
-        try {
             td.retrieveTerreno().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         return list;
     }
 
