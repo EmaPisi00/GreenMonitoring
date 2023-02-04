@@ -17,6 +17,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
     <title>Lista Piante</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
@@ -37,52 +45,56 @@
         }
     </style>
 </head>
+
+
 <body>
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
 <div class="bd">
     <legend style="text-align:center;">Piante</legend>
-<form id="visualizza_piante" action="ServletPianta" method="post">
-    <div class="card">
-        <div class="card-body">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Descrizione</th>
-                <th scope="col">Ph minimo</th>
-                <th scope="col">Ph massimo</th>
-                <th scope="col">Temperatura minima</th>
-                <th scope="col">Temperatura massima</th>
-                <th scope="col">Umidità minima</th>
-                <th scope="col">Umidità massima</th>
-                <th scope="col">Immagine</th>
-            </tr>
-            </thead>
-            <tbody>
-                <%
-                    /* -- INIZIO AUTENTICAZIONE --*/
-                    Object seo = session.getAttribute("currentUserSession");
-                    String email= null;
+    <form id="visualizza_piante" action="ServletPianta" method="post">
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Descrizione</th>
+                        <th scope="col">Ph minimo</th>
+                        <th scope="col">Ph massimo</th>
+                        <th scope="col">Temperatura minima</th>
+                        <th scope="col">Temperatura massima</th>
+                        <th scope="col">Umidità minima</th>
+                        <th scope="col">Umidità massima</th>
+                        <th scope="col">Immagine</th>
+                        <th scope="col">Azione</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <%
+                        /* -- INIZIO AUTENTICAZIONE --*/
+                        Object seo = session.getAttribute("currentUserSession");
+                        String email= null;
 
-                    if (seo == null) {
-                        response.sendError(401);
-                    }
+                        if (seo == null) {
+                            response.sendError(401);
+                        }
 
-                    if(seo instanceof AziendaBean) {
-                        email = ((AziendaBean) seo).getEmail();
-                    }
-                    else if(seo instanceof DipendenteBean) {
-                        email = ((DipendenteBean) seo).getAzienda();
-                    }
+                        if(seo instanceof AziendaBean) {
+                            email = ((AziendaBean) seo).getEmail();
+                        }
+                        else if(seo instanceof DipendenteBean) {
+                            response.sendError(401);
+                        }
 
                         PiantaManager p = new PiantaManager();
                         List<PiantaBean> list = p.ListaPianteManager(email);
-
+                        int i=0;
                         for (PiantaBean pb : list) {
                             out.print("<tr>" +
-                                    "<td>" +
-                                    "</td>" +
+                                    "<td>");
+                            out.print("</td>" +
                                     "<td>" + pb.getId() + "</td>" +
                                     "<td>" + pb.getNome() + "</td>" +
                                     "<td><div class=\"overflow-auto\" style=\"max-width: 260px; max-height: 100px;\" >" + pb.getDescrizione() +"</div></td>" +
@@ -92,16 +104,20 @@
                                     "<td>" + pb.getTemperatura_max() + "</td>" +
                                     "<td>" + pb.getUmidita_min() + "</td>" +
                                     "<td>" + pb.getUmidita_max() + "</td>" +
-                                    "<td> <img src=\"" + "img/" + pb.getImmagine() + "\" alt=\"Descrizione immagine\"></td>" +
+                                    "<td> <img src=\"" + request.getContextPath() + "/../immagini/piante/" + pb.getImmagine() + "\" alt=\"Descrizione immagine\"></td>" +
+                                    "<td> <button type=\"submit\" name=\"rimuoviPianta_submit\" class=\"btn btn-danger\" value=\"" + pb.getId() + "\">Rimuovi</button>"+
+                                        " <button type=\"submit\" value=\"" + pb.getId() + "\"class=\"btn btn-danger\" name=\"modificaRange_submit\">Modifica</button></td>" +
                                     "</tr>"
                             );
-                    }
-                %>
-            </tbody>
-        </table>
+                            i++;
+                        }
+                    %>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-</form>
+
+    </form>
 </div><!-- End bd -->
 
 </body>
