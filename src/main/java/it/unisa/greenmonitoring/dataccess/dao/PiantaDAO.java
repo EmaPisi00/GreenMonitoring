@@ -1,9 +1,6 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.PiantaBean;
-
-
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -11,29 +8,40 @@ public interface PiantaDAO {
     /**
      * Questo metodo crea un nuovo record nella tabella TERRENO.
      * @param p
-     * @throws SQLException
      */
-    void aggiungiPiantaPersonalizzata(PiantaBean p) throws SQLException;
+    void aggiungiPiantaPersonalizzata(PiantaBean p);
 
     /**
      * Questo metodo restituisce ogni terreno del DB.
      * @return TerrenoBean
      * @throws SQLException
      */
-    List<PiantaBean> RetriveAllPiantaDefault() throws SQLException;
+    List<PiantaBean> RetriveAllPiantaDefault();
 
     /**
      * Questo metodo restituisce ogni terreno del DB.
      * @param id
-     * @throws SQLException
      */
-   void deletePianta(int id) throws SQLException;
+   void deletePianta(int id);
 
     /**
      *
      * @param email
      * @return List
-     * @throws SQLException
      */
-    List<PiantaBean> RetriveAllPiantaAzienda(String email) throws SQLException;
+    List<PiantaBean> RetriveAllPiantaAzienda(String email);
+
+    /**
+     *
+     * @param id
+     * @return PiantaBean
+     */
+    PiantaBean retrieveByKey(Integer id);
+
+    /**
+     *
+     * @param p
+     * @return
+     */
+    void updateValue(PiantaBean p);
 }
