@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
-import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -24,7 +23,7 @@ public interface DipendenteDAO {
      * @return DipendenteBean
      * @throws SQLException
      */
-     UtenteBean doRetrieve(String email);
+     DipendenteBean doRetrieve(String email);
 
     /**
      * Metodo retrieve che permette di ricercare tutti i dati di tutti i dipendenti.

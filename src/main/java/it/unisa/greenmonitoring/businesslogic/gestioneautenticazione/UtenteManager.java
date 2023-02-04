@@ -51,8 +51,7 @@ public class UtenteManager {
         AziendaBean azienda;
         if (user.getAzienda() != null) { //controlla se l'utente è già associato
             return false;
-        }
-        else if (!(codiceAzienda.matches("^\\w{8}$"))) { //stringa di 8 char, es: ASDdd234
+        } else if (!(codiceAzienda.matches("^\\w{8}$"))) { //stringa di 8 char, es: ASDdd234
             return false;
         }
         try {
