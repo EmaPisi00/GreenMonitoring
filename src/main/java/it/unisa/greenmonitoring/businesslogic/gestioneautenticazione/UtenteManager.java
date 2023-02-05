@@ -45,7 +45,7 @@ public class UtenteManager {
      * Metodo che permette l'associazione di un dipendente ad un'azienda.
      * @param user
      * @param codiceAzienda
-     * @return true/false
+     * @return true se e solo se l'associazione va a buon fine.
      */
     public boolean associazioneDipendente(DipendenteBean user, String codiceAzienda) throws SQLException {
         AziendaBean azienda;

@@ -51,15 +51,15 @@ public class UtenteManagerTest {
     @Test
     public void associazioneDipendente1() throws SQLException {
         codiceAzienda="";
-        Mockito.when(aziendaDAO.retrieveByCode(codiceAzienda)).thenReturn(new AziendaBean());
+        //Mockito.when(aziendaDAO.retrieveByCode(codiceAzienda)).thenReturn(new AziendaBean());
         boolean result = utenteManager.associazioneDipendente(dipendenteBean, codiceAzienda);
-
+        Assert.assertFalse(result);
     }
 
     @Test
     public void associazioneDipendente2() throws SQLException {
         codiceAzienda = "5";
-        Mockito.when(aziendaDAO.retrieveByCode(codiceAzienda)).thenReturn(null);
+        //Mockito.when(aziendaDAO.retrieveByCode(codiceAzienda)).thenReturn(null);
         boolean result = utenteManager.associazioneDipendente(dipendenteBean, codiceAzienda);
         Assert.assertFalse(result);
     }
@@ -71,7 +71,7 @@ public class UtenteManagerTest {
 
     @Test
     public void associazioneDipendente4() throws SQLException {
-        codiceAzienda = "6";
+        codiceAzienda = "12345678";
         Mockito.when(aziendaDAO.retrieveByCode(codiceAzienda)).thenReturn(new AziendaBean());
         boolean result = utenteManager.associazioneDipendente(dipendenteBean, codiceAzienda);
         Mockito.verify(dipendenteDAO).doUpdate(dipendenteBean);
