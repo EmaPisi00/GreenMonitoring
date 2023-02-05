@@ -1,6 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
+import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 
 
 import java.sql.Connection;
@@ -15,6 +16,16 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
      * Start Connection.
      */
     private Connection connection;
+
+    /**
+     * SensoreDAO.
+     */
+    private SensoreDAO sensoreDAO;
+
+    /**
+     * MisurazioneSensoreDAO.
+     */
+    private MisurazioneSensoreDAO misurazioneSensoreDAO;
 
     /**
      * Costruttore di ColtivazioneDAOImpl.
@@ -56,6 +67,8 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     public ArrayList<ColtivazioneBean> retrieveColtivazione(String id_azienda) throws SQLException {
         String selectSQL = "SELECT * FROM Coltivazione JOIN Terreno ON Coltivazione.terreno = Terreno.id WHERE Terreno.azienda = ?";
         ArrayList<ColtivazioneBean> list = new ArrayList<>();
+        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
+        sensoreDAO = new SensoreDAOImpl();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
@@ -70,11 +83,13 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
                 c.setPianta(rs.getInt("pianta"));
                 c.setTerreno(rs.getInt("terreno"));
                 c.setStato_archiviazione(rs.getByte("stato_archiviazione"));
-               /* c.setInListaSensori(rs.getInt("sensore_id"));
-                c.setInListaMisurazioni(rs.getInt("valore")); */
+                c.setListaMisurazioni(misurazioneSensoreDAO.retreive(String.valueOf(c.getId())));
+                c.setListaSensori((ArrayList<SensoreBean>) sensoreDAO.retrieveAllByAzienda(id_azienda).stream().filter(o -> o.getColtivazione().equals(c.getId())).toList());
                 connection.commit();
                 list.add(c);
             }
+
+
 
         } catch (SQLException s) {
             s.printStackTrace();

@@ -2,6 +2,7 @@ package it.unisa.greenmonitoring.dataccess.beans;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ColtivazioneBean {
@@ -199,6 +200,22 @@ public class ColtivazioneBean {
 
     public void setInListaSensori(SensoreBean s) {
         this.listaSensori.add(s); }
+
+    /**
+     * Questo metodo aggiunge una lista di sensori.
+     * @param given_listaSensori
+     */
+    public void setListaSensori(ArrayList<SensoreBean> given_listaSensori){
+        this.listaSensori = given_listaSensori;
+    }
+
+    /**
+     * Questo metodo aggiunge una lista di misurazioni.
+     * @param given_listaMisurazioni
+     */
+    public void setListaMisurazioni(ArrayList<MisurazioneSensoreBean> given_listaMisurazioni){
+        this.listaMisurazioni = given_listaMisurazioni;
+    }
 
     /**
      * Questo metodo aggiunge un sensore a SensoreBean.
