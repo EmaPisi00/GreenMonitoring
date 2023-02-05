@@ -1,4 +1,4 @@
-/*package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
+package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
@@ -50,6 +50,10 @@ public class UtenteManagerTest {
 
     @Test
     public void associazioneDipendente1() throws SQLException {
+        codiceAzienda="";
+        Mockito.when(aziendaDAO.retrieveByCode(codiceAzienda)).thenReturn(new AziendaBean());
+        boolean result = utenteManager.associazioneDipendente(dipendenteBean, codiceAzienda);
+
     }
 
     @Test
@@ -62,6 +66,7 @@ public class UtenteManagerTest {
 
     @Test
     public void associazioneDipendente3() throws SQLException {
+
     }
 
     @Test
@@ -72,4 +77,4 @@ public class UtenteManagerTest {
         Mockito.verify(dipendenteDAO).doUpdate(dipendenteBean);
         Assert.assertTrue(result);
     }
-}*/
+}
