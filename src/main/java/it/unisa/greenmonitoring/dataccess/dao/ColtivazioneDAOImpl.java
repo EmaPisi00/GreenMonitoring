@@ -64,7 +64,7 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
 
     @Override
     public ArrayList<ColtivazioneBean> retrieveColtivazione(String id_azienda) throws SQLException {
-        String selectSQL = "SELECT Coltivazione.id , pianta, terreno, stato_archiviazione, data_inizio, data_fine FROM Coltivazione JOIN Terreno ON Coltivazione.terreno = Terreno.id WHERE Terreno.azienda = ?";
+        String selectSQL = "SELECT Coltivazione.id , pianta, terreno, stato_archiviazione, data_inizio, data_fine, azienda FROM Coltivazione JOIN Terreno ON Coltivazione.terreno = Terreno.id WHERE Terreno.azienda = ?";
         ArrayList<ColtivazioneBean> list = new ArrayList<>();
         misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
         sensoreDAO = new SensoreDAOImpl();
@@ -80,6 +80,7 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
                 c.setData_inizio(rs.getDate("data_fine"));
                 c.setPianta(rs.getInt("pianta"));
                 c.setTerreno(rs.getInt("terreno"));
+                c.setAzienda(rs.getString("azienda"));
                 c.setStato_archiviazione(rs.getByte("stato_archiviazione"));
                 connection.commit();
                 list.add(c);
