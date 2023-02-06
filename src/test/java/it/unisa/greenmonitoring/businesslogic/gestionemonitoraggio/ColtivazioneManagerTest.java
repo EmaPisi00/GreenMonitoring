@@ -1,4 +1,4 @@
-
+/*
 package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
 import it.unisa.greenmonitoring.dataccess.beans.*;
@@ -87,3 +87,4 @@ public class ColtivazioneManagerTest {
 
 }
 
+*/

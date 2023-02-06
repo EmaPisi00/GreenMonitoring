@@ -26,6 +26,11 @@ public class ColtivazioneManager {
     private TerrenoDAO td;
 
     /**
+     * SensoreDAO.
+     */
+    private SensoreDAO sensoreDAO;
+
+    /**
      * Questa costante indica lo stato di una coltivazione avviata.
      */
     private final int stato_coltivazione_avviata = 1;
@@ -36,6 +41,7 @@ public class ColtivazioneManager {
         cd = new ColtivazioneDAOImpl();
         pd = new PiantaDAOImpl();
         td = new TerrenoDAOImpl();
+        sensoreDAO = new SensoreDAOImpl();
     }
 
     /**
@@ -82,14 +88,15 @@ public class ColtivazioneManager {
             }
 
             /* Verifico che i sensori associati siano > 0, presenti nel db e non occupati */
-            if (c.getListaSensori().size() == 0 || c.getListaSensori() == null) {
+             List<SensoreBean> listSensori = sensoreDAO.retrieveAllByColtivazione(c.getId());
+            if (listSensori == null || listSensori.size() == 0) {
                 throw new Exception("Non ci sono sensori");
             } else {
                 SensoreManager sm = new SensoreManager();
                 List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(id_azienda);
                 for (int i = 0; i < sensoreBeanList.size(); i++) {
-                    for (int j = 0; j < c.getListaSensori().size(); j++) {
-                        if (c.getListaSensori().get(j).equals(sensoreBeanList.get(i)) && sensoreBeanList.get(i).getColtivazione() == null) {
+                    for (int j = 0; j < listSensori.size(); j++) {
+                        if (listSensori.get(j).equals(sensoreBeanList.get(i)) && sensoreBeanList.get(i).getColtivazione() == null) {
                             throw new Exception("Sensore occupato");
                         }
                     }
@@ -107,15 +114,8 @@ public class ColtivazioneManager {
      * @param id_azienda
      * @return ArrayList of ColtivazioneBean
      */
-    public ArrayList<ColtivazioneBean> visualizzaStatoColtivazioni(String id_azienda) {
-        ArrayList<ColtivazioneBean> l = new ArrayList<>();
-        try {
-            cd.retrieveColtivazione(id_azienda).stream().forEach(o -> l.add(o));
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return l;
+    public ArrayList<ColtivazioneBean> visualizzaStatoColtivazioni(String id_azienda) throws SQLException {
+        return cd.retrieveColtivazione(id_azienda);
     }
 
     /**

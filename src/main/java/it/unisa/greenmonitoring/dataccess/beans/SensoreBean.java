@@ -140,6 +140,17 @@ public class SensoreBean {
     }
 
     @Override
+    public String toString() {
+        return "SensoreBean{"
+                + "id=" + id
+                + ", tipo='" + tipo + '\''
+                + ", coltivazione=" + coltivazione
+                + ", azienda='" + azienda + '\''
+                + ", idM='" + idM + '\''
+                + '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

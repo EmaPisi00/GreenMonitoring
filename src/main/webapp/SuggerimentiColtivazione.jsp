@@ -1,9 +1,10 @@
-
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.SensoreBean" %>
 <%@ page import="java.util.List" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.OpenMeteoApiAdapterImpl" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.MeteoApiAdapter" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,57 +15,50 @@
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
-    <title>Lista Sensori</title>
-
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 50%;
-            font-family: monospace;
-            font-size: 18px;
-            text-align: left;
-        }
-        th {
-            background-color: #588c7e;
-            color: white;
-            padding: 12px;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #588c7e;
-        }
-    </style>
+    <title>Suggerimenti Coltivazione</title>
 </head>
 <body>
 <%
-    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    if (u instanceof AziendaBean) { %>
-<%@include file="fragments/headerLoggedAzienda.html"%>
-<%  SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
-    List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
+    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession"); %>
+<%@include file="fragments/headerLoggedAzienda.html" %>
+<%MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl();
+    ColtivazioneManager cm = new ColtivazioneManager();
+    TerrenoManager tm = new TerrenoManager();
+    Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
+    ColtivazioneBean coltivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);
+    TerrenoBean terrenoBean = tm.retrieveTerrenoVero(coltivazioneBean.getTerreno());
+
 %>
+
 <table>
     <tr>
-        <th>ID</th>
-        <th>Tipo</th>
-        <th>ID Mosquitto</th>
-        <th>Azienda</th>
+        <th>Informazioni sul tempo</th>
     </tr>
-    <% for (SensoreBean sensore : sensori) { %>
+    <%  DatiMeteoBean meteo = meteoApi.getTomorrowRain(terrenoBean.getLatitudine(), terrenoBean.getLongitudine());{ %>
     <tr>
-        <td><%= sensore.getId() %></td>
-        <td><%= sensore.getTipo() %></td>
-        <td><%= sensore.getIdM() %></td>
-        <td><%= sensore.getAzienda() %></td>
+        <td>Temperatura minima: <%= meteo.getTemperatura_min() %>°<br>
+            Temperatura massima: <%= meteo.getTemperatura_max() %>°<br>
+            Millimetri di pioggia: <%= meteo.getRain() %><br>
+            Codice meteo: <%= meteo.getWeather_code() %></td>
     </tr>
-    <% } %>
 </table>
-<a href="InserisciSensore.jsp" class="button">Inserisci sensore</a>
-<% } else { %>
-<p>Accesso negato, non sei autorizzato a visualizzare questa pagina</p>
+<table>
+    <tr>
+        <%
+            long weather_code = meteo.getWeather_code();
+            if (weather_code < 56) {
+                out.println("Domani non pioverà, ti consigliamo di irrigare il terreno domani.");
+            } else if (weather_code == 56 || weather_code == 57) {
+                out.println("Domani ci sarà poca pioggia, ti suggeriamo di non irrigare.");
+            } else if (weather_code == 61 || weather_code == 63 || weather_code == 65) {
+                out.println("Domani fa o temporal, statt a cas.");
+            }
+        %>
+    </tr>
+</table>
 <% } %>
+
+
+<%@include file="fragments/footer.html"%>
 </body>
 </html>

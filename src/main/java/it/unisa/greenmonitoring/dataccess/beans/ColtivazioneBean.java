@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class ColtivazioneBean {
@@ -31,22 +30,9 @@ public class ColtivazioneBean {
     private Date data_fine;
 
     /**
-     * Questo campo contiene i sensori associati alla coltivazione.
-     */
-    private ArrayList<SensoreBean> listaSensori;
-
-    /**
-     * Questo campo contiene le misurazioni effettuate da ogni sensore.
-     */
-    private ArrayList<MisurazioneSensoreBean> listaMisurazioni;
-
-    /**
      * Questo è un costruttore vuoto per una coltivazione.
      */
-    public ColtivazioneBean() {
-    listaSensori = new ArrayList<SensoreBean>();
-    listaMisurazioni = new ArrayList<MisurazioneSensoreBean>();
-    }
+    public ColtivazioneBean() { }
 
     /**
      * Questo metodo è il costruttore di ColtivazioneBean.
@@ -177,56 +163,11 @@ public class ColtivazioneBean {
         this.data_fine = given_data_fine;
     }
 
-    /**
-     * Questo metodo restituisce la lista di sensori.
-     * @return ArrayList'<SensoreBean>'
-     */
-    public ArrayList<SensoreBean> getListaSensori() {
-        return listaSensori;
-    }
 
-    /**
-     * Questo metodo restituisce la lista delle misurazioni.
-     * @return ArrayList'<MisurazioneSensoreBean>'
-     */
-    public ArrayList<MisurazioneSensoreBean> getListaMisurazioni() {
-        return listaMisurazioni; }
-
-    /**
-     * Questo metodo aggiunge un sensore a SensoreBean.
-     * @param s
-     */
-
-    public void setInListaSensori(SensoreBean s) {
-        this.listaSensori.add(s); }
-
-    /**
-     * Questo metodo aggiunge una lista di sensori.
-     * @param given_listaSensori
-     */
-    public void setListaSensori(ArrayList<SensoreBean> given_listaSensori) {
-        this.listaSensori = given_listaSensori;
-    }
-
-    /**
-     * Questo metodo aggiunge una lista di misurazioni.
-     * @param given_listaMisurazioni
-     */
-    public void setListaMisurazioni(ArrayList<MisurazioneSensoreBean> given_listaMisurazioni) {
-        this.listaMisurazioni = given_listaMisurazioni;
-    }
-
-    /**
-     * Questo metodo aggiunge un sensore a SensoreBean.
-     * @param ms
-     */
-
-    public void setInListaMisurazioni(MisurazioneSensoreBean ms) {
-        this.listaMisurazioni.add(ms); }
 
     @Override
     public String toString() {
-        return "ColtivazioneBean{" + "id=" + id + ", pianta=" + pianta + ", terreno=" + terreno + ", stato_archiviazione=" + stato_archiviazione + ", data_inizio=" + data_inizio + ", data_fine=" + data_fine + ", listaSensori=" + listaSensori + ", listaMisurazioni=" + listaMisurazioni + '}';
+        return "ColtivazioneBean{" + "id=" + id + ", pianta=" + pianta + ", terreno=" + terreno + ", stato_archiviazione=" + stato_archiviazione + ", data_inizio=" + data_inizio + ", data_fine=" + data_fine + ", listaSensori=" + '}';
     }
 
     @Override
@@ -237,11 +178,11 @@ public class ColtivazioneBean {
         if (!(o instanceof ColtivazioneBean that)) {
             return false;
         }
-        return id == that.id && stato_archiviazione == that.stato_archiviazione && pianta.equals(that.pianta) && terreno.equals(that.terreno) && data_inizio.equals(that.data_inizio) && Objects.equals(data_fine, that.data_fine) && listaSensori.equals(that.listaSensori);
+        return id == that.id && stato_archiviazione == that.stato_archiviazione && pianta.equals(that.pianta) && terreno.equals(that.terreno) && data_inizio.equals(that.data_inizio) && Objects.equals(data_fine, that.data_fine);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, pianta, terreno, stato_archiviazione, data_inizio, data_fine, listaSensori);
+        return Objects.hash(id, pianta, terreno, stato_archiviazione, data_inizio, data_fine);
     }
 }

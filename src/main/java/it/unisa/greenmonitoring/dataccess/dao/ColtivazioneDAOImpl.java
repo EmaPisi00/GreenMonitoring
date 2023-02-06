@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
-import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 
 
 import java.sql.Connection;
@@ -74,7 +73,6 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
             preparedStatement.setString(1, id_azienda);
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 ColtivazioneBean c = new ColtivazioneBean();
                 c.setId(rs.getInt("id"));
@@ -83,8 +81,6 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
                 c.setPianta(rs.getInt("pianta"));
                 c.setTerreno(rs.getInt("terreno"));
                 c.setStato_archiviazione(rs.getByte("stato_archiviazione"));
-                c.setListaMisurazioni(misurazioneSensoreDAO.retreive(String.valueOf(c.getId())));
-                c.setListaSensori((ArrayList<SensoreBean>) sensoreDAO.retrieveAllByAzienda(id_azienda).stream().filter(o -> o.getColtivazione().equals(c.getId())).toList());
                 connection.commit();
                 list.add(c);
             }

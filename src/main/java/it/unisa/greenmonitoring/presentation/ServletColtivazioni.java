@@ -61,19 +61,15 @@ public class ServletColtivazioni extends HttpServlet {
                     cb.setPianta(Integer.valueOf(nomepianta));
                     cb.setStato_archiviazione(Byte.parseByte("0"));
                     cb.setTerreno(terreno);
-                    SensoreManager sm = new SensoreManager();
-                    List<SensoreBean> slist = sm.visualizzaListaSensori(aziendaBean.getEmail());
-                    for (int i = 0; i < slist.size(); i++) {
-                        SensoreBean s = null;
-                        if (slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensoreTemperatura)) {
-                            s = slist.get(i);
-                            cb.getListaSensori().add(s);
-                        }
-                    }
+                    SensoreManager sensoreManager = new SensoreManager();
+
+
+
                     ColtivazioneManager cm = new ColtivazioneManager();
                     cb.setData_inizio(dataInizioDate);
                     try {
                         cm.avvioColtivazione(cb, utente);
+
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
