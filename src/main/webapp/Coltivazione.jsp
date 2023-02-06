@@ -75,6 +75,7 @@
                             }
                             /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                             else {
+
                                 String urlImmagine = new String("Foto coltivazione");
                                 List<ColtivazioneBean> list = null;
                                 List<SensoreBean> sList = null;

@@ -9,6 +9,10 @@ public class ColtivazioneBean {
      */
     private int id;
     /**
+     * Questo campo contiene l'email dell'azienda.
+     */
+    private String azienda;
+    /**
      * Questo campo contiene l'id della pianta.
      */
     private Integer pianta;
@@ -65,6 +69,28 @@ public class ColtivazioneBean {
         this.stato_archiviazione = given_stato_archiviazione;
     }
 
+    /**
+     * Questo è il getter dell'azienda associata ad una coltivazione.
+     * @return
+     */
+    public String getAzienda() {
+        return azienda;
+    }
+
+    /**
+     * Questo è il setter dell'azienda associata alla coltivazione.
+     * @param azienda
+     */
+    public void setAzienda(String azienda) {
+        this.azienda = azienda;
+    }
+
+    /**
+     * Questo è il setter della pianta associata alla coltivazione.
+     */
+    public void setPianta(Integer pianta) {
+        this.pianta = pianta;
+    }
 
     /**
      * Questo metodo restituisce l'id di una coltivazione.
@@ -185,4 +211,5 @@ public class ColtivazioneBean {
     public int hashCode() {
         return Objects.hash(id, pianta, terreno, stato_archiviazione, data_inizio, data_fine);
     }
+
 }
