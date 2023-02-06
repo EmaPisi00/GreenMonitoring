@@ -1,11 +1,13 @@
 package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
-import it.unisa.greenmonitoring.dataccess.beans.*;
+import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
+import it.unisa.greenmonitoring.dataccess.beans.MisurazioneSensoreBean;
+import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
+import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 import it.unisa.greenmonitoring.dataccess.dao.*;
 
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class ColtivazioneManager {
     /**
      * Questa costante indica lo stato di una coltivazione avviata.
      */
-    private final int stato_coltivazione_avviata = 1;
+    private final int stato_coltivazione_avviata = 0;
     /**
      * Costruttore ColtivazioneManager.
      */
@@ -48,14 +50,20 @@ public class ColtivazioneManager {
      * Questo metodo crea una nuova coltivazione sul database.
      * @param c
      * @param id_azienda
+     * @param collezioneSensori
      * @return ColtivazioneBean
      */
 
-    public ColtivazioneBean avvioColtivazione(ColtivazioneBean c, String id_azienda) throws Exception {
+    public ColtivazioneBean avvioColtivazione(ColtivazioneBean c, String id_azienda, ArrayList<String> collezioneSensori) throws Exception {
          try {
             /* Verifico l'esistenza della pianta associata a una certa coltivazione c */
-            List<Integer> piantaBeanList = pd.RetriveAllPiantaDefault().stream().map(o -> o.getId()).toList();
-            if (!piantaBeanList.contains(c.getPianta())) {
+            List<Integer> piantaBeanListAzienda = pd.RetriveAllPiantaAzienda(id_azienda).stream().map(o -> o.getId()).toList();
+            List<Integer> piantaBeanListDefault = pd.RetriveAllPiantaDefault().stream().map(o -> o.getId()).toList();
+            List<Integer> piante = new ArrayList<>();
+            piante.addAll(piantaBeanListDefault);
+            piante.addAll(piantaBeanListAzienda);
+            if (!piante.contains(c.getPianta())) {
+                System.out.println("ColtivazioneManager - c.getPianta is " + c.getPianta());
                 throw new Exception("Pianta inesistente");
             }
 
@@ -86,15 +94,14 @@ public class ColtivazioneManager {
             }
 
             /* Verifico che i sensori associati siano > 0, presenti nel db e non occupati */
-             List<SensoreBean> listSensori = sensoreDAO.retrieveAllByColtivazione(c.getId());
-            if (listSensori == null || listSensori.size() == 0) {
+            if (collezioneSensori == null || collezioneSensori.size() == 0) {
                 throw new Exception("Non ci sono sensori");
             } else {
                 SensoreManager sm = new SensoreManager();
                 List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(id_azienda);
                 for (int i = 0; i < sensoreBeanList.size(); i++) {
-                    for (int j = 0; j < listSensori.size(); j++) {
-                        if (listSensori.get(j).equals(sensoreBeanList.get(i)) && sensoreBeanList.get(i).getColtivazione() == null) {
+                    for (int j = 0; j < collezioneSensori.size(); j++) {
+                        if (collezioneSensori.get(j).equals(sensoreBeanList.get(i)) && sensoreBeanList.get(i).getColtivazione() == null) {
                             throw new Exception("Sensore occupato");
                         }
                     }

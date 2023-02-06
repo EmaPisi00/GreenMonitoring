@@ -166,6 +166,7 @@ public class SensoreDAOImpl implements SensoreDAO {
 
     @Override
     public synchronized void update(int id_sensore, SensoreBean s) throws SQLException {
+        System.out.println("[SensoreDAOImpl] sensoreBean is " + s.toString());
         String updateSQL = "UPDATE Sensore SET tipo = ?, azienda = ?, idM = ?, coltivazione = ? WHERE id = ?";
         try {
             connection = ConnectionPool.getConnection();

@@ -179,7 +179,7 @@
                             out.print("<label>Umidità</label><br>");
                             for (int i = 0; i < sbList.size(); i++) {
                                 if (sbList.get(i).getColtivazione() == 0 && (sbList.get(i).getTipo().toLowerCase().contains("umidit"))) {
-                                    out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreUmidita\" value=\" + sbList.get(i).getId() + \"> Codice sensore: "+ sbList.get(i).getId() + "<br>");
+                                    out.print("<input type=\"checkbox\" id=\"chk\" name=\"sensoreUmidita\" value=\"" + sbList.get(i).getId() + "\"> Codice sensore: "+ sbList.get(i).getId() + "<br>");
                                 }
                             }
                             java.sql.Date todayDate = new java.sql.Date(System.currentTimeMillis());

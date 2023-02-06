@@ -2,7 +2,10 @@ package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
-import it.unisa.greenmonitoring.dataccess.beans.*;
+import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
+import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
+import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
+import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
 public class ServletColtivazioni extends HttpServlet {
@@ -53,6 +58,10 @@ public class ServletColtivazioni extends HttpServlet {
                     System.out.println(sensorePh);
                     String[] sensoreTemperatura = request.getParameterValues("sensoreTemperatura"); //id
                     String[] sensoreUmidita = request.getParameterValues("sensoreUmidita"); //id
+                    ArrayList<String> sensori = new ArrayList<>();
+                    Collections.addAll(sensori, sensorePh);
+                    Collections.addAll(sensori, sensoreTemperatura);
+                    Collections.addAll(sensori, sensoreUmidita);
                     String dataInizio = request.getParameter("datainizio");
                     java.sql.Date dataInizioDate = java.sql.Date.valueOf(dataInizio);
                     int terreno = Integer.parseInt(request.getParameter("terreno")); //id
@@ -62,13 +71,32 @@ public class ServletColtivazioni extends HttpServlet {
                     cb.setStato_archiviazione(Byte.parseByte("0"));
                     cb.setTerreno(terreno);
                     SensoreManager sensoreManager = new SensoreManager();
-
-
-
                     ColtivazioneManager cm = new ColtivazioneManager();
                     cb.setData_inizio(dataInizioDate);
                     try {
-                        cm.avvioColtivazione(cb, utente);
+                        cm.avvioColtivazione(cb, utente, sensori);
+
+                        System.out.println("[ServletColtivazioni] - id_azienda is " + aziendaBean.getEmail());
+
+                        ArrayList<ColtivazioneBean> coltivazioneBeans = cm.visualizzaStatoColtivazioni(aziendaBean.getEmail());
+                                //visualizzaColtivazioniAvviate(aziendaBean.getEmail());
+
+                        System.out.println("[ServletColtivazioni] - coltivazioneBeans is " + coltivazioneBeans.toString());
+
+                        Integer id_coltivazione = coltivazioneBeans.get(coltivazioneBeans.size() - 1).getId();
+
+                        System.out.println("[ServletColtivazioni] - id_coltivazione is " + id_coltivazione);
+
+                        /*for (int i = 0; i < coltivazioneBeans.size(); i++) {
+                            if (coltivazioneBeans.get(i).getTerreno().equals(cb.getTerreno())) {
+                                id_coltivazione = coltivazioneBeans.get(i).getId();
+
+                                System.out.println("[ServletColtivazioni] - id_coltivazione is " + id_coltivazione);
+
+                                break;
+                            }
+                        }*/
+                        cb.setId(id_coltivazione);
                         SensoreBean sensoreBean;
                         for (String sensore : sensorePh) {
                             sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
@@ -86,14 +114,7 @@ public class ServletColtivazioni extends HttpServlet {
                         throw new RuntimeException(e);
                     }
                     /*
-                    List<ColtivazioneBean> cblist = cm.visualizzaColtivazioniAvviate(aziendaBean.getEmail());
-                    Integer id_coltivazione = 0;
-                    for (int i = 0; i < cblist.size(); i++) {
-                        if (cblist.get(i).getTerreno().equals(terreno)) {
-                            id_coltivazione = cblist.get(i).getTerreno();
-                            break;
-                        }
-                    }
+
                     SensoreBean s = new SensoreBean();
                     /*
                     for (int i = 0; i < slist.size(); i++) {
