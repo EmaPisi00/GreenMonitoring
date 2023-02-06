@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-//import java.sql.SQLException;
-import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
 public class ServletColtivazioni extends HttpServlet {
@@ -51,12 +49,14 @@ public class ServletColtivazioni extends HttpServlet {
                     AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
                     String utente = aziendaBean.getEmail();
                     String nomepianta = request.getParameter("nomepianta"); //id
-                    String sensorePh = request.getParameter("sensorePh"); //id
-                    String sensoreTemperatura = request.getParameter("sensoreTemperatura"); //id
-                    String sensoreUmidita = request.getParameter("sensoreUmidita"); //id
+                    String[] sensorePh = request.getParameterValues("sensorePh"); //id
+                    System.out.println(sensorePh);
+                    String[] sensoreTemperatura = request.getParameterValues("sensoreTemperatura"); //id
+                    String[] sensoreUmidita = request.getParameterValues("sensoreUmidita"); //id
                     String dataInizio = request.getParameter("datainizio");
                     java.sql.Date dataInizioDate = java.sql.Date.valueOf(dataInizio);
                     int terreno = Integer.parseInt(request.getParameter("terreno")); //id
+                    System.out.println("l'id del terreno nella servlet " + terreno);
                     ColtivazioneBean cb = new ColtivazioneBean();
                     cb.setPianta(Integer.valueOf(nomepianta));
                     cb.setStato_archiviazione(Byte.parseByte("0"));
@@ -69,10 +69,23 @@ public class ServletColtivazioni extends HttpServlet {
                     cb.setData_inizio(dataInizioDate);
                     try {
                         cm.avvioColtivazione(cb, utente);
-
+                        SensoreBean sensoreBean;
+                        for (String sensore : sensorePh) {
+                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
+                        }
+                        for (String sensore : sensoreTemperatura) {
+                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
+                        }
+                        for (String sensore : sensoreUmidita) {
+                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
+                        }
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
+                    /*
                     List<ColtivazioneBean> cblist = cm.visualizzaColtivazioniAvviate(aziendaBean.getEmail());
                     Integer id_coltivazione = 0;
                     for (int i = 0; i < cblist.size(); i++) {

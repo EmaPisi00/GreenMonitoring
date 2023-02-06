@@ -25,7 +25,7 @@ public class SensoreManager {
      * @return SensoreBean
      * @throws SQLException
      */
-    public static SensoreBean retrieveSensore(int id_sensore) throws SQLException {
+    public SensoreBean retrieveSensore(int id_sensore) throws SQLException {
         SensoreDAO sns = new SensoreDAOImpl();
         return sns.retrieveByKey(id_sensore);
     }
@@ -49,7 +49,7 @@ public class SensoreManager {
      * @param id_coltivazione
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      */
-    public static void aggiungiAssociazioneSensore(int id_coltivazione, SensoreBean sensore) {
+    public void aggiungiAssociazioneSensore(int id_coltivazione, SensoreBean sensore) {
         try {
             SensoreDAO td = new SensoreDAOImpl();
             sensore.setColtivazione(id_coltivazione);
@@ -64,7 +64,7 @@ public class SensoreManager {
      * @param sensore
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      */
-    public static void cancellaAssociazioneSensore(SensoreBean sensore) {
+    public void cancellaAssociazioneSensore(SensoreBean sensore) {
         try {
             SensoreDAO td = new SensoreDAOImpl();
             td.update(sensore.getId(), sensore);

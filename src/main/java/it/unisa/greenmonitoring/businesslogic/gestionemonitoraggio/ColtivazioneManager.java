@@ -65,12 +65,10 @@ public class ColtivazioneManager {
             List<Integer> terrenoBeanIdList = terrenoBeanList.stream().map(o -> o.getId()).toList();
             List<ColtivazioneBean> coltivazioneBeans = cd.retrieveColtivazione(id_azienda);
             if (terrenoBeanIdList.contains(c.getTerreno())) {
-                for (int i = 0; i < terrenoBeanIdList.size(); i++) {
                     for (int j = 0; j < coltivazioneBeans.size(); j++) {
-                        if (terrenoBeanIdList.get(i).equals(coltivazioneBeans.get(j).getTerreno())) {
+                        if (c.getTerreno().equals(coltivazioneBeans.get(j).getTerreno())) {
                             throw new Exception("Terreno occupato");
                         }
-                    }
                 }
             } else {
                 throw new Exception("Terreno inesistente");

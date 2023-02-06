@@ -38,6 +38,7 @@ public class ServletSensore extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SensoreBean sns = new SensoreBean();
+        SensoreManager sensoreManager = new SensoreManager();
         if (request.getParameter("RegistraSensore") != null) {
             String tipo = request.getParameter("tipo");
             String id_mosquitto = request.getParameter("id_mosquitto");
@@ -56,19 +57,19 @@ public class ServletSensore extends HttpServlet {
             int coltivazione = Integer.parseInt(request.getParameter("id_coltivazione"));
             int id_sensore = Integer.parseInt(request.getParameter("id_sensore"));
             try {
-                sns = SensoreManager.retrieveSensore(id_sensore);
+                sns = sensoreManager.retrieveSensore(id_sensore);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            SensoreManager.aggiungiAssociazioneSensore(coltivazione, sns);
+            sensoreManager.aggiungiAssociazioneSensore(coltivazione, sns);
         } else if (request.getParameter("CancellaAssociazioneSensore") != null) {
             int id_sensore = Integer.parseInt(request.getParameter("id_sensore"));
             try {
-                sns = SensoreManager.retrieveSensore(id_sensore);
+                sns = sensoreManager.retrieveSensore(id_sensore);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            SensoreManager.cancellaAssociazioneSensore(sns);
+            sensoreManager.cancellaAssociazioneSensore(sns);
         }
     }
 
