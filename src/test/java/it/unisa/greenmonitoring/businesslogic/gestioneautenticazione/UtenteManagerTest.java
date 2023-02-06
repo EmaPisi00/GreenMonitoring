@@ -16,8 +16,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.sql.SQLException;
 
-import static org.junit.Assert.*;
-
 @RunWith(MockitoJUnitRunner.class)
 public class UtenteManagerTest {
 
@@ -51,15 +49,14 @@ public class UtenteManagerTest {
     @Test
     public void associazioneDipendente1() throws SQLException {
         codiceAzienda="";
-        //Mockito.when(aziendaDAO.retrieveByCode(codiceAzienda)).thenReturn(new AziendaBean());
         boolean result = utenteManager.associazioneDipendente(dipendenteBean, codiceAzienda);
         Assert.assertFalse(result);
     }
 
     @Test
     public void associazioneDipendente2() throws SQLException {
-        codiceAzienda = "5";
-        //Mockito.when(aziendaDAO.retrieveByCode(codiceAzienda)).thenReturn(null);
+        codiceAzienda = "ASDdd234";
+        Mockito.when(aziendaDAO.retrieveByCode(codiceAzienda)).thenReturn(null);
         boolean result = utenteManager.associazioneDipendente(dipendenteBean, codiceAzienda);
         Assert.assertFalse(result);
     }
