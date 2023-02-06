@@ -71,7 +71,7 @@ public class ColtivazioneBean {
 
     /**
      * Questo è il getter dell'azienda associata ad una coltivazione.
-     * @return
+     * @return azienda.
      */
     public String getAzienda() {
         return azienda;
@@ -79,17 +79,18 @@ public class ColtivazioneBean {
 
     /**
      * Questo è il setter dell'azienda associata alla coltivazione.
-     * @param azienda
+     * @param given_azienda
      */
-    public void setAzienda(String azienda) {
-        this.azienda = azienda;
+    public void setAzienda(String given_azienda) {
+        this.azienda = given_azienda;
     }
 
     /**
      * Questo è il setter della pianta associata alla coltivazione.
+     * @param given_pianta
      */
-    public void setPianta(Integer pianta) {
-        this.pianta = pianta;
+    public void setPianta(Integer given_pianta) {
+        this.pianta = given_pianta;
     }
 
     /**
