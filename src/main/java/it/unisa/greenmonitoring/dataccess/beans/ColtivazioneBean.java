@@ -2,7 +2,6 @@ package it.unisa.greenmonitoring.dataccess.beans;
 
 import java.sql.Date;
 import java.util.ArrayList;
-
 import java.util.Objects;
 
 public class ColtivazioneBean {
