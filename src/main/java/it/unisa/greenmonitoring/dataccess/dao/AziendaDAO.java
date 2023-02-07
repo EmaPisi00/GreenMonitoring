@@ -36,7 +36,7 @@ public interface AziendaDAO {
     /**
      * Metodo retrieve che permette di ricercare tutte le aziende a partire da un ID.
      * @param codice_associazione
-     * @return List<AziendaBean>
+     * @return AziendaBean
      * @throws SQLException
      */
     AziendaBean retrieveByCode(String codice_associazione) throws SQLException;

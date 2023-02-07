@@ -63,7 +63,10 @@ public class UtenteManagerTest {
 
     @Test
     public void associazioneDipendente3() throws SQLException {
-
+        codiceAzienda = "ASDdd234";
+        dipendenteBean.setAzienda("Impresa@host.dominio");
+        boolean result = utenteManager.associazioneDipendente(dipendenteBean, codiceAzienda);
+        Assert.assertFalse(result);
     }
 
     @Test
