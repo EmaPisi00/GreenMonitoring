@@ -141,7 +141,7 @@
                             out.print("</select><br>");
                         } else {
                             for (int i = 0; i < ids.size(); i++) {
-                                out.print("<option value=" + ids.get(i) + ">"+"id: "+ ids.get(i) + "lat: "+ tm.retrieveTerreno(ids.get(i).toString()).getLatitudine() + "long: "+ tm.retrieveTerreno(ids.get(i).toString()).getLongitudine() +"</option>");
+                                out.print("<option value=" + ids.get(i) + ">"+"id: "+ ids.get(i) + "lat: "+ tm.restituisciTerreno(ids.get(i).toString()).getLatitudine() + "long: "+ tm.restituisciTerreno(ids.get(i).toString()).getLongitudine() +"</option>");
                             }
                         }
                         out.print("<label>Scegliere la pianta di cui avviare una coltivazione</label><br>");

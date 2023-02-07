@@ -5,6 +5,7 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.Date" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.MisurazioneSensoreManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -67,7 +68,7 @@
                             /* -- INIZIO AUTENTICAZIONE -- */
                             Object sa = session.getAttribute("currentUserSession");
                             int[] valoriMisurati = {0, 0, 0};
-                            ColtivazioneBean cb = null;;
+                            ColtivazioneBean cb = null;
                             if (sa == null) {
                                 response.sendError(401);
                             } else if (!(session.getAttribute("currentUserSession") instanceof UtenteBean)) {
@@ -84,9 +85,11 @@
                                 PiantaManager pm = new PiantaManager();
                                 SensoreManager sm = new SensoreManager();
                                 String nomePianta = new String();
+                                String IDazienda = new String();
                                 Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
                                 if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                                     DipendenteBean a = (DipendenteBean) sa;
+                                    IDazienda = a.getAzienda();
                                     cb = cm.visualizzaStatoColtivazioni(a.getAzienda()).stream().filter(o -> o.getId() == coltivazioneID).findFirst().orElse(null);
                                     sList = sm.visualizzaListaSensori(a.getAzienda()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
                                     list = cm.visualizzaStatoColtivazioni(a.getAzienda());
@@ -101,6 +104,7 @@
                                     }
                                 } else {
                                     AziendaBean a = (AziendaBean) sa;
+                                    IDazienda = a.getEmail();
                                     cb = cm.visualizzaStatoColtivazioni(a.getEmail()).stream().filter(o -> o.getId() == coltivazioneID).findFirst().orElse(null);
                                     list = cm.visualizzaStatoColtivazioni(a.getEmail());
                                     sList = sm.visualizzaListaSensori(a.getEmail()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
@@ -119,9 +123,9 @@
                                 out.print("<ul><li class=\"list-group-item \">" +
                                         "Coltivazione di " + nomePianta + "<br>" +
                                         "<img src=\"" + urlImmagine + "\" alt=\"Foto coltivazione\">" + "<br>" +
-                                        "<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
-                                        "<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
-                                        "<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
+                                        //"<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
+                                        //"<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
+                                        //"<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
 
 
                                         // ho aggiunto questo form, poi te lo gestisci tu, basta che chiama servletSuggerimenti e c'è l'id della coltivazione
@@ -145,21 +149,14 @@
                     <div class="card-body">
                         <h5 class="card-title">Misurazioni più recenti</h5>
                         <%  //System.out.println("\u001B[31m" + "if statement" + "\u001B[0m" + "[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                            System.out.println("[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                            ArrayList<MisurazioneSensoreBean> misurazioneSensoreBeanArrayList = cb.getListaMisurazioni();
-                            List<Date> date = misurazioneSensoreBeanArrayList.stream().map(o -> (Date) o.getData()).toList();
+                            MisurazioneSensoreManager misurazioneSensoreManager = new MisurazioneSensoreManager();
+                            List<MisurazioneSensoreBean> misurazioneSensoreBeanList = misurazioneSensoreManager.restituisciMisurazioniRecenti(IDazienda, coltivazioneID);
+                            System.out.println(/*"\u001B[31m" + "if statement" + "\u001B[0m" + */"[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " misurazioneBeanList is " + misurazioneSensoreBeanList.toString());
                             out.print("<ul>");
-                            for (int i = date.size() - 1; i < date.size() - 5; i--) { //parto dal fondo così sicuro prendo le misurazioni più recenti.
-                                if (misurazioneSensoreBeanArrayList.get(i).getTipo().toLowerCase().contains("umidit")) {
-                                    if (misurazioneSensoreBeanArrayList.get(i).getData().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                                        if (misurazioneSensoreBeanArrayList.get(i).getOra().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                                            out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i).getData() +
-                                                    "risultato : " + misurazioneSensoreBeanArrayList.get(i).getValore() + "</li>");
-                                        } else {
-                                            out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i - 1).getData() +
-                                                    "risultato : " + misurazioneSensoreBeanArrayList.get(i - 1).getValore() + "</li>");
-                                        }
-                                    }
+                            for (int i = 0; i < misurazioneSensoreBeanList.size(); i++){
+                                if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("umi")) {
+                                out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanList.get(i).getData() +
+                                        "<br>risultato : " + misurazioneSensoreBeanList.get(i).getValore() + "<br> tipo sensore: "+ misurazioneSensoreBeanList.get(i).getTipo() +"</li>");
                                 }
                             }
                             out.print("</ul>");
@@ -173,22 +170,12 @@
                 <div class="card" style="width: auto;">
                     <div class="card-body">
                         <h5 class="card-title">Misurazioni più recenti</h5>
-            <%  //System.out.println("\u001B[31m" + "if statement" + "\u001B[0m" + "[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                System.out.println("[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                misurazioneSensoreBeanArrayList = cb.getListaMisurazioni();
-                date = misurazioneSensoreBeanArrayList.stream().map(o -> (Date) o.getData()).toList();
+            <%  misurazioneSensoreBeanList = misurazioneSensoreManager.restituisciMisurazioniRecenti(IDazienda, coltivazioneID);
                 out.print("<ul>");
-                for (int i = date.size() - 1; i < date.size() - 5; i--) { //parto dal fondo così sicuro prendo le misurazioni più recenti.
-                    if (misurazioneSensoreBeanArrayList.get(i).getTipo().toLowerCase().contains("ph")) {
-                        if (misurazioneSensoreBeanArrayList.get(i).getData().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                            if (misurazioneSensoreBeanArrayList.get(i).getOra().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                                out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i).getData() +
-                                        "risultato : " + misurazioneSensoreBeanArrayList.get(i).getValore() + "</li>");
-                            } else {
-                                out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i - 1).getData() +
-                                        "risultato : " + misurazioneSensoreBeanArrayList.get(i - 1).getValore() + "</li>");
-                            }
-                        }
+                for (int i = 0; i < misurazioneSensoreBeanList.size(); i++){
+                    if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("ph")) {
+                    out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanList.get(i).getData() +
+                            "<br>risultato : " + misurazioneSensoreBeanList.get(i).getValore() + "<br> tipo sensore: "+ misurazioneSensoreBeanList.get(i).getTipo() +"</li>");
                     }
                 }
                 out.print("</ul>");
@@ -205,23 +192,14 @@
                         <h5 class="card-title">Misurazioni più recenti</h5>
             <%  //System.out.println("\u001B[31m" + "if statement" + "\u001B[0m" + "[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
             System.out.println("[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-            misurazioneSensoreBeanArrayList = cb.getListaMisurazioni();
-            date = misurazioneSensoreBeanArrayList.stream().map(o -> (Date) o.getData()).toList();
-            out.print("<ul>");
-            for (int i = date.size() - 1; i < date.size() - 5; i--) { //parto dal fondo così sicuro prendo le misurazioni più recenti.
-                if (misurazioneSensoreBeanArrayList.get(i).getTipo().toLowerCase().contains("temp")) {
-                    if (misurazioneSensoreBeanArrayList.get(i).getData().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                        if (misurazioneSensoreBeanArrayList.get(i).getOra().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                            out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i).getData() +
-                                    "risultato : " + misurazioneSensoreBeanArrayList.get(i).getValore() + "</li>");
-                        } else {
-                            out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i - 1).getData() +
-                                    "risultato : " + misurazioneSensoreBeanArrayList.get(i - 1).getValore() + "</li>");
-                        }
+                out.print("<ul>");
+                for (int i = 0; i < misurazioneSensoreBeanList.size(); i++){
+                    if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("temp")) {
+                        out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanList.get(i).getData() +
+                                "<br>risultato : " + misurazioneSensoreBeanList.get(i).getValore() + "<br> tipo sensore: "+ misurazioneSensoreBeanList.get(i).getTipo() +"</li>");
                     }
                 }
-            }
-            out.print("</ul>");
+                out.print("</ul>");
         %>
                     </div>
                 </div>

@@ -141,4 +141,19 @@ public class MisurazioneSensoreBean {
     public int hashCode() {
         return Objects.hash(id, data, ora, tipo, valore);
     }
+
+    /**
+     * To string di MisurazioneSensoreBean.
+     * @return string
+     */
+    @Override
+    public String toString() {
+        return "MisurazioneSensoreBean{"
+                + "id=" + id
+                + ", data=" + data
+                + ", ora=" + ora
+                + ", tipo='" + tipo + '\''
+                + ", valore=" + valore
+                + '}';
+    }
 }

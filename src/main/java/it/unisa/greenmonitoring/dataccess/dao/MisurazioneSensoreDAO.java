@@ -6,6 +6,7 @@ import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface MisurazioneSensoreDAO {
     /**
@@ -25,4 +26,12 @@ public interface MisurazioneSensoreDAO {
      */
     ArrayList<MisurazioneSensoreBean> retreive(String id) throws SQLException;
 
+    /**
+     * Questo metodo restituisce le misurazioni più recenti a partire da un'azienda.
+     * @param id_azienda
+     * @param id_coltivazione
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     * @throws SQLException
+     */
+    List<MisurazioneSensoreBean> restituisciMisurazioniRecenti(String id_azienda, int id_coltivazione) throws SQLException;
 }
