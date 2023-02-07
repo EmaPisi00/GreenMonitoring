@@ -184,7 +184,7 @@
                             }
                             java.sql.Date todayDate = new java.sql.Date(System.currentTimeMillis());
                             out.print("<label>Inserire la data di inizio della coltivazione</label><br>");
-                            out.print("  <input type=\"date\" id=\"dataInizio\" name=\"datainizio\" min=\"" + todayDate + "\" required>");
+                            out.print("  <input type=\"date\" id=\"dataInizio\" name=\"datainizio\" max=\"" + todayDate + "\" required>");
                             out.print("<br><br><button type=\"button\" id=\"summit\" class=\"btn btn-primary\">"+
                                     "                    Aggiungi coltivazione\n" +
                                     "                </button>\n" +

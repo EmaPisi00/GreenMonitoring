@@ -17,16 +17,6 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     private Connection connection;
 
     /**
-     * SensoreDAO.
-     */
-    private SensoreDAO sensoreDAO;
-
-    /**
-     * MisurazioneSensoreDAO.
-     */
-    private MisurazioneSensoreDAO misurazioneSensoreDAO;
-
-    /**
      * Costruttore di ColtivazioneDAOImpl.
      */
     public void ColtivazioneDAOImpl() {
@@ -66,8 +56,6 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     public ArrayList<ColtivazioneBean> retrieveColtivazione(String id_azienda) throws SQLException {
         String selectSQL = "SELECT Coltivazione.id , pianta, terreno, stato_archiviazione, data_inizio, data_fine, azienda FROM Coltivazione JOIN Terreno ON Coltivazione.terreno = Terreno.id WHERE Terreno.azienda = ?";
         ArrayList<ColtivazioneBean> list = new ArrayList<>();
-        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
-        sensoreDAO = new SensoreDAOImpl();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
