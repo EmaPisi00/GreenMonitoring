@@ -127,4 +127,34 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
         connection.close();
         return misurazioneSensoreBeanList;
     }
+
+    @Override
+    public List<MisurazioneSensoreBean> restituisciMisurazioniPerPeriodo(Date data_inizio, Date data_fine, int id_coltivazione) throws SQLException {
+        String selectSQL = "SELECT * FROM misurazione_sensore WHERE (data BETWEEN ? AND ?) AND misurazione_sensore.coltivazione = ?;";
+        connection = null;
+        List<MisurazioneSensoreBean> misurazioneSensoreBeanList = new ArrayList<>();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setDate(1, data_inizio);
+            preparedStatement.setDate(2, data_fine);
+            preparedStatement.setInt(3, id_coltivazione);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                MisurazioneSensoreBean misurazioneSensoreBean = new MisurazioneSensoreBean();
+                misurazioneSensoreBean.setId(rs.getInt("id"));
+                misurazioneSensoreBean.setOra(rs.getTime("ora"));
+                misurazioneSensoreBean.setData(rs.getDate("data"));
+                misurazioneSensoreBean.setValore(rs.getInt("valore"));
+                misurazioneSensoreBean.setTipo(rs.getString("tipo"));
+                connection.commit();
+                misurazioneSensoreBeanList.add(misurazioneSensoreBean);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        connection.close();
+        return misurazioneSensoreBeanList;
+    }
 }

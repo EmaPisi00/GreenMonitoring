@@ -34,4 +34,13 @@ public interface MisurazioneSensoreDAO {
      * @throws SQLException
      */
     List<MisurazioneSensoreBean> restituisciMisurazioniRecenti(String id_azienda, int id_coltivazione) throws SQLException;
+    /**
+     * Questo metodo restituisce le misurazioni effettuate in un certo intervallo.
+     * @param data_inizio
+     * @param data_fine
+     * @param id_coltivazione
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     * @throws SQLException
+     */
+    List<MisurazioneSensoreBean> restituisciMisurazioniPerPeriodo(java.sql.Date data_inizio, java.sql.Date data_fine, int id_coltivazione) throws SQLException;
 }

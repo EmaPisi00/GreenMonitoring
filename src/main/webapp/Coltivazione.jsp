@@ -149,6 +149,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Misurazioni più recenti</h5>
                         <%  MisurazioneSensoreManager misurazioneSensoreManager = new MisurazioneSensoreManager();
+
                             List<MisurazioneSensoreBean> misurazioneSensoreBeanList = misurazioneSensoreManager.restituisciMisurazioniRecenti(IDazienda, coltivazioneID);
                             out.print("<ul>");
                             for (int i = 0; i < misurazioneSensoreBeanList.size(); i++){
@@ -211,6 +212,21 @@
             </div>
         </div>
     </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rilevamenti per periodo</h5>
+                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                    <form method="ServletColtivazioni" action="post">
+                        <input type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_inizio">
+                        <input type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_fine">
+                        <button type="button" class="btn btn-success"></button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
 
         <div class="col-lg-6">
             <div class="card">
