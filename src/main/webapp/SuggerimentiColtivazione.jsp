@@ -26,7 +26,7 @@
     TerrenoManager tm = new TerrenoManager();
     Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
     ColtivazioneBean coltivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);
-    TerrenoBean terrenoBean = tm.retrieveTerrenoVero(coltivazioneBean.getTerreno());
+    TerrenoBean terrenoBean = tm.restituisciTerrenoDaInt(coltivazioneBean.getTerreno());
 
 %>
 

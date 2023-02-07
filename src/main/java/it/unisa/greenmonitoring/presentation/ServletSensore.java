@@ -48,7 +48,7 @@ public class ServletSensore extends HttpServlet {
             sns.setAzienda(azienda.getEmail());
             sns.setIdM(id_mosquitto);
             try {
-                SensoreManager.creaSensore(sns);
+                sensoreManager.creaSensore(sns);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
