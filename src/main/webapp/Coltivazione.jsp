@@ -148,10 +148,8 @@
                 <div class="card" style="width: auto;">
                     <div class="card-body">
                         <h5 class="card-title">Misurazioni più recenti</h5>
-                        <%  //System.out.println("\u001B[31m" + "if statement" + "\u001B[0m" + "[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                            MisurazioneSensoreManager misurazioneSensoreManager = new MisurazioneSensoreManager();
+                        <%  MisurazioneSensoreManager misurazioneSensoreManager = new MisurazioneSensoreManager();
                             List<MisurazioneSensoreBean> misurazioneSensoreBeanList = misurazioneSensoreManager.restituisciMisurazioniRecenti(IDazienda, coltivazioneID);
-                            System.out.println(/*"\u001B[31m" + "if statement" + "\u001B[0m" + */"[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " misurazioneBeanList is " + misurazioneSensoreBeanList.toString());
                             out.print("<ul>");
                             for (int i = 0; i < misurazioneSensoreBeanList.size(); i++){
                                 if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("umi")) {
@@ -190,9 +188,7 @@
                 <div class="card" style="width: auto;">
                     <div class="card-body">
                         <h5 class="card-title">Misurazioni più recenti</h5>
-            <%  //System.out.println("\u001B[31m" + "if statement" + "\u001B[0m" + "[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-            System.out.println("[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                out.print("<ul>");
+            <%  out.print("<ul>");
                 for (int i = 0; i < misurazioneSensoreBeanList.size(); i++){
                     if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("temp")) {
                         out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanList.get(i).getData() +
