@@ -134,6 +134,37 @@ public class SensoreDAOImpl implements SensoreDAO {
     }
 
     @Override
+    public List<SensoreBean> retrieveAllByColtivazione(int coltivazione) throws SQLException {
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE coltivazione = ?";
+        List<SensoreBean> list = new ArrayList<>();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, coltivazione);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                SensoreBean s = new SensoreBean();
+                s.setId(rs.getInt("id"));
+                s.setTipo(rs.getString("tipo"));
+                s.setColtivazione(rs.getInt("coltivazione"));
+                s.setAzienda(rs.getString("azienda"));
+                s.setIdM(rs.getString("idM"));
+
+                list.add(s);
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            return list;
+        }
+    }
+
+    @Override
     public synchronized void update(int id_sensore, SensoreBean s) throws SQLException {
         String updateSQL = "UPDATE Sensore SET tipo = ?, azienda = ?, idM = ?, coltivazione = ? WHERE id = ?";
         try {

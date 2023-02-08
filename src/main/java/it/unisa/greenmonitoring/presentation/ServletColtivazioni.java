@@ -2,7 +2,10 @@ package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
-import it.unisa.greenmonitoring.dataccess.beans.*;
+import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
+import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
+import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
+import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-//import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
@@ -51,78 +55,67 @@ public class ServletColtivazioni extends HttpServlet {
                     AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
                     String utente = aziendaBean.getEmail();
                     String nomepianta = request.getParameter("nomepianta"); //id
-                    String sensorePh = request.getParameter("sensorePh"); //id
-                    String sensoreTemperatura = request.getParameter("sensoreTemperatura"); //id
-                    String sensoreUmidita = request.getParameter("sensoreUmidita"); //id
+                    String[] sensorePh = request.getParameterValues("sensorePh"); //id
+                    String[] sensoreTemperatura = request.getParameterValues("sensoreTemperatura"); //id
+                    String[] sensoreUmidita = request.getParameterValues("sensoreUmidita"); //id
+                    ArrayList<String> sensori = new ArrayList<>();
+                    Collections.addAll(sensori, sensorePh);
+                    Collections.addAll(sensori, sensoreTemperatura);
+                    Collections.addAll(sensori, sensoreUmidita);
                     String dataInizio = request.getParameter("datainizio");
                     java.sql.Date dataInizioDate = java.sql.Date.valueOf(dataInizio);
                     int terreno = Integer.parseInt(request.getParameter("terreno")); //id
+                    System.out.println("l'id del terreno nella servlet " + terreno);
                     ColtivazioneBean cb = new ColtivazioneBean();
                     cb.setPianta(Integer.valueOf(nomepianta));
                     cb.setStato_archiviazione(Byte.parseByte("0"));
                     cb.setTerreno(terreno);
-                    SensoreManager sm = new SensoreManager();
-                    List<SensoreBean> slist = sm.visualizzaListaSensori(aziendaBean.getEmail());
-                    for (int i = 0; i < slist.size(); i++) {
-                        SensoreBean s = null;
-                        if (slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensoreTemperatura)) {
-                            s = slist.get(i);
-                            cb.getListaSensori().add(s);
-                        }
-                    }
+                    SensoreManager sensoreManager = new SensoreManager();
                     ColtivazioneManager cm = new ColtivazioneManager();
                     cb.setData_inizio(dataInizioDate);
                     try {
-                        cm.avvioColtivazione(cb, utente);
+                        cm.avvioColtivazione(cb, utente, sensori);
+                        ArrayList<ColtivazioneBean> coltivazioneBeans = cm.visualizzaStatoColtivazioni(aziendaBean.getEmail());
+                        Integer id_coltivazione = coltivazioneBeans.get(coltivazioneBeans.size() - 1).getId();
+                        cb.setId(id_coltivazione);
+                        SensoreBean sensoreBean;
+                        for (String sensore : sensorePh) {
+                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
+                        }
+                        for (String sensore : sensoreTemperatura) {
+                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
+                        }
+                        for (String sensore : sensoreUmidita) {
+                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
+                        }
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                    List<ColtivazioneBean> cblist = cm.visualizzaColtivazioniAvviate(aziendaBean.getEmail());
-                    Integer id_coltivazione = 0;
-                    for (int i = 0; i < cblist.size(); i++) {
-                        if (cblist.get(i).getTerreno().equals(terreno)) {
-                            id_coltivazione = cblist.get(i).getTerreno();
-                            break;
-                        }
-                    }
-                    SensoreBean s = new SensoreBean();
-                    /*
-                    for (int i = 0; i < slist.size(); i++) {
-                        if (slist.get(i).getId().equals(sensorePh)) {
-                            s = slist.get(i);
-                            s.setColtivazione(id_coltivazione);
-                            sm.updateSensore(s);
-                        } else if (slist.get(i).getId().equals(sensoreTemperatura)) {
-                            s = slist.get(i);
-                            s.setColtivazione(id_coltivazione);
-                            sm.updateSensore(s);
-                        } else if (slist.get(i).getId().equals(sensoreUmidita)) {
-                            s = slist.get(i);
-                            s.setColtivazione(id_coltivazione);
-                            sm.updateSensore(s);
-                        }
-                    }
-                request.getSession().setAttribute("coltivazioneID", String.valueOf(id_coltivazione));
-                response.sendRedirect("Coltivazione.jsp");*/
                 }
             }
         } else if (request.getParameter("sensoreDaRimuovere") != null) {
             String sensoreDaRimuovere = request.getParameter("sensoreDaRimuovere");
-            System.out.println(sensoreDaRimuovere);
-            /*AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
+            AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
             SensoreManager sm = new SensoreManager();
             List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(aziendaBean.getEmail());
+            SensoreBean SensoreDaRimuovere = null;
             for (int i = 0; i < sensoreBeanList.size(); i++) {
                 if (sensoreBeanList.get(i).getId() == Integer.valueOf(sensoreDaRimuovere)) {
-                    try {
-                        sm.cancellaSensore(sensoreBeanList.get(i));
-                        break;
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    SensoreDaRimuovere = sensoreBeanList.get(i);
+                    break;
                 }
-            } */
-
+            }
+            try {
+                System.out.println("[" + "\u001B[31m" + "ServletColtivazioni.java" + "\u001B[0m" + "]" + " sensoreDaRimuovere is " + sensoreDaRimuovere);
+                SensoreDaRimuovere.setColtivazione(0);
+                sm.cancellaSensore(SensoreDaRimuovere);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            response.sendRedirect("Coltivazione.jsp");
         }
     }
 }
