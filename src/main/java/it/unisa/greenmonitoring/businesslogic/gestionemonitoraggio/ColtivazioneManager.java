@@ -153,6 +153,7 @@ public class ColtivazioneManager {
     public Double restituisciMisurazioniRecenti(String tipo, Integer id_coltivazione) {
         misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
         try {
+            System.out.println("[ColtivazioneManager] - MisurazioniRecenti - " + misurazioneSensoreDAO.retrieveMostRecentMesurement(tipo, id_coltivazione));
             return misurazioneSensoreDAO.retrieveMostRecentMesurement(tipo, id_coltivazione);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -170,6 +171,7 @@ public class ColtivazioneManager {
     public List<MisurazioneSensoreBean> restituisciMisurazioniPerPeriodo(java.sql.Date data_inizio_periodo, java.sql.Date data_fine_periodo, Integer coltivazione, String tipo) {
         misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
         try {
+            System.out.println("[ColtivazioneManager] - MisurazionePerPeriodo - " + misurazioneSensoreDAO.retrieveMeasurementPerTimeInterval(data_inizio_periodo, data_fine_periodo, coltivazione, tipo));
             return misurazioneSensoreDAO.retrieveMeasurementPerTimeInterval(data_inizio_periodo, data_fine_periodo, coltivazione, tipo);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -182,6 +184,7 @@ public class ColtivazioneManager {
      * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      */
     public List<MisurazioneSensoreBean> visualizzaMisurazioneOggiColtivazione(Integer id_coltivazione, String tipo) throws SQLException {
+        System.out.println("[ColtivazioneManager] - MisurazioneOggi - " + misurazioneSensoreDAO.retreiveMisurazioneOggiColtivazione(id_coltivazione, tipo));
         return misurazioneSensoreDAO.retreiveMisurazioneOggiColtivazione(id_coltivazione, tipo);
     }
     /**
@@ -191,6 +194,7 @@ public class ColtivazioneManager {
      * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      */
     public List<MisurazioneSensoreBean> visualizzaMisurazioneColtivazione(Integer id_coltivazione, String tipo) throws SQLException {
+        System.out.println("[ColtivazioneManager] - MisurazioneColtivazione - " + misurazioneSensoreDAO.retreiveMisurazioneOggiColtivazione(id_coltivazione, tipo));
         return misurazioneSensoreDAO.retreiveMisurazioneOggiColtivazione(id_coltivazione, tipo);
     }
     /**

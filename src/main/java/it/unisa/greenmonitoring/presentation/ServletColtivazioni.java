@@ -144,25 +144,19 @@ public class ServletColtivazioni extends HttpServlet {
     public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId, String tipo) {
         ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
         List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
-        String InizioJson = "{animationEnabled: true, title:{text: \"Le misurazioni nel periodo \" " + inizioPeriodo + " \", \"" + finePeriodo + "\"}, axisX: {valueFormatString: \"DD MMM,YY\"}, axisY: { title: \"\", suffix: \"\"}, legend:{ cursor: \"pointer\", fontSize: 16, itemclick: toggleDataSeries}, toolTip:{ shared: true}, data: ";
-        String ParteJsonPh =          "{\"data\":[{\"name\":\"pH\",\"type\":\"spline\",\"yValueFormatString\":\"\",\"showInLegend\":true,\"dataPoints\":[";
-        String ParteJsonTemperatura = "]},{\"name\":\"Temperatura\",\"type\":\"spline\",\"yValueFormatString\":\"#0.## °C\",\"showInLegend\":true,\"dataPoints\":[";
-        String ParteJsonUmidita =     "]},{\"name\":\"Umidità\",\"type\":\"spline\",\"yValueFormatString\":\"#.%\",\"showInLegend\":true,\"dataPoints\":[";
-        String FineJson =             "]}]}" + "}";
+        String InizioJson = "{\"theme\":\"light1\",\"animationEnabled\":false,\"title\":{\"text\":\"\"},\"data\":[{\"type\":\"spline\",\"dataPoints\":[";
+        String ParteJsonDataMisurazione = "{\"label\": \"";
+        String ParteJsonValoreMisurazione = "\",  y: \"";
+        String FineInformazioniGrafico = "}";
+        String FineJson = "]}";
+        String valueToPut = new String();
         for (int i = 0; i < misurazioneSensoreBeanList.size(); i++) {
-            if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("ph")) {
-                String valueToPut = "{\"x\":\"" + misurazioneSensoreBeanList.get(i).getData() + "\",\"y\":" + misurazioneSensoreBeanList.get(i).getValore() + "}";
-                ParteJsonPh = ParteJsonPh + valueToPut;
-
-            } else if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("temp")) {
-                String valueToPut = "{\"x\":\"" + misurazioneSensoreBeanList.get(i).getData() + "\",\"y\":" + misurazioneSensoreBeanList.get(i).getValore() + "}";
-                ParteJsonTemperatura = ParteJsonTemperatura + valueToPut;
-            } else if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("umi")) {
-                String valueToPut = "{\"x\":\"" + misurazioneSensoreBeanList.get(i).getData() + "\",\"y\":" + misurazioneSensoreBeanList.get(i).getValore() + "}";
-                ParteJsonUmidita = ParteJsonUmidita + valueToPut;
+            if (i == misurazioneSensoreBeanList.size() - 1) {
+                valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico;
             }
+            valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico + ",";
         }
-        String json = InizioJson + ParteJsonPh + ParteJsonTemperatura + ParteJsonUmidita + FineJson;
+        String json = InizioJson + valueToPut + FineJson;
         return json;
     }
 }
