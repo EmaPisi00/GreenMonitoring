@@ -6,6 +6,7 @@ import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface MisurazioneSensoreDAO {
     /**
