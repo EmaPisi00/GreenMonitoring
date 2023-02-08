@@ -38,7 +38,7 @@
 
 <div class="bd">
     <div class="row" style="width: 99%">
-    <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left : 20rem">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
         </li>
@@ -277,8 +277,7 @@
                                             chart.render();
                                         }
                                     }
-                                };
-                                xhr.send();
+                                };xhr.send();
                             }
                         }
                     </script>
