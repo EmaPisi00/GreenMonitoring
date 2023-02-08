@@ -37,8 +37,8 @@
 <%@include file="fragments/headerLoggedAzienda.html"%>
 
 <div class="bd">
-    <div class="row">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <div class="row" style="width: 99%">
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left : 20rem">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
         </li>
@@ -61,7 +61,7 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
             <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="card" style="width: auto;">
+                <div class="card" style="width: ">
                     <div class="card-body">
                         <h5 class="card-title">Info coltivazione</h5>
                         <%
@@ -212,22 +212,6 @@
             </div>
         </div>
     </div>
-
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Rilevamenti per periodo</h5>
-                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                    <form method="ServletColtivazioni" action="post">
-                        <input type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_inizio">
-                        <input type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_fine">
-                        <button type="button" class="btn btn-success"></button>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
@@ -261,8 +245,49 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rilevamenti per periodo</h5>
+                    <form method="ServletColtivazioni" action="post">
+                        <input id="periodo-inizio" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_inizio_periodo">
+                        <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_fine_periodo">
+                        <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success">Mostra per questi periodi</button>
+                    </form>
+                    <script type="text/javascript">
+                        $("#rilevamentiPerPeriodo").onclick = function() {
+                            var inputInizio = document.getElementById("periodo-inizio").value;
+                            var inputFine = document.getElementById("periodo-inizio").value;
+                            if (inputInizio != null && inputFine != null) {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", "ServletColtivazioni", true);
+                                xhr.onreadystatechange = function () {
+                                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                        //Costruisco il grafico
+                                        var chart = new CanvasJS.Chart("chartContainer", JSON.parse(xhr.responseText));
+                                        chart.render();
+
+                                        function toggleDataSeries(e) {
+                                            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                                e.dataSeries.visible = false;
+                                            } else {
+                                                e.dataSeries.visible = true;
+                                            }
+                                            chart.render();
+                                        }
+                                    }
+                                };
+                                xhr.send();
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+
         <div class="col-sm-6">
-            <div class="card" style="width: 30rem;">
+            <div class="card" style="width: auto;">
                 <div class="card-body">
                     <h5 class="card-title">Sensori</h5>
 
