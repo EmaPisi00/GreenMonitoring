@@ -46,9 +46,8 @@ public interface MisurazioneSensoreDAO {
     /**
      *
      * @param msb
-     * @param sensore
      * @return MisurazioneSensoreBean
      */
-    MisurazioneSensoreBean createMisurazioneManuel(MisurazioneSensoreBean msb, SensoreBean sensore);
+    MisurazioneSensoreBean createMisurazioneManuel(MisurazioneSensoreBean msb);
 
 }

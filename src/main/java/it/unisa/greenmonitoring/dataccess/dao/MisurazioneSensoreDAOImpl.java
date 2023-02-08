@@ -96,18 +96,18 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
 
 
     @Override
-    public MisurazioneSensoreBean createMisurazioneManuel(MisurazioneSensoreBean msb, SensoreBean sensore) {
+    public MisurazioneSensoreBean createMisurazioneManuel(MisurazioneSensoreBean msb) {
         PreparedStatement preparedStatement = null;
         String insertSQL = "insert into misurazione_sensore(coltivazione, valore, data, ora, tipo, sensore_id) values(?, ?, ?, ?, ?, ?);";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
-            preparedStatement.setInt(1, sensore.getColtivazione());
+            preparedStatement.setInt(1, msb.getColtivazioneID());
             preparedStatement.setInt(2, msb.getValore());
             preparedStatement.setDate(3, (Date) msb.getData());
             preparedStatement.setTime(4, msb.getOra());
             preparedStatement.setString(5, msb.getTipo());
-            preparedStatement.setInt(6, sensore.getId());
+            preparedStatement.setInt(6, msb.getSensoreID());
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException s) {

@@ -49,8 +49,8 @@ public class MqttMessagePrinter implements MqttCallback {
             //crea uno storico.
             //MisurazioneSensoreBean msb(data,time,tipo,valore), Integer coltivazioneId, Integer sensoreId
             MisurazioneSensoreBean storico = new MisurazioneSensoreBean(new Date(System.currentTimeMillis()), new Time(System.currentTimeMillis()),
-                    sensore.getTipo(), (int) valore);
-            msd.createMisurazioneManuel(storico, sensore);
+                    sensore.getTipo(), (int) valore, sensore.getId(), sensore.getColtivazione());
+            msd.createMisurazioneManuel(storico);
 
         } else {
             System.out.println("No number found");

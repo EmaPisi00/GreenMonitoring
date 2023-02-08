@@ -10,6 +10,14 @@ public class MisurazioneSensoreBean {
      */
     private int id;
     /**
+     * coltivazioneid.
+     */
+    private int coltivazioneID;
+    /**
+     * sensore id.
+     */
+    private int sensoreID;
+    /**
      * Questo campo contiene la data della misurazione.
      */
     private Date data;
@@ -32,15 +40,17 @@ public class MisurazioneSensoreBean {
     public MisurazioneSensoreBean() { }
 
     /**
-     * Questo è il costruttore con i campi.
-     * @param given_id
+     * costruttore.
      * @param given_data
      * @param given_ora
      * @param given_tipo
      * @param given_valore
+     * @param given_coltivazione
+     * @param given_sensore
      */
-    public MisurazioneSensoreBean(int given_id, Date given_data, Time given_ora, String given_tipo, int given_valore) {
-        this.id = given_id;
+    public MisurazioneSensoreBean(Date given_data, Time given_ora, String given_tipo, int given_valore, int given_coltivazione, int given_sensore) {
+        this.coltivazioneID = given_coltivazione;
+        this.sensoreID = given_sensore;
         this.data = given_data;
         this.ora = given_ora;
         this.tipo = given_tipo;
@@ -48,17 +58,35 @@ public class MisurazioneSensoreBean {
     }
 
     /**
-     * Questo è il costruttore con i campi.
-     * @param given_data
-     * @param given_ora
-     * @param given_tipo
-     * @param given_valore
+     *
+     * @return int
      */
-    public MisurazioneSensoreBean(Date given_data, Time given_ora, String given_tipo, int given_valore) {
-        this.data = given_data;
-        this.ora = given_ora;
-        this.tipo = given_tipo;
-        this.valore = given_valore;
+    public int getColtivazioneID() {
+        return coltivazioneID;
+    }
+
+    /**
+     *
+     * @param param_coltivazioneID
+     */
+    public void setColtivazioneID(int param_coltivazioneID) {
+        this.coltivazioneID = param_coltivazioneID;
+    }
+
+    /**
+     *
+     * @return int
+     */
+    public int getSensoreID() {
+        return sensoreID;
+    }
+
+    /**
+     *
+     * @param param_sensoreID
+     */
+    public void setSensoreID(int param_sensoreID) {
+        this.sensoreID = param_sensoreID;
     }
 
     /**
