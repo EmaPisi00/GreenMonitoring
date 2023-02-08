@@ -79,6 +79,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
             while (rs.next()) {
                 MisurazioneSensoreBean msb = new MisurazioneSensoreBean();
                 msb.setTipo(rs.getString("tipo"));
+                msb.setColtivazione(rs.getInt("coltivazione"));
                 msb.setId(rs.getInt("id"));
                 msb.setValore(rs.getInt("valore"));
                 msb.setData(rs.getDate("data"));
@@ -125,58 +126,57 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
 
 
     @Override
-    public List<MisurazioneSensoreBean> restituisciMisurazioniRecenti(String id_azienda, int id_coltivazione) throws SQLException {
-        String selectSQL = "SELECT i.id, i.data, b.azienda, i.tipo, i.ora, i.valore "
-                + "FROM misurazione_sensore i INNER JOIN coltivazione t JOIN terreno b ON t.terreno = b.id ON t.id = i.coltivazione "
-                + "INNER JOIN ( SELECT MAX(i.data) data, MAX(i.ora) ora, tipo FROM misurazione_sensore i "
-                + "INNER JOIN coltivazione t ON t.id = i.coltivazione GROUP BY i.tipo) t1 ON t1.data = i.data "
-                + "and t1.ora = i.ora "
-                + "and t1.tipo = i.tipo where b.azienda = ? and t.id = ?";
+    public Double retrieveMostRecentMesurement(String tipo, Integer id_coltivazione) throws SQLException {
+        String selectSQL = "SELECT AVG(valore) as v" +
+                "FROM (" +
+                "  SELECT valore" +
+                "  FROM (" +
+                "    SELECT id, valore, max(misurazione_sensore.data) data, max(misurazione_sensore.ora) ora, sensore_id" +
+                "    FROM Misurazione_sensore" +
+                "    WHERE tipo = ? AND coltivazione = ? GROUP BY sensore_id" +
+                "  ) tab1" +
+                ") tab2;";
+        Double result = 0d;
         connection = null;
-        List<MisurazioneSensoreBean> misurazioneSensoreBeanList = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setString(1, id_azienda);
+            preparedStatement.setString(1, tipo);
             preparedStatement.setInt(2, id_coltivazione);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                MisurazioneSensoreBean misurazioneSensoreBean = new MisurazioneSensoreBean();
-                misurazioneSensoreBean.setId(rs.getInt("id"));
-                misurazioneSensoreBean.setOra(rs.getTime("ora"));
-                misurazioneSensoreBean.setData(rs.getDate("data"));
-                misurazioneSensoreBean.setValore(rs.getInt("valore"));
-                misurazioneSensoreBean.setTipo(rs.getString("tipo"));
+            if (rs.next()) {
+                result = rs.getDouble("v");
                 connection.commit();
-                misurazioneSensoreBeanList.add(misurazioneSensoreBean);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         connection.close();
-        return misurazioneSensoreBeanList;
+        return result;
     }
 
     @Override
-    public List<MisurazioneSensoreBean> restituisciMisurazioniPerPeriodo(Date data_inizio, Date data_fine, int id_coltivazione) throws SQLException {
-        String selectSQL = "SELECT * FROM misurazione_sensore WHERE (data BETWEEN ? AND ?) AND misurazione_sensore.coltivazione = ?;";
+    public List<MisurazioneSensoreBean> retrieveMeasurementPerTimeInterval(Date data_inizio, Date data_fine, Integer id_coltivazione, String tipo) throws SQLException {
+        String selectSQL = "SELECT avg(valore) as v, misurazione_sensore.data " +
+                "FROM misurazione_sensore " +
+                "WHERE coltivazione = ? and tipo = ? and misurazione_sensore.data >= ?  and misurazione_sensore.data <= ?" +
+                "GROUP BY misurazione_sensore.data;";
         connection = null;
         List<MisurazioneSensoreBean> misurazioneSensoreBeanList = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setDate(1, data_inizio);
-            preparedStatement.setDate(2, data_fine);
-            preparedStatement.setInt(3, id_coltivazione);
+            preparedStatement.setInt(1, id_coltivazione);
+            preparedStatement.setString(2, tipo);
+            preparedStatement.setDate(3, data_inizio);
+            preparedStatement.setDate(4, data_fine);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 MisurazioneSensoreBean misurazioneSensoreBean = new MisurazioneSensoreBean();
-                misurazioneSensoreBean.setId(rs.getInt("id"));
-                misurazioneSensoreBean.setOra(rs.getTime("ora"));
                 misurazioneSensoreBean.setData(rs.getDate("data"));
-                misurazioneSensoreBean.setValore(rs.getInt("valore"));
+                misurazioneSensoreBean.setValore(rs.getInt("v"));
                 misurazioneSensoreBean.setTipo(rs.getString("tipo"));
+                misurazioneSensoreBean.setColtivazione(id_coltivazione);
                 connection.commit();
                 misurazioneSensoreBeanList.add(misurazioneSensoreBean);
 

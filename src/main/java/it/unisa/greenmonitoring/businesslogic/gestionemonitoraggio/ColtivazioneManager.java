@@ -13,6 +13,10 @@ import java.util.List;
 
 public class ColtivazioneManager {
     /**
+     * MisurazioneSensoreDAO.
+     */
+    private MisurazioneSensoreDAO misurazioneSensoreDAO;
+    /**
      * ColtivazioneDAO.
      */
     private ColtivazioneDAO cd;
@@ -140,7 +144,37 @@ public class ColtivazioneManager {
         }
         return l;
     }
+    /**
+     * Questo metodo restituisce le misurazioni più recenti a partire da un'azienda.
+     * @param id_coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     */
+    public Double restituisciMisurazioniRecenti(String tipo, Integer id_coltivazione) {
+        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
+        try {
+            return misurazioneSensoreDAO.retrieveMostRecentMesurement(tipo, id_coltivazione);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    /**
+     * Questo metodo restituisce le misurazioni per periodo.
+     * @param data_inizio_periodo
+     * @param data_fine_periodo
+     * @param coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     */
+    public List<MisurazioneSensoreBean> restituisciMisurazioniPerPeriodo(java.sql.Date data_inizio_periodo, java.sql.Date data_fine_periodo, Integer coltivazione, String tipo) {
+        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
+        try {
+            return misurazioneSensoreDAO.retrieveMeasurementPerTimeInterval(data_inizio_periodo, data_fine_periodo, coltivazione, tipo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * Questo metodo calcola la media per ogni tipo di sensore.
      * @param id_coltivazione

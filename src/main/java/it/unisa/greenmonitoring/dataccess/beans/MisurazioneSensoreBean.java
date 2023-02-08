@@ -25,6 +25,10 @@ public class MisurazioneSensoreBean {
      * Questo campo contiene il valore misurato dal sensore.
      */
     private int valore;
+    /**
+     * Questo campo contiene la foreign key di coltivazione.
+     */
+    private Integer coltivazione;
 
     /**
      * Questo è il costruttore vuoto.
@@ -169,5 +173,21 @@ public class MisurazioneSensoreBean {
                 + ", tipo='" + tipo + '\''
                 + ", valore=" + valore
                 + '}';
+    }
+
+    /**
+     * Questo metodo restituisce la coltivazione associata alla misurazione.
+     * @return Integer
+     */
+    public Integer getColtivazione() {
+        return coltivazione;
+    }
+
+    /**
+     * Questo metodo imposta la coltivazione alla misurazione
+     * @param coltivazione
+     */
+    public void setColtivazione(Integer coltivazione) {
+        this.coltivazione = coltivazione;
     }
 }

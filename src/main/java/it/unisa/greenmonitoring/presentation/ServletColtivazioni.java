@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
-import it.unisa.greenmonitoring.businesslogic.gestionesensore.MisurazioneSensoreManager;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.*;
 
@@ -119,12 +118,13 @@ public class ServletColtivazioni extends HttpServlet {
                 request.getSession().setAttribute("erroreDataPeriodo", "Periodo non valido");
                 response.sendRedirect("Coltivazione.jsp");
             } else {
-                MisurazioneSensoreManager sm = new MisurazioneSensoreManager();
+                ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
                 java.sql.Date inizioPeriodo = java.sql.Date.valueOf(request.getParameter("data_inizio_periodo"));
                 java.sql.Date finePeriodo = java.sql.Date.valueOf(request.getParameter("data_fine_periodo"));
                 Integer coltivazioneId = (Integer) request.getSession().getAttribute("coltivazioneID");
-                List<MisurazioneSensoreBean> misurazioneSensoreBeanList = sm.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId);
-                String jsonPeriodoColtivazioni = costruisciJsonPeriodo(inizioPeriodo, finePeriodo, coltivazioneId);
+                String tipo = request.getParameter("tipoSensore");
+                List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
+                String jsonPeriodoColtivazioni = costruisciJsonPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
                 PrintWriter out = response.getWriter();
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
@@ -140,9 +140,9 @@ public class ServletColtivazioni extends HttpServlet {
      * @param coltivazioneId
      * @return string
      */
-    public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId) {
-        MisurazioneSensoreManager sm = new MisurazioneSensoreManager();
-        List<MisurazioneSensoreBean> misurazioneSensoreBeanList = sm.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId);
+    public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId, String tipo) {
+        ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+        List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
         String InizioJson = "{animationEnabled: true, title:{text: \"Le misurazioni nel periodo \" " + inizioPeriodo + " \", \"" + finePeriodo + "\"}, axisX: {valueFormatString: \"DD MMM,YY\"}, axisY: { title: \"\", suffix: \"\"}, legend:{ cursor: \"pointer\", fontSize: 16, itemclick: toggleDataSeries}, toolTip:{ shared: true}, data: ";
         String ParteJsonPh =          "{\"data\":[{\"name\":\"pH\",\"type\":\"spline\",\"yValueFormatString\":\"\",\"showInLegend\":true,\"dataPoints\":[";
         String ParteJsonTemperatura = "]},{\"name\":\"Temperatura\",\"type\":\"spline\",\"yValueFormatString\":\"#0.## °C\",\"showInLegend\":true,\"dataPoints\":[";
