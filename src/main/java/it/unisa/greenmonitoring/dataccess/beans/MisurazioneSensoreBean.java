@@ -29,11 +29,31 @@ public class MisurazioneSensoreBean {
      * Questo campo contiene la foreign key di coltivazione.
      */
     private Integer coltivazione;
+    /**
+     * Questo campo contiene la foreign key di sensore.
+     */
+    private Integer sensore_id;
 
     /**
      * Questo è il costruttore vuoto.
      */
     public MisurazioneSensoreBean() { }
+
+    /**
+     * Questo è il getter di sensore_id.
+     * @return
+     */
+    public Integer getSensore_id() {
+        return sensore_id;
+    }
+
+    /**
+     * Questo è il setter di sensore_id.
+     * @param sensore_id
+     */
+    public void setSensore_id(Integer sensore_id) {
+        this.sensore_id = sensore_id;
+    }
 
     /**
      * Questo è il costruttore con i campi.

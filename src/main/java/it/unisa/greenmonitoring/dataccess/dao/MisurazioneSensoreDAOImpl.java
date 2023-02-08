@@ -27,7 +27,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
      * Costruttore di MisurazioneSensoreDAOImpl.
      */
     @Override
-    public MisurazioneSensoreBean createMisurazione(MisurazioneSensoreBean msb, ColtivazioneBean cb, SensoreBean sb) throws SQLException, Exception {
+    public synchronized MisurazioneSensoreBean createMisurazione(MisurazioneSensoreBean msb, ColtivazioneBean cb, SensoreBean sb) throws SQLException, Exception {
         PreparedStatement preparedStatement = null;
         String insertSQL = "insert into misurazione_sensore(coltivazione, valore, data, ora, tipo, sensore_id) values(?, ?, ?, ?, ?, ?);";
         try {
@@ -66,7 +66,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
     }
 
     @Override
-    public ArrayList<MisurazioneSensoreBean> retreive(String id) throws SQLException {
+    public synchronized ArrayList<MisurazioneSensoreBean> retreive(String id) throws SQLException {
             String selectSQL = "SELECT misurazione_sensore.id, misurazione_sensore.coltivazione, misurazione_sensore.valore, misurazione_sensore.data, misurazione_sensore.ora, sensore.tipo, misurazione_sensore.sensore_id FROM \n"
                 + "misurazione_sensore join sensore on misurazione_sensore.sensore_id = sensore.id WHERE sensore.coltivazione = ?;";
         ArrayList<MisurazioneSensoreBean> list = new ArrayList<>();
@@ -97,7 +97,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
 
 
     @Override
-    public MisurazioneSensoreBean createMisurazioneManuel(MisurazioneSensoreBean msb, SensoreBean sensore) {
+    public synchronized MisurazioneSensoreBean createMisurazioneManuel(MisurazioneSensoreBean msb, SensoreBean sensore) {
         PreparedStatement preparedStatement = null;
         String insertSQL = "insert into misurazione_sensore(coltivazione, valore, data, ora, tipo, sensore_id) values(?, ?, ?, ?, ?, ?);";
         try {
@@ -123,10 +123,67 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
         return msb;
     }
 
+    @Override
+    public synchronized MisurazioneSensoreBean retreiveMisurazioneByColtivazione(Integer id_coltivazione, String tipo) throws SQLException {
+        String selectSQL = "SELECT * FROM misurazione_sensore WHERE misurazione_sensore.coltivazione = ? and misurazione_sensore.tipo = ?";
+        MisurazioneSensoreBean misurazioneSensoreBean = new MisurazioneSensoreBean();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, id_coltivazione);
+            preparedStatement.setString(2, tipo);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                misurazioneSensoreBean.setTipo(rs.getString("tipo"));
+                misurazioneSensoreBean.setColtivazione(rs.getInt("coltivazione"));
+                misurazioneSensoreBean.setId(rs.getInt("id"));
+                misurazioneSensoreBean.setValore(rs.getInt("valore"));
+                misurazioneSensoreBean.setData(rs.getDate("data"));
+                misurazioneSensoreBean.setOra(rs.getTime("ora"));
+                misurazioneSensoreBean.setSensore_id(rs.getInt("sensore_id"));
+                connection.commit();
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        return misurazioneSensoreBean;
+    }
+
+    @Override
+    public synchronized MisurazioneSensoreBean retreiveMisurazioneByColtivazione(Integer id_coltivazione, String tipo, java.sql.Date date) throws SQLException{
+        String selectSQL = "SELECT * FROM misurazione_sensore WHERE misurazione_sensore.coltivazione = ? and misurazione_sensore.tipo = ? and misurazione_sensore.data >= ?";
+        MisurazioneSensoreBean misurazioneSensoreBean = new MisurazioneSensoreBean();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, id_coltivazione);
+            preparedStatement.setString(2, tipo);
+            preparedStatement.setDate(3, date);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                misurazioneSensoreBean.setTipo(rs.getString("tipo"));
+                misurazioneSensoreBean.setColtivazione(rs.getInt("coltivazione"));
+                misurazioneSensoreBean.setId(rs.getInt("id"));
+                misurazioneSensoreBean.setValore(rs.getInt("valore"));
+                misurazioneSensoreBean.setData(rs.getDate("data"));
+                misurazioneSensoreBean.setOra(rs.getTime("ora"));
+                misurazioneSensoreBean.setSensore_id(rs.getInt("sensore_id"));
+                connection.commit();
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        return misurazioneSensoreBean;
+    }
 
 
     @Override
-    public Double retrieveMostRecentMesurement(String tipo, Integer id_coltivazione) throws SQLException {
+    public synchronized Double retrieveMostRecentMesurement(String tipo, Integer id_coltivazione) throws SQLException {
         String selectSQL = "SELECT AVG(valore) as v" +
                 "FROM (" +
                 "  SELECT valore" +
@@ -156,7 +213,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
     }
 
     @Override
-    public List<MisurazioneSensoreBean> retrieveMeasurementPerTimeInterval(Date data_inizio, Date data_fine, Integer id_coltivazione, String tipo) throws SQLException {
+    public synchronized List<MisurazioneSensoreBean> retrieveMeasurementPerTimeInterval(Date data_inizio, Date data_fine, Integer id_coltivazione, String tipo) throws SQLException {
         String selectSQL = "SELECT avg(valore) as v, misurazione_sensore.data " +
                 "FROM misurazione_sensore " +
                 "WHERE coltivazione = ? and tipo = ? and misurazione_sensore.data >= ?  and misurazione_sensore.data <= ?" +

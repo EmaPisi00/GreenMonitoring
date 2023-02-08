@@ -51,5 +51,20 @@ public interface MisurazioneSensoreDAO {
      */
     MisurazioneSensoreBean createMisurazioneManuel(MisurazioneSensoreBean msb, SensoreBean sensore);
 
-
+    /**
+     * Questo metodo restituisce le misurazioni sulla base del tipo di sensore e la coltivazione.
+     * @param id_coltivazione
+     * @param tipo
+     * @return MisurazioneSensoreBean
+     * @throws SQLException
+     */
+    MisurazioneSensoreBean retreiveMisurazioneByColtivazione(Integer id_coltivazione, String tipo) throws SQLException;
+    /**
+     * Questo metodo restituisce le misurazioni effettuate dal tipo di sensore e la coltivazione, oltre una certa data.
+     * @param id_coltivazione
+     * @param tipo
+     * @return MisurazioneSensoreBean
+     * @throws SQLException
+     */
+    MisurazioneSensoreBean retreiveMisurazioneByColtivazione(Integer id_coltivazione, String tipo, java.sql.Date date) throws SQLException;
 }
