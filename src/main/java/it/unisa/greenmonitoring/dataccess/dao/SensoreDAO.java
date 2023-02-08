@@ -55,4 +55,18 @@ public interface SensoreDAO {
      * @throws SQLException
      */
     void delete(SensoreBean sensore) throws SQLException;
+
+    /**
+     *
+     * @param idM
+     * @return SensoreBean
+     * @throws SQLException
+     */
+    SensoreBean retrieveByidM(String idM) throws SQLException;
+
+    /**
+     *
+     * @return List
+     */
+    List<SensoreBean> SensoriColtivazioneAvviata();
 }

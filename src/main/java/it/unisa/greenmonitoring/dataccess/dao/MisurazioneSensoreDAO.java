@@ -25,4 +25,12 @@ public interface MisurazioneSensoreDAO {
      */
     ArrayList<MisurazioneSensoreBean> retreive(String id) throws SQLException;
 
+    /**
+     *
+     * @param msb
+     * @param sensore
+     * @return MisurazioneSensoreBean
+     */
+    MisurazioneSensoreBean createMisurazioneManuel(MisurazioneSensoreBean msb, SensoreBean sensore);
+
 }

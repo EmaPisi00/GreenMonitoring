@@ -48,6 +48,20 @@ public class MisurazioneSensoreBean {
     }
 
     /**
+     * Questo è il costruttore con i campi.
+     * @param given_data
+     * @param given_ora
+     * @param given_tipo
+     * @param given_valore
+     */
+    public MisurazioneSensoreBean(Date given_data, Time given_ora, String given_tipo, int given_valore) {
+        this.data = given_data;
+        this.ora = given_ora;
+        this.tipo = given_tipo;
+        this.valore = given_valore;
+    }
+
+    /**
      * Questo è il setter per l'id.
      * @param given_id
      */
