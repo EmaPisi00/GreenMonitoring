@@ -48,6 +48,7 @@ public class ServletTerreno extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("inserisciTerreno_submit") != null) {
             //setta i parametri
+            String nome = request.getParameter("nome");
             String azienda = request.getParameter("azienda");
 
             String fileName = null;
@@ -69,7 +70,7 @@ public class ServletTerreno extends HttpServlet {
             Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
             String superfice = request.getParameter("superfice");
             //creo il bean da inserire
-            TerrenoBean terreno = new TerrenoBean(latitudine, longitudine, superfice, fileName, azienda);
+            TerrenoBean terreno = new TerrenoBean(nome, latitudine, longitudine, superfice, fileName, azienda);
             //errori ritorna il bean terreno con i parametri settati null se ci sono errori
             if (tm.createTerreno(terreno) == null) {
                 request.setAttribute("erroriTerrenoBean", "errore nell'inserimento dei dati");

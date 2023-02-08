@@ -28,15 +28,16 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     @Override
     public void createTerreno(TerrenoBean t) {
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT " + TABLE_NAME + "(azienda,immagine,latitudine,longitudine,superfice)" + " VALUES (?,?,?,?,?)";
+        String insertSQL = "INSERT " + TABLE_NAME + "(nome,azienda,immagine,latitudine,longitudine,superfice)" + " VALUES (?,?,?,?,?,?)";
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
-            preparedStatement.setString(1, t.getAzienda());
-            preparedStatement.setString(2, t.getImmagine());
-            preparedStatement.setFloat(3, t.getLatitudine());
-            preparedStatement.setFloat(4, t.getLongitudine());
-            preparedStatement.setString(5, t.getSuperficie());
+            preparedStatement.setString(1, t.getNome());
+            preparedStatement.setString(2, t.getAzienda());
+            preparedStatement.setString(3, t.getImmagine());
+            preparedStatement.setFloat(4, t.getLatitudine());
+            preparedStatement.setFloat(5, t.getLongitudine());
+            preparedStatement.setString(6, t.getSuperficie());
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException s) {
@@ -63,6 +64,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
             while (rs.next()) {
                 TerrenoBean t = new TerrenoBean();
                 t.setId(rs.getInt("id"));
+                t.setNome(rs.getString("nome"));
                 t.setImmagine(rs.getString("immagine"));
                 t.setSuperficie(rs.getString("superfice"));
                 t.setLatitudine(rs.getFloat("latitudine"));
@@ -94,6 +96,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 t.setId(rs.getInt("id"));
+                t.setNome(rs.getString("nome"));
                 t.setLongitudine(rs.getFloat("longitudine"));
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setAzienda(rs.getString("azienda"));

@@ -72,6 +72,7 @@
             <tr>
                 <th scope="col"></th>
                 <th scope="col">#</th>
+                <th scope="col">nome</th>
                 <th scope="col" class="tohide">Immagine</th>
                 <th scope="col">Latitudine</th>
                 <th scope="col">Longitudine</th>
@@ -108,6 +109,7 @@
                                             "<input id=\"chk\" name=\"terreno" + i + "\" type=\"checkbox\" value=\"" + tb.getId() + "\"></input>" +
                                             "</td>" +
                                             "<td>" + tb.getId() + "</td>" +
+                                            "<td>" + tb.getNome() + "</td>" +
                                             "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
                                             "<td>" + tb.getLatitudine() + "</td>" +
                                             "<td>" + tb.getLongitudine() + "</td>" +
@@ -119,6 +121,7 @@
                                             "<td>Coltivazione avviata" +
                                             "</td>" +
                                             "<td>" + tb.getId() + "</td>" +
+                                            "<td>" + tb.getNome() + "</td>" +
                                             "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
                                             "<td>" + tb.getLatitudine() + "</td>" +
                                             "<td>" + tb.getLongitudine() + "</td>" +

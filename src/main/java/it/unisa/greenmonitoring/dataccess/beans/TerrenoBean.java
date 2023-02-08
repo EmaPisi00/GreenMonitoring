@@ -8,8 +8,14 @@ public class TerrenoBean {
      */
     private Integer id;
     /**
+     * nome terreno.
+     */
+    private String nome;
+
+    /**
      * Questo campo contiene la latitudine del terreno.
      */
+
     private Float  latitudine;
     /**
      * Questo campo contiene la longitudine del terreno.
@@ -30,18 +36,34 @@ public class TerrenoBean {
 
     /**
      * Questo metodo crea un TerrenoBean a partire da i seguenti parametri.
+     * @param given_nome
      * @param given_latitudine
      * @param given_longitudine
      * @param given_superficie
      * @param given_immagine
      * @param given_azienda
      */
-    public TerrenoBean(Float given_latitudine, Float given_longitudine, String given_superficie, String given_immagine, String given_azienda) {
+    public TerrenoBean(String given_nome, Float given_latitudine, Float given_longitudine, String given_superficie, String given_immagine, String given_azienda) {
+        this.nome = given_nome;
         this.latitudine = given_latitudine;
         this.longitudine = given_longitudine;
         this.superficie = given_superficie;
         this.immagine = given_immagine;
         this.azienda = given_azienda;
+    }
+    /**
+     * nome get.
+     * @return String
+     */
+    public String getNome() {
+        return nome;
+    }
+    /**
+     * nome set.
+     * @param nomeParam
+     */
+    public void setNome(String nomeParam) {
+        this.nome = nomeParam;
     }
 
     /**
@@ -141,6 +163,7 @@ public class TerrenoBean {
     public String toString() {
         return "TerrenoBean{"
                 + "id=" + id
+                + "nome=" + nome
                 + ", latitudine=" + latitudine
                 + ", longitudine=" + longitudine
                 + ", superficie='" + superficie + '\''
@@ -165,11 +188,11 @@ public class TerrenoBean {
         if (!(o instanceof TerrenoBean that)) {
             return false;
         }
-        return id.equals(that.id) && latitudine.equals(that.latitudine) && longitudine.equals(that.longitudine) && superficie.equals(that.superficie) && immagine.equals(that.immagine) && azienda.equals(that.azienda);
+        return nome.equals(that.nome) && id.equals(that.id) && latitudine.equals(that.latitudine) && longitudine.equals(that.longitudine) && superficie.equals(that.superficie) && immagine.equals(that.immagine) && azienda.equals(that.azienda);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, latitudine, longitudine, superficie, immagine, azienda);
+        return Objects.hash(nome, id, latitudine, longitudine, superficie, immagine, azienda);
     }
 }

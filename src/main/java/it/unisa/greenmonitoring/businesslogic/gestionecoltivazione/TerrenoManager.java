@@ -40,6 +40,10 @@ public class TerrenoManager {
             System.out.println("errore nella superfice");
             return null;
         }
+        if (t.getNome().length() < 2 || t.getNome().length() > 30) {
+            System.out.println("errore nella dimensione del nome");
+            return null;
+        }
 
         if (t.getLatitudine() < 0 || t.getLatitudine() > 90) {
             System.out.println("errore: latitudine minore di 0 ");
