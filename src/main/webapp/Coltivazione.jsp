@@ -40,7 +40,7 @@
     <div class="row" style="width: 99%">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Generale</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Dati Umidità</button>
@@ -61,11 +61,10 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
             <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="card" style="width: ">
+                <div class="card" style="width: auto;">
                     <div class="card-body">
                         <h5 class="card-title">Info coltivazione</h5>
-                        <%
-                            /* -- INIZIO AUTENTICAZIONE -- */
+                        <%  /* -- INIZIO AUTENTICAZIONE -- */
                             Object sa = session.getAttribute("currentUserSession");
                             int[] valoriMisurati = {0, 0, 0};
                             ColtivazioneBean cb = null;
@@ -122,18 +121,48 @@
                                 valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
                                 out.print("<ul><li class=\"list-group-item \">" +
                                         "Coltivazione di " + nomePianta + "<br>" +
-                                        "<img src=\"" + urlImmagine + "\" alt=\"Foto coltivazione\">" + "<br>" +
-                                        //"<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
-                                        //"<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
-                                        //"<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
-
-
+                                        "<img src=\"" + urlImmagine + "\" alt=\"Foto coltivazione\">"); %>
+                        <%  ColtivazioneManager coltivazionemanager = new ColtivazioneManager();
+                            Double resultUmidita = coltivazionemanager.restituisciMisurazioniRecenti("umidità", coltivazioneID);
+                            Double resultTemperatura = coltivazionemanager.restituisciMisurazioniRecenti("temperatura", coltivazioneID);
+                            Double resultPH = coltivazionemanager.restituisciMisurazioniRecenti("pH", coltivazioneID);
+                            String colorPH = "blue";
+                            String colorTemperatura = "blue";
+                            String colorUmidità = "blue";
+                            /*
+                            if (resultUmidita è lontano dal valore ottimale) {
+                                colorUmidità = "red";
+                            } else if (resultTemperatura è lontano dal valore ottimale) {
+                                colorTemperatura = "red";
+                            } else if (resultPH è lontano dal valore ottimale) {
+                                colorPH = "red";
+                            }
+                            */
+                        %>
+                        <h5>Umidità media</h5>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div>
+                            <%=resultUmidita%>%
+                            <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
+                        </div>
+                        <h5>Temperatura media</h5>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
+                            <%=resultTemperatura%>"\00b0"C
+                            <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
+                        </div>
+                        <h5>pH media</h5>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) + 10); }%>%; height: 20px; background-color: <%=colorPH%>;"></div>
+                            <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) + 10); }%>
+                            <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
+                        </div>
+                        <% out.print("<br>" +
                                         // ho aggiunto questo form, poi te lo gestisci tu, basta che chiama servletSuggerimenti e c'è l'id della coltivazione
                                         "<form action=\"ServletSuggerimenti\" method=\"get\">\n" +
                                         "<input type=\"hidden\" name=\"coltivazione\" value=\"" + coltivazioneID + "\">" +
                                         "<button type=\"submit\" class=\"btn btn-success\" >Suggerimenti</button>"
                                         + "</form>" +
-
                                         //fino a qui
                                         "</li></ul>"
                                 );
@@ -142,24 +171,20 @@
                 </div>
             </div>
         </div>
-
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
-                        <h5 class="card-title">Misurazioni più recenti</h5>
-                        <%  MisurazioneSensoreManager misurazioneSensoreManager = new MisurazioneSensoreManager();
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div>
+                            <%=resultUmidita%>%
+                            <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
+                            <%
+                                for (int i = 0; i < ;i++) {
 
-                            List<MisurazioneSensoreBean> misurazioneSensoreBeanList = misurazioneSensoreManager.restituisciMisurazioniRecenti(IDazienda, coltivazioneID);
-                            out.print("<ul>");
-                            for (int i = 0; i < misurazioneSensoreBeanList.size(); i++){
-                                if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("umi")) {
-                                out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanList.get(i).getData() +
-                                        "<br>risultato : " + misurazioneSensoreBeanList.get(i).getValore() + "<br> tipo sensore: "+ misurazioneSensoreBeanList.get(i).getTipo() +"</li>");
                                 }
-                            }
-                            out.print("</ul>");
-                        %>
+                            %>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,17 +193,11 @@
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
-                        <h5 class="card-title">Misurazioni più recenti</h5>
-            <%  misurazioneSensoreBeanList = misurazioneSensoreManager.restituisciMisurazioniRecenti(IDazienda, coltivazioneID);
-                out.print("<ul>");
-                for (int i = 0; i < misurazioneSensoreBeanList.size(); i++){
-                    if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("ph")) {
-                    out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanList.get(i).getData() +
-                            "<br>risultato : " + misurazioneSensoreBeanList.get(i).getValore() + "<br> tipo sensore: "+ misurazioneSensoreBeanList.get(i).getTipo() +"</li>");
-                    }
-                }
-                out.print("</ul>");
-            %>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) + 10); }%>%; height: 20px; background-color: <%=colorPH%>;"></div>
+                            <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) - 40); }%>
+                            <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,16 +207,11 @@
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
-                        <h5 class="card-title">Misurazioni più recenti</h5>
-            <%  out.print("<ul>");
-                for (int i = 0; i < misurazioneSensoreBeanList.size(); i++){
-                    if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("temp")) {
-                        out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanList.get(i).getData() +
-                                "<br>risultato : " + misurazioneSensoreBeanList.get(i).getValore() + "<br> tipo sensore: "+ misurazioneSensoreBeanList.get(i).getTipo() +"</li>");
-                    }
-                }
-                out.print("</ul>");
-        %>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
+                            <%=resultTemperatura%>"\00b0"C
+                            <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -239,7 +253,6 @@
                                 ]
                             });
                             chart.render();
-
                         }
                     </script>
                 </div>
@@ -251,8 +264,13 @@
                 <div class="card-body">
                     <h5 class="card-title">Rilevamenti per periodo</h5>
                     <form method="ServletColtivazioni" action="post">
-                        <input id="periodo-inizio" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_inizio_periodo">
-                        <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_fine_periodo">
+                        <input id="periodo-inizio" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_inizio_periodo" required>
+                        <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_fine_periodo" required>
+                        <select required>
+                            <option name="tipoSensore" value="umidità">Umidità</option>
+                            <option name="tipoSensore" value="pH">pH</option>
+                            <option name="tipoSensore" value="temperatura">Temperatura</option>
+                        </select>
                         <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success">Mostra per questi periodi</button>
                     </form>
                     <script type="text/javascript">

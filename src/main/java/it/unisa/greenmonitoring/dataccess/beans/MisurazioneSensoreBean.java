@@ -10,14 +10,6 @@ public class MisurazioneSensoreBean {
      */
     private int id;
     /**
-     * coltivazioneid.
-     */
-    private int coltivazioneID;
-    /**
-     * sensore id.
-     */
-    private int sensoreID;
-    /**
      * Questo campo contiene la data della misurazione.
      */
     private Date data;
@@ -33,11 +25,35 @@ public class MisurazioneSensoreBean {
      * Questo campo contiene il valore misurato dal sensore.
      */
     private int valore;
+    /**
+     * Questo campo contiene la foreign key di coltivazione.
+     */
+    private Integer coltivazione;
+    /**
+     * Questo campo contiene la foreign key di sensore.
+     */
+    private Integer sensore_id;
 
     /**
      * Questo è il costruttore vuoto.
      */
     public MisurazioneSensoreBean() { }
+
+    /**
+     * Questo è il getter di sensore_id.
+     * @return Integer
+     */
+    public Integer getSensore_id() {
+        return sensore_id;
+    }
+
+    /**
+     * Questo è il setter di sensore_id.
+     * @param given_sensore_id
+     */
+    public void setSensore_id(Integer given_sensore_id) {
+        this.sensore_id = given_sensore_id;
+    }
 
     /**
      * costruttore.
@@ -49,44 +65,12 @@ public class MisurazioneSensoreBean {
      * @param given_sensore
      */
     public MisurazioneSensoreBean(Date given_data, Time given_ora, String given_tipo, int given_valore, int given_coltivazione, int given_sensore) {
-        this.coltivazioneID = given_coltivazione;
-        this.sensoreID = given_sensore;
+        this.coltivazione = given_coltivazione;
+        this.sensore_id = given_sensore;
         this.data = given_data;
         this.ora = given_ora;
         this.tipo = given_tipo;
         this.valore = given_valore;
-    }
-
-    /**
-     *
-     * @return int
-     */
-    public int getColtivazioneID() {
-        return coltivazioneID;
-    }
-
-    /**
-     *
-     * @param param_coltivazioneID
-     */
-    public void setColtivazioneID(int param_coltivazioneID) {
-        this.coltivazioneID = param_coltivazioneID;
-    }
-
-    /**
-     *
-     * @return int
-     */
-    public int getSensoreID() {
-        return sensoreID;
-    }
-
-    /**
-     *
-     * @param param_sensoreID
-     */
-    public void setSensoreID(int param_sensoreID) {
-        this.sensoreID = param_sensoreID;
     }
 
     /**
@@ -197,5 +181,21 @@ public class MisurazioneSensoreBean {
                 + ", tipo='" + tipo + '\''
                 + ", valore=" + valore
                 + '}';
+    }
+
+    /**
+     * Questo metodo restituisce la coltivazione associata alla misurazione.
+     * @return Integer
+     */
+    public Integer getColtivazione() {
+        return coltivazione;
+    }
+
+    /**
+     * Questo metodo imposta la coltivazione alla misurazione.
+     * @param given_coltivazione
+     */
+    public void setColtivazione(Integer given_coltivazione) {
+        this.coltivazione = given_coltivazione;
     }
 }

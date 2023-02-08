@@ -13,6 +13,10 @@ import java.util.List;
 
 public class ColtivazioneManager {
     /**
+     * MisurazioneSensoreDAO.
+     */
+    private MisurazioneSensoreDAO misurazioneSensoreDAO;
+    /**
      * ColtivazioneDAO.
      */
     private ColtivazioneDAO cd;
@@ -140,27 +144,54 @@ public class ColtivazioneManager {
         }
         return l;
     }
+    /**
+     * Questo metodo restituisce le misurazioni più recenti a partire da un'azienda.
+     * @param id_coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     */
+    public Double restituisciMisurazioniRecenti(String tipo, Integer id_coltivazione) {
+        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
+        try {
+            return misurazioneSensoreDAO.retrieveMostRecentMesurement(tipo, id_coltivazione);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
-     * Questo metodo calcola la media per ogni tipo di sensore.
-     * @param id_coltivazione
-     * @return ms
+     * Questo metodo restituisce le misurazioni per periodo.
+     * @param data_inizio_periodo
+     * @param data_fine_periodo
+     * @param coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      */
-    public int[] visualizzaMediaSensori(String id_coltivazione) throws SQLException {
-        MisurazioneSensoreDAO msdao = new MisurazioneSensoreDAOImpl();
-        ArrayList<MisurazioneSensoreBean> msbList = msdao.retreive(id_coltivazione);
-        int[] media = new int[3];
-        for (int i = 0; i < msbList.size(); i++) {
-            MisurazioneSensoreBean msb = msbList.get(i);
-            if (msb.getTipo().equals("pH")) {
-                media[0] = media[0] + msb.getValore();
-            } else if (msb.getTipo().equals("temperatura")) {
-                media[1] = media[1] + msb.getValore();
-            } else if (msb.getTipo().equals("umidità")) {
-                media[2] = media[2] + msb.getValore();
-            }
+    public List<MisurazioneSensoreBean> restituisciMisurazioniPerPeriodo(java.sql.Date data_inizio_periodo, java.sql.Date data_fine_periodo, Integer coltivazione, String tipo) {
+        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
+        try {
+            return misurazioneSensoreDAO.retrieveMeasurementPerTimeInterval(data_inizio_periodo, data_fine_periodo, coltivazione, tipo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return media;
+    }
+    /**
+     * Questo metodo restituisce le misurazioni a partire da oggi.
+     * @param id_coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     */
+    public List<MisurazioneSensoreBean> visualizzaMisurazioneOggiColtivazione(Integer id_coltivazione, String tipo) throws SQLException {
+        return misurazioneSensoreDAO.retreiveMisurazioneOggiColtivazione(id_coltivazione, tipo);
+    }
+    /**
+     * Questo metodo restituisce le misurazioni sulla base del tipo di sensore e della coltivazione.
+     * @param id_coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     */
+    public List<MisurazioneSensoreBean> visualizzaMisurazioneColtivazione(Integer id_coltivazione, String tipo) throws SQLException {
+        return misurazioneSensoreDAO.retreiveMisurazioneOggiColtivazione(id_coltivazione, tipo);
     }
     /**
      * Questo metodo restituisce esattamente una coltivazione.
