@@ -64,7 +64,7 @@ public class MisurazioneSensoreBean {
      * @param given_coltivazione
      * @param given_sensore
      */
-    public MisurazioneSensoreBean(Date given_data, Time given_ora, String given_tipo, int given_valore, int given_coltivazione, int given_sensore) {
+    public MisurazioneSensoreBean(Date given_data, Time given_ora, String given_tipo, Integer given_valore, Integer given_coltivazione, int given_sensore) {
         this.coltivazione = given_coltivazione;
         this.sensore_id = given_sensore;
         this.data = given_data;
