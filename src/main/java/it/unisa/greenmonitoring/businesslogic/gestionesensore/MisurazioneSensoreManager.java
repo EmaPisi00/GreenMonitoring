@@ -27,4 +27,20 @@ public class MisurazioneSensoreManager {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Questo metodo restituisce le misurazioni per periodo.
+     * @param data_inizio_periodo
+     * @param data_fine_periodo
+     * @param coltivazione
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     */
+    public List<MisurazioneSensoreBean> restituisciMisurazioniPerPeriodo(java.sql.Date data_inizio_periodo, java.sql.Date data_fine_periodo, int coltivazione) {
+        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
+        try {
+            return misurazioneSensoreDAO.restituisciMisurazioniPerPeriodo(data_inizio_periodo, data_fine_periodo, coltivazione);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

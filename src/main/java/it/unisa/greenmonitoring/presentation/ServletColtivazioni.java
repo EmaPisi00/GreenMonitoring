@@ -1,11 +1,9 @@
 package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
+import it.unisa.greenmonitoring.businesslogic.gestionesensore.MisurazioneSensoreManager;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
-import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
-import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
-import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
-import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
+import it.unisa.greenmonitoring.dataccess.beans.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,10 +38,9 @@ public class ServletColtivazioni extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("moduloInserimentoColtivazione") != null) {
-            if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
-                response.sendError(401);
-            } else {
+        if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
+            response.sendError(401);
+        } else if (request.getParameter("moduloInserimentoColtivazione") != null) {
                 java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
                 if (request.getParameter("nomepianta") == null || request.getParameter("terreno") == null) {
                     String errore = "L'operazione non è stata eseguita: La pianta o il terreno sono vuoti.";
@@ -95,27 +93,75 @@ public class ServletColtivazioni extends HttpServlet {
                         throw new RuntimeException(e);
                     }
                 }
-            }
-        } else if (request.getParameter("sensoreDaRimuovere") != null) {
-            String sensoreDaRimuovere = request.getParameter("sensoreDaRimuovere");
-            AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
-            SensoreManager sm = new SensoreManager();
-            List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(aziendaBean.getEmail());
-            SensoreBean SensoreDaRimuovere = null;
-            for (int i = 0; i < sensoreBeanList.size(); i++) {
-                if (sensoreBeanList.get(i).getId() == Integer.valueOf(sensoreDaRimuovere)) {
-                    SensoreDaRimuovere = sensoreBeanList.get(i);
-                    break;
+            }  else if (request.getParameter("sensoreDaRimuovere") != null) {
+                String sensoreDaRimuovere = request.getParameter("sensoreDaRimuovere");
+                AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
+                SensoreManager sm = new SensoreManager();
+                List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(aziendaBean.getEmail());
+                SensoreBean SensoreDaRimuovere = null;
+                for (int i = 0; i < sensoreBeanList.size(); i++) {
+                    if (sensoreBeanList.get(i).getId() == Integer.valueOf(sensoreDaRimuovere)) {
+                        SensoreDaRimuovere = sensoreBeanList.get(i);
+                        break;
+                    }
                 }
+                try {
+                    System.out.println("[" + "\u001B[21m" + "ServletColtivazioni.java" + "\u001B[0m" + "]" + " sensoreDaRimuovere is " + sensoreDaRimuovere);
+                    SensoreDaRimuovere.setColtivazione(0);
+                    sm.cancellaSensore(SensoreDaRimuovere);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                response.sendRedirect("Coltivazione.jsp");
+            } else {
+            java.sql.Date todaydate = new java.sql.Date(System.currentTimeMillis());
+            if (java.sql.Date.valueOf(request.getParameter("data_inizio_periodo")).after(todaydate)) {
+                request.getSession().setAttribute("erroreDataPeriodo", "Periodo non valido");
+                response.sendRedirect("Coltivazione.jsp");
+            } else {
+                MisurazioneSensoreManager sm = new MisurazioneSensoreManager();
+                java.sql.Date inizioPeriodo = java.sql.Date.valueOf(request.getParameter("data_inizio_periodo"));
+                java.sql.Date finePeriodo = java.sql.Date.valueOf(request.getParameter("data_fine_periodo"));
+                Integer coltivazioneId = (Integer) request.getSession().getAttribute("coltivazioneID");
+                List<MisurazioneSensoreBean> misurazioneSensoreBeanList = sm.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId);
+                String jsonPeriodoColtivazioni = costruisciJsonPeriodo(inizioPeriodo, finePeriodo, coltivazioneId);
+                PrintWriter out = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                out.write(jsonPeriodoColtivazioni);
             }
-            try {
-                System.out.println("[" + "\u001B[31m" + "ServletColtivazioni.java" + "\u001B[0m" + "]" + " sensoreDaRimuovere is " + sensoreDaRimuovere);
-                SensoreDaRimuovere.setColtivazione(0);
-                sm.cancellaSensore(SensoreDaRimuovere);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            response.sendRedirect("Coltivazione.jsp");
         }
+    }
+
+    /**
+     * Questo metodo genera un json per mostrare l'andamento delle misurazioni in una colivazione in un certo periodo.
+     * @param inizioPeriodo
+     * @param finePeriodo
+     * @param coltivazioneId
+     * @return string
+     */
+    public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId) {
+        MisurazioneSensoreManager sm = new MisurazioneSensoreManager();
+        List<MisurazioneSensoreBean> misurazioneSensoreBeanList = sm.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId);
+        String InizioJson = "{animationEnabled: true, title:{text: \"Le misurazioni nel periodo \" " + inizioPeriodo + " \", \"" + finePeriodo + "\"}, axisX: {valueFormatString: \"DD MMM,YY\"}, axisY: { title: \"\", suffix: \"\"}, legend:{ cursor: \"pointer\", fontSize: 16, itemclick: toggleDataSeries}, toolTip:{ shared: true}, data: ";
+        String ParteJsonPh =          "{\"data\":[{\"name\":\"pH\",\"type\":\"spline\",\"yValueFormatString\":\"\",\"showInLegend\":true,\"dataPoints\":[";
+        String ParteJsonTemperatura = "]},{\"name\":\"Temperatura\",\"type\":\"spline\",\"yValueFormatString\":\"#0.## °C\",\"showInLegend\":true,\"dataPoints\":[";
+        String ParteJsonUmidita =     "]},{\"name\":\"Umidità\",\"type\":\"spline\",\"yValueFormatString\":\"#.%\",\"showInLegend\":true,\"dataPoints\":[";
+        String FineJson =             "]}]}" + "}";
+        for (int i = 0; i < misurazioneSensoreBeanList.size(); i++) {
+            if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("ph")) {
+                String valueToPut = "{\"x\":\"" + misurazioneSensoreBeanList.get(i).getData() + "\",\"y\":" + misurazioneSensoreBeanList.get(i).getValore() + "}";
+                ParteJsonPh = ParteJsonPh + valueToPut;
+
+            } else if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("temp")) {
+                String valueToPut = "{\"x\":\"" + misurazioneSensoreBeanList.get(i).getData() + "\",\"y\":" + misurazioneSensoreBeanList.get(i).getValore() + "}";
+                ParteJsonTemperatura = ParteJsonTemperatura + valueToPut;
+            } else if (misurazioneSensoreBeanList.get(i).getTipo().toLowerCase().contains("umi")) {
+                String valueToPut = "{\"x\":\"" + misurazioneSensoreBeanList.get(i).getData() + "\",\"y\":" + misurazioneSensoreBeanList.get(i).getValore() + "}";
+                ParteJsonUmidita = ParteJsonUmidita + valueToPut;
+            }
+        }
+        String json = InizioJson + ParteJsonPh + ParteJsonTemperatura + ParteJsonUmidita + FineJson;
+        return json;
     }
 }
