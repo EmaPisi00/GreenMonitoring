@@ -41,7 +41,7 @@ public class MisurazioneSensoreBean {
 
     /**
      * Questo è il getter di sensore_id.
-     * @return
+     * @return Integer
      */
     public Integer getSensore_id() {
         return sensore_id;
@@ -49,10 +49,10 @@ public class MisurazioneSensoreBean {
 
     /**
      * Questo è il setter di sensore_id.
-     * @param sensore_id
+     * @param given_sensore_id
      */
-    public void setSensore_id(Integer sensore_id) {
-        this.sensore_id = sensore_id;
+    public void setSensore_id(Integer given_sensore_id) {
+        this.sensore_id = given_sensore_id;
     }
 
     /**
@@ -204,10 +204,10 @@ public class MisurazioneSensoreBean {
     }
 
     /**
-     * Questo metodo imposta la coltivazione alla misurazione
-     * @param coltivazione
+     * Questo metodo imposta la coltivazione alla misurazione.
+     * @param given_coltivazione
      */
-    public void setColtivazione(Integer coltivazione) {
-        this.coltivazione = coltivazione;
+    public void setColtivazione(Integer given_coltivazione) {
+        this.coltivazione = given_coltivazione;
     }
 }

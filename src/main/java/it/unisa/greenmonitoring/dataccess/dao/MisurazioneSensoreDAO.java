@@ -39,6 +39,7 @@ public interface MisurazioneSensoreDAO {
      * @param data_inizio
      * @param data_fine
      * @param id_coltivazione
+     * @param tipo
      * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      * @throws SQLException
      */
@@ -55,16 +56,16 @@ public interface MisurazioneSensoreDAO {
      * Questo metodo restituisce le misurazioni sulla base del tipo di sensore e la coltivazione.
      * @param id_coltivazione
      * @param tipo
-     * @return MisurazioneSensoreBean
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      * @throws SQLException
      */
-    MisurazioneSensoreBean retreiveMisurazioneByColtivazione(Integer id_coltivazione, String tipo) throws SQLException;
+    List<MisurazioneSensoreBean> retreiveMisurazioneByColtivazione(Integer id_coltivazione, String tipo) throws SQLException;
     /**
      * Questo metodo restituisce le misurazioni effettuate dal tipo di sensore e la coltivazione, oltre una certa data.
      * @param id_coltivazione
      * @param tipo
-     * @return MisurazioneSensoreBean
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      * @throws SQLException
      */
-    MisurazioneSensoreBean retreiveMisurazioneByColtivazione(Integer id_coltivazione, String tipo, java.sql.Date date) throws SQLException;
+    List<MisurazioneSensoreBean> retreiveMisurazioneOggiColtivazione(Integer id_coltivazione, String tipo) throws SQLException;
 }

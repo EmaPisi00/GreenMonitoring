@@ -138,6 +138,7 @@ public class ServletColtivazioni extends HttpServlet {
      * @param inizioPeriodo
      * @param finePeriodo
      * @param coltivazioneId
+     * @param tipo
      * @return string
      */
     public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId, String tipo) {

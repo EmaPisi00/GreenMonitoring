@@ -176,25 +176,22 @@ public class ColtivazioneManager {
         }
     }
     /**
-     * Questo metodo calcola la media per ogni tipo di sensore.
+     * Questo metodo restituisce le misurazioni a partire da oggi.
      * @param id_coltivazione
-     * @return ms
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      */
-    public int[] visualizzaMediaSensori(String id_coltivazione) throws SQLException {
-        MisurazioneSensoreDAO msdao = new MisurazioneSensoreDAOImpl();
-        ArrayList<MisurazioneSensoreBean> msbList = msdao.retreive(id_coltivazione);
-        int[] media = new int[3];
-        for (int i = 0; i < msbList.size(); i++) {
-            MisurazioneSensoreBean msb = msbList.get(i);
-            if (msb.getTipo().equals("pH")) {
-                media[0] = media[0] + msb.getValore();
-            } else if (msb.getTipo().equals("temperatura")) {
-                media[1] = media[1] + msb.getValore();
-            } else if (msb.getTipo().equals("umidità")) {
-                media[2] = media[2] + msb.getValore();
-            }
-        }
-        return media;
+    public List<MisurazioneSensoreBean> visualizzaMisurazioneOggiColtivazione(Integer id_coltivazione, String tipo) throws SQLException {
+        return misurazioneSensoreDAO.retreiveMisurazioneOggiColtivazione(id_coltivazione, tipo);
+    }
+    /**
+     * Questo metodo restituisce le misurazioni sulla base del tipo di sensore e della coltivazione.
+     * @param id_coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     */
+    public List<MisurazioneSensoreBean> visualizzaMisurazioneColtivazione(Integer id_coltivazione, String tipo) throws SQLException {
+        return misurazioneSensoreDAO.retreiveMisurazioneOggiColtivazione(id_coltivazione, tipo);
     }
     /**
      * Questo metodo restituisce esattamente una coltivazione.
