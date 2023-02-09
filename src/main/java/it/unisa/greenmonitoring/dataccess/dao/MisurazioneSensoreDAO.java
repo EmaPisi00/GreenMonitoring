@@ -6,6 +6,7 @@ import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface MisurazioneSensoreDAO {
     /**
@@ -25,4 +26,45 @@ public interface MisurazioneSensoreDAO {
      */
     ArrayList<MisurazioneSensoreBean> retreive(String id) throws SQLException;
 
+    /**
+     * Questo metodo restituisce le misurazioni più recenti a partire da un'azienda.
+     * @param tipo
+     * @param id_coltivazione
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     * @throws SQLException
+     */
+    Double retrieveMostRecentMesurement(String tipo, Integer id_coltivazione) throws SQLException;
+    /**
+     * Questo metodo restituisce le misurazioni effettuate in un certo intervallo.
+     * @param data_inizio
+     * @param data_fine
+     * @param id_coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     * @throws SQLException
+     */
+    List<MisurazioneSensoreBean> retrieveMeasurementPerTimeInterval(java.sql.Date data_inizio, java.sql.Date data_fine, Integer id_coltivazione, String tipo) throws SQLException;
+    /**
+     *
+     * @param msb
+     * @return MisurazioneSensoreBean
+     */
+    MisurazioneSensoreBean createMisurazioneManuel(MisurazioneSensoreBean msb);
+
+    /**
+     * Questo metodo restituisce le misurazioni sulla base del tipo di sensore e la coltivazione.
+     * @param id_coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     * @throws SQLException
+     */
+    List<MisurazioneSensoreBean> retreiveMisurazioneByColtivazione(Integer id_coltivazione, String tipo) throws SQLException;
+    /**
+     * Questo metodo restituisce le misurazioni effettuate dal tipo di sensore e la coltivazione, oltre una certa data.
+     * @param id_coltivazione
+     * @param tipo
+     * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
+     * @throws SQLException
+     */
+    List<MisurazioneSensoreBean> retreiveMisurazioneOggiColtivazione(Integer id_coltivazione, String tipo) throws SQLException;
 }

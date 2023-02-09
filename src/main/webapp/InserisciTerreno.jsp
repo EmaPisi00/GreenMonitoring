@@ -47,14 +47,19 @@
           <% } %>
 
           <div>
+            <label for="nome"  class="text-left-label">nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserisci nome" required>
+          </div>
+
+          <div>
             <label for="latitudine"  class="text-left-label">latitudine</label>
-            <input type="text" class="form-control" id="latitudine" name="latitudine" placeholder="Inserisci latitudine" required>
+            <input type="number" class="form-control" id="latitudine" name="latitudine" placeholder="Inserisci latitudine" required>
           </div>
 
 
           <div>
             <label for="longitudine" class="form-label" >longitudine:</label>
-            <input type="text" class="form-control" id="longitudine" name="longitudine" placeholder="Inserisci longitudine" required>
+            <input type="number" class="form-control" id="longitudine" name="longitudine" placeholder="Inserisci longitudine" required>
           </div>
 
 

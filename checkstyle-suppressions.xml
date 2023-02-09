@@ -10,6 +10,7 @@
         <suppress checks="FinalParameters" files="." />
         <suppress files=".java" checks="DesignForExtension"/>
         <suppress checks="MagicNumber" files=".+.(?:jar|zip|java|war|class|tar|bin)$"/>
-      <!--  <suppress files="/Servlet.java" checks="*" /> !-->
+        <suppress checks="ParameterNumber" files="FisiopatieBean.java" />
+        <!--  <suppress files="/Servlet.java" checks="*" /> !-->
         </suppressions>
 

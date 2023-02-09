@@ -29,18 +29,39 @@ public class PiantaManager {
      * @return List
      */
     public PiantaBean CreaPiantaManager(PiantaBean t) {
+        System.out.println("_____ sono t= " + t);
         pd = new PiantaDAOImpl();
-
+        boolean matchDefault = false;
+        boolean matchAzienda = false;
         List<PiantaBean> listaPiante = pd.RetriveAllPiantaDefault();
-        listaPiante.addAll(pd.RetriveAllPiantaAzienda(t.getAzienda()));
+        List<PiantaBean> listaPianteAzienda = pd.RetriveAllPiantaAzienda(t.getAzienda());
         for (PiantaBean tt : listaPiante) {
-
             if (tt.getNome().matches(t.getNome())) {
-                System.out.println("simili= " + tt + "\n" + t);
-                    System.out.println("esiste già una pianta con questo nome ");
-                return null;
+                matchDefault = true;
+                break;
+            }
+        }
+        //controlla se tnome esiste in azienda
+        for (PiantaBean tt : listaPianteAzienda) {
+            if (matchDefault) {
+                System.out.println("*** t" + t.getNome().concat("(" + t.getAzienda() + ")"));
+                System.out.println("*** tt" + tt.getNome());
+                if (t.getNome().concat("(" + t.getAzienda() + ")").equals(tt.getNome())) {
+                    return null;
+                }
+                //altrimenti controlla il nome normale
+            } else {
+                if (t.getNome().matches(tt.getNome())) {
+                    return null;
                 }
             }
+
+        }
+        //se il nome è uguale al default ma non alla pianta azienda, allora personalizza
+        if (matchDefault) {
+            t.setNome(t.getNome().concat("(" + t.getAzienda() + ")"));
+        }
+        System.out.println("FINE sono t= " + t);
         if (controlloDatiPiantaManager(t) == null) {
                 return null;
         }

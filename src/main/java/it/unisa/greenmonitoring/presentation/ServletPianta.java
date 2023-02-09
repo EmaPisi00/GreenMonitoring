@@ -95,8 +95,8 @@ public class ServletPianta extends HttpServlet {
             System.out.println("***** id" + request.getParameter("rimuoviPianta_submit"));
             int idPianta = Integer.parseInt(request.getParameter("rimuoviPianta_submit"));
             pm.rimuoviPiantaManager(idPianta, utente.getEmail());
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Piante.jsp");
-                dispatcher.forward(request, response);
+            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Piante.jsp");
+            dispatcher.forward(request, response);
         } else if (request.getParameter("modificaRange_submit") != null) {
             int idPianta = Integer.parseInt(request.getParameter("modificaRange_submit"));
             System.out.println("pianta id= " + idPianta);

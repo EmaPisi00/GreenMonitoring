@@ -25,6 +25,14 @@ public class MisurazioneSensoreBean {
      * Questo campo contiene il valore misurato dal sensore.
      */
     private int valore;
+    /**
+     * Questo campo contiene la foreign key di coltivazione.
+     */
+    private Integer coltivazione;
+    /**
+     * Questo campo contiene la foreign key di sensore.
+     */
+    private Integer sensore_id;
 
     /**
      * Questo è il costruttore vuoto.
@@ -32,15 +40,33 @@ public class MisurazioneSensoreBean {
     public MisurazioneSensoreBean() { }
 
     /**
-     * Questo è il costruttore con i campi.
-     * @param given_id
+     * Questo è il getter di sensore_id.
+     * @return Integer
+     */
+    public Integer getSensore_id() {
+        return sensore_id;
+    }
+
+    /**
+     * Questo è il setter di sensore_id.
+     * @param given_sensore_id
+     */
+    public void setSensore_id(Integer given_sensore_id) {
+        this.sensore_id = given_sensore_id;
+    }
+
+    /**
+     * costruttore.
      * @param given_data
      * @param given_ora
      * @param given_tipo
      * @param given_valore
+     * @param given_coltivazione
+     * @param given_sensore
      */
-    public MisurazioneSensoreBean(int given_id, Date given_data, Time given_ora, String given_tipo, int given_valore) {
-        this.id = given_id;
+    public MisurazioneSensoreBean(Date given_data, Time given_ora, String given_tipo, Integer given_valore, Integer given_coltivazione, int given_sensore) {
+        this.coltivazione = given_coltivazione;
+        this.sensore_id = given_sensore;
         this.data = given_data;
         this.ora = given_ora;
         this.tipo = given_tipo;
@@ -140,5 +166,36 @@ public class MisurazioneSensoreBean {
     @Override
     public int hashCode() {
         return Objects.hash(id, data, ora, tipo, valore);
+    }
+
+    /**
+     * To string di MisurazioneSensoreBean.
+     * @return string
+     */
+    @Override
+    public String toString() {
+        return "MisurazioneSensoreBean{"
+                + "id=" + id
+                + ", data=" + data
+                + ", ora=" + ora
+                + ", tipo='" + tipo + '\''
+                + ", valore=" + valore
+                + '}';
+    }
+
+    /**
+     * Questo metodo restituisce la coltivazione associata alla misurazione.
+     * @return Integer
+     */
+    public Integer getColtivazione() {
+        return coltivazione;
+    }
+
+    /**
+     * Questo metodo imposta la coltivazione alla misurazione.
+     * @param given_coltivazione
+     */
+    public void setColtivazione(Integer given_coltivazione) {
+        this.coltivazione = given_coltivazione;
     }
 }

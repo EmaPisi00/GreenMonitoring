@@ -41,6 +41,14 @@ public interface SensoreDAO {
     List<SensoreBean> retrieveAllByAzienda(String azienda) throws SQLException;
 
     /**
+     * Metodo retrieve che permette di ricercare tutti i sensori di una coltivazione.
+     * @param coltivazione
+     * @return List<SensoreBean>
+     * @throws SQLException
+     */
+    List<SensoreBean> retrieveAllByColtivazione(int coltivazione) throws SQLException;
+
+    /**
      * Metodo update che permette di modificare dati già presenti nel DB.
      * @param id_sensore
      * @param s
@@ -55,4 +63,18 @@ public interface SensoreDAO {
      * @throws SQLException
      */
     void delete(SensoreBean sensore) throws SQLException;
+
+    /**
+     *
+     * @param idM
+     * @return SensoreBean
+     * @throws SQLException
+     */
+    SensoreBean retrieveByidM(String idM) throws SQLException;
+
+    /**
+     *
+     * @return List
+     */
+    List<SensoreBean> SensoriColtivazioneAvviata();
 }

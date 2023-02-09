@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean;
-import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 
 
 import java.sql.Connection;
@@ -16,16 +15,6 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
      * Start Connection.
      */
     private Connection connection;
-
-    /**
-     * SensoreDAO.
-     */
-    private SensoreDAO sensoreDAO;
-
-    /**
-     * MisurazioneSensoreDAO.
-     */
-    private MisurazioneSensoreDAO misurazioneSensoreDAO;
 
     /**
      * Costruttore di ColtivazioneDAOImpl.
@@ -65,16 +54,13 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
 
     @Override
     public ArrayList<ColtivazioneBean> retrieveColtivazione(String id_azienda) throws SQLException {
-        String selectSQL = "SELECT * FROM Coltivazione JOIN Terreno ON Coltivazione.terreno = Terreno.id WHERE Terreno.azienda = ?";
+        String selectSQL = "SELECT Coltivazione.id , pianta, terreno, stato_archiviazione, data_inizio, data_fine, azienda FROM Coltivazione JOIN Terreno ON Coltivazione.terreno = Terreno.id WHERE Terreno.azienda = ?";
         ArrayList<ColtivazioneBean> list = new ArrayList<>();
-        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
-        sensoreDAO = new SensoreDAOImpl();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
             preparedStatement.setString(1, id_azienda);
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 ColtivazioneBean c = new ColtivazioneBean();
                 c.setId(rs.getInt("id"));
@@ -82,15 +68,11 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
                 c.setData_inizio(rs.getDate("data_fine"));
                 c.setPianta(rs.getInt("pianta"));
                 c.setTerreno(rs.getInt("terreno"));
+                c.setAzienda(rs.getString("azienda"));
                 c.setStato_archiviazione(rs.getByte("stato_archiviazione"));
-                c.setListaMisurazioni(misurazioneSensoreDAO.retreive(String.valueOf(c.getId())));
-                c.setListaSensori((ArrayList<SensoreBean>) sensoreDAO.retrieveAllByAzienda(id_azienda).stream().filter(o -> o.getColtivazione().equals(c.getId())).toList());
                 connection.commit();
                 list.add(c);
             }
-
-
-
         } catch (SQLException s) {
             s.printStackTrace();
         } finally {

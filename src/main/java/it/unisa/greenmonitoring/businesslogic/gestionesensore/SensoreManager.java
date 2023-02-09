@@ -11,11 +11,20 @@ import java.util.ArrayList;
 
 public class SensoreManager {
     /**
+     * DAO.
+     */
+    private SensoreDAO sns;
+    /**
+     * Costruttore.
+     */
+    public SensoreManager() {
+        sns = new SensoreDAOImpl();
+    }
+    /**
      * @param s
      * @throws SQLException
      */
-    public static void creaSensore(SensoreBean s) throws SQLException {
-        SensoreDAO sns = new SensoreDAOImpl();
+    public void creaSensore(SensoreBean s) throws SQLException {
         sns.create(s);
     }
 
@@ -25,8 +34,7 @@ public class SensoreManager {
      * @return SensoreBean
      * @throws SQLException
      */
-    public static SensoreBean retrieveSensore(int id_sensore) throws SQLException {
-        SensoreDAO sns = new SensoreDAOImpl();
+    public SensoreBean retrieveSensore(int id_sensore) throws SQLException {
         return sns.retrieveByKey(id_sensore);
     }
 
@@ -37,8 +45,7 @@ public class SensoreManager {
      */
     public void cancellaSensore(SensoreBean sensore) throws SQLException {
         try {
-            SensoreDAO td = new SensoreDAOImpl();
-            td.update(sensore.getId(), sensore);
+            sns.update(sensore.getId(), sensore);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -49,11 +56,10 @@ public class SensoreManager {
      * @param id_coltivazione
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      */
-    public static void aggiungiAssociazioneSensore(int id_coltivazione, SensoreBean sensore) {
+    public void aggiungiAssociazioneSensore(int id_coltivazione, SensoreBean sensore) {
         try {
-            SensoreDAO td = new SensoreDAOImpl();
             sensore.setColtivazione(id_coltivazione);
-            td.update(sensore.getId(), sensore);
+            sns.update(sensore.getId(), sensore);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -64,10 +70,9 @@ public class SensoreManager {
      * @param sensore
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      */
-    public static void cancellaAssociazioneSensore(SensoreBean sensore) {
+    public void cancellaAssociazioneSensore(SensoreBean sensore) {
         try {
-            SensoreDAO td = new SensoreDAOImpl();
-            td.update(sensore.getId(), sensore);
+            sns.update(sensore.getId(), sensore);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,16 +84,23 @@ public class SensoreManager {
      * @return list
      */
     public ArrayList<SensoreBean> visualizzaListaSensori(String id_azienda) {
-        SensoreDAO td = null;
         ArrayList<SensoreBean> list = new ArrayList<>();
         try {
-            td = new SensoreDAOImpl();
-            td.retrieveAll().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
+            sns.retrieveAll().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return list;
+    }
+
+    /**
+     *
+     * @return ArrayList
+     */
+    public ArrayList<SensoreBean> SensoriColtivazioneAvviataManager() {
+        SensoreDAO td = new SensoreDAOImpl();
+        return (ArrayList<SensoreBean>) td.SensoriColtivazioneAvviata();
     }
 
 }

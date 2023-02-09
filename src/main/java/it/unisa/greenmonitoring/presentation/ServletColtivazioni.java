@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-//import java.sql.SQLException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
@@ -35,10 +37,9 @@ public class ServletColtivazioni extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("moduloInserimentoColtivazione") != null) {
-            if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
-                response.sendError(401);
-            } else {
+        if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
+            response.sendError(401);
+        } else if (request.getParameter("moduloInserimentoColtivazione") != null) {
                 java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
                 if (request.getParameter("nomepianta") == null || request.getParameter("terreno") == null) {
                     String errore = "L'operazione non è stata eseguita: La pianta o il terreno sono vuoti.";
@@ -51,78 +52,111 @@ public class ServletColtivazioni extends HttpServlet {
                     AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
                     String utente = aziendaBean.getEmail();
                     String nomepianta = request.getParameter("nomepianta"); //id
-                    String sensorePh = request.getParameter("sensorePh"); //id
-                    String sensoreTemperatura = request.getParameter("sensoreTemperatura"); //id
-                    String sensoreUmidita = request.getParameter("sensoreUmidita"); //id
+                    String[] sensorePh = request.getParameterValues("sensorePh"); //id
+                    String[] sensoreTemperatura = request.getParameterValues("sensoreTemperatura"); //id
+                    String[] sensoreUmidita = request.getParameterValues("sensoreUmidita"); //id
+                    ArrayList<String> sensori = new ArrayList<>();
+                    Collections.addAll(sensori, sensorePh);
+                    Collections.addAll(sensori, sensoreTemperatura);
+                    Collections.addAll(sensori, sensoreUmidita);
                     String dataInizio = request.getParameter("datainizio");
                     java.sql.Date dataInizioDate = java.sql.Date.valueOf(dataInizio);
                     int terreno = Integer.parseInt(request.getParameter("terreno")); //id
+                    System.out.println("l'id del terreno nella servlet " + terreno);
                     ColtivazioneBean cb = new ColtivazioneBean();
                     cb.setPianta(Integer.valueOf(nomepianta));
                     cb.setStato_archiviazione(Byte.parseByte("0"));
                     cb.setTerreno(terreno);
-                    SensoreManager sm = new SensoreManager();
-                    List<SensoreBean> slist = sm.visualizzaListaSensori(aziendaBean.getEmail());
-                    for (int i = 0; i < slist.size(); i++) {
-                        SensoreBean s = null;
-                        if (slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensorePh) || slist.get(i).getId() == Integer.valueOf(sensoreTemperatura)) {
-                            s = slist.get(i);
-                            cb.getListaSensori().add(s);
-                        }
-                    }
+                    SensoreManager sensoreManager = new SensoreManager();
                     ColtivazioneManager cm = new ColtivazioneManager();
                     cb.setData_inizio(dataInizioDate);
                     try {
-                        cm.avvioColtivazione(cb, utente);
+                        cm.avvioColtivazione(cb, utente, sensori);
+                        ArrayList<ColtivazioneBean> coltivazioneBeans = cm.visualizzaStatoColtivazioni(aziendaBean.getEmail());
+                        Integer id_coltivazione = coltivazioneBeans.get(coltivazioneBeans.size() - 1).getId();
+                        cb.setId(id_coltivazione);
+                        SensoreBean sensoreBean;
+                        for (String sensore : sensorePh) {
+                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
+                        }
+                        for (String sensore : sensoreTemperatura) {
+                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
+                        }
+                        for (String sensore : sensoreUmidita) {
+                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
+                        }
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                    List<ColtivazioneBean> cblist = cm.visualizzaColtivazioniAvviate(aziendaBean.getEmail());
-                    Integer id_coltivazione = 0;
-                    for (int i = 0; i < cblist.size(); i++) {
-                        if (cblist.get(i).getTerreno().equals(terreno)) {
-                            id_coltivazione = cblist.get(i).getTerreno();
-                            break;
-                        }
-                    }
-                    SensoreBean s = new SensoreBean();
-                    /*
-                    for (int i = 0; i < slist.size(); i++) {
-                        if (slist.get(i).getId().equals(sensorePh)) {
-                            s = slist.get(i);
-                            s.setColtivazione(id_coltivazione);
-                            sm.updateSensore(s);
-                        } else if (slist.get(i).getId().equals(sensoreTemperatura)) {
-                            s = slist.get(i);
-                            s.setColtivazione(id_coltivazione);
-                            sm.updateSensore(s);
-                        } else if (slist.get(i).getId().equals(sensoreUmidita)) {
-                            s = slist.get(i);
-                            s.setColtivazione(id_coltivazione);
-                            sm.updateSensore(s);
-                        }
-                    }
-                request.getSession().setAttribute("coltivazioneID", String.valueOf(id_coltivazione));
-                response.sendRedirect("Coltivazione.jsp");*/
                 }
-            }
-        } else if (request.getParameter("sensoreDaRimuovere") != null) {
-            String sensoreDaRimuovere = request.getParameter("sensoreDaRimuovere");
-            System.out.println(sensoreDaRimuovere);
-            /*AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
-            SensoreManager sm = new SensoreManager();
-            List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(aziendaBean.getEmail());
-            for (int i = 0; i < sensoreBeanList.size(); i++) {
-                if (sensoreBeanList.get(i).getId() == Integer.valueOf(sensoreDaRimuovere)) {
-                    try {
-                        sm.cancellaSensore(sensoreBeanList.get(i));
+            }  else if (request.getParameter("sensoreDaRimuovere") != null) {
+                String sensoreDaRimuovere = request.getParameter("sensoreDaRimuovere");
+                AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
+                SensoreManager sm = new SensoreManager();
+                List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(aziendaBean.getEmail());
+                SensoreBean SensoreDaRimuovere = null;
+                for (int i = 0; i < sensoreBeanList.size(); i++) {
+                    if (sensoreBeanList.get(i).getId() == Integer.valueOf(sensoreDaRimuovere)) {
+                        SensoreDaRimuovere = sensoreBeanList.get(i);
                         break;
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
                     }
                 }
-            } */
-
+                try {
+                    System.out.println("[" + "\u001B[21m" + "ServletColtivazioni.java" + "\u001B[0m" + "]" + " sensoreDaRimuovere is " + sensoreDaRimuovere);
+                    SensoreDaRimuovere.setColtivazione(0);
+                    sm.cancellaSensore(SensoreDaRimuovere);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                response.sendRedirect("Coltivazione.jsp");
+            } else {
+            java.sql.Date todaydate = new java.sql.Date(System.currentTimeMillis());
+            if (java.sql.Date.valueOf(request.getParameter("data_inizio_periodo")).after(todaydate)) {
+                request.getSession().setAttribute("erroreDataPeriodo", "Periodo non valido");
+                response.sendRedirect("Coltivazione.jsp");
+            } else {
+                ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+                java.sql.Date inizioPeriodo = java.sql.Date.valueOf(request.getParameter("data_inizio_periodo"));
+                java.sql.Date finePeriodo = java.sql.Date.valueOf(request.getParameter("data_fine_periodo"));
+                Integer coltivazioneId = (Integer) request.getSession().getAttribute("coltivazioneID");
+                String tipo = request.getParameter("tipoSensore");
+                List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
+                String jsonPeriodoColtivazioni = costruisciJsonPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
+                PrintWriter out = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                out.write(jsonPeriodoColtivazioni);
+            }
         }
+    }
+
+    /**
+     * Questo metodo genera un json per mostrare l'andamento delle misurazioni in una colivazione in un certo periodo.
+     * @param inizioPeriodo
+     * @param finePeriodo
+     * @param coltivazioneId
+     * @param tipo
+     * @return string
+     */
+    public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId, String tipo) {
+        ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+        List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
+        String InizioJson = "{\"theme\":\"light1\",\"animationEnabled\":false,\"title\":{\"text\":\"\"},\"data\":[{\"type\":\"spline\",\"dataPoints\":[";
+        String ParteJsonDataMisurazione = "{\"label\": \"";
+        String ParteJsonValoreMisurazione = "\",  y: \"";
+        String FineInformazioniGrafico = "}";
+        String FineJson = "]}";
+        String valueToPut = new String();
+        for (int i = 0; i < misurazioneSensoreBeanList.size(); i++) {
+            if (i == misurazioneSensoreBeanList.size() - 1) {
+                valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico;
+            }
+            valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico + ",";
+        }
+        String json = InizioJson + valueToPut + FineJson;
+        return json;
     }
 }

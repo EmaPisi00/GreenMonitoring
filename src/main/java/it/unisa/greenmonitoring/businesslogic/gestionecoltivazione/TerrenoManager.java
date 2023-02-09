@@ -1,5 +1,6 @@
 package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
 
+import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAO;
 import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAOImpl;
@@ -10,7 +11,10 @@ import java.util.List;
 
 
 public class TerrenoManager {
-
+    /**
+     * ColtivazioneManager.
+     */
+    private ColtivazioneManager coltivazioneManager;
     /**
      * terrenodao.
      */
@@ -21,6 +25,7 @@ public class TerrenoManager {
      */
     public TerrenoManager() {
         this.td = new TerrenoDAOImpl();
+        this.coltivazioneManager = new ColtivazioneManager();
     }
 
     /**
@@ -33,6 +38,10 @@ public class TerrenoManager {
 
         if (!(t.getSuperficie().matches("^[0-9]+$"))) {
             System.out.println("errore nella superfice");
+            return null;
+        }
+        if (t.getNome().length() < 2 || t.getNome().length() > 30) {
+            System.out.println("errore nella dimensione del nome");
             return null;
         }
 
@@ -60,6 +69,15 @@ public class TerrenoManager {
             return t;
     }
 
+    /**
+     * Questo metodo restituisce un terreno a partire da un id intero.
+     * @param id_terreno
+     * @return TerrenoBean
+     * @throws SQLException
+     */
+    public TerrenoBean restituisciTerrenoDaInt(int id_terreno) throws SQLException {
+        return td.retrieveByKey(id_terreno);
+    }
 
     /**
      * Questo metodo restituisce un terreno a partire da un id.
@@ -67,7 +85,7 @@ public class TerrenoManager {
      * @return TerrenoBean
      * @throws SQLException
      */
-    public TerrenoBean retrieveTerreno(String id_terreno) throws SQLException {
+    public TerrenoBean restituisciTerreno(String id_terreno) throws SQLException {
         List<TerrenoBean> terrenoBeanList = td.retrieveTerreno();
         TerrenoBean result = new TerrenoBean();
         for (int i = 0; i < terrenoBeanList.size(); i++) {
@@ -95,7 +113,9 @@ public class TerrenoManager {
      */
     public void rimuoviTerreno(int id_terreno) {
         try {
-            td.deleteTerreno(id_terreno);
+            if (coltivazioneManager.retrieveColtivazioneSingola(id_terreno) != null) {
+                td.deleteTerreno(id_terreno);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

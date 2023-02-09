@@ -1,6 +1,10 @@
 
 package my;
 
+//import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
+import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
+//import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
+import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -9,13 +13,17 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * cose.
  */
 public class Listener implements ServletContextListener {
 
+    /**
+     * sensore.
+     */
+    private SensoreManager sm;
     /**
      *
      * @param sce
@@ -26,28 +34,9 @@ public class Listener implements ServletContextListener {
         String clientId = "mySubscriberClientId";
 
         //prendi sensori dal db con avvia coltivazione true
-        //List of sensors
-        List<String> sensors = new ArrayList<>();
-        sensors.add("temperature/1");
-        sensors.add("temperature/2");
-        sensors.add("temperature/3");
-        sensors.add("temperature/4");
-        sensors.add("temperature/5");
-        sensors.add("temperature/6");
-        sensors.add("temperature/7");
-        sensors.add("temperature/8");
-        sensors.add("temperature/9");
-        sensors.add("temperature/10");
-        sensors.add("humidity/1");
-        sensors.add("humidity/2");
-        sensors.add("humidity/3");
-        sensors.add("humidity/4");
-        sensors.add("humidity/5");
-        sensors.add("humidity/6");
-        sensors.add("humidity/7");
-        sensors.add("humidity/8");
-        sensors.add("humidity/9");
-        sensors.add("humidity/10");
+        sm = new SensoreManager();
+        ArrayList<SensoreBean> listaSensori = sm.SensoriColtivazioneAvviataManager();
+
         MemoryPersistence persistence = new MemoryPersistence();
 
         try {
@@ -67,10 +56,14 @@ public class Listener implements ServletContextListener {
             MqttMessagePrinter printer = new MqttMessagePrinter();
             client.setCallback(printer);
 
-            // start the message processing loop
+            /*start the message processing loop
             for (String sensor : sensors) {
                 // subscribe to the MQTT topic
                 client.subscribe(sensor);
+            }
+             */
+            for (SensoreBean sensori : listaSensori) {
+                client.subscribe(sensori.getIdM());
             }
         } catch (MqttException e) {
             e.printStackTrace();

@@ -1,10 +1,11 @@
-        <%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.Date" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.MisurazioneSensoreManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -36,10 +37,10 @@
 <%@include file="fragments/headerLoggedAzienda.html"%>
 
 <div class="bd">
-    <div class="row">
+    <div class="row" style="width: 99%">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Generale</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Dati Umidità</button>
@@ -63,11 +64,10 @@
                 <div class="card" style="width: auto;">
                     <div class="card-body">
                         <h5 class="card-title">Info coltivazione</h5>
-                        <%
-                            /* -- INIZIO AUTENTICAZIONE -- */
+                        <%  /* -- INIZIO AUTENTICAZIONE -- */
                             Object sa = session.getAttribute("currentUserSession");
-                            int[] valoriMisurati = {0, 0, 0};
-                            ColtivazioneBean cb = null;;
+                            System.out.println("[Coltivazione.jsp] - Sono in coltivazionejsp - ");
+                            ColtivazioneBean cb = null;
                             if (sa == null) {
                                 response.sendError(401);
                             } else if (!(session.getAttribute("currentUserSession") instanceof UtenteBean)) {
@@ -75,6 +75,7 @@
                             }
                             /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
                             else {
+                                System.out.println("[Coltivazione.jsp] - Superati i controlli - ");
                                 String urlImmagine = new String("Foto coltivazione");
                                 List<ColtivazioneBean> list = null;
                                 List<SensoreBean> sList = null;
@@ -83,13 +84,19 @@
                                 PiantaManager pm = new PiantaManager();
                                 SensoreManager sm = new SensoreManager();
                                 String nomePianta = new String();
+                                String IDazienda = new String();
                                 Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
                                 if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                                     DipendenteBean a = (DipendenteBean) sa;
+                                    IDazienda = a.getAzienda();
                                     cb = cm.visualizzaStatoColtivazioni(a.getAzienda()).stream().filter(o -> o.getId() == coltivazioneID).findFirst().orElse(null);
+                                    System.out.println("[Coltivazione.jsp] - ColtivazioneBean è - " +cb);
                                     sList = sm.visualizzaListaSensori(a.getAzienda()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
+                                    System.out.println("[Coltivazione.jsp] - SensoreList (sList) è - " +sList);
                                     list = cm.visualizzaStatoColtivazioni(a.getAzienda());
+                                    System.out.println("[Coltivazione.jsp] - statoColtivazioni (list) è - " +list);
                                     piantaBeanList = pm.ListaPianteManager(a.getAzienda());
+                                    System.out.println("[Coltivazione.jsp] - piantaBeanList è - " +piantaBeanList);
                                     for (int i = 0; i < piantaBeanList.size(); i++) {
                                         for (int j = 0; j < list.size(); j++) {
                                             if (piantaBeanList.get(i).getId().equals(list.get(j).getPianta())) {
@@ -98,12 +105,18 @@
                                             }
                                         }
                                     }
+                                    System.out.println("[Coltivazione.jsp] - superati i due for - ");
+                                    System.out.println("[Coltivazione.jsp] - nomePianta è - " +nomePianta);
                                 } else {
                                     AziendaBean a = (AziendaBean) sa;
+                                    IDazienda = a.getEmail();
                                     cb = cm.visualizzaStatoColtivazioni(a.getEmail()).stream().filter(o -> o.getId() == coltivazioneID).findFirst().orElse(null);
+                                    System.out.println("[Coltivazione.jsp] - ColtivazioneBean è - " +cb);
                                     list = cm.visualizzaStatoColtivazioni(a.getEmail());
                                     sList = sm.visualizzaListaSensori(a.getEmail()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
+                                    System.out.println("[Coltivazione.jsp] - SensoreList (sList) è - " +sList);
                                     piantaBeanList = pm.ListaPianteManager(a.getEmail());
+                                    System.out.println("[Coltivazione.jsp] - piantaBeanList è - " +piantaBeanList);
                                     for (int i = 0; i < piantaBeanList.size(); i++) {
                                         for (int j = 0; j < list.size(); j++) {
                                             if (piantaBeanList.get(i).getId().equals(list.get(j).getPianta())) {
@@ -113,22 +126,53 @@
                                             }
                                         }
                                     }
+                                    System.out.println("[Coltivazione.jsp] - superati i due for - ");
+                                    System.out.println("[Coltivazione.jsp] - nomePianta è - " + nomePianta);
                                 }
-                                valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
                                 out.print("<ul><li class=\"list-group-item \">" +
                                         "Coltivazione di " + nomePianta + "<br>" +
-                                        "<img src=\"" + urlImmagine + "\" alt=\"Foto coltivazione\">" + "<br>" +
-                                        "<h7>media pH</h7> " + valoriMisurati[0] + "<br>" +
-                                        "<h7>media temperatura</h7> " + valoriMisurati[1] + "<br>" +
-                                        "<h7>media umidità</h7> " + valoriMisurati[2] + "<br>" +
-
-
+                                        "<img src=\"" + urlImmagine + "\" alt=\"Foto coltivazione\">");%>
+                        <%  ColtivazioneManager coltivazionemanager = new ColtivazioneManager();
+                            Double resultUmidita = coltivazionemanager.restituisciMisurazioniRecenti("umidità", coltivazioneID);
+                            Double resultTemperatura = coltivazionemanager.restituisciMisurazioniRecenti("temperatura", coltivazioneID);
+                            Double resultPH = coltivazionemanager.restituisciMisurazioniRecenti("pH", coltivazioneID);
+                            String colorPH = "blue";
+                            String colorTemperatura = "blue";
+                            String colorUmidità = "blue";
+                            /*
+                            if (resultUmidita è lontano dal valore ottimale) {
+                                colorUmidità = "red";
+                            } else if (resultTemperatura è lontano dal valore ottimale) {
+                                colorTemperatura = "red";
+                            } else if (resultPH è lontano dal valore ottimale) {
+                                colorPH = "red";
+                            }
+                            */
+                        %>
+                        <h5>Umidità media</h5>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div>
+                            <%=resultUmidita%>%
+                            <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
+                        </div>
+                        <h5>Temperatura media</h5>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
+                            <%=resultTemperatura%>"\00b0"C
+                            <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
+                        </div>
+                        <h5>pH media</h5>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) + 10); }%>%; height: 20px; background-color: <%=colorPH%>;"></div>
+                            <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) + 10); }%>
+                            <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
+                        </div>
+                        <% out.print("<br>" +
                                         // ho aggiunto questo form, poi te lo gestisci tu, basta che chiama servletSuggerimenti e c'è l'id della coltivazione
                                         "<form action=\"ServletSuggerimenti\" method=\"get\">\n" +
                                         "<input type=\"hidden\" name=\"coltivazione\" value=\"" + coltivazioneID + "\">" +
                                         "<button type=\"submit\" class=\"btn btn-success\" >Suggerimenti</button>"
                                         + "</form>" +
-
                                         //fino a qui
                                         "</li></ul>"
                                 );
@@ -137,32 +181,23 @@
                 </div>
             </div>
         </div>
-
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
-                        <h5 class="card-title">Misurazioni più recenti</h5>
-                        <%  //System.out.println("\u001B[31m" + "if statement" + "\u001B[0m" + "[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                            System.out.println("[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                            ArrayList<MisurazioneSensoreBean> misurazioneSensoreBeanArrayList = cb.getListaMisurazioni();
-                            List<Date> date = misurazioneSensoreBeanArrayList.stream().map(o -> (Date) o.getData()).toList();
-                            out.print("<ul>");
-                            for (int i = date.size() - 1; i < date.size() - 5; i--) { //parto dal fondo così sicuro prendo le misurazioni più recenti.
-                                if (misurazioneSensoreBeanArrayList.get(i).getTipo().toLowerCase().contains("umidit")) {
-                                    if (misurazioneSensoreBeanArrayList.get(i).getData().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                                        if (misurazioneSensoreBeanArrayList.get(i).getOra().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                                            out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i).getData() +
-                                                    "risultato : " + misurazioneSensoreBeanArrayList.get(i).getValore() + "</li>");
-                                        } else {
-                                            out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i - 1).getData() +
-                                                    "risultato : " + misurazioneSensoreBeanArrayList.get(i - 1).getValore() + "</li>");
-                                        }
+                        <div>
+                            <% coltivazionemanager = new ColtivazioneManager();
+                                    List<MisurazioneSensoreBean> misurazioneSensoreBeans = coltivazionemanager.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "umidità");
+                                    for (int i = 0; i < misurazioneSensoreBeans.size() ;i++) {
+                                            out.print("<li class=\"list-group-item\"> Sensore umidità" + misurazioneSensoreBeans.get(i).getId() + ": " + misurazioneSensoreBeans.get(i).getValore() + "</li>");
                                     }
-                                }
-                            }
-                            out.print("</ul>");
-                        %>
+                                    %>
+                        </div>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div>
+                            <%=resultUmidita%>%
+                            <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,27 +206,19 @@
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
-                        <h5 class="card-title">Misurazioni più recenti</h5>
-            <%  //System.out.println("\u001B[31m" + "if statement" + "\u001B[0m" + "[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                System.out.println("[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-                misurazioneSensoreBeanArrayList = cb.getListaMisurazioni();
-                date = misurazioneSensoreBeanArrayList.stream().map(o -> (Date) o.getData()).toList();
-                out.print("<ul>");
-                for (int i = date.size() - 1; i < date.size() - 5; i--) { //parto dal fondo così sicuro prendo le misurazioni più recenti.
-                    if (misurazioneSensoreBeanArrayList.get(i).getTipo().toLowerCase().contains("ph")) {
-                        if (misurazioneSensoreBeanArrayList.get(i).getData().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                            if (misurazioneSensoreBeanArrayList.get(i).getOra().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                                out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i).getData() +
-                                        "risultato : " + misurazioneSensoreBeanArrayList.get(i).getValore() + "</li>");
-                            } else {
-                                out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i - 1).getData() +
-                                        "risultato : " + misurazioneSensoreBeanArrayList.get(i - 1).getValore() + "</li>");
-                            }
-                        }
-                    }
-                }
-                out.print("</ul>");
-            %>
+                        <div>
+                            <% coltivazionemanager = new ColtivazioneManager();
+                                misurazioneSensoreBeans = coltivazionemanager.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "pH");
+                                    for (int i = 0; i < misurazioneSensoreBeans.size() ;i++) {
+                                            out.print("<li class=\"list-group-item\"> Sensore umidità" + misurazioneSensoreBeans.get(i).getId() + ": " + misurazioneSensoreBeans.get(i).getValore() + "</li>");
+                                    }
+                                    %>
+                        </div>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) + 10); }%>%; height: 20px; background-color: <%=colorPH%>;"></div>
+                            <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) - 40); }%>
+                            <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -201,27 +228,20 @@
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
-                        <h5 class="card-title">Misurazioni più recenti</h5>
-            <%  //System.out.println("\u001B[31m" + "if statement" + "\u001B[0m" + "[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-            System.out.println("[" + "\u001B[32m" + "Coltivazione.jsp" + "\u001B[0m" + "]" + " ColtivazioneBean is " + cb.toString());
-            misurazioneSensoreBeanArrayList = cb.getListaMisurazioni();
-            date = misurazioneSensoreBeanArrayList.stream().map(o -> (Date) o.getData()).toList();
-            out.print("<ul>");
-            for (int i = date.size() - 1; i < date.size() - 5; i--) { //parto dal fondo così sicuro prendo le misurazioni più recenti.
-                if (misurazioneSensoreBeanArrayList.get(i).getTipo().toLowerCase().contains("temp")) {
-                    if (misurazioneSensoreBeanArrayList.get(i).getData().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                        if (misurazioneSensoreBeanArrayList.get(i).getOra().after(misurazioneSensoreBeanArrayList.get(i - 1).getData())) {
-                            out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i).getData() +
-                                    "risultato : " + misurazioneSensoreBeanArrayList.get(i).getValore() + "</li>");
-                        } else {
-                            out.print("<li class=\"list-group-item \"> Misurazione in data : " + misurazioneSensoreBeanArrayList.get(i - 1).getData() +
-                                    "risultato : " + misurazioneSensoreBeanArrayList.get(i - 1).getValore() + "</li>");
-                        }
-                    }
-                }
-            }
-            out.print("</ul>");
-        %>
+                        <div>
+                            <% coltivazionemanager = new ColtivazioneManager();
+                                    misurazioneSensoreBeans = coltivazionemanager.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "temperatura");
+                                    for (int i = 0; i < misurazioneSensoreBeans.size() ;i++) {
+                                        out.print("<li class=\"list-group-item\"> Sensore temperatura" + misurazioneSensoreBeans.get(i).getId() + ": " + misurazioneSensoreBeans.get(i).getValore() + "</li>");
+                                    }
+                                    %>
+                        </div>
+                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                            <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
+                            <%=resultTemperatura%>"\00b0"C
+
+                            <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -236,42 +256,46 @@
             </div>
         </div>
     </div>
-
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Sunto delle misurazioni (media)</h5>
-                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                    <h5 class="card-title">Rilevamenti per periodo</h5>
+                    <form method="ServletColtivazioni" action="post">
+                        <input id="periodo-inizio" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_inizio_periodo" required>
+                        <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_fine_periodo" required>
+                        <select required>
+                            <option name="tipoSensore" value="umidità">Umidità</option>
+                            <option name="tipoSensore" value="pH">pH</option>
+                            <option name="tipoSensore" value="temperatura">Temperatura</option>
+                        </select>
+                        <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success">Mostra per questi periodi</button>
+                    </form>
                     <script type="text/javascript">
-                        window.onload = function () {
-
-                            var chart = new CanvasJS.Chart("chartContainer", {
-                                theme: "light1", // "light2", "dark1", "dark2"
-                                animationEnabled: false, // change to true
-                                title:{
-                                    text: ""
-                                },
-                                data: [
-                                    {
-                                        // Change type to "bar", "area", "spline", "pie",etc.
-                                        type: "pie",
-                                        dataPoints: [
-                                            { label: "pH",  y: <%=valoriMisurati[0]%>  },
-                                            { label: "Temperatura", y:  <%=valoriMisurati[1]%>  },
-                                            { label: "Umidità", y: <%=valoriMisurati[2]%>  }
-                                        ]
+                        $("#rilevamentiPerPeriodo").onclick = function() {
+                            var inputInizio = document.getElementById("periodo-inizio").value;
+                            var inputFine = document.getElementById("periodo-inizio").value;
+                            if (inputInizio != null && inputFine != null) {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", "ServletColtivazioni", true);
+                                xhr.onreadystatechange = function () {
+                                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                        //Costruisco il grafico
+                                        window.onload = function () {
+                                            var chart = new CanvasJS.Chart("chartContainer", JSON.parse(xhr.responseText));
+                                            chart.render();
+                                        }
                                     }
-                                ]
-                            });
-                            chart.render();
-
+                                    ;xhr.send();
+                                }
+                            }
                         }
                     </script>
                 </div>
             </div>
         </div>
+
         <div class="col-sm-6">
-            <div class="card" style="width: 30rem;">
+            <div class="card" style="width: auto;">
                 <div class="card-body">
                     <h5 class="card-title">Sensori</h5>
 

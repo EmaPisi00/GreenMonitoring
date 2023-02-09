@@ -134,6 +134,37 @@ public class SensoreDAOImpl implements SensoreDAO {
     }
 
     @Override
+    public List<SensoreBean> retrieveAllByColtivazione(int coltivazione) throws SQLException {
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE coltivazione = ?";
+        List<SensoreBean> list = new ArrayList<>();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, coltivazione);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                SensoreBean s = new SensoreBean();
+                s.setId(rs.getInt("id"));
+                s.setTipo(rs.getString("tipo"));
+                s.setColtivazione(rs.getInt("coltivazione"));
+                s.setAzienda(rs.getString("azienda"));
+                s.setIdM(rs.getString("idM"));
+
+                list.add(s);
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            return list;
+        }
+    }
+
+    @Override
     public synchronized void update(int id_sensore, SensoreBean s) throws SQLException {
         String updateSQL = "UPDATE Sensore SET tipo = ?, azienda = ?, idM = ?, coltivazione = ? WHERE id = ?";
         try {
@@ -168,5 +199,71 @@ public class SensoreDAOImpl implements SensoreDAO {
         } finally {
             connection.close();
         }
+    }
+
+    /**
+     *
+     * @param idM
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public SensoreBean retrieveByidM(String idM) throws SQLException {
+        String selectSQL = "SELECT * FROM Sensore WHERE idM = ?";
+        SensoreBean s = new SensoreBean();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, idM);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                s.setId(rs.getInt("id"));
+                s.setTipo(rs.getString("tipo"));
+                s.setColtivazione(rs.getInt("coltivazione"));
+                s.setAzienda(rs.getString("azienda"));
+                s.setIdM(rs.getString("idM"));
+
+                connection.commit();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        connection.close();
+        return s;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public ArrayList<SensoreBean> SensoriColtivazioneAvviata() {
+        //select * from Sensore where Coltivazione in (select id from Coltivazione as c where c.stato_archiviazione=1)
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE Coltivazione in (SELECT id from Coltivazione as c where c.stato_archiviazione=1)";
+        ArrayList<SensoreBean> list = new ArrayList<>();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            ResultSet rs = preparedStatement.executeQuery();
+            System.out.println("va bene");
+            while (rs.next()) {
+                SensoreBean s = new SensoreBean();
+                s.setId(rs.getInt("id"));
+                s.setTipo(rs.getString("tipo"));
+                s.setColtivazione(rs.getInt("coltivazione"));
+                s.setAzienda(rs.getString("azienda"));
+                s.setIdM(rs.getString("idM"));
+                list.add(s);
+            }
+            connection.commit();
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+        return list;
     }
 }
