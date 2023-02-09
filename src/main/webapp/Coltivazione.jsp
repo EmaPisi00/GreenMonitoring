@@ -131,8 +131,8 @@
                                 }
                                 out.print("<ul><li class=\"list-group-item \">" +
                                         "Coltivazione di " + nomePianta + "<br>" +
-                                        "<img src=\"" + urlImmagine + "\" alt=\"Foto coltivazione\">");%>
-                        <%  ColtivazioneManager coltivazionemanager = new ColtivazioneManager();
+                                        "<img src=\"" + urlImmagine + "\" alt=\"Foto coltivazione\">");
+                                ColtivazioneManager coltivazionemanager = new ColtivazioneManager();
                             Double resultUmidita = coltivazionemanager.restituisciMisurazioniRecenti("umidità", coltivazioneID);
                             Double resultTemperatura = coltivazionemanager.restituisciMisurazioniRecenti("temperatura", coltivazioneID);
                             Double resultPH = coltivazionemanager.restituisciMisurazioniRecenti("pH", coltivazioneID);
@@ -152,13 +152,14 @@
                         <h5>Umidità media</h5>
                         <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
                             <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div>
+                            System.out.println("["+ "\u001B31 Coltivazione.jsp"+ "\u001B00]" - restultUmidità - " +resultUmidita +" - colorUmidita - " +colorUmidità);
                             <%=resultUmidita%>%
                             <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
                         </div>
                         <h5>Temperatura media</h5>
                         <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
                             <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
-                            <%=resultTemperatura%>"\00b0"C
+                            <%=resultTemperatura%>&degC
                             <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
                         </div>
                         <h5>pH media</h5>
@@ -328,7 +329,9 @@
                             }
                             out.print("</ul>");
                         }
-                    }%>
+                    }
+                        }
+                    %>
                     <!-- Fine coltivazioni -->
                 </div>
             </div>
