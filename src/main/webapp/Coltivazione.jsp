@@ -147,7 +147,7 @@
                             } else if (resultPH è lontano dal valore ottimale) {
                                 colorPH = "red";
                             }
-                            */}
+                            */
                         %>
                         <h5>Umidità media</h5>
                         <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
@@ -330,6 +330,7 @@
                             out.print("</ul>");
                         }
                     }
+                        }
                     %>
                     <!-- Fine coltivazioni -->
                 </div>
