@@ -25,18 +25,8 @@
 
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (u instanceof DipendenteBean)  { %>
-<script type="text/javascript">
-    window.onload = function() {
-        alert('Login effettuato')
-    }
-</script>
 <%@include file="/fragments/headerLoggedDipendente.html" %>
 <%} else if(u instanceof  AziendaBean){ %>
-<script type="text/javascript">
-    window.onload = function() {
-        alert('Login effettuato (ps: da migliorare )')
-    }
-</script>
 <%@ include file="/fragments/headerLoggedAzienda.html" %>
 <%} else { %>
 <%@include file="fragments/headerLogin.html"%>
