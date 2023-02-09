@@ -45,6 +45,16 @@ public class AutenticazioneManagerTest {
         aziendaBean.setCodice_associazione("AZ456562");
         aziendaBean.setProvincia("SA");
         aziendaBean.setTelefono("23458246");
+
+        dipendenteBean = new DipendenteBean();
+        dipendenteBean.setEmail("dip@gmail.com");
+        dipendenteBean.setNome("Emanuele");
+        dipendenteBean.setCognome("Pisaturo");
+        dipendenteBean.setAzienda("prova@gmail.com");
+        dipendenteBean.setCitta("Pontecagnano");
+        dipendenteBean.setProvincia("Salerno");
+        dipendenteBean.setPassword("1234UHD");
+        dipendenteBean.setIndirizzo("Via Sapro");
     }
 
     @After
@@ -59,8 +69,36 @@ public class AutenticazioneManagerTest {
         assertEquals(az,aziendaBean);
     }
     @Test
-    public void registraAzienda2() throws SQLException {
+    public void failAziendaNome() throws SQLException {
         aziendaBean.setNome_azienda("55555555555555");
+        AziendaBean az = autenticazioneManager.registraAzienda(aziendaBean);
+        assertNull(az);
+    }
+
+    @Test
+    public void failPartitaIva() throws SQLException {
+        aziendaBean.setPartita_iva("ll");
+        AziendaBean az = autenticazioneManager.registraAzienda(aziendaBean);
+        assertNull(az);
+    }
+
+    @Test
+    public void failCitta() throws SQLException {
+        aziendaBean.setCitta("01,d02");
+        AziendaBean az = autenticazioneManager.registraAzienda(aziendaBean);
+        assertNull(az);
+    }
+
+    @Test
+    public void failProvincia() throws SQLException {
+        aziendaBean.setProvincia("01,d02");
+        AziendaBean az = autenticazioneManager.registraAzienda(aziendaBean);
+        assertNull(az);
+    }
+
+    @Test
+    public void failPassword() throws SQLException {
+        aziendaBean.setPassword("01,d02");
         AziendaBean az = autenticazioneManager.registraAzienda(aziendaBean);
         assertNull(az);
     }

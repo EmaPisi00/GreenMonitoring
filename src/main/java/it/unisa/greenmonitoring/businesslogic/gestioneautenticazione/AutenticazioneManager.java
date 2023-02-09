@@ -50,12 +50,12 @@ public class AutenticazioneManager {
             System.out.println("\nErrore nel nome della Provincia\n");
             return null;
         }
-        if (!(aziendaBean.getNome_azienda().matches("^[a-zA-Z0-9!@#$%^&*]+$"))) {
+        if (!(aziendaBean.getPassword().matches("^[a-zA-Z0-9!@#$%^&*]+$"))) {
             /*Inserisci una password di lunghezza max 15 caratteri e minimo 8 con almeno un carattere speciale,un numero e una maiuscola*/
             System.out.println("\nErrore nella password \n");
             return null;
         }
-        if ((aziendaBean.getPartita_iva().matches("^[0-11]+$"))) {
+        if (!(aziendaBean.getPartita_iva().matches("^[0-9]+$"))) {
             System.out.println("\nErrore nella partita iva\n");
             return null;
         }
