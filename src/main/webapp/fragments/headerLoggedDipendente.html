@@ -25,7 +25,7 @@
       <div class="col-lg-1 col-md-1 col-xs-12">
         <!-- Logo -->
         <div style="position: absolute;" class="logo">
-          <a href="index.jsp"><img src="img/logo.png"  class="img-fluid rounded-top" alt=""></a>
+          <a href="index.jsp"><img src="img/logo.png" class="img-fluid rounded-top" alt=""></a>
         </div>
       </div>
       <div class="col-lg-12 col-md-12 col-xs-12">
@@ -48,8 +48,8 @@
             </button>
             <ul style="text-align: center; font-size: 20px; font-family: 'Anton' sans-serif;"
                 class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Modifica Profilo</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
+              <li><a class="dropdown-item" href="ModificaProfilo.jsp">Modifica Profilo</a></li>
+              <li><a class="dropdown-item" href="ServletLogout">Logout</a></li>
             </ul>
           </div>
         </div>
@@ -76,38 +76,21 @@
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3"
                     style="line-height: 108px;">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="HomePage.jsp">Home</a>
+                    <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId"
                        data-bs-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">Gestione Autenticazione</a>
+                       aria-expanded="false">Autenticazione</a>
                     <div class="dropdown-content" aria-labelledby="dropdownId">
-                      <a class="" style="display: none" href="">Rimozione Dipendente</a>
-                      <a class=""  href="#">Associazione ad azienda</a>
-                    </div>
-                  </li>
-                  <li style="display: none" class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId"
-                       data-bs-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">Gestione Coltivazione</a>
-                    <div class="dropdown-content" aria-labelledby="dropdownId">
-                      <a class="" style="display: none" href="Terreni.jsp">Visualizzazione Terreni</a>
-                      <a class="" style="display: none" href="InserisciTerreno.jsp">Inserimento Terreno</a>
-                      <a class="" style="display: none" href="">Rimozione Terreno</a>
-                      <a class="" style="display: none" href="InserisciPianta.jsp">Aggiunta pianta</a>
-                      <a class="" style="display: none" href="">Modifica pianta</a>
-                      <a class="" style="display: none" href="Piante.jsp">Visualizzazione piante</a>
-                      <a class="" style="display: none" href="RimuoviPianta.jsp">Rimozione pianta</a>
+                      <a class="" style="display: none" href="#">Associazione ad azienda</a>
                     </div>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId"
                        data-bs-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">Gestione Monitoraggio</a>
+                       aria-expanded="false">Monitoraggio coltivazioni</a>
                     <div class="dropdown-content" aria-labelledby="dropdownId">
-                      <a class="" style="display: none" href="Coltivazione.jsp">Avvio Coltivazione</a>
-                      <a class="" style="display: none" href="">Archivio Coltivazione</a>
                       <a class="" href="">Visualizzazione notifiche</a>
                       <a class="" href="">Consultazione fisiopatie</a>
                       <a class="" href="SuggerimentiColtivazione.jsp">Visualizzazione suggerimenti irrigazione</a>
@@ -115,18 +98,6 @@
                       <a class="" href="ListaColtivazioni.jsp">Visualizzazione lista coltivazioni</a>
                     </div>
                   </li>
-                  <li style="display: none" class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId"
-                       data-bs-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">Gestione Sensori</a>
-                    <div class="dropdown-content" aria-labelledby="dropdownId">
-                      <a class="" style="display: none" href="InserisciSensore.jsp">Registrazione Sensore</a>
-                      <a class="" style="display: none" href="">Associazione Sensore</a>
-                      <a class="" style="display: none" href="">Rimozione Sensore</a>
-                      <a class="" style="display: none" href="ListaSensori.jsp">Visualizzazione Sensori</a>
-                    </div>
-                  </li>
-
                 </ul>
               </div>
             </div>
