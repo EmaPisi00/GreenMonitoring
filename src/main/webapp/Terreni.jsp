@@ -118,7 +118,8 @@
                                     i++;
                                 } else {
                                     out.print("<tr>" +
-                                            "<td>Coltivazione avviata" +
+                                            "<td>" +
+                                            "<input id=\"chk\" name=\"terreno" + i + "\" type=\"checkbox\" value=\"" + tb.getId() + "\" disabled></input>" +
                                             "</td>" +
                                             "<td>" + tb.getId() + "</td>" +
                                             "<td>" + tb.getNome() + "</td>" +

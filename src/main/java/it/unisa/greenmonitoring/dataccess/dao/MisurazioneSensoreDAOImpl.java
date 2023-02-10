@@ -150,7 +150,6 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
         } finally {
             connection.close();
         }
-        System.out.println("[MisurazioneSensoreDAO] - MisurazioniColtivazione - " + misurazioneSensoreBeans);
         return misurazioneSensoreBeans;
     }
 
@@ -184,7 +183,6 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
         } finally {
             connection.close();
         }
-        System.out.println("[MisurazioneSensoreDAO] - MisurazioniOggi - " + misurazioneSensoreBeans);
         return misurazioneSensoreBeans;
     }
 
@@ -208,7 +206,6 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
             e.printStackTrace();
         }
         connection.close();
-        System.out.println("[MisurazioneSensoreDAO] - MisurazioneRecente - " + result);
         return result;
     }
 
@@ -239,7 +236,6 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
             e.printStackTrace();
         }
         connection.close();
-        System.out.println("[MisurazioneSensoreDAO] - MisurazioniRecenti - " + misurazioneSensoreBeanList);
         return misurazioneSensoreBeanList;
     }
 }

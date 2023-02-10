@@ -105,7 +105,6 @@ public class ServletColtivazioni extends HttpServlet {
                     }
                 }
                 try {
-                    System.out.println("[" + "\u001B[21m" + "ServletColtivazioni.java" + "\u001B[0m" + "]" + " sensoreDaRimuovere is " + sensoreDaRimuovere);
                     SensoreDaRimuovere.setColtivazione(0);
                     sm.cancellaSensore(SensoreDaRimuovere);
                 } catch (Exception e) {
