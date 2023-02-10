@@ -109,23 +109,25 @@
                 <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane4" aria-selected="false">Storico</button>
             </li>
         </ul>
-    <div id="rigo">
+    <div id="row">
         <div class="col-sm-6">
     <div id="generale">
         <div class="card" style="width: auto;">
             <div class="card-body">
+                <div style="width: auto;" class="row">
+                    <div class="col-sm-6">
                 <h5>Info coltivazione</h5>
                 <h7>Coltivazione di <%=nomePianta%></h7><br>
                 <img src="<%=urlImmagine%>" alt="Foto coltivazione"/><br>
                 <h7>Terreno: <%=descrizioneTerreno%></h7><br>
                 <h7>Data inizio: <%=temporaryColtivazioneBean.getData_inizio()%></h7><br>
+                    </div>
+                    <div class="col-sm-6">
                 <h5>Umidità media</h5>
-                <div style="width: auto;" class="row">
                     <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
                         <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div><%out.print(resultUmidita+" %");%>
                         <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
                     </div>
-                </div>
                 <h5>Temperatura media</h5>
                 <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
                     <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
@@ -137,22 +139,25 @@
                     <div style="width: <%=(resultPH/14)*100%>%; height: 20px; background-color: <%=colorPH%>;"></div>
                     <%=resultPH.intValue()%>
                     <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
-                </div> <br>
+                </div>
+                    </div>
+                </div>
+                <br>
                 <button class="btn btn-danger" id="archivia-coltivazione">Archivia Coltivazione</button>
             </div>
         </div>
     </div>
-        <!-- contenuto dei tab -->
         </div>
+        <!-- contenuto dei tab -->
         <div class="col-sm-6">
     <div class="tab-content" id="myTabContent">
             <!-- Umidità -->
             <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
+                        <div style="width: auto;" class="row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
-                    <div style="width: auto;" class="row">
-                                <% cm = new ColtivazioneManager();
+                        <% cm = new ColtivazioneManager();
                                         List<MisurazioneSensoreBean> misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "umidità");
                                         for (int i = 0; i < misurazioneSensoreBeans.size() ;i++) {
                                             colorUmidità = "green";
@@ -164,12 +169,13 @@
                         <h8>Sensore Umidità <%=misurazioneSensoreBeans.get(i).getSensore_id()%> : <%=misurazioneSensoreBeans.get(i).getValore()%>%</h8>
                         <%}%>
                     </div>
-                </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <h5>Media</h5>
                         <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
                             <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div><%=resultUmidita%>%
                             <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
+                        </div>
+                    </div>
                         </div>
                         <% out.print("<br>" +
                                 // ho aggiunto questo form, poi te lo gestisci tu, basta che chiama servletSuggerimenti e c'è l'id della coltivazione
@@ -188,8 +194,8 @@
             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
+                        <div style="width: auto;" class="row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <div style="width: auto;" class="row">
                                 <% cm = new ColtivazioneManager();
                                     misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "pH");
                                     for (int i = 0; i < misurazioneSensoreBeans.size() ;i++) {
@@ -202,7 +208,6 @@
                                 <h8>Sensore pH <%=misurazioneSensoreBeans.get(i).getSensore_id()%> : <%=misurazioneSensoreBeans.get(i).getValore()%></h8>
                                 <%}%>
                             </div>
-                        </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <h5>Media</h5>
                         <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
@@ -210,6 +215,7 @@
                             <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
                         </div>
                     </div>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -217,8 +223,8 @@
             <div class="tab-pane fade" id="contact-tab-pane2" role="tabpanel" aria-labelledby="contact-tab2" tabindex="0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <div style="width: auto;" class="row">
+                        <div style="width: auto;" class="row">
+                        <div class="col-sm-6 mb-3">
                                 <% cm = new ColtivazioneManager();
                                     misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "Temperatura");
                                     for (int i = 0; i < misurazioneSensoreBeans.size() ;i++) {
@@ -231,7 +237,6 @@
                                 <h8>Sensore temperatura <%=misurazioneSensoreBeans.get(i).getSensore_id()%> : <%=misurazioneSensoreBeans.get(i).getValore()%>&degC</h8>
                                 <%}%>
                             </div>
-                        </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <h5>Media</h5>
                         <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
@@ -239,12 +244,12 @@
                             <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
                         </div>
                     </div>
+                        </div>
                     </div>
                 </div>
                 </div>
             <!-- Fisiopatie -->
             <div class="tab-pane fade" id="contact-tab-pane3" role="tabpanel" aria-labelledby="contact-tab3" tabindex="0">
-                <div class="col-sm-6 mb-3 mb-sm-0">
                     <div class="card" style="width: auto;">
                         <div class="card-body">
                             <h5>Nessuna fisiopatia al momento</h5>
