@@ -63,15 +63,11 @@ public class AutenticazioneManager {
         AziendaBean ricercaAzienda = aziendaDao.retrieveForKey(aziendaBean.getEmail());
 
         if (ricercaAzienda.getEmail() != null) {
-
             System.out.println("Errore");
-            return null;
-        } else {
-
-            aziendaDao.create(aziendaBean);
-            System.out.println("Inserimento fatto con successo");
-            return aziendaBean;
         }
+        aziendaDao.create(aziendaBean);
+        System.out.println("Inserimento fatto con successo");
+        return aziendaBean;
     }
 
 
@@ -116,15 +112,12 @@ public class AutenticazioneManager {
             DipendenteBean bean = listaDipendenti.next();
             if ((bean.getNome().equals(dipendenteBean.getNome())) && (bean.getCognome().equals(dipendenteBean.getCognome())) && (bean.getAzienda().equals(dipendenteBean.getAzienda()))) {
                 System.out.println("\nDipendente già presente\n");
-
+                return null;
             }
-            return null;
-        } else {
-            dipendenteDao.create(dipendenteBean);
-            System.out.println("Inserimento fatto con successo");
-            return dipendenteBean;
         }
-
+        dipendenteDao.create(dipendenteBean);
+        System.out.println("Inserimento fatto con successo");
+        return dipendenteBean;
     }
 
     /**

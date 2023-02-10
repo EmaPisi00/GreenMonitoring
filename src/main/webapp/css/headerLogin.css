@@ -70,8 +70,14 @@ header{
     /* background-color: #8fbc8f; */
     font-size: 19px;
     font-family: 'Inter', sans-serif;
+    text-align: center;
+    height: 120px;
 }
 
+.nav-item a:hover{
+    font-family: 'Lora', sans-serif;
+    font-size: 40px;
+}
 
 .dropdown-content {
     display: none;
