@@ -4,6 +4,7 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -58,9 +59,9 @@
     Double resultUmidita = 0d;
     Double resultTemperatura = 0d;
     Double resultPH = 0d;
-    String colorPH = "blue";
-    String colorTemperatura = "blue";
-    String colorUmidità = "blue";
+    String colorPH = "green";
+    String colorTemperatura = "green";
+    String colorUmidità = "green";
     String descrizioneTerreno = new String("");
     PiantaBean temporaryPiantaBean = new PiantaBean();
     Integer idPianta = 0;
@@ -81,8 +82,11 @@
         urlImmagine = temporaryPiantaBean.getImmagine();
         temporaryTerrenoBean = tm.restituisciTerrenoDaInt(temporaryColtivazioneBean.getTerreno());
         descrizioneTerreno = temporaryTerrenoBean.getNome();
+        resultUmidita = cm.restituisciMisurazioniRecenti("umidità", coltivazioneID);
+        resultPH = cm.restituisciMisurazioniRecenti("pH", coltivazioneID);
+        resultTemperatura = cm.restituisciMisurazioniRecenti("Temperatura", coltivazioneID);
     } %>
-<%System.out.println("[Coltivazione.jsp] - superati i controlli");%>
+
 <div class="bd">
         <!-- elenco dei tab accessibili -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -104,42 +108,44 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane4" aria-selected="false">Storico</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane5" aria-selected="false" disabled>Archivia Coltivazione</button>
-            </li>
         </ul>
-    <%System.out.println("[Coltivazione.jsp] - superati elenco tab accessibili");%>
-        <!-- contenuto dei tab -->
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                <div class="card" style="width: auto;">
-                    <div class="card-body">
+    <div id="rigo">
+        <div class="col-sm-6">
+    <div id="generale">
+        <div class="card" style="width: auto;">
+            <div class="card-body">
                 <h5>Info coltivazione</h5>
-                    <h7>Coltivazione di <%=nomePianta%></h7><br>
-                    <img src="<%=urlImmagine%>" alt="Foto coltivazione"/><br>
-                        <h7>Terreno: <%=descrizioneTerreno%></h7><br>
-                        <h7>Data inizio: <%=temporaryColtivazioneBean.getData_inizio()%></h7><br>
-                            <h5>Umidità media</h5>
-                        <div style="width: auto;" class="row">
-                            <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                                <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div><%out.print(resultUmidita+" %");%>
-                                <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
-                            </div>
-                        </div>
-                            <h5>Temperatura media</h5>
-                            <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                                <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
-                                <%=resultTemperatura%>&degC
-                                <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
-                            </div>
-                            <h5>pH media</h5>
-                            <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                                <div style="width: <%=(resultPH/14)*100%>%; height: 20px; background-color: <%=colorPH%>;"></div>
-                                <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
-                            </div>
+                <h7>Coltivazione di <%=nomePianta%></h7><br>
+                <img src="<%=urlImmagine%>" alt="Foto coltivazione"/><br>
+                <h7>Terreno: <%=descrizioneTerreno%></h7><br>
+                <h7>Data inizio: <%=temporaryColtivazioneBean.getData_inizio()%></h7><br>
+                <h5>Umidità media</h5>
+                <div style="width: auto;" class="row">
+                    <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                        <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div><%out.print(resultUmidita+" %");%>
+                        <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <h5>Temperatura media</h5>
+                <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                    <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
+                    <%=resultTemperatura%>&degC
+                    <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
+                </div>
+                <h5>pH media</h5>
+                <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
+                    <div style="width: <%=(resultPH/14)*100%>%; height: 20px; background-color: <%=colorPH%>;"></div>
+                    <%=resultPH.intValue()%>
+                    <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
+                </div> <br>
+                <button class="btn btn-danger" id="archivia-coltivazione">Archivia Coltivazione</button>
             </div>
-            </div>
-            </div>
+        </div>
+    </div>
+        <!-- contenuto dei tab -->
+        </div>
+        <div class="col-sm-6">
+    <div class="tab-content" id="myTabContent">
             <!-- Umidità -->
             <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                 <div class="card" style="width: auto;">
@@ -149,17 +155,16 @@
                                 <% cm = new ColtivazioneManager();
                                         List<MisurazioneSensoreBean> misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "umidità");
                                         for (int i = 0; i < misurazioneSensoreBeans.size() ;i++) {
-                                            colorUmidità = "blue";
+                                            colorUmidità = "green";
                             /*
                             if (resultUmidita è lontano dal valore ottimale) {
                                 colorUmidità = "red";
                             }
                             */%>
-                        <h8>Sensore Umidità <%=i%> : <%=misurazioneSensoreBeans.get(i).getValore()%>%</h8>
+                        <h8>Sensore Umidità <%=misurazioneSensoreBeans.get(i).getSensore_id()%> : <%=misurazioneSensoreBeans.get(i).getValore()%>%</h8>
                         <%}%>
                     </div>
                 </div>
-                    </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <h5>Media</h5>
                         <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
@@ -176,6 +181,7 @@
                                 "</li></ul>");
                         %>
                     </div>
+                    </div>
                 </div>
             </div>
             <!-- pH -->
@@ -187,23 +193,23 @@
                                 <% cm = new ColtivazioneManager();
                                     misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "pH");
                                     for (int i = 0; i < misurazioneSensoreBeans.size() ;i++) {
-                                        colorPH = "blue";
+                                        colorPH = "green";
                             /*
                             if (resultPH è lontano dal valore ottimale) {
                                 colorPH = "red";
                             }
                             */%>
-                                <h8>Sensore pH <%=i%> : <%=misurazioneSensoreBeans.get(i).getValore()%>%</h8>
+                                <h8>Sensore pH <%=misurazioneSensoreBeans.get(i).getSensore_id()%> : <%=misurazioneSensoreBeans.get(i).getValore()%></h8>
                                 <%}%>
                             </div>
                         </div>
-                    </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <h5>Media</h5>
                         <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                            <div style="width: <%=resultPH%>%; height: 20px; background-color: <%=resultPH%>;"></div><%=resultPH%>%
+                            <div style="width: <%=(resultPH/14)*100%>%; height: 20px; background-color: <%=colorPH%>;"></div><%=resultPH.intValue()%>
                             <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 </div>
@@ -216,23 +222,23 @@
                                 <% cm = new ColtivazioneManager();
                                     misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "Temperatura");
                                     for (int i = 0; i < misurazioneSensoreBeans.size() ;i++) {
-                                        colorTemperatura = "blue";
+                                        colorTemperatura = "green";
                             /*
                             if (resultTemperatura è lontano dal valore ottimale) {
                                 colorTemperatura = "red";
                             }
                             */%>
-                                <h8>Sensore temperatura <%=i%> : <%=misurazioneSensoreBeans.get(i).getValore()%>%</h8>
+                                <h8>Sensore temperatura <%=misurazioneSensoreBeans.get(i).getSensore_id()%> : <%=misurazioneSensoreBeans.get(i).getValore()%>&degC</h8>
                                 <%}%>
                             </div>
                         </div>
-                    </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <h5>Media</h5>
                         <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                            <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=resultTemperatura%>;"></div><%=resultTemperatura%>%
+                            <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=resultTemperatura%>;"></div><%=resultTemperatura%>&degC
                             <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 </div>
@@ -301,7 +307,7 @@
                         if (sList != null) {
                             for (int i = 0; i < sList.size(); i++) {
                                 out.print("<form id=\"rimuoviSensore\" action=\"ServletColtivazioni\" method=\"post\">");
-                                out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getId());
+                                out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getIdM());
                                 out.print("<input type=\"hidden\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">");
                                 if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
                                     out.print("<a></a><button type=\"submit\" class=\"btn btn-link\">Rimuovi</button>");
@@ -318,6 +324,8 @@
                 </div>
             </div>
         </div>
+        </div>
+    </div>
 </div>
 <%@include file="fragments/footer.html"%>
 </body>

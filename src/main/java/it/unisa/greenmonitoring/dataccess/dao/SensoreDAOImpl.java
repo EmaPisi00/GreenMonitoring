@@ -2,10 +2,7 @@ package it.unisa.greenmonitoring.dataccess.dao;
 
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,7 +170,11 @@ public class SensoreDAOImpl implements SensoreDAO {
             preparedStatement.setString(1, s.getTipo());
             preparedStatement.setString(2, s.getAzienda());
             preparedStatement.setString(3, s.getIdM());
-            preparedStatement.setInt(4, s.getColtivazione());
+            if (s.getColtivazione() != null) {
+                preparedStatement.setInt(4, s.getColtivazione());
+            } else {
+                preparedStatement.setNull(4, Types.INTEGER);
+            }
             preparedStatement.setInt(5, id_sensore);
             preparedStatement.executeUpdate();
             connection.commit();

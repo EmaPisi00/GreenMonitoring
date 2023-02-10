@@ -110,14 +110,19 @@ public class TerrenoManager {
      * @param id_terreno
      * @pre t ha un id che esiste nel database.
      * @post la relazione tra t e la coltivazione nel database non esiste più.
+     * @return true se e solo se la rimozione avviene con successo.
      */
-    public void rimuoviTerreno(int id_terreno) {
+    public boolean rimuoviTerreno(int id_terreno) {
         try {
-            if (coltivazioneManager.retrieveColtivazioneSingola(id_terreno) != null) {
+            System.out.println("[TerrenoManager] - retrieveColtivazioneSingola -" + coltivazioneManager.retrieveColtivazioneSingola(id_terreno).getTerreno());
+            if (coltivazioneManager.retrieveColtivazioneSingola(id_terreno).getTerreno() == null) {
                 td.deleteTerreno(id_terreno);
+                return true;
+            } else {
+                return false;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
@@ -131,5 +136,4 @@ public class TerrenoManager {
             td.retrieveTerreno().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
         return list;
     }
-
 }
