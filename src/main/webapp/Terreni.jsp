@@ -63,15 +63,19 @@
     <legend style="text-align:center;">Terreni</legend>
 <form id="rimuovi_terreno" action="ServletTerreno" method="post">
     <div id="alrt" class="alert alert-warning fade show" role="alert">
-        <i class="bi bi-exclamation-triangle me-1"> Selezionare almeno un terreno.</i>
+        <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>
     </div>
+    <%if (session.getAttribute("terrenoOccupato") != null) {%>
+    <div id="alrtTerreno" class="alert alert-warning fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-1"><%=session.getAttribute("terrenoOccupato")%></i>
+    </div>
+    <%session.removeAttribute("terrenoOccupato");}%>
     <div class="card">
         <div class="card-body">
         <table class="table">
             <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col">#</th>
                 <th scope="col">nome</th>
                 <th scope="col" class="tohide">Immagine</th>
                 <th scope="col">Latitudine</th>
@@ -98,17 +102,11 @@
                         ColtivazioneManager cm = new ColtivazioneManager();
                         List<ColtivazioneBean> clist = cm.visualizzaStatoColtivazioni(a.getEmail());
                         List<Integer> ids = new ArrayList<>();
-                        if (list != null || clist != null) {
-                            for (ColtivazioneBean cb : clist) {
-                                ids.add(cb.getTerreno());
-                            }
                             for (TerrenoBean tb : list) {
-                                if (!ids.contains(tb.getId())) {
                                     out.print("<tr>" +
                                             "<td>" +
                                             "<input id=\"chk\" name=\"terreno" + i + "\" type=\"checkbox\" value=\"" + tb.getId() + "\"></input>" +
                                             "</td>" +
-                                            "<td>" + tb.getId() + "</td>" +
                                             "<td>" + tb.getNome() + "</td>" +
                                             "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
                                             "<td>" + tb.getLatitudine() + "</td>" +
@@ -116,22 +114,8 @@
                                             "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
                                     );
                                     i++;
-                                } else {
-                                    out.print("<tr>" +
-                                            "<td>" +
-                                            "<input id=\"chk\" name=\"terreno" + i + "\" type=\"checkbox\" value=\"" + tb.getId() + "\" disabled></input>" +
-                                            "</td>" +
-                                            "<td>" + tb.getId() + "</td>" +
-                                            "<td>" + tb.getNome() + "</td>" +
-                                            "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
-                                            "<td>" + tb.getLatitudine() + "</td>" +
-                                            "<td>" + tb.getLongitudine() + "</td>" +
-                                            "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
-                                    );
                                 }
-                            }
                         }
-                    }
                 %>
             </tbody>
         </table>
@@ -162,7 +146,6 @@
         </div>
     </div>
 </div>
-
 <%@include file="fragments/footer.html"%>
 </body>
 </html>

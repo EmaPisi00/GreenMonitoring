@@ -105,7 +105,7 @@ public class ServletColtivazioni extends HttpServlet {
                     }
                 }
                 try {
-                    SensoreDaRimuovere.setColtivazione(0);
+                    SensoreDaRimuovere.setColtivazione(null);
                     sm.cancellaSensore(SensoreDaRimuovere);
                 } catch (Exception e) {
                     throw new RuntimeException(e);

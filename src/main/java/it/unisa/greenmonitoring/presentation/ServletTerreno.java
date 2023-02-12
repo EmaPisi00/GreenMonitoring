@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
 import java.util.Enumeration;
 
 @WebServlet(name = "ServletTerreno", value = "/ServletTerreno")
@@ -65,7 +66,6 @@ public class ServletTerreno extends HttpServlet {
                 Files.copy(fileContent, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
                 fileContent.close();
             }
-
             Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
             Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
             String superfice = request.getParameter("superfice");
@@ -80,18 +80,25 @@ public class ServletTerreno extends HttpServlet {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Terreni.jsp");
                 dispatcher.forward(request, response);
             }
-        }
-        if (request.getParameter("pianta0") != null) {
+        } else if (request.getParameter("inserisciTerreno_submit") == null) {
             Enumeration<String> parameters = request.getParameterNames();
+            TerrenoBean temporaryTerrenoBean = new TerrenoBean();
+            boolean result = false;
             while (parameters.hasMoreElements()) {
                 int id = Integer.parseInt(request.getParameter(parameters.nextElement()));
-                tm.rimuoviTerreno(id);
+                result = tm.rimuoviTerreno(id);
+                if (!result) {
+                    try {
+                        temporaryTerrenoBean = tm.restituisciTerrenoDaInt(id);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    request.getSession().setAttribute("terrenoOccupato", " Il terreno " + temporaryTerrenoBean.getNome() + " è impegnato con una coltivazione.");
+                    break;
+                }
             }
             response.sendRedirect("Terreni.jsp");
         }
-
-        response.sendRedirect("index.jsp");
-
+       //response.sendRedirect("index.jsp");
     }
-
 }
