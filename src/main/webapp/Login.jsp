@@ -48,7 +48,7 @@
 <body>
 
 
-<div class="container py-2 h100">
+<div class="container h100">
     <div class="row justify-content-center align-items-center h-100" style="width: 100%;">
         <div class="card text-black text-center"
              style="border-radius: 1rem; border: 6px solid green; font-size:  28px; background-color: rgb(208, 213, 218);">
