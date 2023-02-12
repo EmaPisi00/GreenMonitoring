@@ -56,7 +56,7 @@
     <div class="row">
         <div class="col-12 text-center">
 
-            <h1>Dipendenti</h1>
+            <h1 style="font-family: 'Lobster', cursive; font-size: 35px;">Dipendenti</h1>
         </div>
         <div class="col-14 py-5 " style="font-size: 20px;">
             <table class="table table-group-divider">
@@ -70,7 +70,7 @@
                 </thead>
                 <% String salvaEmail="";
                     for (DipendenteBean dipendente : dipendenti) { %>
-                <tr>
+                <tr class="justify-content-center">
                     <td><%= dipendente.getEmail() %>
                     </td>
                     <td><%= dipendente.getNome() %>
@@ -79,7 +79,7 @@
                     </td>
                     <td><%salvaEmail = dipendente.getEmail();%>
                         <img src="img/delete.png" width="35px" style="cursor: pointer" data-bs-toggle="modal"
-                             data-bs-target="#exampleModal"></a></td>
+                             data-bs-target="#exampleModal"></td>
                 </tr>
                 <% } %>
             </table>

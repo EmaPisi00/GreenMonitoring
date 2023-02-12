@@ -7,7 +7,8 @@
 <%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %><%--
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
+<%@ page import="java.util.Iterator" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -26,8 +27,10 @@
     <link rel="stylesheet" href="css/headerLogin.css">
 
     <style>
-        @media screen and (max-width:768px) {
-            .tohide { display: none; }
+        @media screen and (max-width: 768px) {
+            .tohide {
+                display: none;
+            }
         }
     </style>
     <title>Terreni</title>
@@ -55,97 +58,118 @@
 
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+    TerrenoBean terrenoBean = new TerrenoBean();
+    int idTerreno=0;
     if (u instanceof AziendaBean) { %>
-<%@include file="fragments/headerLoggedAzienda.html"%>
+<%@include file="fragments/headerLoggedAzienda.html" %>
 
 <%}%>
-<div class="bd">
-    <legend style="text-align:center;">Terreni</legend>
-<form id="rimuovi_terreno" action="ServletTerreno" method="post">
-    <div id="alrt" class="alert alert-warning fade show" role="alert">
-        <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>
-    </div>
-    <%if (session.getAttribute("terrenoOccupato") != null) {%>
-    <div id="alrtTerreno" class="alert alert-warning fade show" role="alert">
-        <i class="bi bi-exclamation-triangle me-1"><%=session.getAttribute("terrenoOccupato")%></i>
-    </div>
-    <%session.removeAttribute("terrenoOccupato");}%>
-    <div class="card">
-        <div class="card-body">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">nome</th>
-                <th scope="col" class="tohide">Immagine</th>
-                <th scope="col">Latitudine</th>
-                <th scope="col">Longitudine</th>
-                <th scope="col">Superfice</th>
-            </tr>
-            </thead>
-            <tbody>
-                <%
-                    /* -- INIZIO AUTENTICAZIONE -- */
-                    Object seo = session.getAttribute("currentUserSession");
-                    if (seo == null) {
-                        response.sendError(401);
-                    } else if ( ! (session.getAttribute("currentUserSession") instanceof AziendaBean)) {
-                        response.sendError(401);
-                    }
-                    /* -- PASSATI I TEST, APRE IL RESTO DELLA PAGINA--*/
-                    else {
-                        AziendaBean a = (AziendaBean) seo;
 
-                        TerrenoManager t = new TerrenoManager();
-                        List<TerrenoBean> list = t.visualizzaListaTerreni(a.getEmail());
-                        int i = 0;
-                        ColtivazioneManager cm = new ColtivazioneManager();
-                        List<ColtivazioneBean> clist = cm.visualizzaStatoColtivazioni(a.getEmail());
-                        List<Integer> ids = new ArrayList<>();
-                            for (TerrenoBean tb : list) {
-                                    out.print("<tr>" +
-                                            "<td>" +
-                                            "<input id=\"chk\" name=\"terreno" + i + "\" type=\"checkbox\" value=\"" + tb.getId() + "\"></input>" +
-                                            "</td>" +
-                                            "<td>" + tb.getNome() + "</td>" +
-                                            "<td class=\"tohide\">" + tb.getImmagine() + "</td>" +
-                                            "<td>" + tb.getLatitudine() + "</td>" +
-                                            "<td>" + tb.getLongitudine() + "</td>" +
-                                            "<td>" + tb.getSuperficie() + "</td>" + "</tr>"
-                                    );
-                                    i++;
-                                }
-                        }
-                %>
-            </tbody>
-        </table>
+
+<div class="bd">
+    <h1 style="font-family: 'Lobster', cursive; font-size: 35px; text-align: center">Dipendenti</h1>
+    <div id="alrt" class="alert alert-warning fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>
         </div>
-    </div>
-    <!-- Button trigger modal -->
-    <button onclick="location.href='InserisciTerreno.jsp'" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter">
-        Aggiungi terreno
-    </button>
-    <!-- Button trigger modal -->
-    <button id="showModal" type="button" class="btn btn-primary" data-toggle="Modal" data-target="#exampleModalCenter">
-        Rimuovi terreni
-    </button>
-</form>
+        <%if (session.getAttribute("terrenoOccupato") != null) {%>
+        <div id="alrtTerreno" class="alert alert-warning fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-1"><%=session.getAttribute("terrenoOccupato")%>
+            </i>
+        </div>
+        <%
+                session.removeAttribute("terrenoOccupato");
+            }
+        %>
+
+        <div class="container">
+            <div class="row">
+                    <div class="card-body">
+                        <table class="table table-group-divider">
+                            <thead>
+                            <tr style="font-family: 'Staatliches', cursive; font-size: 25px;">
+                                <th scope="col">nome</th>
+                                <th scope="col" class="tohide">Immagine</th>
+                                <th scope="col">Latitudine</th>
+                                <th scope="col">Longitudine</th>
+                                <th scope="col">Superficie</th>
+                                <th scope="col">Rimuovi</th>
+                            </tr>
+                            </thead>
+
+                            <%
+                                /* -- INIZIO AUTENTICAZIONE -- */
+                                Object seo = session.getAttribute("currentUserSession");
+                                if (seo == null) {
+                                    response.sendError(401);
+                                } else if (!(session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                                    response.sendError(401);
+                                }
+                                /* -- PASSATI I TEST, APRE IL RESTO DELLA PAGINA--*/
+                                else {
+                                    AziendaBean a = (AziendaBean) seo;
+
+                                    TerrenoManager t = new TerrenoManager();
+                                    List<TerrenoBean> list = t.visualizzaListaTerreni(a.getEmail());
+                                    int i = 0;
+                                    ColtivazioneManager cm = new ColtivazioneManager();
+                                    List<ColtivazioneBean> clist = cm.visualizzaStatoColtivazioni(a.getEmail());
+                                    List<Integer> ids = new ArrayList<>();
+
+                                    if(list.size()!=0){
+                                        Iterator it = list.iterator();
+                                        while (it.hasNext()){
+                                            terrenoBean = (TerrenoBean) it.next(); %>
+
+                                                 <tr class="justify-content-center">
+                                                     <td><%= terrenoBean.getNome()%></td>
+                                                     <td><%= terrenoBean.getImmagine()%></td>
+                                                     <td><%= terrenoBean.getLatitudine()%></td>
+                                                     <td><%= terrenoBean.getLongitudine()%></td>
+                                                     <td><%= terrenoBean.getSuperficie()%></td>
+                                                     <td><p style="display: none"><%= idTerreno= terrenoBean.getId()%></p> <img src="img/delete.png" width="35px" style="cursor: pointer" data-bs-toggle="modal"
+                                                                                                   data-bs-target="#exampleModal"></td>
+                                                 </tr>
+
+                                  <%  }
+                                }
+                                  }
+                                  %>
+
+                        </table>
+                    </div>
+                </div>
+        </div>
+        <!-- Button trigger modal -->
+       <div class="container py-2">
+           <div class="row justify-content-center">
+               <div class="col-3">
+        <button onclick="location.href='InserisciTerreno.jsp'" type="button"
+                class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
+                data-target="#exampleModalCenter">
+            Aggiungi terreno
+        </button>
+               </div>
+           </div>
+       </div>
+
 </div><!-- End bd -->
 
+
 <!-- Modal -->
-<div id=Modal class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 Sei sicuro di voler effettuare la rimozione?
             </div>
             <div class="modal-footer">
-                <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button id="summit" type="button" class="btn btn-primary">Sì</button>
+                <button id="closeModal" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button id="summit"  class="btn btn btn-outline-danger"><a style="text-decoration: none; " href="ServletRemoveTerreno?action=delete&id=<%= idTerreno%>">Conferma</a></button>
             </div>
         </div>
     </div>
 </div>
-<%@include file="fragments/footer.html"%>
+<%@include file="fragments/footer.html" %>
 </body>
 </html>

@@ -22,7 +22,7 @@ public class ServletRemoveDipendente extends HttpServlet {
         UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
 
 
-        if(user instanceof AziendaBean) {
+        if (user instanceof AziendaBean) {
             if (action != null && action.equalsIgnoreCase("delete")) {
 
                 String email = request.getParameter("email");
