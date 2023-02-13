@@ -39,6 +39,7 @@ public class TerrenoManagerTest {
         terrenoBean.setLatitudine(54F);
         terrenoBean.setAzienda("mariorui");
         terrenoBean.setSuperficie("40");
+        terrenoBean.setNome("giggino");
         terrenoBean.setImmagine("imm.jpg");
 
     }
