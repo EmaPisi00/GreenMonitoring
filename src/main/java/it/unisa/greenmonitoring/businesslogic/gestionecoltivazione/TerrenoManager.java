@@ -85,7 +85,7 @@ public class TerrenoManager {
      * @return TerrenoBean
      * @throws SQLException
      */
-    public TerrenoBean restituisciTerreno(String id_terreno) throws SQLException {
+    public TerrenoBean restituisciTerreno(Integer id_terreno) throws SQLException {
         List<TerrenoBean> terrenoBeanList = td.retrieveTerreno();
         TerrenoBean result = new TerrenoBean();
         for (int i = 0; i < terrenoBeanList.size(); i++) {

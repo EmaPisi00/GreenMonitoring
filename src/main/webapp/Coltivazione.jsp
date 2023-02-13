@@ -402,7 +402,7 @@
     <script type="text/javascript">
         $("#rilevamentiPerPeriodo").onclick = function() {
             var inputInizio = document.getElementById("periodo-inizio").value;
-            var inputFine = document.getElementById("periodo-inizio").value;
+            var inputFine = document.getElementById("periodo-fine").value;
             if (inputInizio != null && inputFine != null) {
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "ServletColtivazioni", true);
