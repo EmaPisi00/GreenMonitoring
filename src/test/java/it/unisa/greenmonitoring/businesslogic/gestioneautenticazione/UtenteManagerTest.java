@@ -46,6 +46,10 @@ public class UtenteManagerTest {
     public void tearDown() throws Exception {
     }
 
+    /**
+     * TC_1.1_1 Il dipendente inserisce un codice azienda che non rispetta il formato.
+     * @throws SQLException
+     */
     @Test
     public void associazioneDipendente1() throws SQLException {
         codiceAzienda="";
@@ -53,6 +57,10 @@ public class UtenteManagerTest {
         Assert.assertFalse(result);
     }
 
+    /**
+     * TC_1.1_2 Il dipendente inserisce un codice azienda non presente sul db.
+     * @throws SQLException
+     */
     @Test
     public void associazioneDipendente2() throws SQLException {
         codiceAzienda = "ASDdd234";
@@ -61,6 +69,10 @@ public class UtenteManagerTest {
         Assert.assertFalse(result);
     }
 
+    /**
+     *
+     * @throws SQLException
+     */
     @Test
     public void associazioneDipendente3() throws SQLException {
         codiceAzienda = "ASDdd234";
@@ -69,6 +81,10 @@ public class UtenteManagerTest {
         Assert.assertFalse(result);
     }
 
+    /**
+     * Il codice rispetta il formato e ha successo in quanto è presente nel db.
+     * @throws SQLException
+     */
     @Test
     public void associazioneDipendente4() throws SQLException {
         codiceAzienda = "12345678";
