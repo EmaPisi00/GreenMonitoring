@@ -45,7 +45,7 @@
 <%} %>
 
 <div class="container">
-    <form method="post" action="AssociationServlet" id="associa_dipendente">
+    <form method="post" action="ServletAssociazione" id="associa_dipendente">
         <label for="codiceAzienda">Codice:</label>
         <input type="text" id="codiceAzienda" name="codiceAzienda">
 

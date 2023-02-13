@@ -14,11 +14,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet(name = "ServletAssociazione", value = "/ServletAssociazione")
-public class AssociationServlet extends HttpServlet {
+public class ServletAssociazione extends HttpServlet {
 
     /** Non lo so, l'ha messa intellij sta roba sotto.
     */
-    public AssociationServlet() throws SQLException {
+    public ServletAssociazione() throws SQLException {
     }
 
 
