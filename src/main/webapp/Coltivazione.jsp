@@ -291,7 +291,7 @@
                     <div class="card-body">
                         <%
                             FisiopatieDAO fisiopatieDAO = new FisiopatieDAOImpl();
-                            ArrayList<FisiopatieBean> listaFisiopatie = fisiopatieDAO.retrieveAll();
+                            ArrayList<FisiopatieBean> listaFisiopatie = fisiopatieDAO.retrieveAllByPianta(idPianta);
                             if (listaFisiopatie.size() == 0) {
                                 out.print("Nessuna fisiopatia presente per questa pianta.");
                             } else {
