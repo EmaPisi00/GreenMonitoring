@@ -1,13 +1,10 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Random" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
 <%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.PiantaBean" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %><%--
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %><%--
   Created by IntelliJ IDEA.
   User: Manuel
   Date: 23/01/2023
@@ -15,6 +12,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+    if (u instanceof AziendaBean) { %>
+<%@include file="fragments/headerLoggedAzienda.html"%>
+<%
+    }
+%>
 <html>
 <head>
     <!-- Import Bootstrap -->
@@ -45,10 +50,8 @@
         }
     </style>
 </head>
-
-
 <body>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+
 
 
 <div class="bd">
