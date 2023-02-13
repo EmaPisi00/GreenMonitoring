@@ -7,6 +7,26 @@ import java.util.List;
  * Connessione DB.
  */
 public final class ConnectionPool {
+    /**
+     * Dichiaro List<Connection>.
+     */
+    private static List<Connection> freecon;
+
+    /**
+     * Dichiaro user.
+     */
+    private static String user = Const.name;
+
+    /**
+     * Dichiaro pwd.
+     */
+    private static String pwd = Const.pwd;
+
+    /**
+     * Dichiaro db.
+     */
+    private static String db = Const.nomeDB;
+
 
     /**
      * Costruttore.
@@ -14,10 +34,6 @@ public final class ConnectionPool {
     private ConnectionPool() {
 
     }
-    /**
-     * Dichiaro List<Connection>.
-     */
-    private static List<Connection> freecon;
 
     static {
         freecon = new LinkedList<Connection>();
@@ -37,9 +53,7 @@ public final class ConnectionPool {
 
 
                 // non serve  Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://localhost:3306/greenmonitoringdb";
-                String user = "root";
-                String pwd = "311000";
+                String url = "jdbc:mysql://localhost:3306/" + db;
                 Connection con = DriverManager.getConnection(url, user, pwd);
 
                 con.setAutoCommit(false);
