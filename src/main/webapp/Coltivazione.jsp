@@ -5,6 +5,9 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.FisiopatieDAOImpl" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.FisiopatieDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -286,7 +289,49 @@
                  tabindex="0">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
-                        <h5>Nessuna fisiopatia al momento</h5>
+                        <%
+                            FisiopatieDAO fisiopatieDAO = new FisiopatieDAOImpl();
+                            ArrayList<FisiopatieBean> listaFisiopatie = fisiopatieDAO.retrieveAll();
+                            if (listaFisiopatie.size() == 0) {
+                                out.print("Nessuna fisiopatia presente per questa pianta.");
+                            } else {
+                        %>
+
+                        <div>
+                            <div style="display:flex;">
+                                <div style="width:5%;">ID</div>
+                                <div style="width:10%;">Pianta</div>
+                                <div style="width:10%;">Nome</div>
+                                <div style="width:15%;">Umidità Terra Min</div>
+                                <div style="width:15%;">Umidità Terra Max</div>
+                                <div style="width:15%;">Temperatura Min</div>
+                                <div style="width:15%;">Temperatura Max</div>
+                                <div style="width:15%;">Umidità Aria Min</div>
+                                <div style="width:15%;">Umidità Aria Max</div>
+                            </div>
+                            <%
+                                for (FisiopatieBean fisiopatia : listaFisiopatie) {
+
+                            %>
+                            <div style="display:flex;">
+                                <div style="width:5%;"><%= fisiopatia.getId() %></div>
+                                <div style="width:10%;"><%= nomePianta %></div>
+                                <div style="width:10%;"><%= fisiopatia.getNome() %></div>
+                                <div style="width:15%;"><%= fisiopatia.getUmid_terr_min() %></div>
+                                <div style="width:15%;"><%= fisiopatia.getUmid_terr_max() %></div>
+                                <div style="width:15%;"><%= fisiopatia.getTemp_min() %></div>
+                                <div style="width:15%;"><%= fisiopatia.getTemp_max() %></div>
+                                <div style="width:15%;"><%= fisiopatia.getUmid_aria_min() %></div>
+                                <div style="width:15%;"><%= fisiopatia.getUmid_aria_max()%></div>
+                            </div>
+                            <div div style="border: 1px solid black; padding: 10px;">
+                                <strong>Descrizione:</strong><br>
+                                <%= fisiopatia.getDescrizione() %>
+                            </div>
+                            <% }
+                            }
+                            %>
+                        </div>
                     </div>
                 </div>
             </div>
