@@ -68,7 +68,7 @@
                     <th scope="col">Rimozione</th>
                 </tr>
                 </thead>
-                <% String salvaEmail="";
+                <% String salvaEmail = "";
                     for (DipendenteBean dipendente : dipendenti) { %>
                 <tr class="justify-content-center">
                     <td><%= dipendente.getEmail() %>
@@ -98,7 +98,9 @@
             </div>
             <div class="modal-footer">
                 <button id="closeModal" class="btn btn-secondary" data-dismiss="modal">Esci</button>
-                <button id="summit" class="btn btn-outline-danger"><a style="text-decoration: none; " href="ServletRemoveDipendente?action=delete&email=<%= salvaEmail%>">Conferma</a></button>
+                <button id="summit" class="btn btn-outline-danger"><a style="text-decoration: none; "
+                                                                      href="ServletRemoveDipendente?action=delete&email=<%= salvaEmail%>">Conferma</a>
+                </button>
             </div>
         </div>
     </div>

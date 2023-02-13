@@ -23,46 +23,34 @@
 
 <!-- Header -->
 <header>
-
     <!-- Logo e titolo -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-1 col-md-1 col-xs-12">
-                <!-- Logo -->
-                <div style="position: absolute;" class="logo">
-                    <a href="index.jsp"><img src="img/logo.png" class="img-fluid rounded-top" alt=""></a>
-                </div>
-            </div>
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <!-- Titolo -->
                 <div class="title">
                     <h1 class="display-4">Green Monitoring</h1>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Dropdow profilo o login -->
-
-    <div class="container">
-        <div class="row">
+            <div class="col-1 col-md-1 col-xs-12">
+                <!-- Logo -->
+                <div  class="logo">
+                    <a href="index.jsp"><img src="img/logo.png" style="margin-top:-30px;" class="img-fluid rounded-top" alt=""></a>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="btn1">
-                    <div class="dropdown">
-                        <button class="reg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                            Profilo
-                        </button>
-                        <ul style="text-align: center; font-size: 20px; font-family: 'Anton' sans-serif;"
-                            class="dropdown-menu">
-                            <li><a class="dropdown-item" href="ModificaProfilo.jsp">Modifica Profilo</a></li>
-                            <li><a class="dropdown-item" href="ServletLogout">Logout</a></li>
-                        </ul>
-                    </div>
+                    <form action="ModificaProfilo.jsp"><input class="log" type="submit" value="Profilo"></form>
+
                 </div>
-
+                <div class="btn1">
+                    <form action="ServletLogout"><input class="log" type="submit" value="Logout"></form>
+                </div>
             </div>
+        </div>
+    </div>
+
             <div class="col-lg-6">
-
-
                 <!-- Navbar -->
                 <nav class="navbar navbar-light fixed-top">
                     <div class="container-fluid">
