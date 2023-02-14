@@ -39,18 +39,6 @@ public class SensoreManager {
     }
 
     /**
-     * Questo metodo aggiorna una riga in Sensore in corrispondenza ad id.
-     * @param sensore
-     * @throws SQLException
-     */
-    public void cancellaSensore(SensoreBean sensore) throws SQLException {
-        try {
-            sns.update(sensore.getId(), sensore);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    /**
      * Metodo usato per associare un sensore.
      * @param sensore
      * @param id_coltivazione

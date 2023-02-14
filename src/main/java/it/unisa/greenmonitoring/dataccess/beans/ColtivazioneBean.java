@@ -194,7 +194,7 @@ public class ColtivazioneBean {
 
     @Override
     public String toString() {
-        return "ColtivazioneBean{" + "id=" + id + ", pianta=" + pianta + ", terreno=" + terreno + ", stato_archiviazione=" + stato_archiviazione + ", data_inizio=" + data_inizio + ", data_fine=" + data_fine + ", listaSensori=" + '}';
+        return "ColtivazioneBean{" + "id=" + id + ", pianta=" + pianta + ", terreno=" + terreno + ", stato_archiviazione=" + stato_archiviazione + ", data_inizio=" + data_inizio + ", data_fine=" + data_fine + '}';
     }
 
     @Override
