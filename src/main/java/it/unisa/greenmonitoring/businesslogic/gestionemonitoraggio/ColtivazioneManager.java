@@ -48,6 +48,7 @@ public class ColtivazioneManager {
         pd = new PiantaDAOImpl();
         td = new TerrenoDAOImpl();
         sensoreDAO = new SensoreDAOImpl();
+        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
     }
 
     /**
@@ -67,7 +68,6 @@ public class ColtivazioneManager {
             piante.addAll(piantaBeanListDefault);
             piante.addAll(piantaBeanListAzienda);
             if (!piante.contains(c.getPianta())) {
-                System.out.println("ColtivazioneManager - c.getPianta is " + c.getPianta());
                 throw new Exception("Pianta inesistente");
             }
 
@@ -151,7 +151,6 @@ public class ColtivazioneManager {
      * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      */
     public Double restituisciMisurazioniRecenti(String tipo, Integer id_coltivazione) {
-        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
         try {
             return misurazioneSensoreDAO.retrieveMostRecentMesurement(tipo, id_coltivazione);
         } catch (SQLException e) {
@@ -168,7 +167,6 @@ public class ColtivazioneManager {
      * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      */
     public List<MisurazioneSensoreBean> restituisciMisurazioniPerPeriodo(java.sql.Date data_inizio_periodo, java.sql.Date data_fine_periodo, Integer coltivazione, String tipo) {
-        misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
         try {
             return misurazioneSensoreDAO.retrieveMeasurementPerTimeInterval(data_inizio_periodo, data_fine_periodo, coltivazione, tipo);
         } catch (SQLException e) {

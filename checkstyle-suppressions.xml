@@ -11,6 +11,7 @@
         <suppress files=".java" checks="DesignForExtension"/>
         <suppress checks="MagicNumber" files=".+.(?:jar|zip|java|war|class|tar|bin)$"/>
         <suppress checks="ParameterNumber" files="FisiopatieBean.java" />
+        <suppress checks="." files="Const.java"/>
         <!--  <suppress files="/Servlet.java" checks="*" /> !-->
         </suppressions>
 

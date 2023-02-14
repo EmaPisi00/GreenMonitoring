@@ -1,10 +1,9 @@
-<%@ page import="it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.dao.OpenMeteoApiAdapterImpl" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.dao.MeteoApiAdapter" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.*" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,12 +21,17 @@
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession"); %>
 <%@include file="fragments/headerLoggedAzienda.html" %>
 <%MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl();
+    MisurazioneSensoreDAO misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
+    PiantaManager piantaManager = new PiantaManager();
     ColtivazioneManager cm = new ColtivazioneManager();
     TerrenoManager tm = new TerrenoManager();
     Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
     ColtivazioneBean coltivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);
     TerrenoBean terrenoBean = tm.restituisciTerrenoDaInt(coltivazioneBean.getTerreno());
-
+    Double misurazione = misurazioneSensoreDAO.retrieveMostRecentMesurement("umidità", coltivazioneID);
+    PiantaBean piantaBean = piantaManager.ritornaPiantaManager(coltivazioneBean.getPianta());
+    Double umidMax = Double.valueOf(piantaBean.getUmidita_max());
+    Double umidMin = Double.valueOf(piantaBean.getUmidita_min());
 %>
 
 <table>
@@ -46,12 +50,19 @@
     <tr>
         <%
             long weather_code = meteo.getWeather_code();
-            if (weather_code < 56) {
-                out.println("Domani non pioverà, ti consigliamo di irrigare il terreno domani.");
-            } else if (weather_code == 56 || weather_code == 57) {
-                out.println("Domani ci sarà poca pioggia, ti suggeriamo di non irrigare.");
+            if (weather_code < 56 && (misurazione > umidMax || (umidMax - misurazione)<= 5)) {
+                out.println("Domani non pioverà però è consigliato disattivare l'irrigazione in quanto " +
+                        "l'umidità della pianta è quasi ai suoi limiti.");
+            }else if (weather_code < 56 && (umidMax - misurazione) >= (umidMax - umidMin)/2) {
+                out.println("Domani non pioverà ed è consigliato di attivare l'irrigazione in quanto " +
+                        "il terreno risulta alquanto secca e ha bisogno di idratazione.");
+            } else if (weather_code == 56 || weather_code == 57 && (umidMax - misurazione) >= (umidMax - umidMin)/2) {
+                out.println("Domani ci sarà una leggera pioggia, è consigliato non irrigare.");
+            } else if (weather_code == 56 || weather_code == 57 && (umidMax - misurazione) <= (umidMax - umidMin)/2) {
+                out.println("Domani ci sarà una leggera pioggia, però è consigliato irrigare in quanto " +
+                        "il terrento è asciutto.");
             } else if (weather_code == 61 || weather_code == 63 || weather_code == 65) {
-                out.println("Domani fa o temporal, statt a cas.");
+                out.println("Domani ci sarà una forte pioggia, è consigliato disattivare l'irrigazione.");
             }
         %>
     </tr>

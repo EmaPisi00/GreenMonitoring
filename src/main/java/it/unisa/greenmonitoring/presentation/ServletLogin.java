@@ -54,7 +54,7 @@ public class ServletLogin extends HttpServlet {
                 for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((AziendaBean) user).getPartita_iva(), ((AziendaBean) user).getNome_azienda())) {
                     System.out.println(s);
                 }
-                response.sendRedirect("HomePage.jsp");
+                response.sendRedirect("ListaColtivazioni.jsp");
             } else if (user instanceof DipendenteBean)  {
                 sessione.setAttribute("currentUserSession", user);
                 if (((DipendenteBean) user).getAzienda() != null) {
@@ -62,7 +62,7 @@ public class ServletLogin extends HttpServlet {
                     for (String s : Arrays.asList(user.getEmail(), user.getPassword(), user.getTelefono(), user.getCitta(), user.getProvincia(), user.getIndirizzo(), ((DipendenteBean) user).getNome(), ((DipendenteBean) user).getCognome(), ((DipendenteBean) user).getAzienda())) {
                         System.out.println(s);
                     }
-                    response.sendRedirect("HomePage.jsp");
+                    response.sendRedirect("ListaColtivazioni.jsp");
                 } else {
                     response.sendRedirect("Associazione.jsp");
                 }

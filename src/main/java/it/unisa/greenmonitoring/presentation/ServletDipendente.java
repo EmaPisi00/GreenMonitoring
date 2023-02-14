@@ -2,10 +2,8 @@ package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.AutenticazioneManager;
 
-import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.UtenteManager;
-import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
+
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
-import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -81,27 +79,9 @@ public class ServletDipendente extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UtenteManager utenteManager = new UtenteManager();
-        String[] idDipendente = request.getParameterValues("idDipendente");
-        HttpSession session = request.getSession();
-        UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
 
-        if (user instanceof AziendaBean) {
-            if (idDipendente != null) {
-                for (String id : idDipendente) {
-                    try {
-                        utenteManager.rimuoviAssociazioneDipendente(id);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                response.sendRedirect("RimuoviDipendente.jsp");
-            } else {
-                response.sendRedirect("RimuoviDipendente.jsp");
-            }
-        } else {
-            response.sendRedirect("error.jsp");
-        }
+
+
     }
 }
 

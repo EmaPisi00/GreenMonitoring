@@ -1,4 +1,4 @@
-/*package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
+package it.unisa.greenmonitoring.businesslogic.gestionecoltivazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.TerrenoBean;
 import it.unisa.greenmonitoring.dataccess.dao.TerrenoDAO;
@@ -7,6 +7,7 @@ import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +40,7 @@ public class TerrenoManagerTest {
         terrenoBean.setLatitudine(54F);
         terrenoBean.setAzienda("mariorui");
         terrenoBean.setSuperficie("40");
+        terrenoBean.setNome("giggino");
         terrenoBean.setImmagine("imm.jpg");
 
     }
@@ -48,13 +50,38 @@ public class TerrenoManagerTest {
     }
 
     @Test
-    public void createTerreno() throws SQLException{
+    public void createTerrenoSuccess() throws SQLException{
         Mockito.when(terrenoDAO.retrieveTerreno()).thenReturn(new ArrayList<TerrenoBean>());
         TerrenoBean td = terrenoManager.createTerreno(terrenoBean);
         Mockito.verify(terrenoDAO).createTerreno(terrenoBean);
         assertEquals(td,terrenoBean);
     }
+    @Test
+    public void createTerrenoSuperficieError() throws SQLException{
+        terrenoBean.setSuperficie("pippo");
+        TerrenoBean result = terrenoManager.createTerreno(terrenoBean);
+        assertNull(result);
+    }
 
+    @Test
+    public void createTerrenoLongitudineError() throws SQLException{
+        terrenoBean.setLongitudine(190F);
+        TerrenoBean result = terrenoManager.createTerreno(terrenoBean);
+        assertNull(result);
+    }
+
+    @Test
+    public void createTerrenoLatitudineError() throws SQLException{
+        terrenoBean.setLatitudine(100F);
+        TerrenoBean result = terrenoManager.createTerreno(terrenoBean);
+        assertNull(result);
+    }
+
+    @Test
+    public void createTerrenoNomeError() throws SQLException{
+        terrenoBean.setNome("a");
+        TerrenoBean result = terrenoManager.createTerreno(terrenoBean);
+        assertNull(result);
+    }
 }
-(
- */
+

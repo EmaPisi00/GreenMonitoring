@@ -189,15 +189,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
 
     @Override
     public synchronized Double retrieveMostRecentMesurement(String tipo, Integer id_coltivazione) throws SQLException {
-        String selectSQL = "SELECT AVG(valore) as v"
-                + "FROM ("
-                + "  SELECT valore"
-                + "  FROM ("
-                + "    SELECT id, valore, max(misurazione_sensore.data) data, max(misurazione_sensore.ora) ora, sensore_id"
-                + "    FROM Misurazione_sensore"
-                + "    WHERE tipo = ? AND coltivazione = ? GROUP BY sensore_id"
-                + "  ) tab1"
-                + ") tab2;";
+        String selectSQL = "SELECT AVG(valore) v FROM (SELECT valore FROM (SELECT id, valore, max(misurazione_sensore.data) data, max(misurazione_sensore.ora) ora, sensore_id FROM Misurazione_sensore WHERE tipo = ? AND coltivazione = ? GROUP BY sensore_id) tab1) tab2;";
         Double result = 0d;
         connection = null;
         try {
@@ -219,10 +211,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
 
     @Override
     public synchronized List<MisurazioneSensoreBean> retrieveMeasurementPerTimeInterval(Date data_inizio, Date data_fine, Integer id_coltivazione, String tipo) throws SQLException {
-        String selectSQL = "SELECT avg(valore) as v, misurazione_sensore.data "
-                + "FROM misurazione_sensore "
-                + "WHERE coltivazione = ? and tipo = ? and misurazione_sensore.data >= ?  and misurazione_sensore.data <= ?"
-                + "GROUP BY misurazione_sensore.data;";
+        String selectSQL = "SELECT avg(valore) v, misurazione_sensore.data FROM misurazione_sensore WHERE coltivazione = ? and tipo = ? and misurazione_sensore.data >= ?  and misurazione_sensore.data <= ? GROUP BY misurazione_sensore.data;";
         connection = null;
         List<MisurazioneSensoreBean> misurazioneSensoreBeanList = new ArrayList<>();
         try {

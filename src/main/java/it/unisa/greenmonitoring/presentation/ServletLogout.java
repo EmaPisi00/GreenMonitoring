@@ -13,7 +13,7 @@ public class ServletLogout extends HttpServlet {
 
         // Invalidate the session.
         request.getSession(false).invalidate();
-        response.sendRedirect("HomePage.jsp");
+        response.sendRedirect("index.jsp");
 
     }
 

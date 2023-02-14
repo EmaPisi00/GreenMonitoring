@@ -57,4 +57,38 @@ public class FisiopatieDAOImpl implements FisiopatieDAO {
         }
         return list;
     }
+
+    @Override
+    public ArrayList<FisiopatieBean> retrieveAllByPianta(int id_pianta) throws SQLException {
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE pianta = ?";
+        ArrayList<FisiopatieBean> list = new ArrayList<>();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, id_pianta);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                FisiopatieBean s = new FisiopatieBean();
+                s.setId(rs.getInt("id"));
+                s.setId_pianta(rs.getInt("pianta"));
+                s.setNome(rs.getString("nome"));
+                s.setDescrizione(rs.getString("descrizione"));
+                s.setUmid_terr_min(rs.getFloat("umidita_terreno_min"));
+                s.setUmid_terr_max(rs.getFloat("umidita_terreno_max"));
+                s.setTemp_min(rs.getFloat("temperatura_min"));
+                s.setTemp_max(rs.getFloat("temperatura_max"));
+                s.setUmid_aria_min(rs.getFloat("umidita_aria_min"));
+                s.setUmid_aria_max(rs.getFloat("umidita_aria_min"));
+
+                connection.commit();
+                list.add(s);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        return list;
+    }
 }

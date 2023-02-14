@@ -95,7 +95,7 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
                 s.setPianta(rs.getInt("pianta"));
                 s.setTerreno(rs.getInt("terreno"));
                 s.setStato_archiviazione(rs.getByte("stato_archiviazione"));
-                s.setData_inizio(rs.getDate("dato_inizio"));
+                s.setData_inizio(rs.getDate("data_inizio"));
                 s.getData_fine();
 
                 connection.commit();

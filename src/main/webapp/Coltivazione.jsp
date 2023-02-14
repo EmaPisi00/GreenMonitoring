@@ -3,26 +3,71 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.FisiopatieDAO" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.FisiopatieDAOImpl" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.sql.Date" %>
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.MisurazioneSensoreManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <!-- Import Bootstrap -->
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Import css -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
+
+    <style>
+        @media screen and (max-width: 768px) {
+            .tohide {
+                display: none;
+            }
+        }
+
+        .value-bar {
+            display: flex;
+            align-items: center;
+            height: 20px;
+            background-color: lightgray;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .mesured-value {
+            height: 100%;
+            width: 50%;
+            background-color: green;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .value-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
 
 
+        .value-label {
+            margin-left: 10px;
+            font-size: 14px;
+        }
+    </style>
     <title>Coltivazione</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
-    <script src="./canvas/canvasjs.min.js" >
-    </script>
     <link href="/img/favicon.png" rel="icon">
     <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <script src="canvas/canvasjs.min.js"></script>
+    <script src="canvas/jquery.canvasjs.min.js"></script>
     <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Import Bootstrap -->
     <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
@@ -33,285 +78,398 @@
 
 </head>
 <body>
+<%@include file="fragments/headerLoggedAzienda.html" %>
 
-<%@include file="fragments/headerLoggedAzienda.html"%>
-
-<div class="bd">
-    <div class="row" style="width: 99%">
+<%! String urlImmagine = new String("Foto coltivazione");
+    List<ColtivazioneBean> list = null;
+    List<SensoreBean> sList = null;
+    List<PiantaBean> piantaBeanList = null;
+    ColtivazioneManager cm = new ColtivazioneManager();
+    PiantaManager pm = new PiantaManager();
+    SensoreManager sm = new SensoreManager();
+    TerrenoManager tm = new TerrenoManager();
+    String nomePianta = new String();
+    Integer coltivazioneID = 0;
+    Double resultUmidita = 0d;
+    Double resultTemperatura = 0d;
+    Double resultPH = 0d;
+    String colorPH = "green";
+    String colorTemperatura = "green";
+    String colorUmidità = "green";
+    String descrizioneTerreno = new String("");
+    PiantaBean temporaryPiantaBean = new PiantaBean();
+    Integer idPianta = 0;
+    TerrenoBean temporaryTerrenoBean = new TerrenoBean();
+    ColtivazioneBean temporaryColtivazioneBean = new ColtivazioneBean();
+%>
+<% if (!(session.getAttribute("currentUserSession") instanceof UtenteBean) && session.getAttribute("coltivazioneID") == null) {
+    response.sendError(401);
+} else {
+    coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
+    temporaryColtivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);
+    idPianta = temporaryColtivazioneBean.getPianta();
+    temporaryPiantaBean = pm.ritornaPiantaManager(idPianta);
+    nomePianta = temporaryPiantaBean.getNome();
+    urlImmagine = temporaryPiantaBean.getImmagine();
+    temporaryTerrenoBean = tm.restituisciTerrenoDaInt(temporaryColtivazioneBean.getTerreno());
+    descrizioneTerreno = temporaryTerrenoBean.getNome();
+    resultUmidita = cm.restituisciMisurazioniRecenti("umidità", coltivazioneID);
+    resultPH = cm.restituisciMisurazioniRecenti("pH", coltivazioneID);
+    resultTemperatura = cm.restituisciMisurazioniRecenti("Temperatura", coltivazioneID);
+} %>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="row text-center">
+                <h5>Info coltivazione</h5>
+            </div>
+            <div class="row row-cols-2">
+                <div class="col">
+                    <h7>Coltivazione:</h7>
+                </div>
+                <div class="col">
+                    <h7><%=nomePianta%>
+                    </h7>
+                </div>
+            </div>
+            <div class="row">
+                <img src="<%=urlImmagine%>" alt="Foto coltivazione"/>
+            </div>
+            <div class="row row-cols-2">
+                <div class="col">
+                    <h7>Terreno:</h7>
+                </div>
+                <div class="col">
+                    <h7><%=descrizioneTerreno%>
+                    </h7>
+                </div>
+            </div>
+            <div class="row row-cols-2">
+                <div class="col">
+                    <h7>Data inizio:</h7>
+                </div>
+                <div class="col d-flex align-items-center">
+                    <h7><%=temporaryColtivazioneBean.getData_inizio()%>
+                    </h7>
+                </div>
+            </div>
+        </div>
+        <div class="col d-flex align-items-center">
+            <h7>
+                <button class="btn btn-danger" id="archivia-coltivazione">Archivia Coltivazione</button>
+            </h7>
+        </div>
+    </div>
+</div>
+<div class="bd mt-5">
+    <!-- elenco dei tab accessibili -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Generale</button>
+            <button class="nav-link active" id="generale-tab" data-bs-toggle="tab" data-bs-target="#generale-tab-pane"
+                    type="button" role="tab" aria-controls="generale-tab-pane" aria-selected="true">Generale
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Dati Umidità</button>
+            <button class="nav-link" id="umidità-tab" data-bs-toggle="tab" data-bs-target="#umidità-tab-pane"
+                    type="button" role="tab" aria-controls="umidità-tab-pane" aria-selected="false">Dati Umidità
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Dati Ph</button>
+            <button class="nav-link" id="ph-tab" data-bs-toggle="tab" data-bs-target="#ph-tab-pane" type="button"
+                    role="tab" aria-controls="ph-tab-pane" aria-selected="false">Dati ph
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab2" data-bs-toggle="tab" data-bs-target="#contact-tab-pane2" type="button" role="tab" aria-controls="contact-tab-pane2" aria-selected="false">Dati Temperatura</button>
+            <button class="nav-link" id="temperatura-tab" data-bs-toggle="tab" data-bs-target="#temperatura-tab-pane"
+                    type="button" role="tab" aria-controls="temperatura-tab-pane" aria-selected="false">Dati Temperatura
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab3" data-bs-toggle="tab" data-bs-target="#contact-tab-pane3" type="button" role="tab" aria-controls="contact-tab-pane3" aria-selected="false">Fisiopatie</button>
+            <button class="nav-link" id="fisiopatie-tab" data-bs-toggle="tab" data-bs-target="#fisiopatie-tab-pane"
+                    type="button" role="tab" aria-controls="fisiopatie-tab-pane" aria-selected="false">Fisiopatie
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Archivia Coltivazione</button>
+            <button class="nav-link" id="storico-tab" data-bs-toggle="tab" data-bs-target="#storico-tab-pane"
+                    type="button" role="tab" aria-controls="storico-tab-pane" aria-selected="false">Storico
+            </button>
         </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="card" style="width: auto;">
-                    <div class="card-body">
-                        <h5 class="card-title">Info coltivazione</h5>
-                        <%  /* -- INIZIO AUTENTICAZIONE -- */
-                            Object sa = session.getAttribute("currentUserSession");
-                            int[] valoriMisurati = {0, 0, 0};
-                            ColtivazioneBean cb = null;
-                            if (sa == null) {
-                                response.sendError(401);
-                            } else if (!(session.getAttribute("currentUserSession") instanceof UtenteBean)) {
-                                response.sendError(401);
-                            }
-                            /* -- PASSATI I TEST, IL CONTAINER APRE IL RESTO DELLA PAGINA -- */
-                            else {
-
-                                String urlImmagine = new String("Foto coltivazione");
-                                List<ColtivazioneBean> list = null;
-                                List<SensoreBean> sList = null;
-                                List<PiantaBean> piantaBeanList = null;
-                                ColtivazioneManager cm = new ColtivazioneManager();
-                                PiantaManager pm = new PiantaManager();
-                                SensoreManager sm = new SensoreManager();
-                                String nomePianta = new String();
-                                String IDazienda = new String();
-                                Integer coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
-                                if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
-                                    DipendenteBean a = (DipendenteBean) sa;
-                                    IDazienda = a.getAzienda();
-                                    cb = cm.visualizzaStatoColtivazioni(a.getAzienda()).stream().filter(o -> o.getId() == coltivazioneID).findFirst().orElse(null);
-                                    sList = sm.visualizzaListaSensori(a.getAzienda()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
-                                    list = cm.visualizzaStatoColtivazioni(a.getAzienda());
-                                    piantaBeanList = pm.ListaPianteManager(a.getAzienda());
-                                    for (int i = 0; i < piantaBeanList.size(); i++) {
-                                        for (int j = 0; j < list.size(); j++) {
-                                            if (piantaBeanList.get(i).getId().equals(list.get(j).getPianta())) {
-                                                nomePianta = piantaBeanList.get(i).getNome();
-                                                break;
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    AziendaBean a = (AziendaBean) sa;
-                                    IDazienda = a.getEmail();
-                                    cb = cm.visualizzaStatoColtivazioni(a.getEmail()).stream().filter(o -> o.getId() == coltivazioneID).findFirst().orElse(null);
-                                    list = cm.visualizzaStatoColtivazioni(a.getEmail());
-                                    sList = sm.visualizzaListaSensori(a.getEmail()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
-                                    piantaBeanList = pm.ListaPianteManager(a.getEmail());
-                                    for (int i = 0; i < piantaBeanList.size(); i++) {
-                                        for (int j = 0; j < list.size(); j++) {
-                                            if (piantaBeanList.get(i).getId().equals(list.get(j).getPianta())) {
-                                                nomePianta = piantaBeanList.get(i).getNome();
-                                                urlImmagine = piantaBeanList.get(i).getImmagine();
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                                valoriMisurati = cm.visualizzaMediaSensori((String) session.getAttribute("coltivazioneID"));
-                                out.print("<ul><li class=\"list-group-item \">" +
-                                        "Coltivazione di " + nomePianta + "<br>" +
-                                        "<img src=\"" + urlImmagine + "\" alt=\"Foto coltivazione\">"); %>
-                        <%  ColtivazioneManager coltivazionemanager = new ColtivazioneManager();
-                            Double resultUmidita = coltivazionemanager.restituisciMisurazioniRecenti("umidità", coltivazioneID);
-                            Double resultTemperatura = coltivazionemanager.restituisciMisurazioniRecenti("temperatura", coltivazioneID);
-                            Double resultPH = coltivazionemanager.restituisciMisurazioniRecenti("pH", coltivazioneID);
-                            String colorPH = "blue";
-                            String colorTemperatura = "blue";
-                            String colorUmidità = "blue";
-                            /*
-                            if (resultUmidita è lontano dal valore ottimale) {
-                                colorUmidità = "red";
-                            } else if (resultTemperatura è lontano dal valore ottimale) {
-                                colorTemperatura = "red";
-                            } else if (resultPH è lontano dal valore ottimale) {
-                                colorPH = "red";
-                            }
-                            */
-                        %>
-                        <h5>Umidità media</h5>
-                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                            <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div>
-                            <%=resultUmidita%>%
-                            <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
+</div>
+<!-- contenuto dei tab -->
+<div class="tab-content" id="myTabContent">
+    <!-- Generale -->
+    <div class="tab-pane fade show active" id="generale-tab-pane" role="tabpanel" aria-labelledby="generale-tab-pane"
+         tabindex="0">
+        <div class="card" style="width: auto;">
+            <div class="card-body">
+                <div style="width: auto;" class="row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <!--Media umidità -->
+                        <div class="row">
+                            <h5>Umidità media</h5>
+                            <div class="row">
+                                <div class="col value-bar">
+                                    <div class="mesured-value" style="width: <%=resultUmidita%>%"></div>
+                                </div>
+                                <div class="col-3 value-label"><%=resultUmidita%>%</div>
+                                <div class="col-1">
+                                    <div class="value-status" style="background-color: <%=colorUmidità%>;"></div>
+                                </div>
+                            </div>
                         </div>
+                        <!--Media temperatura -->
                         <h5>Temperatura media</h5>
-                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                            <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
-                            <%=resultTemperatura%>"\00b0"C
-                            <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
+                        <div class="row">
+                            <div class="col value-bar">
+                                <div class="mesured-value" style="width: <%=resultTemperatura%>%"></div>
+                            </div>
+                            <div class="col-3 value-label"><%=resultTemperatura%>&degC</div>
+                            <div class="col-1">
+                                <div class="value-status" style="background-color: <%=colorTemperatura%>;"></div>
+                            </div>
                         </div>
+                        <!--Media ph -->
                         <h5>pH media</h5>
-                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                            <div style="width: <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) + 10); }%>%; height: 20px; background-color: <%=colorPH%>;"></div>
-                            <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) + 10); }%>
-                            <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
+                        <div class="row">
+                            <div class="col value-bar">
+                                <div class="mesured-value" style="width: <%=(resultPH/14)*100%>%"></div>
+                            </div>
+                            <div class="col-3 value-label"><%=resultPH.intValue()%>
+                            </div>
+                            <div class="col-1">
+                                <div class="value-status" style="background-color: <%=colorPH%>;"></div>
+                            </div>
                         </div>
-                        <% out.print("<br>" +
-                                        // ho aggiunto questo form, poi te lo gestisci tu, basta che chiama servletSuggerimenti e c'è l'id della coltivazione
-                                        "<form action=\"ServletSuggerimenti\" method=\"get\">\n" +
-                                        "<input type=\"hidden\" name=\"coltivazione\" value=\"" + coltivazioneID + "\">" +
-                                        "<button type=\"submit\" class=\"btn btn-success\" >Suggerimenti</button>"
-                                        + "</form>" +
-                                        //fino a qui
-                                        "</li></ul>"
-                                );
-                            %>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="card" style="width: auto;">
-                    <div class="card-body">
-                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                            <div style="width: <%=resultUmidita%>%; height: 20px; background-color: <%=colorUmidità%>;"></div>
-                            <%=resultUmidita%>%
-                            <div style="width: 10px; height: 10px; background-color: <%=colorUmidità%>; border-radius: 50%;"></div>
-                            <%
-                                for (int i = 0; i < ;i++) {
-
-                                }
-                            %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="card" style="width: auto;">
-                    <div class="card-body">
-                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                            <div style="width: <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) + 10); }%>%; height: 20px; background-color: <%=colorPH%>;"></div>
-                            <%if (resultPH.equals(0)) { Integer baseCasePH = 0; out.print(baseCasePH); } else { out.print((resultPH * 10) - 40); }%>
-                            <div style="width: 10px; height: 10px; background-color: <%=colorPH%>; border-radius: 50%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-pane fade" id="contact-tab-pane2" role="tabpanel" aria-labelledby="contact-tab2" tabindex="0">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="card" style="width: auto;">
-                    <div class="card-body">
-                        <div style="width: 50%; height: 20px; background-color: #ddd;display: flex; align-items: center;">
-                            <div style="width: <%=resultTemperatura%>%; height: 20px; background-color: <%=colorTemperatura%>;"></div>
-                            <%=resultTemperatura%>"\00b0"C
-                            <div style="width: 10px; height: 10px; background-color: <%=colorTemperatura%>; border-radius: 50%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="contact-tab-pane3" role="tabpanel" aria-labelledby="contact-tab3" tabindex="0">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="card" style="width: auto;">
-                    <div class="card-body">
-                        <h5>Nessuna fisiopatia al momento</h5>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Sunto delle misurazioni (media)</h5>
-                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                    <script type="text/javascript">
-                        window.onload = function () {
-
-                            var chart = new CanvasJS.Chart("chartContainer", {
-                                theme: "light1", // "light2", "dark1", "dark2"
-                                animationEnabled: false, // change to true
-                                title:{
-                                    text: ""
-                                },
-                                data: [
-                                    {
-                                        // Change type to "bar", "area", "spline", "pie",etc.
-                                        type: "pie",
-                                        dataPoints: [
-                                            { label: "pH",  y: <%=valoriMisurati[0]%>  },
-                                            { label: "Temperatura", y:  <%=valoriMisurati[1]%>  },
-                                            { label: "Umidità", y: <%=valoriMisurati[2]%>  }
-                                        ]
-                                    }
-                                ]
-                            });
-                            chart.render();
-                        }
-                    </script>
+    <!-- Umidità -->
+    <div class="tab-pane fade" id="umidità-tab-pane" role="tabpanel" aria-labelledby="umidità-tab-pane" tabindex="0">
+        <div class="card" style="width: auto;">
+            <div class="card-body">
+                <div style="width: auto;" class="row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <% cm = new ColtivazioneManager();
+                            List<MisurazioneSensoreBean> misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "umidità");
+                            for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
+                                colorUmidità = "green";
+                            /*
+                            if (resultUmidita è lontano dal valore ottimale) {
+                                colorUmidità = "red";
+                            }
+                            */%>
+                        <h8>Sensore Umidità <%=misurazioneSensoreBeans.get(i).getSensore_id()%>
+                            : <%=misurazioneSensoreBeans.get(i).getValore()%>%
+                        </h8>
+                        <%}%>
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <h5>Media</h5>
+                        <div class="row">
+                            <div class="col value-bar">
+                                <div class="mesured-value" style="width: <%=resultUmidita%>%"></div>
+                            </div>
+                            <div class="col-3 value-label"><%=resultUmidita%>&degC</div>
+                            <div class="col-1">
+                                <div class="value-status" style="background-color: <%=colorUmidità%>;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% out.print("<br>" +
+                        // ho aggiunto questo form, poi te lo gestisci tu, basta che chiama servletSuggerimenti e c'è l'id della coltivazione
+                        "<form action=\"ServletSuggerimenti\" method=\"get\">\n" +
+                        "<input type=\"hidden\" name=\"coltivazione\" value=\"" + coltivazioneID + "\">" +
+                        "<button type=\"submit\" class=\"btn btn-success\">Suggerimenti</button>"
+                        + "</form>" +
+                        //fino a qui
+                        "</li></ul>");
+                %>
+            </div>
+        </div>
+    </div>
+    <!-- pH -->
+    <div class="tab-pane fade" id="ph-tab-pane" role="tabpanel" aria-labelledby="ph-tab-pane" tabindex="0">
+        <div class="card" style="width: auto;">
+            <div class="card-body">
+                <div style="width: auto;" class="row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <% cm = new ColtivazioneManager();
+                            misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "pH");
+                            for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
+                                colorPH = "green";
+                            /*
+                            if (resultPH è lontano dal valore ottimale) {
+                                colorPH = "red";
+                            }
+                            */%>
+                        <h8>Sensore pH <%=misurazioneSensoreBeans.get(i).getSensore_id()%>
+                            : <%=misurazioneSensoreBeans.get(i).getValore()%>
+                        </h8>
+                        <%}%>
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <h5>Media</h5>
+                        <div class="row">
+                            <div class="col value-bar">
+                                <div class="mesured-value" style="width: <%=(resultPH/14)*100%>%"></div>
+                            </div>
+                            <div class="col-3 value-label"><%=resultPH%>
+                            </div>
+                            <div class="col-1">
+                                <div class="value-status" style="background-color: <%=colorPH%>;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- Temperatura -->
+    <div class="tab-pane fade" id="temperatura-tab-pane" role="tabpanel" aria-labelledby="temperatura-tab-pane"
+         tabindex="0">
+        <div class="card" style="width: auto;">
+            <div class="card-body">
+                <div style="width: auto;" class="row">
+                    <div class="col-sm-6 mb-3">
+                        <% cm = new ColtivazioneManager();
+                            misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "Temperatura");
+                            for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
+                                colorTemperatura = "green";
+                            /*
+                            if (resultTemperatura è lontano dal valore ottimale) {
+                                colorTemperatura = "red";
+                            }
+                            */%>
+                        <h8>Sensore temperatura <%=misurazioneSensoreBeans.get(i).getSensore_id()%>
+                            : <%=misurazioneSensoreBeans.get(i).getValore()%>&degC
+                        </h8>
+                        <%}%>
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <h5>Media</h5>
+                        <div class="row">
+                            <div class="col value-bar">
+                                <div class="mesured-value" style="width: <%=resultTemperatura%>%"></div>
+                            </div>
+                            <div class="col-3 value-label"><%=resultTemperatura%>&degC</div>
+                            <div class="col-1">
+                                <div class="value-status" style="background-color: <%=colorTemperatura%>;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fisiopatie -->
+    <div class="tab-pane fade" id="fisiopatie-tab-pane" role="tabpanel" aria-labelledby="fisiopatie-tab"
+         tabindex="0">
+        <div class="card" style="width: auto;">
+            <div class="card-body">
+                <%
+                    FisiopatieDAO fisiopatieDAO = new FisiopatieDAOImpl();
+                    ArrayList<FisiopatieBean> listaFisiopatie = fisiopatieDAO.retrieveAllByPianta(idPianta);
+                    if (listaFisiopatie.size() == 0) {
+                        out.print("Nessuna fisiopatia presente per questa pianta.");
+                    } else {
+                %>
 
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Rilevamenti per periodo</h5>
-                    <form method="ServletColtivazioni" action="post">
-                        <input id="periodo-inizio" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_inizio_periodo" required>
-                        <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>" name="data_fine_periodo" required>
-                        <select required>
-                            <option name="tipoSensore" value="umidità">Umidità</option>
-                            <option name="tipoSensore" value="pH">pH</option>
-                            <option name="tipoSensore" value="temperatura">Temperatura</option>
-                        </select>
-                        <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success">Mostra per questi periodi</button>
-                    </form>
-                    <script type="text/javascript">
-                        $("#rilevamentiPerPeriodo").onclick = function() {
-                            var inputInizio = document.getElementById("periodo-inizio").value;
-                            var inputFine = document.getElementById("periodo-inizio").value;
-                            if (inputInizio != null && inputFine != null) {
-                                var xhr = new XMLHttpRequest();
-                                xhr.open("POST", "ServletColtivazioni", true);
-                                xhr.onreadystatechange = function () {
-                                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                                        //Costruisco il grafico
-                                        var chart = new CanvasJS.Chart("chartContainer", JSON.parse(xhr.responseText));
-                                        chart.render();
+                <div>
+                    <div style="display:flex;">
+                        <div style="width:5%;">ID</div>
+                        <div style="width:10%;">Pianta</div>
+                        <div style="width:10%;">Nome</div>
+                        <div style="width:15%;">Umidità Terra Min</div>
+                        <div style="width:15%;">Umidità Terra Max</div>
+                        <div style="width:15%;">Temperatura Min</div>
+                        <div style="width:15%;">Temperatura Max</div>
+                        <div style="width:15%;">Umidità Aria Min</div>
+                        <div style="width:15%;">Umidità Aria Max</div>
+                    </div>
+                    <%
+                        for (FisiopatieBean fisiopatia : listaFisiopatie) {
 
-                                        function toggleDataSeries(e) {
-                                            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                                                e.dataSeries.visible = false;
-                                            } else {
-                                                e.dataSeries.visible = true;
-                                            }
-                                            chart.render();
-                                        }
-                                    }
-                                };xhr.send();
+                    %>
+                    <div style="display:flex;">
+                        <div style="width:5%;"><%= fisiopatia.getId() %>
+                        </div>
+                        <div style="width:10%;"><%= nomePianta %>
+                        </div>
+                        <div style="width:10%;"><%= fisiopatia.getNome() %>
+                        </div>
+                        <div style="width:15%;"><%= fisiopatia.getUmid_terr_min() %>
+                        </div>
+                        <div style="width:15%;"><%= fisiopatia.getUmid_terr_max() %>
+                        </div>
+                        <div style="width:15%;"><%= fisiopatia.getTemp_min() %>
+                        </div>
+                        <div style="width:15%;"><%= fisiopatia.getTemp_max() %>
+                        </div>
+                        <div style="width:15%;"><%= fisiopatia.getUmid_aria_min() %>
+                        </div>
+                        <div style="width:15%;"><%= fisiopatia.getUmid_aria_max()%>
+                        </div>
+                    </div>
+                    <div div style="border: 1px solid black; padding: 10px;">
+                        <strong>Descrizione:</strong><br>
+                        <%= fisiopatia.getDescrizione() %>
+                    </div>
+                    <% }
+                    }
+                    %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Storico -->
+    <div class="tab-pane fade" id="storico-tab-pane" role="tabpanel" aria-labelledby="storico-tab-pane" tabindex="0">
+        <h5 class="card-title">Rilevamenti per periodo</h5>
+        <form method="ServletColtivazioni" action="post">
+            <input id="periodo-inizio" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>"
+                   name="data_inizio_periodo" required>
+            <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>"
+                   name="data_fine_periodo" required>
+            <select required>
+                <option name="tipoSensore" value="umidità">Umidità</option>
+                <option name="tipoSensore" value="pH">pH</option>
+                <option name="tipoSensore" value="temperatura">Temperatura</option>
+            </select>
+            <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success">Mostra per questi periodi</button>
+        </form>
+        <script type="text/javascript">
+            $("#rilevamentiPerPeriodo").onclick = function () {
+                var inputInizio = document.getElementById("periodo-inizio").value;
+                var inputFine = document.getElementById("periodo-fine").value;
+                if (inputInizio != null && inputFine != null) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "ServletColtivazioni", true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                            //Costruisco il grafico
+                            window.onload = function () {
+                                var chart = new CanvasJS.Chart("chartContainer", JSON.parse(xhr.responseText));
+                                chart.render();
                             }
                         }
-                    </script>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6">
-            <div class="card" style="width: auto;">
-                <div class="card-body">
+                        ;xhr.send();
+                    }
+                }
+            }
+        </script>
+    </div>
+    <!-- lista dei sensori e form rimuovi sensore -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card" style="width: auto;">
                     <h5 class="card-title">Sensori</h5>
-
-                    <%  cm = new ColtivazioneManager();
+                    <% Object sa = session.getAttribute("currentUserSession");
+                        cm = new ColtivazioneManager();
                         out.print("<ul class=\"list-group\">\n");
-                        list = null;
-                        sList = null;
                         sm = new SensoreManager();
                         if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                             DipendenteBean a = (DipendenteBean) sa;
@@ -325,7 +483,7 @@
                         if (sList != null) {
                             for (int i = 0; i < sList.size(); i++) {
                                 out.print("<form id=\"rimuoviSensore\" action=\"ServletColtivazioni\" method=\"post\">");
-                                out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getId());
+                                out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getIdM());
                                 out.print("<input type=\"hidden\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">");
                                 if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
                                     out.print("<a></a><button type=\"submit\" class=\"btn btn-link\">Rimuovi</button>");
@@ -337,15 +495,14 @@
                             }
                             out.print("</ul>");
                         }
-                    }%>
-                    <!-- Fine coltivazioni -->
+                    %>
+                    </div>
                 </div>
+                <!-- Fine coltivazioni -->
             </div>
         </div>
-    </div>
-</div>
-<%@include file="fragments/footer.html"%>
+
+
+        <%@include file="fragments/footer.html" %>
 </body>
-
-
 </html>

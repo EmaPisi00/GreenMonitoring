@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Import Google fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<!-- Import Google fonts-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 
-    <!-- Import Bootstrap -->
-    <link href="/bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+<!-- Import Bootstrap -->
+<link href="/bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Import css -->
-    <link rel="stylesheet" href="/css/headerLogin.css">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- Import css -->
+<link rel="stylesheet" href="/css/headerLogin.css">
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
 <!-- Inizio Header -->
 <header>
@@ -27,7 +22,7 @@
             <div class="col-lg-1 col-md-1 col-xs-12">
                 <!-- Logo -->
                 <div style="position: absolute;" class="logo">
-                    <a href="HomePage.jsp"><img src="img/logo.png" class="img-fluid rounded-top" alt=""></a>
+                    <a href="index.jsp"><img src="img/logo.png" class="img-fluid rounded-top" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-xs-12">
@@ -37,31 +32,28 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="btn1">
-                        <div class="dropdown">
-                            <button class="reg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                                Registrazione
-                            </button>
-                            <ul style="text-align: center; font-size: 20px; font-family: 'Anton' sans-serif;"
-                                class="dropdown-menu">
-                                <li><a class="dropdown-item" href="RegistrazioneAzienda.jsp">Registra Azienda</a></li>
-                                <li><a class="dropdown-item" href="Dipendente.jsp">Registra Dipendente</a></li>
-                            </ul>
-                        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="btn1">
+                    <div class="dropdown">
+                        <button class="reg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                            Registrazione
+                        </button>
+                        <ul style="text-align: center; font-size: 20px; font-family: 'Anton' sans-serif;"
+                            class="dropdown-menu">
+                            <li><a class="dropdown-item" href="RegistrazioneAzienda.jsp">Registra Azienda</a></li>
+                            <li><a class="dropdown-item" href="Dipendente.jsp">Registra Dipendente</a></li>
+                        </ul>
                     </div>
-                    <div class="btn1">
-                        <form action="Login.jsp"><input class="log" type="submit" value="Login"></form>
-                    </div>
+                </div>
+                <div class="btn1">
+                    <form action="Login.jsp"><input class="log" type="submit" value="Login"></form>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </header>
-
 <!-- Fine Header -->
-
-</body>
-</html>

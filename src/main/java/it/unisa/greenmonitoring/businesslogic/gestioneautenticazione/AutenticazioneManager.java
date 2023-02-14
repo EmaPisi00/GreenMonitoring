@@ -50,12 +50,12 @@ public class AutenticazioneManager {
             System.out.println("\nErrore nel nome della Provincia\n");
             return null;
         }
-        if (!(aziendaBean.getNome_azienda().matches("^[a-zA-Z0-9!@#$%^&*]+$"))) {
+        if (!(aziendaBean.getPassword().matches("^[a-zA-Z0-9!@#$%^&*]+$"))) {
             /*Inserisci una password di lunghezza max 15 caratteri e minimo 8 con almeno un carattere speciale,un numero e una maiuscola*/
             System.out.println("\nErrore nella password \n");
             return null;
         }
-        if ((aziendaBean.getPartita_iva().matches("^[0-11]+$"))) {
+        if (!(aziendaBean.getPartita_iva().matches("^[0-9]+$"))) {
             System.out.println("\nErrore nella partita iva\n");
             return null;
         }
@@ -63,15 +63,11 @@ public class AutenticazioneManager {
         AziendaBean ricercaAzienda = aziendaDao.retrieveForKey(aziendaBean.getEmail());
 
         if (ricercaAzienda.getEmail() != null) {
-
             System.out.println("Errore");
-            return null;
-        } else {
-
-            aziendaDao.create(aziendaBean);
-            System.out.println("Inserimento fatto con successo");
-            return aziendaBean;
         }
+        aziendaDao.create(aziendaBean);
+        System.out.println("Inserimento fatto con successo");
+        return aziendaBean;
     }
 
 
@@ -116,15 +112,12 @@ public class AutenticazioneManager {
             DipendenteBean bean = listaDipendenti.next();
             if ((bean.getNome().equals(dipendenteBean.getNome())) && (bean.getCognome().equals(dipendenteBean.getCognome())) && (bean.getAzienda().equals(dipendenteBean.getAzienda()))) {
                 System.out.println("\nDipendente già presente\n");
-
+                return null;
             }
-            return null;
-        } else {
-            dipendenteDao.create(dipendenteBean);
-            System.out.println("Inserimento fatto con successo");
-            return dipendenteBean;
         }
-
+        dipendenteDao.create(dipendenteBean);
+        System.out.println("Inserimento fatto con successo");
+        return dipendenteBean;
     }
 
     /**

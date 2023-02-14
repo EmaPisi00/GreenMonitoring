@@ -1,13 +1,10 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Random" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
 <%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.PiantaBean" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %><%--
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %><%--
   Created by IntelliJ IDEA.
   User: Manuel
   Date: 23/01/2023
@@ -15,6 +12,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+    if (u instanceof AziendaBean) { %>
+<%@include file="fragments/headerLoggedAzienda.html"%>
+<%
+    }
+%>
 <html>
 <head>
     <!-- Import Bootstrap -->
@@ -45,80 +50,96 @@
         }
     </style>
 </head>
-
-
 <body>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+
+
+
 <div class="bd">
-    <legend style="text-align:center;">Piante</legend>
+    <legend style="font-family: 'Lobster', cursive; text-align: center; font-size: 35px;">Piante</legend>
     <form id="visualizza_piante" action="ServletPianta" method="post">
-        <div class="card">
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">#</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Ph minimo</th>
-                        <th scope="col">Ph massimo</th>
-                        <th scope="col">Temperatura minima</th>
-                        <th scope="col">Temperatura massima</th>
-                        <th scope="col">Umidità minima</th>
-                        <th scope="col">Umidità massima</th>
-                        <th scope="col">Immagine</th>
-                        <th scope="col">Azione</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <%
-                        /* -- INIZIO AUTENTICAZIONE --*/
-                        Object seo = session.getAttribute("currentUserSession");
-                        String email= null;
+        <div class="container">
+            <div class="row">
+                <div class="col-14 py-5">
 
-                        if (seo == null) {
-                            response.sendError(401);
-                        }
+                    <table class="table table-group-divider">
+                        <thead>
+                        <tr  style="font-family: 'Staatliches', cursive; font-size: 20px;">
+                            <th scope="col"></th>
+                            <th scope="col">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Descrizione</th>
+                            <th scope="col">Ph minimo</th>
+                            <th scope="col">Ph massimo</th>
+                            <th scope="col">Temperatura minima</th>
+                            <th scope="col">Temperatura massima</th>
+                            <th scope="col">Umidità minima</th>
+                            <th scope="col">Umidità massima</th>
+                            <th scope="col">Immagine</th>
+                            <th scope="col">Azione</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            /* -- INIZIO AUTENTICAZIONE --*/
+                            Object seo = session.getAttribute("currentUserSession");
+                            String email = null;
 
-                        if(seo instanceof AziendaBean) {
-                            email = ((AziendaBean) seo).getEmail();
-                        }
-                        else if(seo instanceof DipendenteBean) {
-                            response.sendError(401);
-                        }
+                            if (seo == null) {
+                                response.sendError(401);
+                            }
 
-                        PiantaManager p = new PiantaManager();
-                        List<PiantaBean> list = p.ListaPianteManager(email);
-                        int i=0;
-                        for (PiantaBean pb : list) {
-                            out.print("<tr>" +
-                                    "<td>");
-                            out.print("</td>" +
-                                    "<td>" + pb.getId() + "</td>" +
-                                    "<td>" + pb.getNome() + "</td>" +
-                                    "<td><div class=\"overflow-auto\" style=\"max-width: 260px; max-height: 100px;\" >" + pb.getDescrizione() +"</div></td>" +
-                                    "<td>" + pb.getPh_min() + "</td>" +
-                                    "<td>" + pb.getPh_max() + "</td>" +
-                                    "<td>" + pb.getTemperatura_min() + "</td>" +
-                                    "<td>" + pb.getTemperatura_max() + "</td>" +
-                                    "<td>" + pb.getUmidita_min() + "</td>" +
-                                    "<td>" + pb.getUmidita_max() + "</td>" +
-                                    "<td> <img src=\"" + request.getContextPath() + "/../immagini/piante/" + pb.getImmagine() + "\" alt=\"Descrizione immagine\"></td>" +
-                                    "<td> <button type=\"submit\" name=\"rimuoviPianta_submit\" class=\"btn btn-danger\" value=\"" + pb.getId() + "\">Rimuovi</button>"+
+                            if (seo instanceof AziendaBean) {
+                                email = ((AziendaBean) seo).getEmail();
+                            } else if (seo instanceof DipendenteBean) {
+                                response.sendError(401);
+                            }
+
+                            PiantaManager p = new PiantaManager();
+                            List<PiantaBean> list = p.ListaPianteManager(email);
+                            int i = 0;
+                            for (PiantaBean pb : list) {
+                                out.print("<tr>" +
+                                        "<td>");
+                                out.print("</td>" +
+                                        "<td>" + pb.getId() + "</td>" +
+                                        "<td>" + pb.getNome() + "</td>" +
+                                        "<td><div class=\"overflow-auto\" style=\"max-width: 260px; max-height: 100px;\" >" + pb.getDescrizione() + "</div></td>" +
+                                        "<td>" + pb.getPh_min() + "</td>" +
+                                        "<td>" + pb.getPh_max() + "</td>" +
+                                        "<td>" + pb.getTemperatura_min() + "</td>" +
+                                        "<td>" + pb.getTemperatura_max() + "</td>" +
+                                        "<td>" + pb.getUmidita_min() + "</td>" +
+                                        "<td>" + pb.getUmidita_max() + "</td>" +
+                                        "<td> <img src=\"" + request.getContextPath() + "/../immagini/piante/" + pb.getImmagine() + "\" alt=\"Descrizione immagine\"></td>" +
+                                        "<td> <button type=\"submit\" name=\"rimuoviPianta_submit\" class=\"btn btn-danger\" value=\"" + pb.getId() + "\">Rimuovi</button>" +
                                         " <button type=\"submit\" value=\"" + pb.getId() + "\"class=\"btn btn-danger\" name=\"modificaRange_submit\">Modifica</button></td>" +
-                                    "</tr>"
-                            );
-                            i++;
-                        }
-                    %>
-                    </tbody>
-                </table>
+                                        "</tr>"
+                                );
+                                i++;
+                            }
+                        %>
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
         </div>
 
     </form>
+    <div class="container py-2">
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <button onclick="location.href='InserisciPianta.jsp'" type="button"
+                        class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
+                        data-target="#exampleModalCenter">
+                    Aggiungi Pianta
+                </button>
+            </div>
+        </div>
+    </div>
 </div><!-- End bd -->
 
+
+<%@include file="fragments/footer.html" %>
 </body>
 </html>
