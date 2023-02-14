@@ -34,7 +34,7 @@ public class TerrenoManager {
      * @throws SQLException
      * @return List
      */
-    public TerrenoBean createTerreno(TerrenoBean t)  {
+    public TerrenoBean inserisciTerreno(TerrenoBean t)  {
 
         if (!(t.getSuperficie().matches("^[0-9]+$"))) {
             System.out.println("errore nella superfice");
@@ -55,7 +55,7 @@ public class TerrenoManager {
             System.out.println("errore: longitudine maggiore di 180");
             return null;
         }
-        List<TerrenoBean> listaterreni = td.retrieveTerreno();
+        List<TerrenoBean> listaterreni = td.retrieveAll();
         for (TerrenoBean tt : listaterreni) {
             System.out.println(tt.getId());
             if (t.getLongitudine().compareTo(tt.getLongitudine()) == 0 && t.getLatitudine().compareTo(tt.getLatitudine()) == 0) {
@@ -77,23 +77,6 @@ public class TerrenoManager {
      */
     public TerrenoBean restituisciTerrenoDaInt(int id_terreno) throws SQLException {
         return td.retrieveByKey(id_terreno);
-    }
-
-    /**
-     * Questo metodo restituisce un terreno a partire da un id.
-     * @param id_terreno
-     * @return TerrenoBean
-     * @throws SQLException
-     */
-    public TerrenoBean restituisciTerreno(Integer id_terreno) throws SQLException {
-        List<TerrenoBean> terrenoBeanList = td.retrieveTerreno();
-        TerrenoBean result = new TerrenoBean();
-        for (int i = 0; i < terrenoBeanList.size(); i++) {
-            if (terrenoBeanList.get(i).getId().equals(id_terreno)) {
-                result = terrenoBeanList.get(i);
-            }
-        }
-        return result;
     }
 
     /**
@@ -133,7 +116,7 @@ public class TerrenoManager {
      */
     public ArrayList<TerrenoBean> visualizzaListaTerreni(String id_azienda) {
         ArrayList<TerrenoBean> list = new ArrayList<>();
-            td.retrieveTerreno().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
+            td.retrieveAll().stream().filter(o -> o.getAzienda().equals(id_azienda)).forEach(o -> list.add(o));
         return list;
     }
 }

@@ -51,36 +51,36 @@ public class TerrenoManagerTest {
 
     @Test
     public void createTerrenoSuccess() throws SQLException{
-        Mockito.when(terrenoDAO.retrieveTerreno()).thenReturn(new ArrayList<TerrenoBean>());
-        TerrenoBean td = terrenoManager.createTerreno(terrenoBean);
+        Mockito.when(terrenoDAO.retrieveAll()).thenReturn(new ArrayList<TerrenoBean>());
+        TerrenoBean td = terrenoManager.inserisciTerreno(terrenoBean);
         Mockito.verify(terrenoDAO).createTerreno(terrenoBean);
         assertEquals(td,terrenoBean);
     }
     @Test
     public void createTerrenoSuperficieError() throws SQLException{
         terrenoBean.setSuperficie("pippo");
-        TerrenoBean result = terrenoManager.createTerreno(terrenoBean);
+        TerrenoBean result = terrenoManager.inserisciTerreno(terrenoBean);
         assertNull(result);
     }
 
     @Test
     public void createTerrenoLongitudineError() throws SQLException{
         terrenoBean.setLongitudine(190F);
-        TerrenoBean result = terrenoManager.createTerreno(terrenoBean);
+        TerrenoBean result = terrenoManager.inserisciTerreno(terrenoBean);
         assertNull(result);
     }
 
     @Test
     public void createTerrenoLatitudineError() throws SQLException{
         terrenoBean.setLatitudine(100F);
-        TerrenoBean result = terrenoManager.createTerreno(terrenoBean);
+        TerrenoBean result = terrenoManager.inserisciTerreno(terrenoBean);
         assertNull(result);
     }
 
     @Test
     public void createTerrenoNomeError() throws SQLException{
         terrenoBean.setNome("a");
-        TerrenoBean result = terrenoManager.createTerreno(terrenoBean);
+        TerrenoBean result = terrenoManager.inserisciTerreno(terrenoBean);
         assertNull(result);
     }
 }

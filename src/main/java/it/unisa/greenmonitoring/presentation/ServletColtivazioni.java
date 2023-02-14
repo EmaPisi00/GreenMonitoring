@@ -79,7 +79,7 @@ public class ServletColtivazioni extends HttpServlet {
                     try {
                         ArrayList<SensoreBean> listaSensoriBean = new ArrayList<>();
                         for (String id_sensore : sensori) {
-                            listaSensoriBean.add(sensoreManager.retrieveSensore(Integer.parseInt(id_sensore)));
+                            listaSensoriBean.add(sensoreManager.visualizzaSensore(Integer.parseInt(id_sensore)));
                         }
                         cm.avvioColtivazione(cb, utente, listaSensoriBean);
                         ArrayList<ColtivazioneBean> coltivazioneBeans = cm.visualizzaStatoColtivazioni(aziendaBean.getEmail());
@@ -87,7 +87,7 @@ public class ServletColtivazioni extends HttpServlet {
                         cb.setId(id_coltivazione);
                         SensoreBean sensoreBean;
                         for (String sensore : sensori) {
-                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                            sensoreBean = sensoreManager.visualizzaSensore(Integer.parseInt(sensore));
                             sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
                         }
 

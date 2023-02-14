@@ -52,7 +52,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     }
 
     @Override
-    public ArrayList<TerrenoBean> retrieveTerreno() {
+    public ArrayList<TerrenoBean> retrieveAll() {
 
         String selectSQL = "SELECT * FROM Terreno";
         ArrayList<TerrenoBean> list = new ArrayList<>();

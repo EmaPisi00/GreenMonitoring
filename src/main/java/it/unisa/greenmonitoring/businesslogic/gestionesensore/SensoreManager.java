@@ -34,7 +34,7 @@ public class SensoreManager {
      * @return SensoreBean
      * @throws SQLException
      */
-    public SensoreBean retrieveSensore(int id_sensore) throws SQLException {
+    public SensoreBean visualizzaSensore(int id_sensore) throws SQLException {
         return sns.retrieveByKey(id_sensore);
     }
 

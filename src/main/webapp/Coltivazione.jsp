@@ -108,7 +108,7 @@
     coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
     temporaryColtivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);
     idPianta = temporaryColtivazioneBean.getPianta();
-    temporaryPiantaBean = pm.ritornaPiantaManager(idPianta);
+    temporaryPiantaBean = pm.visualizzaPianta(idPianta);
     nomePianta = temporaryPiantaBean.getNome();
     urlImmagine = temporaryPiantaBean.getImmagine();
     temporaryTerrenoBean = tm.restituisciTerrenoDaInt(temporaryColtivazioneBean.getTerreno());

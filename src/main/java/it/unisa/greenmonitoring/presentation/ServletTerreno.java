@@ -72,7 +72,7 @@ public class ServletTerreno extends HttpServlet {
             //creo il bean da inserire
             TerrenoBean terreno = new TerrenoBean(nome, latitudine, longitudine, superfice, fileName, azienda);
             //errori ritorna il bean terreno con i parametri settati null se ci sono errori
-            if (tm.createTerreno(terreno) == null) {
+            if (tm.inserisciTerreno(terreno) == null) {
                 request.setAttribute("erroriTerrenoBean", "errore nell'inserimento dei dati");
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciTerreno.jsp");
                 dispatcher.forward(request, response);
