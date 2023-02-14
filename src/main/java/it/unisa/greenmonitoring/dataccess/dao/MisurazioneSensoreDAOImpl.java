@@ -103,12 +103,12 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
         try {
             connection = ConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
-            preparedStatement.setInt(1, msb.getColtivazioneID());
+            preparedStatement.setInt(1, msb.getColtivazione());
             preparedStatement.setInt(2, msb.getValore());
             preparedStatement.setDate(3, (Date) msb.getData());
             preparedStatement.setTime(4, msb.getOra());
             preparedStatement.setString(5, msb.getTipo());
-            preparedStatement.setInt(6, msb.getSensoreID());
+            preparedStatement.setInt(6, msb.getSensore_id());
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException s) {

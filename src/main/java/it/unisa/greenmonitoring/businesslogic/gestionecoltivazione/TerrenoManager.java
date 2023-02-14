@@ -75,6 +75,7 @@ public class TerrenoManager {
      * @return TerrenoBean
      * @throws SQLException
      */
+    //visualizzaTerreno
     public TerrenoBean restituisciTerrenoDaInt(int id_terreno) throws SQLException {
         return td.retrieveByKey(id_terreno);
     }
@@ -85,6 +86,7 @@ public class TerrenoManager {
      * @return TerrenoBean
      * @throws SQLException
      */
+    //rimuovere ed usare solo quellodi sebastian
     public TerrenoBean restituisciTerreno(String id_terreno) throws SQLException {
         List<TerrenoBean> terrenoBeanList = td.retrieveTerreno();
         TerrenoBean result = new TerrenoBean();
@@ -96,14 +98,6 @@ public class TerrenoManager {
         return result;
     }
 
-    /**
-     * Questo metodo aggiorna una riga in TERRENO in corrispondenza ad id.
-     * @param id_terreno
-     * @throws SQLException
-     */
-    public void updateTerreno(String id_terreno) throws SQLException {
-
-    }
 
     /**
      * Metodo usato per rimuovere un terreno.
