@@ -44,33 +44,49 @@
 
 <%} %>
 
-<div class="container">
-    <form method="post" action="ServletAssociazione" id="associa_dipendente">
-        <label for="codiceAzienda">Codice:</label>
-        <input type="text" id="codiceAzienda" name="codiceAzienda">
+<div class="container py-5 border-1">
+    <div class="row justify-content-center">
+        <div class="col-5 py-5">
+            <legend style="font-size: 40px; text-align:center; color: black; font-family: 'Lobster', cursive;">
+                Associazione Azienda
+            </legend>
+            <form class="row g-4 justify-content-center  py-3" action="ServletAssociazione" id="associa_dipendente"
+                  method="post">
+                <div class="col-6" style="font-family: 'Lora', serif; ">
+                    <div class="form-outline form-white mb-4">
+                        <label for="codiceAzienda" class="form-label">Codice Azienda:</label>
+                        <input type="text" class="form-control" id="codiceAzienda" placeholder="12345"
+                               name="codiceAzienda"
+                               required=""/>
+                    </div>
+                </div>
 
-        <!-- Button trigger modal -->
-        <button id="showModal" type="button" class="btn btn-primary" data-toggle="Modal"
-                data-target="#exampleModalCenter">
-            Associa
-        </button>
-    </form>
-    <!-- Modal -->
-    <div id=Modal class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    Sei sicuro di voler effettuare l'associazione?
-                </div>
-                <div class="modal-footer">
-                    <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Esci</button>
-                    <button id="summit" type="button" class="btn btn-primary">Conferma</button>
-                </div>
+                <!-- Button trigger modal -->
+                <button id="showModal" type="button" class="btn btn-outline-success btn-lg px-3" data-toggle="Modal"
+                        data-target="#exampleModalCenter">
+                    Associa
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id=Modal class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                Sei sicuro di voler effettuare l'associazione?
+            </div>
+            <div class="modal-footer">
+                <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Esci</button>
+                <button id="summit" type="button" class="btn btn-primary">Conferma</button>
             </div>
         </div>
     </div>
+</div>
 
-    <%@include file="fragments/footer.html" %>
+<%@include file="fragments/footer.html" %>
 </body>
 </html>
