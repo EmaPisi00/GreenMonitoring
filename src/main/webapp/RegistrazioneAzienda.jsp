@@ -24,7 +24,14 @@
 
 
 <%@include file="/fragments/headerLogin.html"%>
+<%
 
+    if (session.getAttribute("currentUserSession") != null) {
+        //l'if controlla se l'utente è già loggato quando tenta di arrivare alla registrazione
+        response.sendRedirect("ListaColtivazioni.jsp");
+    }
+
+%>
 
 <div class="container py-4 h100">
     <div class="row justify-content-center align-items-center h-100" style="width: 100%;">

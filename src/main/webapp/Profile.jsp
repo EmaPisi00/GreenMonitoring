@@ -25,11 +25,13 @@
 
 
 <% UtenteBean user= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (user == null)  { %>
-<%@include file="/fragments/headerLogin.html" %>
-<%} else{ %>
+    if (user == null)  {
+        response.sendRedirect("error.jsp");
+    } else if(user instanceof AziendaBean){ %>
 <%@ include file="/fragments/headerLoggedAzienda.html" %>
-<%}%>
+<%} else if (user instanceof DipendenteBean){ %>
+<%@ include file="/fragments/headerLoggedDipendente.html" %>
+<% }%>
 <html>
 <body>
 

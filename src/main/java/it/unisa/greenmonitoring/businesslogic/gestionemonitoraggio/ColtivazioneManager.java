@@ -193,7 +193,7 @@ public class ColtivazioneManager {
     }
 
     /**
-     * Questo metodo restituisce tutte le fisiopatie di una pianta
+     * Questo metodo restituisce tutte le fisiopatie di una pianta.
      * @param id_pianta
      * @return ArrayList<FisiopatieBean>
      */
@@ -203,7 +203,7 @@ public class ColtivazioneManager {
     }
 
     /**
-     * Questo metodo restituisce tutte le fisiopatie
+     * Questo metodo restituisce tutte le fisiopatie.
      * @return ArrayList<FisiopatieBean>
      */
 

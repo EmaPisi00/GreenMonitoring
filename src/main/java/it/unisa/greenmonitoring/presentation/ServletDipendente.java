@@ -44,7 +44,7 @@ public class ServletDipendente extends HttpServlet {
 
         if (!(password.equals(confermPassword)) || !(email.equals(confermEmail))) {
             System.out.println("\nErrore email o password diverse ");
-            response.sendRedirect("Dipendente.jsp");
+            response.sendRedirect("RegistrazioneDipendente.jsp");
         } else {
 
             DipendenteBean dipendenteBean = new DipendenteBean();
