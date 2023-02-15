@@ -20,7 +20,7 @@ public class PiantaManager {
      */
     private ColtivazioneManager cm;
     /**
-     * Costruttore
+     * Costruttore.
      */
     public PiantaManager() {
         this.pd = new PiantaDAOImpl();
@@ -84,6 +84,7 @@ public class PiantaManager {
     /**
      * @param emailAzienda
      * @param id_pianta
+     * @return boolean
      */
     public boolean rimuoviPiantaManager(int id_pianta, String emailAzienda) {
         ArrayList<ColtivazioneBean> c = cm.visualizzaColtivazioniAvviate(emailAzienda);

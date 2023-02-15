@@ -52,7 +52,7 @@ public class MqttMessagePrinter implements MqttCallback {
             MisurazioneSensoreBean storico = new MisurazioneSensoreBean(new Date(System.currentTimeMillis()), new Time(System.currentTimeMillis()),
                     sensore.getTipo(), (int) valore, sensore.getId(), sensore.getColtivazione());
             msd.createMisurazioneManuel(storico);
-            PiantaDAO pd= new PiantaDAOImpl();
+            PiantaDAO pd = new PiantaDAOImpl();
             if (storico.getTipo().matches("temperature")) {
 
                 //prendo la pianta dal sensore che mi da la coltivazione.
@@ -61,7 +61,7 @@ public class MqttMessagePrinter implements MqttCallback {
                 // se temperatura del sensore rilevata è diversa da max e min della pianta
                 if (storico.getValore() > Float.parseFloat(pianta.getTemperatura_max())
                         || storico.getValore() < Float.parseFloat(pianta.getTemperatura_min())) {
-                    NotificaDAO nd= new NotificaDAOImpl();
+                    NotificaDAO nd = new NotificaDAOImpl();
                     NotificaBean nb = new NotificaBean(sensore.getColtivazione(), sensore.getAzienda(),
                             "ErroreTemperatura", new Timestamp(storico.getOra().getTime()), "errore nella temperatura");
                     System.out.println(nb);

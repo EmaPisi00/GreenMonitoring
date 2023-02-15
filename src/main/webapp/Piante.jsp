@@ -54,10 +54,10 @@
 
 
 
-<div class="bd">
+<div class="bd py-5">
     <legend style="font-family: 'Lobster', cursive; text-align: center; font-size: 35px;">Piante</legend>
     <form id="visualizza_piante" action="ServletPianta" method="post">
-        <div class="container">
+        <div class="container py-5">
             <div class="row">
                 <div class="col-14 py-5">
 

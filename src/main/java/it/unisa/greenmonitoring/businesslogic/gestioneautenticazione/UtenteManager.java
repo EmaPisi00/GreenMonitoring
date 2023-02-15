@@ -12,7 +12,6 @@ import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAOImpl;
 
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class UtenteManager {
     /**
