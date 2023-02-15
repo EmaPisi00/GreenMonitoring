@@ -32,22 +32,24 @@
 %>
 
 
-<div class="container">
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-12 text-center">
+        <div class="col-5 text-center">
 
             <h1 style="font-family: 'Lobster', cursive; font-size: 35px;">Visualizza Sensori</h1>
         </div>
-        <div class="col-5 py-5">
-            <table  class="table-group-divider" style="font-size: 30px;">
+        <div class="col-12 py-5">
+            <table  class="table table-group-divider" style="font-size: 30px;">
+                <thead>
                 <tr style="font-family: 'Staatliches', cursive; font-size: 20px;">
                     <th  scope="col">ID</th>
                     <th  scope="col">Tipo</th>
                     <th  scope="col">ID Mosquitto</th>
                     <th  scope="col">Azienda</th>
                 </tr>
+                </thead>
                 <% for (SensoreBean sensore : sensori) { %>
-                <tr scope="row" >
+                <tr class="justify-content-center" >
                     <td ><%= sensore.getId() %>
                     </td>
                     <td><%= sensore.getTipo() %>
@@ -71,7 +73,9 @@
                 </div>
             </div>
         </div>
-        <% } %>
+        <% } else {
+            response.sendRedirect("error.jsp");
+        }%>
     </div>
 </div>
 <%@include file="fragments/footer.html" %>

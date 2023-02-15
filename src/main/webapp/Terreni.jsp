@@ -67,7 +67,6 @@
 
 
 <div class="bd">
-    <h1 style="font-family: 'Lobster', cursive; font-size: 35px; text-align: center">Dipendenti</h1>
     <div id="alrt" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>
     </div>
@@ -81,9 +80,12 @@
         }
     %>
 
-    <div class="container">
+    <div class="container py-5">
         <div class="row">
-            <div class="card-body">
+            <div class="col-12 text-center">
+                <h1 style="font-family: 'Lobster', cursive; font-size: 35px; text-align: center">Terreni Presenti</h1>
+            </div>
+            <div class="col-14 py-5">
                 <table class="table table-group-divider">
                     <thead>
                     <tr style="font-family: 'Staatliches', cursive; font-size: 25px;">

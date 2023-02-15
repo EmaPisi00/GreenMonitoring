@@ -18,7 +18,11 @@
 </head>
 <body>
 <%
-    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession"); %>
+    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+    if (u == null) {
+        response.sendRedirect("error.jsp");
+    }
+%>
 <%@include file="fragments/headerLoggedAzienda.html" %>
 <%MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl();
     MisurazioneSensoreDAO misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();

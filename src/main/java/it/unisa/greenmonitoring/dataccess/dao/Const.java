@@ -6,5 +6,5 @@ public class Const {
     public final static String NOME_DB = "greenmonitoringdb";
     public final static String NOME_DB_TEST = "greenmonitoringdb_test";
     public static String name = "root";
-    public static String pwd = "1820";
+    public static String pwd = "311000";
 }

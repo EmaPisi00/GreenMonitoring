@@ -22,6 +22,31 @@
   <title>InserisciTerreno</title>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
+  <style>
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+
+    table td {
+      padding: 5px;
+    }
+
+    table td:first-child {
+      text-align: right;
+      font-weight: bold;
+      width: 120px;
+    }
+
+    table select, table input {
+      width: 100%;
+    }
+
+    table input[type="submit"] {
+      margin-top: 10px;
+      width: auto;
+    }
+  </style>
 
 </head>
 
@@ -33,15 +58,27 @@
 <%}%>
 
   <body >
-
   <form method="post" action="ServletSensore">
-    <label for="tipo">tipo sensore:</label>
-    <input type="text" id="tipo" name="tipo">
-
-    <label for="id_mosquitto">ID Mosquitto:</label>
-    <input type="id_mosquitto" id="id_mosquitto" name="id_mosquitto">
-
-    <input type="submit" value="RegistraSensore" name="RegistraSensore">
+    <table>
+      <tr>
+        <td>Tipo sensore:</td>
+        <td>
+          <select id="tipo" name="tipo">
+            <option value="Umidità">Umidita'</option>
+            <option value="Temperatura">Temperatura</option>
+            <option value="PH">PH</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>ID Mosquitto:</td>
+        <td><input type="text" id="id_mosquitto" name="id_mosquitto"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><input type="submit" value="Registra Sensore" name="RegistraSensore"></td>
+      </tr>
+    </table>
   </form>
 
   <%@include file="/fragments/footer.html"%>

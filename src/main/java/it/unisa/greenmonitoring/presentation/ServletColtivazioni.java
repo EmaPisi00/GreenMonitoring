@@ -68,7 +68,6 @@ public class ServletColtivazioni extends HttpServlet {
                     String dataInizio = request.getParameter("datainizio");
                     java.sql.Date dataInizioDate = java.sql.Date.valueOf(dataInizio);
                     int terreno = Integer.parseInt(request.getParameter("terreno")); //id
-                    System.out.println("l'id del terreno nella servlet " + terreno);
                     ColtivazioneBean cb = new ColtivazioneBean();
                     cb.setPianta(Integer.valueOf(nomepianta));
                     cb.setStato_archiviazione(Byte.parseByte("0"));
@@ -115,23 +114,26 @@ public class ServletColtivazioni extends HttpServlet {
                 }
                 response.sendRedirect("Coltivazione.jsp");
             } else {
-            java.sql.Date todaydate = new java.sql.Date(System.currentTimeMillis());
+            /* java.sql.Date todaydate = new java.sql.Date(System.currentTimeMillis());
             if (java.sql.Date.valueOf(request.getParameter("data_inizio_periodo")).after(todaydate)) {
                 request.getSession().setAttribute("erroreDataPeriodo", "Periodo non valido");
                 response.sendRedirect("Coltivazione.jsp");
-            } else {
+            } else { */
                 ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+                System.out.println("Data Inizio Periodo "  + request.getParameter("data_inizio_periodo"));
+                System.out.println("Data Fine Periodo " + request.getParameter("data_inizio_periodo"));
                 java.sql.Date inizioPeriodo = java.sql.Date.valueOf(request.getParameter("data_inizio_periodo"));
                 java.sql.Date finePeriodo = java.sql.Date.valueOf(request.getParameter("data_fine_periodo"));
-                Integer coltivazioneId = (Integer) request.getSession().getAttribute("coltivazioneID");
+                Integer coltivazioneId = Integer.valueOf(request.getSession().getAttribute("coltivazioneID").toString());
                 String tipo = request.getParameter("tipoSensore");
+                System.out.println("Tipo di sensore arrivato : " + tipo);
                 List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
                 String jsonPeriodoColtivazioni = costruisciJsonPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
                 PrintWriter out = response.getWriter();
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 out.write(jsonPeriodoColtivazioni);
-            }
+            /*}*/
         }
     }
 
@@ -146,19 +148,19 @@ public class ServletColtivazioni extends HttpServlet {
     public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId, String tipo) {
         ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
         List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
-        String InizioJson = "{\"theme\":\"light1\",\"animationEnabled\":false,\"title\":{\"text\":\"\"},\"data\":[{\"type\":\"spline\",\"dataPoints\":[";
+        String InizioJson = "{\"theme\":\"light1\",\"animationEnabled\":\"false\",\"title\":{\"text\":\"\"},\"data\":[{\"type\":\"spline\",\"dataPoints\":[";
         String ParteJsonDataMisurazione = "{\"label\": \"";
         String ParteJsonValoreMisurazione = "\",  y: \"";
-        String FineInformazioniGrafico = "}";
-        String FineJson = "]}";
+        String FineJson = "}]}";
         String valueToPut = new String();
         for (int i = 0; i < misurazioneSensoreBeanList.size(); i++) {
+            valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + "}" + ",";
             if (i == misurazioneSensoreBeanList.size() - 1) {
-                valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico;
+                valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + "}]";
             }
-            valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico + ",";
         }
         String json = InizioJson + valueToPut + FineJson;
+        System.out.println("JSON : " + json);
         return json;
     }
 }

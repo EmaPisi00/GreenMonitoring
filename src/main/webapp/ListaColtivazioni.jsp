@@ -70,6 +70,10 @@
                     List<ColtivazioneBean> list = null;
                     if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                         DipendenteBean a = (DipendenteBean) sa;
+                        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> qui <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                        if(a.getAzienda() == null) {
+                            response.sendRedirect("error.jsp");
+                        }
                         ColtivazioneManager cm = new ColtivazioneManager();
                         list = cm.visualizzaStatoColtivazioni(a.getAzienda());
                     } else {

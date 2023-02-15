@@ -94,9 +94,9 @@ public class ServletPianta extends HttpServlet {
             AziendaBean utente = (AziendaBean) session.getAttribute("currentUserSession");
             System.out.println("***** id" + request.getParameter("rimuoviPianta_submit"));
             int idPianta = Integer.parseInt(request.getParameter("rimuoviPianta_submit"));
-            if(!pm.rimuoviPiantaManager(idPianta, utente.getEmail())) {
+            if (!pm.rimuoviPiantaManager(idPianta, utente.getEmail())) {
                 System.out.println("errore");
-                request.setAttribute("erroreRimozionePianta","errore nella rimozione della pianta");
+                request.setAttribute("erroreRimozionePianta", "errore nella rimozione della pianta");
             }
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Piante.jsp");
             dispatcher.forward(request, response);

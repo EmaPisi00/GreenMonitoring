@@ -33,6 +33,10 @@ public class ColtivazioneManager {
     private SensoreDAO sensoreDAO;
 
     /**
+     * FisiopatieDAO.
+     */
+    private FisiopatieDAO fisiopatieDAO;
+    /**
      * Questa costante indica lo stato di una coltivazione avviata.
      */
     private final int stato_coltivazione_avviata = 0;
@@ -44,6 +48,7 @@ public class ColtivazioneManager {
         pd = new PiantaDAOImpl();
         td = new TerrenoDAOImpl();
         sensoreDAO = new SensoreDAOImpl();
+        fisiopatieDAO = new FisiopatieDAOImpl();
         misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
     }
 
@@ -185,5 +190,24 @@ public class ColtivazioneManager {
      */
     public ColtivazioneBean retrieveColtivazioneSingola(int id) throws SQLException {
         return cd.retrieveByKey(id);
+    }
+
+    /**
+     * Questo metodo restituisce tutte le fisiopatie di una pianta.
+     * @param id_pianta
+     * @return ArrayList<FisiopatieBean>
+     */
+
+    public ArrayList<FisiopatieBean> visualizzaFisiopatiePerPianta(int id_pianta) throws SQLException {
+        return fisiopatieDAO.retrieveAllByPianta(id_pianta);
+    }
+
+    /**
+     * Questo metodo restituisce tutte le fisiopatie.
+     * @return ArrayList<FisiopatieBean>
+     */
+
+    public ArrayList<FisiopatieBean> visualizzaFisiopatie() throws SQLException {
+        return fisiopatieDAO.retrieveAll();
     }
 }

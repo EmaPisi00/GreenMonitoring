@@ -51,9 +51,9 @@
   if (u == null) {
     response.sendRedirect("Login.jsp");
   }
-  FisiopatieDAO fisiopatieDAO = new FisiopatieDAOImpl();
+  ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+  ArrayList<FisiopatieBean> listaFisiopatie = coltivazioneManager.visualizzaFisiopatie();
   PiantaDAO piantaDAO = new PiantaDAOImpl();
-  ArrayList<FisiopatieBean> listaFisiopatie = fisiopatieDAO.retrieveAll();
   List<PiantaBean> listaPiante = piantaDAO.RetriveAllPiantaDefault();
 
 %>
