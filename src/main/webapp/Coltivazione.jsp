@@ -106,7 +106,7 @@
     urlImmagine = temporaryPiantaBean.getImmagine();
     temporaryTerrenoBean = tm.restituisciTerrenoDaInt(temporaryColtivazioneBean.getTerreno());
     descrizioneTerreno = temporaryTerrenoBean.getNome();
-    resultUmidita = cm.restituisciMisurazioniRecenti("umidità", coltivazioneID);
+    resultUmidita = cm.restituisciMisurazioniRecenti("umidita", coltivazioneID);
     resultPH = cm.restituisciMisurazioniRecenti("pH", coltivazioneID);
     resultTemperatura = cm.restituisciMisurazioniRecenti("Temperatura", coltivazioneID);
 } else {
@@ -151,8 +151,39 @@
         </div>
         <div class="col d-flex align-items-center">
             <h7>
-                <button class="btn btn-danger" id="archivia-coltivazione">Archivia Coltivazione</button>
+                <button class="btn btn-danger" id="archivia-coltivazione" disabled>Archivia Coltivazione</button>
             </h7>
+        </div>
+        <div class="col d-flex align-items-center">
+            <div id="fullChartCanvas" style="width: 500px; height: 200px ">
+                <script type="text/javascript">
+                    window.onload =  function() {
+                        var coltivazioneID = <%=coltivazioneID%>;
+                            console.log("sono nell'if");
+                            var xhr = new XMLHttpRequest();
+                            console.log("xhr inizializzato");
+                            xhr.open("POST", "ServletColtivazioni");
+                            console.log("open fatta");
+                            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                            console.log("requestHeader settato");
+                            xhr.send("coltivazioneID="+coltivazioneID+"&today=today");
+                            console.log("inviata la richiesta");
+                            xhr.onreadystatechange = function () {
+                                console.log("sono dentro la funzione");
+                                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                    console.log("lo status è 200");
+                                    var fullchartData = JSON.parse(xhr.responseText);
+                                    console.log(fullchartData);
+                                    var chart2 = new CanvasJS.Chart("fullChartCanvas", fullchartData);
+                                    chart2.render();
+                                } else if (xhr.status === 500){
+                                    var div = document.getElementById("fullChartCanvas");
+                                    div.innerHTML = xhr.responseText;
+                                }
+                            }
+                    }
+                </script>
+            </div>
         </div>
     </div>
 </div>
@@ -201,7 +232,6 @@
                 <div style="width: auto;" class="row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <!--Media umidità -->
-                        <div class="row">
                             <h5>Umidità media</h5>
                             <div class="row">
                                 <div class="col value-bar">
@@ -212,7 +242,6 @@
                                     <div class="value-status" style="background-color: <%=colorUmidità%>;"></div>
                                 </div>
                             </div>
-                        </div>
                         <!--Media temperatura -->
                         <h5>Temperatura media</h5>
                         <div class="row">
@@ -248,7 +277,7 @@
                 <div style="width: auto;" class="row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <% cm = new ColtivazioneManager();
-                            List<MisurazioneSensoreBean> misurazioneSensoreBeans = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "umidità");
+                            List<MisurazioneSensoreBean> misurazioneSensoreBeans = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "umidita");
                             for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
                                 colorUmidità = "green";
                             /*
@@ -429,13 +458,13 @@
             <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>"
                    name="data_fine_periodo" required>
             <select id="selectSensore" required>
-                <option name="tipoSensore" value="umidità">Umidità</option>
+                <option name="tipoSensore" value="umidita">Umidità</option>
                 <option name="tipoSensore" value="pH">pH</option>
                 <option name="tipoSensore" value="temperatura">Temperatura</option>
             </select>
             <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success" onclick="loadJsonAndPrintChart()">Mostra per questi periodi</button>
         </form>
-        <div id="rilevamentiPerPeriodoCanvas" style="height: 370px; width: 100%;"></div>
+        <div id="rilevamentiPerPeriodoCanvas" style="height: 370px; width: 500px;"></div>
         <script type="text/javascript">
             function loadJsonAndPrintChart() {
                 var coltivazioneID = <%=coltivazioneID%>;
