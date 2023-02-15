@@ -18,7 +18,7 @@ public interface TerrenoDAO {
      * @return TerrenoBean
      * @throws SQLException
      */
-    ArrayList<TerrenoBean> retrieveTerreno();
+    ArrayList<TerrenoBean> retrieveAll();
 
     /**
      * Questo metodo ricerca un terreno in base all'id.

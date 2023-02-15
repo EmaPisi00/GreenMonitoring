@@ -12,10 +12,6 @@ import java.util.List;
 
 public class PiantaManager {
     /**
-     * contiene gli errori e la descrizione.
-     */
-    private  PiantaBean errori;
-    /**
      * piantadao.
      */
     private PiantaDAO pd;
@@ -23,16 +19,21 @@ public class PiantaManager {
      * coltivazionemanager.
      */
     private ColtivazioneManager cm;
+    /**
+     * Costruttore
+     */
+    public PiantaManager() {
+        this.pd = new PiantaDAOImpl();
+        this.cm = new ColtivazioneManager();
+    }
     //TO-DO implementare i metodi di pianta manager
     /**
      * @param t
      * @return List
      */
-    public PiantaBean CreaPiantaManager(PiantaBean t) {
+    public PiantaBean inserisciPianta(PiantaBean t) {
         System.out.println("_____ sono t= " + t);
-        pd = new PiantaDAOImpl();
         boolean matchDefault = false;
-        boolean matchAzienda = false;
         List<PiantaBean> listaPiante = pd.RetriveAllPiantaDefault();
         List<PiantaBean> listaPianteAzienda = pd.RetriveAllPiantaAzienda(t.getAzienda());
         for (PiantaBean tt : listaPiante) {
@@ -76,7 +77,6 @@ public class PiantaManager {
      * @return List
      */
     public List<PiantaBean> ListaPianteManager(String email) {
-        pd = new PiantaDAOImpl();
         List<PiantaBean> listaPiante = pd.RetriveAllPiantaDefault();
         listaPiante.addAll(pd.RetriveAllPiantaAzienda(email));
         return (!listaPiante.isEmpty()) ? listaPiante : null;
@@ -85,18 +85,16 @@ public class PiantaManager {
      * @param emailAzienda
      * @param id_pianta
      */
-    public void rimuoviPiantaManager(int id_pianta, String emailAzienda) {
-        cm = new ColtivazioneManager();
+    public boolean rimuoviPiantaManager(int id_pianta, String emailAzienda) {
         ArrayList<ColtivazioneBean> c = cm.visualizzaColtivazioniAvviate(emailAzienda);
         for (ColtivazioneBean colti : c) {
             if (colti.getPianta() == id_pianta) {
                     System.out.println("sono uguali errore");
-                    return;
+                    return false;
             }
         }
-        pd = new PiantaDAOImpl();
         pd.deletePianta(id_pianta);
-        System.out.println("fatto elimitato");
+        return true;
     }
 
     /**
@@ -104,8 +102,7 @@ public class PiantaManager {
      * @param id
      * @return PiantaBean
      */
-    public PiantaBean ritornaPiantaManager(Integer id) {
-        pd = new PiantaDAOImpl();
+    public PiantaBean visualizzaPianta(Integer id) {
         PiantaBean pianta = pd.retrieveByKey(id);
         return pianta;
     }
@@ -114,12 +111,11 @@ public class PiantaManager {
      * @param pianta
      * @return PiantaBean
      */
-    public PiantaBean aggiornaValoriPiantaManager(PiantaBean pianta) {
+    public PiantaBean aggiornaPianta(PiantaBean pianta) {
         if (controlloDatiPiantaManager(pianta) == null) {
             System.out.println("errore in aggiornavaloriManager");
             return null;
         }
-            pd = new PiantaDAOImpl();
             pd.updateValue(pianta);
             return pianta;
     }
@@ -128,7 +124,7 @@ public class PiantaManager {
      * @param t
      * @return PiantaBean
      */
-    public PiantaBean controlloDatiPiantaManager(PiantaBean t) {
+    private PiantaBean controlloDatiPiantaManager(PiantaBean t) {
         //errori Nome
         if ((t.getNome().length() <= 3 || t.getNome().length() >= 30)) {
             System.out.println("errore nella dimensione del nome. Deve essere compresa tra 3 e 30" + t.getNome());

@@ -33,15 +33,6 @@ public class UtenteManager {
     }
 
     /**
-     * Metodo che permette la rimozione di una associazione ad un'azienda.
-     * @param email
-     * @return dipendente
-     * @throws SQLException
-     */
-    public List<DipendenteBean> retrieveAll(String email) throws SQLException {
-        return null;
-    }
-    /**
      * Metodo che permette l'associazione di un dipendente ad un'azienda.
      * @param user
      * @param codiceAzienda
@@ -87,19 +78,17 @@ public class UtenteManager {
      * @param vecchioUtente
      * @throws SQLException
      */
-    public void controllaDatiAggiorna(UtenteBean utenteNuovo, UtenteBean vecchioUtente) throws SQLException {
+    public void modificaDatiUtente(UtenteBean utenteNuovo, UtenteBean vecchioUtente) throws SQLException {
 
         if (utenteNuovo instanceof AziendaBean) {
-            AziendaDAOImpl aziendaDao = new AziendaDAOImpl();
             if (((AziendaBean) utenteNuovo).compareTo((AziendaBean) vecchioUtente) != 0) {
-                aziendaDao.update((AziendaBean) utenteNuovo, vecchioUtente.getEmail());
+                aziendaDAO.update((AziendaBean) utenteNuovo, vecchioUtente.getEmail());
             }
 
         } else if (utenteNuovo instanceof DipendenteBean) {
-            DipendenteDAOImpl dipendenteDao = new DipendenteDAOImpl();
             if (((DipendenteBean) utenteNuovo).compareTo((DipendenteBean) vecchioUtente) != 0) {
                 System.out.println("ci sono modifiche da aggiornare");
-                dipendenteDao.update((DipendenteBean) utenteNuovo, vecchioUtente.getEmail());
+                dipendenteDAO.update((DipendenteBean) utenteNuovo, vecchioUtente.getEmail());
             }
 
         }

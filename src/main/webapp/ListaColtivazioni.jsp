@@ -155,7 +155,7 @@
                 <% } else {
                     for (int i = 0; i < ids.size(); i++) {
                 %>
-                <option value="<%=ids.get(i)%>">nome: <%=tm.restituisciTerreno(ids.get(i)).getNome()%>
+                <option value="<%=ids.get(i)%>">nome: <%=tm.restituisciTerrenoDaInt(ids.get(i)).getNome()%>
                 </option>
                 <% }
                 } %>

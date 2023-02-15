@@ -29,7 +29,7 @@
     ColtivazioneBean coltivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);
     TerrenoBean terrenoBean = tm.restituisciTerrenoDaInt(coltivazioneBean.getTerreno());
     Double misurazione = misurazioneSensoreDAO.retrieveMostRecentMesurement("umidità", coltivazioneID);
-    PiantaBean piantaBean = piantaManager.ritornaPiantaManager(coltivazioneBean.getPianta());
+    PiantaBean piantaBean = piantaManager.visualizzaPianta(coltivazioneBean.getPianta());
     Double umidMax = Double.valueOf(piantaBean.getUmidita_max());
     Double umidMin = Double.valueOf(piantaBean.getUmidita_min());
 %>

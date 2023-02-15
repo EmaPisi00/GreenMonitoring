@@ -34,22 +34,10 @@ public class SensoreManager {
      * @return SensoreBean
      * @throws SQLException
      */
-    public SensoreBean retrieveSensore(int id_sensore) throws SQLException {
+    public SensoreBean visualizzaSensore(int id_sensore) throws SQLException {
         return sns.retrieveByKey(id_sensore);
     }
 
-    /**
-     * Questo metodo aggiorna una riga in Sensore in corrispondenza ad id.
-     * @param sensore
-     * @throws SQLException
-     */
-    public void cancellaSensore(SensoreBean sensore) throws SQLException {
-        try {
-            sns.update(sensore.getId(), sensore);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
     /**
      * Metodo usato per associare un sensore.
      * @param sensore

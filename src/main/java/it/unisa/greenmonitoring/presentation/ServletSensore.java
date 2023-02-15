@@ -57,7 +57,7 @@ public class ServletSensore extends HttpServlet {
             int coltivazione = Integer.parseInt(request.getParameter("id_coltivazione"));
             int id_sensore = Integer.parseInt(request.getParameter("id_sensore"));
             try {
-                sns = sensoreManager.retrieveSensore(id_sensore);
+                sns = sensoreManager.visualizzaSensore(id_sensore);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -65,7 +65,7 @@ public class ServletSensore extends HttpServlet {
         } else if (request.getParameter("CancellaAssociazioneSensore") != null) {
             int id_sensore = Integer.parseInt(request.getParameter("id_sensore"));
             try {
-                sns = sensoreManager.retrieveSensore(id_sensore);
+                sns = sensoreManager.visualizzaSensore(id_sensore);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

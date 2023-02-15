@@ -64,7 +64,7 @@ public class ServletGestioneProfilo extends HttpServlet {
             utenteNuovo.setNome_azienda(nome_azienda);
             utenteNuovo.setPartita_iva(partita_iva);
             try {
-                u.controllaDatiAggiorna(utenteNuovo, utente);
+                u.modificaDatiUtente(utenteNuovo, utente);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -79,7 +79,7 @@ public class ServletGestioneProfilo extends HttpServlet {
             utenteNuovo.setCognome(cognome);
             utenteNuovo.setAzienda(Nome_aziendaDipendente);
             try {
-                u.controllaDatiAggiorna(utenteNuovo, utente);
+                u.modificaDatiUtente(utenteNuovo, utente);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

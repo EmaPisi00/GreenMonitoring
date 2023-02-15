@@ -56,9 +56,15 @@ public class ServletColtivazioni extends HttpServlet {
                     String[] sensoreTemperatura = request.getParameterValues("sensoreTemperatura"); //id
                     String[] sensoreUmidita = request.getParameterValues("sensoreUmidita"); //id
                     ArrayList<String> sensori = new ArrayList<>();
-                    Collections.addAll(sensori, sensorePh);
-                    Collections.addAll(sensori, sensoreTemperatura);
-                    Collections.addAll(sensori, sensoreUmidita);
+                    if (sensorePh != null) {
+                        Collections.addAll(sensori, sensorePh);
+                    }
+                    if (sensoreTemperatura != null) {
+                        Collections.addAll(sensori, sensoreTemperatura);
+                    }
+                    if (sensoreUmidita != null) {
+                        Collections.addAll(sensori, sensoreUmidita);
+                    }
                     String dataInizio = request.getParameter("datainizio");
                     java.sql.Date dataInizioDate = java.sql.Date.valueOf(dataInizio);
                     int terreno = Integer.parseInt(request.getParameter("terreno")); //id
@@ -71,23 +77,20 @@ public class ServletColtivazioni extends HttpServlet {
                     ColtivazioneManager cm = new ColtivazioneManager();
                     cb.setData_inizio(dataInizioDate);
                     try {
-                        cm.avvioColtivazione(cb, utente, sensori);
+                        ArrayList<SensoreBean> listaSensoriBean = new ArrayList<>();
+                        for (String id_sensore : sensori) {
+                            listaSensoriBean.add(sensoreManager.visualizzaSensore(Integer.parseInt(id_sensore)));
+                        }
+                        cm.avvioColtivazione(cb, utente, listaSensoriBean);
                         ArrayList<ColtivazioneBean> coltivazioneBeans = cm.visualizzaStatoColtivazioni(aziendaBean.getEmail());
                         Integer id_coltivazione = coltivazioneBeans.get(coltivazioneBeans.size() - 1).getId();
                         cb.setId(id_coltivazione);
                         SensoreBean sensoreBean;
-                        for (String sensore : sensorePh) {
-                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
+                        for (String sensore : sensori) {
+                            sensoreBean = sensoreManager.visualizzaSensore(Integer.parseInt(sensore));
                             sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
                         }
-                        for (String sensore : sensoreTemperatura) {
-                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
-                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
-                        }
-                        for (String sensore : sensoreUmidita) {
-                            sensoreBean = sensoreManager.retrieveSensore(Integer.parseInt(sensore));
-                            sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
-                        }
+
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -106,7 +109,7 @@ public class ServletColtivazioni extends HttpServlet {
                 }
                 try {
                     SensoreDaRimuovere.setColtivazione(null);
-                    sm.cancellaSensore(SensoreDaRimuovere);
+                    sm.cancellaAssociazioneSensore(SensoreDaRimuovere);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

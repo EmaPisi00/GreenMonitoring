@@ -21,56 +21,59 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
     <title>Lista Sensori</title>
-
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 50%;
-            font-family: monospace;
-            font-size: 18px;
-            text-align: left;
-        }
-        th {
-            background-color: #588c7e;
-            color: white;
-            padding: 12px;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #588c7e;
-        }
-    </style>
 </head>
 <body>
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
     if (u instanceof AziendaBean) { %>
-<%@include file="fragments/headerLoggedAzienda.html"%>
-<%  SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
+<%@include file="fragments/headerLoggedAzienda.html" %>
+<% SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
     List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
 %>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Tipo</th>
-        <th>ID Mosquitto</th>
-        <th>Azienda</th>
-    </tr>
-    <% for (SensoreBean sensore : sensori) { %>
-    <tr>
-        <td><%= sensore.getId() %></td>
-        <td><%= sensore.getTipo() %></td>
-        <td><%= sensore.getIdM() %></td>
-        <td><%= sensore.getAzienda() %></td>
-    </tr>
-    <% } %>
-</table>
-<a href="InserisciSensore.jsp" class="button">Inserisci sensore</a>
-<% } else { %>
-<p>Accesso negato, non sei autorizzato a visualizzare questa pagina</p>
-<% } %>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+
+            <h1 style="font-family: 'Lobster', cursive; font-size: 35px;">Visualizza Sensori</h1>
+        </div>
+        <div class="col-5 py-5">
+            <table  class="table-group-divider" style="font-size: 30px;">
+                <tr style="font-family: 'Staatliches', cursive; font-size: 20px;">
+                    <th  scope="col">ID</th>
+                    <th  scope="col">Tipo</th>
+                    <th  scope="col">ID Mosquitto</th>
+                    <th  scope="col">Azienda</th>
+                </tr>
+                <% for (SensoreBean sensore : sensori) { %>
+                <tr scope="row" >
+                    <td ><%= sensore.getId() %>
+                    </td>
+                    <td><%= sensore.getTipo() %>
+                    </td>
+                    <td><%= sensore.getIdM() %>
+                    </td>
+                    <td><%= sensore.getAzienda() %>
+                    </td>
+                </tr>
+                <% } %>
+            </table>
+        </div>
+        <div class="container py-2">
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    <button onclick="location.href='InserisciSensore.jsp'" type="button"
+                            class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
+                            data-target="#exampleModalCenter">
+                        Inserisci Sensore
+                    </button>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+<%@include file="fragments/footer.html" %>
 </body>
 </html>

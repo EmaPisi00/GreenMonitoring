@@ -80,7 +80,7 @@ public class ServletPianta extends HttpServlet {
             pianta.setUmidita_max(umidita_max);
             pianta.setImmagine(fileName);
 
-            PiantaBean errori = pm.CreaPiantaManager(pianta);
+            PiantaBean errori = pm.inserisciPianta(pianta);
             if (errori == null) {
                 request.setAttribute("erroriPiantaBean", "errore nell inserimento dei dati pianta");
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciPianta.jsp");
@@ -100,7 +100,7 @@ public class ServletPianta extends HttpServlet {
         } else if (request.getParameter("modificaRange_submit") != null) {
             int idPianta = Integer.parseInt(request.getParameter("modificaRange_submit"));
             System.out.println("pianta id= " + idPianta);
-            PiantaBean pianta = pm.ritornaPiantaManager(idPianta);
+            PiantaBean pianta = pm.visualizzaPianta(idPianta);
             request.setAttribute("piantaModificare", pianta);
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/ModificaRangePianta.jsp");
             dispatcher.forward(request, response);
@@ -126,7 +126,7 @@ public class ServletPianta extends HttpServlet {
             copiaPianta.setPh_max(ph_max);
             copiaPianta.setPh_min(ph_min);
             System.out.println("copia = " + copiaPianta + "\npiantanormale=" + pianta);
-            if (pm.aggiornaValoriPiantaManager(copiaPianta) == null) {
+            if (pm.aggiornaPianta(copiaPianta) == null) {
                 System.out.println("nno");
                 request.setAttribute("erroreDatiPianta", "dati inseriti errati");
                 request.setAttribute("piantaModificare", pianta);
