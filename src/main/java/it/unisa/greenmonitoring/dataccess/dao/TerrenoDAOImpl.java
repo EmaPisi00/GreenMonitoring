@@ -112,10 +112,6 @@ public class TerrenoDAOImpl implements TerrenoDAO {
         return t;
     }
 
-    @Override
-    public synchronized void updateTerreno(int id_terreno) throws SQLException {
-
-    }
 
     @Override
     public synchronized void deleteTerreno(int id_terreno) throws SQLException {
