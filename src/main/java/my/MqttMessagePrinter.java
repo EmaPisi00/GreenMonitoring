@@ -1,11 +1,10 @@
 package my;
 
 import it.unisa.greenmonitoring.dataccess.beans.MisurazioneSensoreBean;
+import it.unisa.greenmonitoring.dataccess.beans.NotificaBean;
+import it.unisa.greenmonitoring.dataccess.beans.PiantaBean;
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
-import it.unisa.greenmonitoring.dataccess.dao.MisurazioneSensoreDAO;
-import it.unisa.greenmonitoring.dataccess.dao.MisurazioneSensoreDAOImpl;
-import it.unisa.greenmonitoring.dataccess.dao.SensoreDAO;
-import it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl;
+import it.unisa.greenmonitoring.dataccess.dao.*;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -14,6 +13,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 
 public class MqttMessagePrinter implements MqttCallback {
@@ -34,6 +34,8 @@ public class MqttMessagePrinter implements MqttCallback {
      * @param message
      * @throws MqttException
      */
+
+    //chiama i DAO
     public void messageArrived(String topic, MqttMessage message) throws MqttException, SQLException {
         System.out.println("Received message: " + "Topic= " + topic + new String(message.getPayload()));
 
@@ -47,10 +49,25 @@ public class MqttMessagePrinter implements MqttCallback {
             //prendi il sensore con l idM
             SensoreBean sensore = sensoreDAO.retrieveByidM(topic);
             //crea uno storico.
-            //MisurazioneSensoreBean msb(data,time,tipo,valore), Integer coltivazioneId, Integer sensoreId
             MisurazioneSensoreBean storico = new MisurazioneSensoreBean(new Date(System.currentTimeMillis()), new Time(System.currentTimeMillis()),
                     sensore.getTipo(), (int) valore, sensore.getId(), sensore.getColtivazione());
             msd.createMisurazioneManuel(storico);
+            PiantaDAO pd= new PiantaDAOImpl();
+            if (storico.getTipo().matches("temperature")) {
+
+                //prendo la pianta dal sensore che mi da la coltivazione.
+                PiantaBean pianta = pd.ritornaPiantaPerColtivazione(sensore.getColtivazione());
+
+                // se temperatura del sensore rilevata è diversa da max e min della pianta
+                if (storico.getValore() > Float.parseFloat(pianta.getTemperatura_max())
+                        || storico.getValore() < Float.parseFloat(pianta.getTemperatura_min())) {
+                    NotificaDAO nd= new NotificaDAOImpl();
+                    NotificaBean nb = new NotificaBean(sensore.getColtivazione(), sensore.getAzienda(),
+                            "ErroreTemperatura", new Timestamp(storico.getOra().getTime()), "errore nella temperatura");
+                    System.out.println(nb);
+                    nd.aggiungiNotifica(nb);
+                }
+            }
 
         } else {
             System.out.println("No number found");

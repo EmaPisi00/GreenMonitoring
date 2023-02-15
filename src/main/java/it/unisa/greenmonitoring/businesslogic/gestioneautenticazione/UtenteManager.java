@@ -32,6 +32,7 @@ public class UtenteManager {
         this.aziendaDAO = new AziendaDAOImpl();
     }
 
+
     /**
      * Metodo che permette l'associazione di un dipendente ad un'azienda.
      * @param user
@@ -82,13 +83,14 @@ public class UtenteManager {
 
         if (utenteNuovo instanceof AziendaBean) {
             if (((AziendaBean) utenteNuovo).compareTo((AziendaBean) vecchioUtente) != 0) {
-                aziendaDAO.update((AziendaBean) utenteNuovo, vecchioUtente.getEmail());
+                this.aziendaDAO.update((AziendaBean) utenteNuovo, vecchioUtente.getEmail());
             }
 
         } else if (utenteNuovo instanceof DipendenteBean) {
+
             if (((DipendenteBean) utenteNuovo).compareTo((DipendenteBean) vecchioUtente) != 0) {
                 System.out.println("ci sono modifiche da aggiornare");
-                dipendenteDAO.update((DipendenteBean) utenteNuovo, vecchioUtente.getEmail());
+                this.dipendenteDAO.update((DipendenteBean) utenteNuovo, vecchioUtente.getEmail());
             }
 
         }
