@@ -123,7 +123,7 @@ public class ServletColtivazioni extends HttpServlet {
                 ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
                 java.sql.Date inizioPeriodo = java.sql.Date.valueOf(request.getParameter("data_inizio_periodo"));
                 java.sql.Date finePeriodo = java.sql.Date.valueOf(request.getParameter("data_fine_periodo"));
-                Integer coltivazioneId = (Integer) request.getSession().getAttribute("coltivazioneID");
+                Integer coltivazioneId = Integer.valueOf(request.getSession().getAttribute("coltivazioneID").toString());
                 String tipo = request.getParameter("tipoSensore");
                 List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
                 String jsonPeriodoColtivazioni = costruisciJsonPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
@@ -146,19 +146,20 @@ public class ServletColtivazioni extends HttpServlet {
     public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId, String tipo) {
         ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
         List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
-        String InizioJson = "{\"theme\":\"light1\",\"animationEnabled\":false,\"title\":{\"text\":\"\"},\"data\":[{\"type\":\"spline\",\"dataPoints\":[";
+        System.out.println("costruisciJsonPeriodo " + misurazioneSensoreBeanList);
+        String InizioJson = "{\"theme\":\"light1\",\"animationEnabled\":\"false\",\"title\":{\"text\":\"\"},\"data\":[{\"type\":\"spline\",\"dataPoints\":[";
         String ParteJsonDataMisurazione = "{\"label\": \"";
         String ParteJsonValoreMisurazione = "\",  y: \"";
-        String FineInformazioniGrafico = "}";
-        String FineJson = "]}";
+        String FineJson = "}]}";
         String valueToPut = new String();
         for (int i = 0; i < misurazioneSensoreBeanList.size(); i++) {
+            valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + "}" + ",";
             if (i == misurazioneSensoreBeanList.size() - 1) {
-                valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico;
+                valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + "}]";
             }
-            valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico + ",";
         }
         String json = InizioJson + valueToPut + FineJson;
+        System.out.println("JSON : " + json);
         return json;
     }
 }
