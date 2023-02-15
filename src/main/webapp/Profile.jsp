@@ -88,6 +88,9 @@
     <% } %>
 </table>
 
+<button onclick="location.href='ModificaProfilo.jsp'">Modifica profilo</button>
+
+
 <%@include file="fragments/footer.html"%>
 
 </body>

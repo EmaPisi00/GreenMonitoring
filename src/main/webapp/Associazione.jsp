@@ -36,7 +36,7 @@
 <body>
 
 <% UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
-    if (user instanceof AziendaBean && ((DipendenteBean) user).getAzienda() != null) {
+    if (user instanceof AziendaBean || ((DipendenteBean) user).getAzienda() != null) {
         //l'if controlla se l'utente è un dipendente e se è già associato ad un'azienda
         response.sendRedirect("Profile.jsp");
     } else { %>
