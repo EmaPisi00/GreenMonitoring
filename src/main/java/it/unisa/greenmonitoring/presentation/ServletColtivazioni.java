@@ -3,6 +3,8 @@ package it.unisa.greenmonitoring.presentation;
 import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +71,6 @@ public class ServletColtivazioni extends HttpServlet {
                     String dataInizio = request.getParameter("datainizio");
                     java.sql.Date dataInizioDate = java.sql.Date.valueOf(dataInizio);
                     int terreno = Integer.parseInt(request.getParameter("terreno")); //id
-                    System.out.println("l'id del terreno nella servlet " + terreno);
                     ColtivazioneBean cb = new ColtivazioneBean();
                     cb.setPianta(Integer.valueOf(nomepianta));
                     cb.setStato_archiviazione(Byte.parseByte("0"));
@@ -114,29 +116,45 @@ public class ServletColtivazioni extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 response.sendRedirect("Coltivazione.jsp");
+            } else if (request.getParameter("today") != null) {
+                ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+                java.sql.Date today = new java.sql.Date(System.currentTimeMillis());
+                Integer coltivazioneId = Integer.valueOf(request.getSession().getAttribute("coltivazioneID").toString());
+                String jsonColtivazioni = null;
+                try {
+                    jsonColtivazioni = costruisciJson(coltivazioneId);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                PrintWriter out = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                out.write(jsonColtivazioni);
             } else {
-            java.sql.Date todaydate = new java.sql.Date(System.currentTimeMillis());
+            /* java.sql.Date todaydate = new java.sql.Date(System.currentTimeMillis());
             if (java.sql.Date.valueOf(request.getParameter("data_inizio_periodo")).after(todaydate)) {
                 request.getSession().setAttribute("erroreDataPeriodo", "Periodo non valido");
                 response.sendRedirect("Coltivazione.jsp");
-            } else {
+            } else { */
                 ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+                System.out.println("Data Inizio Periodo "  + request.getParameter("data_inizio_periodo"));
+                System.out.println("Data Fine Periodo " + request.getParameter("data_inizio_periodo"));
                 java.sql.Date inizioPeriodo = java.sql.Date.valueOf(request.getParameter("data_inizio_periodo"));
                 java.sql.Date finePeriodo = java.sql.Date.valueOf(request.getParameter("data_fine_periodo"));
-                Integer coltivazioneId = (Integer) request.getSession().getAttribute("coltivazioneID");
+                Integer coltivazioneId = Integer.valueOf(request.getSession().getAttribute("coltivazioneID").toString());
                 String tipo = request.getParameter("tipoSensore");
-                List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
+                System.out.println("Tipo di sensore arrivato : " + tipo);
                 String jsonPeriodoColtivazioni = costruisciJsonPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
                 PrintWriter out = response.getWriter();
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 out.write(jsonPeriodoColtivazioni);
-            }
+            /*}*/
         }
     }
 
     /**
-     * Questo metodo genera un json per mostrare l'andamento delle misurazioni in una colivazione in un certo periodo.
+     * Questo metodo genera un json per mostrare l'andamento delle misurazioni di un tipo di sensore in un certo periodo.
      * @param inizioPeriodo
      * @param finePeriodo
      * @param coltivazioneId
@@ -146,19 +164,83 @@ public class ServletColtivazioni extends HttpServlet {
     public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId, String tipo) {
         ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
         List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
-        String InizioJson = "{\"theme\":\"light1\",\"animationEnabled\":false,\"title\":{\"text\":\"\"},\"data\":[{\"type\":\"spline\",\"dataPoints\":[";
-        String ParteJsonDataMisurazione = "{\"label\": \"";
-        String ParteJsonValoreMisurazione = "\",  y: \"";
-        String FineInformazioniGrafico = "}";
-        String FineJson = "]}";
-        String valueToPut = new String();
+        String InizioJson = "{\"theme\":\"light1\",\"animationEnabled\":\"false\",\"title\":{\"text\":\"\"},\"data\":[{\"type\":\"spline\",\"dataPoints\":[";
+        JSONObject jsonObject = new JSONObject();
+        JSONObject title = new JSONObject();
+        JSONArray data = new JSONArray();
+        JSONObject dataContent = new JSONObject();
+        JSONArray dataPoints = new JSONArray();
+        jsonObject.put("theme", "light1");
+        jsonObject.put("animationEnabled", "false");
+        title.put("text", "");
+        jsonObject.put("title", title);
+        dataContent.put("type", "spline");
+
         for (int i = 0; i < misurazioneSensoreBeanList.size(); i++) {
-            if (i == misurazioneSensoreBeanList.size() - 1) {
-                valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico;
-            }
-            valueToPut = valueToPut + ParteJsonDataMisurazione + misurazioneSensoreBeanList.get(i).getData() + ParteJsonValoreMisurazione + misurazioneSensoreBeanList.get(i).getValore() + FineInformazioniGrafico + ",";
+            JSONObject dataPoint = new JSONObject();
+            dataPoint.put("label", misurazioneSensoreBeanList.get(i).getData());
+            dataPoint.put("y", misurazioneSensoreBeanList.get(i).getValore());
+            dataPoints.add(dataPoint);
         }
-        String json = InizioJson + valueToPut + FineJson;
-        return json;
+        dataContent.put("dataPoints", dataPoints);
+        data.add(dataContent);
+        jsonObject.put("data", data);
+        System.out.println("JSON : " + jsonObject);
+        return jsonObject.toJSONString();
+    }
+
+    /**
+     * Questo metodo genera un json per mostrare l'andamento delle misurazioni in una colivazione in un certo periodo.
+     * @param coltivazioneId
+     * @return string
+     */
+    public String costruisciJson(Integer coltivazioneId) throws SQLException {
+        ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+        List<MisurazioneSensoreBean> misurazioneSensoreBeanListPH = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, "pH");
+        List<MisurazioneSensoreBean> misurazioneSensoreBeanListTemperatura = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, "temperatura");
+        List<MisurazioneSensoreBean> misurazioneSensoreBeanListUmidita = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, "umidita");
+        JSONObject jsonObject = new JSONObject();
+        JSONObject title = new JSONObject();
+        JSONArray data = new JSONArray();
+        JSONObject dataContentPH = new JSONObject();
+        JSONObject dataContentTemperatura = new JSONObject();
+        JSONObject dataContentUmidità = new JSONObject();
+        JSONArray dataPoints = new JSONArray();
+        jsonObject.put("theme", "light1");
+        jsonObject.put("animationEnabled", "false");
+        title.put("text", "");
+        jsonObject.put("title", title);
+        dataContentPH.put("type", "spline");
+        dataContentTemperatura.put("type", "spline");
+        dataContentUmidità.put("type", "spline");
+        for (int i = 0; i < misurazioneSensoreBeanListPH.size(); i++) {
+            JSONObject dataPoint = new JSONObject();
+            dataPoint.put("label", misurazioneSensoreBeanListPH.get(i).getTipo());
+            dataPoint.put("y", misurazioneSensoreBeanListPH.get(i).getValore());
+            dataPoints.add(dataPoint);
+        }
+        dataContentPH.put("dataPoints", dataPoints);
+        data.add(dataContentPH);
+        dataPoints = new JSONArray();
+        for (int i = 0; i < misurazioneSensoreBeanListTemperatura.size(); i++) {
+            JSONObject dataPoint = new JSONObject();
+            dataPoint.put("label", misurazioneSensoreBeanListTemperatura.get(i).getTipo());
+            dataPoint.put("y", misurazioneSensoreBeanListTemperatura.get(i).getValore());
+            dataPoints.add(dataPoint);
+        }
+        dataContentTemperatura.put("dataPoints", dataPoints);
+        data.add(dataContentTemperatura);
+        dataPoints = new JSONArray();
+        for (int i = 0; i < misurazioneSensoreBeanListUmidita.size(); i++) {
+            JSONObject dataPoint = new JSONObject();
+            dataPoint.put("label", misurazioneSensoreBeanListUmidita.get(i).getTipo());
+            dataPoint.put("y", misurazioneSensoreBeanListUmidita.get(i).getValore());
+            dataPoints.add(dataPoint);
+        }
+        dataContentUmidità.put("dataPoints", dataPoints);
+        data.add(dataContentUmidità);
+        jsonObject.put("data", data);
+        System.out.println("JSON : " + jsonObject);
+        return jsonObject.toJSONString();
     }
 }

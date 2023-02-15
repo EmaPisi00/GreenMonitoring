@@ -30,11 +30,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <% UtenteBean user= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (user == null)  { %>
-<%@include file="/fragments/headerLogin.html" %>
-<%} else{ %>
+    if (user == null)  {
+    response.sendRedirect("error.jsp");
+} else if(user instanceof AziendaBean){ %>
 <%@ include file="/fragments/headerLoggedAzienda.html" %>
-<%}%>
+<%} else if (user instanceof DipendenteBean){ %>
+<%@ include file="/fragments/headerLoggedDipendente.html" %>
+   <% }%>
 <body>
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">

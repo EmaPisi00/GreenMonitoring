@@ -42,7 +42,9 @@
 
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    if (u instanceof AziendaBean) { %>
+    if (u instanceof DipendenteBean) {
+        response.sendRedirect("error.jsp");
+    } else if (u instanceof AziendaBean) { %>
 <%@include file="fragments/headerLoggedAzienda.html" %>
 <%
     DipendenteDAO d = new DipendenteDAOImpl();

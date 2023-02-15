@@ -2,14 +2,11 @@ package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
-
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 import it.unisa.greenmonitoring.dataccess.dao.AziendaDAO;
 import it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl;
-
 import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAO;
 import it.unisa.greenmonitoring.dataccess.dao.DipendenteDAOImpl;
-
 
 import java.sql.SQLException;
 
@@ -30,7 +27,6 @@ public class UtenteManager {
         this.dipendenteDAO = new DipendenteDAOImpl();
         this.aziendaDAO = new AziendaDAOImpl();
     }
-
 
     /**
      * Metodo che permette l'associazione di un dipendente ad un'azienda.

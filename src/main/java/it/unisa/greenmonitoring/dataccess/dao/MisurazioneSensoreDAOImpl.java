@@ -34,7 +34,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
 
             if (msb.getValore() > 9 || msb.getValore() < 0) {
                 throw new Exception("Sensor value out of bounds");
-            } else if (!sb.getTipo().equals("pH") || !sb.getTipo().equals("temperatura") || !sb.getTipo().equals("umidità")) {
+            } else if (!sb.getTipo().equals("pH") || !sb.getTipo().equals("temperatura") || !sb.getTipo().equals("umidita")) {
                 throw new Exception("Sensor type does not exist");
             }
 
@@ -211,31 +211,38 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
 
     @Override
     public synchronized List<MisurazioneSensoreBean> retrieveMeasurementPerTimeInterval(Date data_inizio, Date data_fine, Integer id_coltivazione, String tipo) throws SQLException {
-        String selectSQL = "SELECT avg(valore) v, misurazione_sensore.data FROM misurazione_sensore WHERE coltivazione = ? and tipo = ? and misurazione_sensore.data >= ?  and misurazione_sensore.data <= ? GROUP BY misurazione_sensore.data;";
+        String selectSQL = "SELECT avg(valore), misurazione_sensore.data, misurazione_sensore.tipo FROM misurazione_sensore WHERE coltivazione = ? and tipo = ? and misurazione_sensore.data >= ?  and misurazione_sensore.data <= ? GROUP BY misurazione_sensore.data";
         connection = null;
         List<MisurazioneSensoreBean> misurazioneSensoreBeanList = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
             preparedStatement.setInt(1, id_coltivazione);
+            System.out.println("MisurazioneSensoreDAOImpl -- id_coltivazione : " + id_coltivazione);
             preparedStatement.setString(2, tipo);
+            System.out.println("MisurazioneSensoreDAOImpl -- tipo : " + tipo);
             preparedStatement.setDate(3, data_inizio);
+            System.out.println("MisurazioneSensoreDAOImpl -- data_inizio : " + data_inizio);
             preparedStatement.setDate(4, data_fine);
+            System.out.println("MisurazioneSensoreDAOImpl -- data_fine : " + data_fine);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
+                System.out.println("Sono nel while");
                 MisurazioneSensoreBean misurazioneSensoreBean = new MisurazioneSensoreBean();
                 misurazioneSensoreBean.setData(rs.getDate("data"));
-                misurazioneSensoreBean.setValore(rs.getInt("v"));
+                misurazioneSensoreBean.setValore(rs.getInt("avg(valore)"));
                 misurazioneSensoreBean.setTipo(rs.getString("tipo"));
                 misurazioneSensoreBean.setColtivazione(id_coltivazione);
-                connection.commit();
+                System.out.println("MisurazioneSensoreBean : " + misurazioneSensoreBean);
                 misurazioneSensoreBeanList.add(misurazioneSensoreBean);
+                connection.commit();
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         connection.close();
+        System.out.println("MisurazioneSensoreDAOImpl -- " + misurazioneSensoreBeanList);
         return misurazioneSensoreBeanList;
     }
 }

@@ -31,11 +31,11 @@
 <body class="background">
 
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (!(u instanceof AziendaBean) )  { %>
+    if (u == null)  { %>
 <%@include file="/fragments/headerLogin.html" %>
-<%} else{ %>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
-<%}%>
+<%} else{
+    request.getSession(false).invalidate();
+}%>
 
 
 <div class="container h100">

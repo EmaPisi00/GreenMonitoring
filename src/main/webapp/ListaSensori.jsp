@@ -73,7 +73,9 @@
                 </div>
             </div>
         </div>
-        <% } %>
+        <% } else {
+            response.sendRedirect("error.jsp");
+        }%>
     </div>
 </div>
 <%@include file="fragments/footer.html" %>

@@ -14,11 +14,9 @@
     <!-- Import Bootstrap -->
     <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
-
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
-
     <style>
         @media screen and (max-width: 768px) {
             .tohide {
@@ -63,19 +61,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-    <script src="canvas/canvasjs.min.js"></script>
-    <script src="canvas/jquery.canvasjs.min.js"></script>
     <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
     <!-- Import Bootstrap -->
     <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
-
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
-
 </head>
 <body>
 <%@include file="fragments/headerLoggedAzienda.html" %>
@@ -102,9 +95,9 @@
     TerrenoBean temporaryTerrenoBean = new TerrenoBean();
     ColtivazioneBean temporaryColtivazioneBean = new ColtivazioneBean();
 %>
-<% if (!(session.getAttribute("currentUserSession") instanceof UtenteBean) && session.getAttribute("coltivazioneID") == null) {
+<% if (!(session.getAttribute("currentUserSession") instanceof UtenteBean)) {
     response.sendError(401);
-} else {
+} else if (session.getAttribute("coltivazioneID") != null) {
     coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
     temporaryColtivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);
     idPianta = temporaryColtivazioneBean.getPianta();
@@ -113,10 +106,12 @@
     urlImmagine = temporaryPiantaBean.getImmagine();
     temporaryTerrenoBean = tm.restituisciTerrenoDaInt(temporaryColtivazioneBean.getTerreno());
     descrizioneTerreno = temporaryTerrenoBean.getNome();
-    resultUmidita = cm.restituisciMisurazioniRecenti("umidità", coltivazioneID);
+    resultUmidita = cm.restituisciMisurazioniRecenti("umidita", coltivazioneID);
     resultPH = cm.restituisciMisurazioniRecenti("pH", coltivazioneID);
     resultTemperatura = cm.restituisciMisurazioniRecenti("Temperatura", coltivazioneID);
-} %>
+} else {
+    response.sendError(404);
+}%>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -156,8 +151,39 @@
         </div>
         <div class="col d-flex align-items-center">
             <h7>
-                <button class="btn btn-danger" id="archivia-coltivazione">Archivia Coltivazione</button>
+                <button class="btn btn-danger" id="archivia-coltivazione" disabled>Archivia Coltivazione</button>
             </h7>
+        </div>
+        <div class="col d-flex align-items-center">
+            <div id="fullChartCanvas" style="width: 500px; height: 200px ">
+                <script type="text/javascript">
+                    window.onload =  function() {
+                        var coltivazioneID = <%=coltivazioneID%>;
+                            console.log("sono nell'if");
+                            var xhr = new XMLHttpRequest();
+                            console.log("xhr inizializzato");
+                            xhr.open("POST", "ServletColtivazioni");
+                            console.log("open fatta");
+                            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                            console.log("requestHeader settato");
+                            xhr.send("coltivazioneID="+coltivazioneID+"&today=today");
+                            console.log("inviata la richiesta");
+                            xhr.onreadystatechange = function () {
+                                console.log("sono dentro la funzione");
+                                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                    console.log("lo status è 200");
+                                    var fullchartData = JSON.parse(xhr.responseText);
+                                    console.log(fullchartData);
+                                    var chart2 = new CanvasJS.Chart("fullChartCanvas", fullchartData);
+                                    chart2.render();
+                                } else if (xhr.status === 500){
+                                    var div = document.getElementById("fullChartCanvas");
+                                    div.innerHTML = xhr.responseText;
+                                }
+                            }
+                    }
+                </script>
+            </div>
         </div>
     </div>
 </div>
@@ -206,7 +232,6 @@
                 <div style="width: auto;" class="row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <!--Media umidità -->
-                        <div class="row">
                             <h5>Umidità media</h5>
                             <div class="row">
                                 <div class="col value-bar">
@@ -217,7 +242,6 @@
                                     <div class="value-status" style="background-color: <%=colorUmidità%>;"></div>
                                 </div>
                             </div>
-                        </div>
                         <!--Media temperatura -->
                         <h5>Temperatura media</h5>
                         <div class="row">
@@ -253,7 +277,7 @@
                 <div style="width: auto;" class="row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <% cm = new ColtivazioneManager();
-                            List<MisurazioneSensoreBean> misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "umidità");
+                            List<MisurazioneSensoreBean> misurazioneSensoreBeans = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "umidita");
                             for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
                                 colorUmidità = "green";
                             /*
@@ -263,7 +287,7 @@
                             */%>
                         <h8>Sensore Umidità <%=misurazioneSensoreBeans.get(i).getSensore_id()%>
                             : <%=misurazioneSensoreBeans.get(i).getValore()%>%
-                        </h8>
+                        </h8><br>
                         <%}%>
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -298,7 +322,7 @@
                 <div style="width: auto;" class="row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <% cm = new ColtivazioneManager();
-                            misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "pH");
+                            misurazioneSensoreBeans = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "pH");
                             for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
                                 colorPH = "green";
                             /*
@@ -308,7 +332,7 @@
                             */%>
                         <h8>Sensore pH <%=misurazioneSensoreBeans.get(i).getSensore_id()%>
                             : <%=misurazioneSensoreBeans.get(i).getValore()%>
-                        </h8>
+                        </h8><br>
                         <%}%>
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -336,7 +360,8 @@
                 <div style="width: auto;" class="row">
                     <div class="col-sm-6 mb-3">
                         <% cm = new ColtivazioneManager();
-                            misurazioneSensoreBeans = cm.visualizzaMisurazioneOggiColtivazione(coltivazioneID, "Temperatura");
+                            misurazioneSensoreBeans = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "Temperatura");
+
                             for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
                                 colorTemperatura = "green";
                             /*
@@ -346,7 +371,7 @@
                             */%>
                         <h8>Sensore temperatura <%=misurazioneSensoreBeans.get(i).getSensore_id()%>
                             : <%=misurazioneSensoreBeans.get(i).getValore()%>&degC
-                        </h8>
+                        </h8><br>
                         <%}%>
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -371,8 +396,7 @@
         <div class="card" style="width: auto;">
             <div class="card-body">
                 <%
-                    FisiopatieDAO fisiopatieDAO = new FisiopatieDAOImpl();
-                    ArrayList<FisiopatieBean> listaFisiopatie = fisiopatieDAO.retrieveAllByPianta(idPianta);
+                    ArrayList<FisiopatieBean> listaFisiopatie = cm.visualizzaFisiopatiePerPianta(idPianta);
                     if (listaFisiopatie.size() == 0) {
                         out.print("Nessuna fisiopatia presente per questa pianta.");
                     } else {
@@ -433,33 +457,51 @@
                    name="data_inizio_periodo" required>
             <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>"
                    name="data_fine_periodo" required>
-            <select required>
-                <option name="tipoSensore" value="umidità">Umidità</option>
+            <select id="selectSensore" required>
+                <option name="tipoSensore" value="umidita">Umidità</option>
                 <option name="tipoSensore" value="pH">pH</option>
                 <option name="tipoSensore" value="temperatura">Temperatura</option>
             </select>
-            <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success">Mostra per questi periodi</button>
+            <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success" onclick="loadJsonAndPrintChart()">Mostra per questi periodi</button>
         </form>
+        <div id="rilevamentiPerPeriodoCanvas" style="height: 370px; width: 500px;"></div>
         <script type="text/javascript">
-            $("#rilevamentiPerPeriodo").onclick = function () {
+            function loadJsonAndPrintChart() {
+                var coltivazioneID = <%=coltivazioneID%>;
+                console.log(coltivazioneID);
                 var inputInizio = document.getElementById("periodo-inizio").value;
+                console.log(inputInizio);
                 var inputFine = document.getElementById("periodo-fine").value;
+                console.log(inputFine);
+                var tipoSensore = document.getElementById("selectSensore").value;
+                console.log(tipoSensore);
                 if (inputInizio != null && inputFine != null) {
+                    console.log("sono nell'if");
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "ServletColtivazioni", true);
+                    console.log("xhr inizializzato");
+                    xhr.open("POST", "ServletColtivazioni");
+                    console.log("open fatta");
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    console.log("requestHeader settato");
+                    xhr.send("data_inizio_periodo="+ inputInizio +"&data_fine_periodo="+ inputFine +"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
+                    console.log("data_inizio_periodo="+ inputInizio +"&data_fine_periodo="+ inputFine +"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
+                    console.log("inviata la richiesta");
                     xhr.onreadystatechange = function () {
+                        console.log("sono dentro la funzione");
                         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                            //Costruisco il grafico
-                            window.onload = function () {
-                                var chart = new CanvasJS.Chart("chartContainer", JSON.parse(xhr.responseText));
-                                chart.render();
-                            }
+                            console.log("lo status è 200");
+                            var chartData = JSON.parse(xhr.responseText);
+                            console.log(chartData);
+                            var chart = new CanvasJS.Chart("rilevamentiPerPeriodoCanvas", chartData);
+                            chart.render();
+                        } else if (xhr.status === 500) {
+                            console.log(xhr.responseText);
                         }
-                        ;xhr.send();
                     }
                 }
             }
         </script>
+        <script src="canvas/canvasjs.min.js"></script>
     </div>
     <!-- lista dei sensori e form rimuovi sensore -->
     <div class="container">
