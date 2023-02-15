@@ -260,4 +260,46 @@ public class PiantaDAOImpl implements PiantaDAO {
             }
         }
     }
+
+    /**
+     * @param idColtivazione
+     * @return
+     */
+    @Override
+    public PiantaBean ritornaPiantaPerColtivazione(int idColtivazione) {
+        String selectSQL = "SELECT * FROM Pianta WHERE id in (select pianta from Coltivazione as c where c.id= ? )";
+        PiantaBean p = new PiantaBean();
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, idColtivazione);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                p.setId(rs.getInt("id"));
+                p.setAzienda(rs.getString("azienda"));
+                p.setNome(rs.getString("nome"));
+                p.setDescrizione(rs.getString("descrizione"));
+                p.setPh_min(String.valueOf(rs.getFloat("ph_min")));
+                p.setPh_max(String.valueOf(rs.getFloat("ph_max")));
+                p.setTemperatura_min(String.valueOf(rs.getFloat("temperatura_min")));
+                p.setTemperatura_max(String.valueOf(rs.getFloat("temperatura_max")));
+                p.setUmidita_min(String.valueOf(rs.getFloat("umidita_min")));
+                p.setUmidita_max(String.valueOf(rs.getFloat("umidita_max")));
+                p.setImmagine(rs.getString("immagine"));
+
+                System.out.println("singola pianta da ritornare" + p);
+                connection.commit();
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+
+        return p;
+    }
 }

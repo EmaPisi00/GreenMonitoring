@@ -14,7 +14,6 @@ public interface PiantaDAO {
     /**
      * Questo metodo restituisce ogni terreno del DB.
      * @return TerrenoBean
-     * @throws SQLException
      */
     List<PiantaBean> RetriveAllPiantaDefault();
 
@@ -41,7 +40,13 @@ public interface PiantaDAO {
     /**
      *
      * @param p
-     * @return
      */
     void updateValue(PiantaBean p);
+
+    /**
+     *
+     * @param id
+     * @return PiantaBean
+     */
+    PiantaBean ritornaPiantaPerColtivazione(int id);
 }
