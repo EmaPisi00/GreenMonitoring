@@ -5,6 +5,8 @@ package my;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 //import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
+import it.unisa.greenmonitoring.dataccess.dao.SensoreDAO;
+import it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -23,7 +25,7 @@ public class Listener implements ServletContextListener {
     /**
      * sensore.
      */
-    private SensoreManager sm;
+    private SensoreDAO sd;
     /**
      *
      * @param sce
@@ -34,11 +36,9 @@ public class Listener implements ServletContextListener {
         String clientId = "mySubscriberClientId";
 
         //prendi sensori dal db con avvia coltivazione true
-        sm = new SensoreManager();
-        ArrayList<SensoreBean> listaSensori = sm.SensoriColtivazioneAvviataManager();
-
+        sd = new SensoreDAOImpl();
+        ArrayList<SensoreBean> listaSensori = (ArrayList<SensoreBean>) sd.SensoriColtivazioneAvviata();
         MemoryPersistence persistence = new MemoryPersistence();
-
         try {
 
             // create the MQTT client
