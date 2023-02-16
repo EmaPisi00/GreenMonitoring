@@ -1,14 +1,10 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
-<%@ page import="java.util.List" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Random" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
-<%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
-<%@ page import="java.util.Iterator" %><%--
+<%@ page import="java.util.*" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -53,6 +49,13 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
 
+    <style>
+        #immagine {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
 
@@ -125,7 +128,7 @@
                     <tr class="justify-content-center">
                         <td><%= terrenoBean.getNome()%>
                         </td>
-                        <td><%= terrenoBean.getImmagine()%>
+                        <td><img id="immagine" src="data:image/jpeg;base64,<%= new String(Base64.getEncoder().encode(terrenoBean.getImmagine())) %>">
                         </td>
                         <td><%= terrenoBean.getLatitudine()%>
                         </td>
