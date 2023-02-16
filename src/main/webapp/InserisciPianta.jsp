@@ -123,7 +123,7 @@
 
             </div>
             <div class="row justify-content-center">
-                <div class="col-3 py-5">
+                <div class="col-2 py-5">
                     <input type="submit" value="Inserisci Pianta" class="btn btn-outline-success btn-lg px-5" name="inserisciPianta_submit">
                 </div>
             </div>

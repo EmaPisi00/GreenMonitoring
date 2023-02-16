@@ -96,5 +96,6 @@
         </div>
     </div>
 </div>
+<%@include file="fragments/footer.html"%>
 </body>
 </html>

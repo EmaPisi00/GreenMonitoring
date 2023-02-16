@@ -23,15 +23,19 @@
     <title>Lista Sensori</title>
 </head>
 <body>
+
+<% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
+
+    if(u == null){
+        response.sendRedirect("error.jsp");
+    }else if (!(u instanceof AziendaBean))  {
+ response.sendRedirect("error.jsp");
+ } else{  %>
+<%@include file="fragments/headerLoggedAzienda.html"%>
 <%
-    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    if (u instanceof AziendaBean) { %>
-<%@include file="fragments/headerLoggedAzienda.html" %>
-<% SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
-    List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
-%>
+    }%>
 
-
+<%if (u!= null) {%>
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-5 text-center">
@@ -48,7 +52,9 @@
                     <th  scope="col">Azienda</th>
                 </tr>
                 </thead>
-                <% for (SensoreBean sensore : sensori) { %>
+                <% SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
+                    List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
+                    for (SensoreBean sensore : sensori) { %>
                 <tr class="justify-content-center" >
                     <td ><%= sensore.getId() %>
                     </td>
@@ -73,11 +79,11 @@
                 </div>
             </div>
         </div>
-        <% } else {
-            response.sendRedirect("error.jsp");
-        }%>
+
     </div>
 </div>
+
+<%}%>
 <%@include file="fragments/footer.html" %>
 </body>
 </html>

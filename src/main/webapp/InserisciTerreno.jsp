@@ -24,14 +24,17 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<% UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+
+<% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
   String errore= (String) request.getAttribute("erroriTerrenoBean");
-  if (!(u instanceof AziendaBean)) { %>
+  if(u == null){
+    response.sendRedirect("error.jsp");
+  }else if (!(u instanceof AziendaBean))  { %>
 <% response.sendRedirect("error.jsp"); %>
-<% } else {
-%>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<% } else{  %>
+<%@include file="fragments/headerLoggedAzienda.html"%>
 <%}%>
+
 <body >
 <br>
 <div class="container">
