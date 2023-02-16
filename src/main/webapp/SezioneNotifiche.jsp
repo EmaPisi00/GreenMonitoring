@@ -45,11 +45,14 @@
     UtenteBean seo = (UtenteBean) session.getAttribute("currentUserSession");
     NotificaDAO n = new NotificaDAOImpl();
     if (!(seo instanceof AziendaBean)) {
-        response.sendError(401);
+        response.sendRedirect("error.jsp");
     }
 
 %>
 <%@ include file="/fragments/headerLoggedAzienda.html" %>
+
+<% if(seo != null){%>
+
 <%
     List<NotificaBean> listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());
 %>
@@ -119,5 +122,7 @@
     }
 
 </script>
+<%}%>
+<%@include file="fragments/footer.html"%>
 </body>
 </html>

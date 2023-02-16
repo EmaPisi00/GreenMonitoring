@@ -1,14 +1,10 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
-<%@ page import="java.util.List" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.TerrenoBean" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Random" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
-<%@ page import="java.lang.reflect.AnnotatedArrayType" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.ColtivazioneBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
-<%@ page import="java.util.Iterator" %><%--
+<%@ page import="java.util.*" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -53,19 +49,31 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
 
+    <style>
+        #immagine {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
 
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    TerrenoBean terrenoBean = new TerrenoBean();
-    int idTerreno = 0;
+
+    if(u == null){
+        response.sendRedirect("error.jsp");
+    }
     if (u instanceof AziendaBean) { %>
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
-<%}%>
+<%
+
+    }%>
 
 
+<% if (u != null) {%>
 <div class="bd">
     <div id="alrt" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>
@@ -99,6 +107,8 @@
                     </thead>
 
                     <%
+                        TerrenoBean terrenoBean = new TerrenoBean();
+                        int idTerreno = 0;
                         /* -- INIZIO AUTENTICAZIONE -- */
                         Object seo = session.getAttribute("currentUserSession");
                         if (seo == null) {
@@ -125,7 +135,7 @@
                     <tr class="justify-content-center">
                         <td><%= terrenoBean.getNome()%>
                         </td>
-                        <td><%= terrenoBean.getImmagine()%>
+                        <td><img id="immagine" src="data:image/jpeg;base64,<%= new String(Base64.getEncoder().encode(terrenoBean.getImmagine())) %>">
                         </td>
                         <td><%= terrenoBean.getLatitudine()%>
                         </td>
@@ -180,6 +190,8 @@
         </div>
     </div>
 </div>
+
+<%}%>
 <%@include file="fragments/footer.html" %>
 </body>
 </html>

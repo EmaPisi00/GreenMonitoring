@@ -11,12 +11,6 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
 
 @WebServlet(name = "ServletPianta", value = "/ServletPianta")
 @MultipartConfig
@@ -58,27 +52,14 @@ public class ServletPianta extends HttpServlet {
             String temperatura_max = request.getParameter("temperatura_max");
             String umidita_min = request.getParameter("umidita_min");
             String umidita_max = request.getParameter("umidita_max");
-            System.out.println(azienda + nome + descrizione + ph_max + ph_min + temperatura_max + temperatura_min + umidita_max + umidita_min);
+
             Part immagine = request.getPart("immagine");
-            String fileName = null;
-
-            String contextPath = request.getServletContext().getRealPath("/");
-            Path currentPath = Paths.get(contextPath);
-            Path parentPath = currentPath.getParent();
-
-            if (immagine.getSize() > 0) {
-                fileName = Paths.get(immagine.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-                InputStream fileContent = immagine.getInputStream();
-                // Salva l'immagine su disco
-                String path = parentPath + "/immagini/piante/" + fileName;
-                Files.copy(fileContent, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
-                fileContent.close();
-            }
+            byte[] imageData = immagine.getInputStream().readAllBytes();
 
             PiantaBean pianta = new PiantaBean(azienda, nome, descrizione, ph_min, ph_max, temperatura_min, temperatura_max);
             pianta.setUmidita_min(umidita_min);
             pianta.setUmidita_max(umidita_max);
-            pianta.setImmagine(fileName);
+            pianta.setImmagine(imageData);
 
             PiantaBean errori = pm.inserisciPianta(pianta);
             if (errori == null) {

@@ -34,7 +34,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
             preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setString(1, t.getNome());
             preparedStatement.setString(2, t.getAzienda());
-            preparedStatement.setString(3, t.getImmagine());
+            preparedStatement.setBytes(3, t.getImmagine());
             preparedStatement.setFloat(4, t.getLatitudine());
             preparedStatement.setFloat(5, t.getLongitudine());
             preparedStatement.setString(6, t.getSuperficie());
@@ -65,7 +65,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 TerrenoBean t = new TerrenoBean();
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
-                t.setImmagine(rs.getString("immagine"));
+                t.setImmagine(rs.getBytes("immagine"));
                 t.setSuperficie(rs.getString("superfice"));
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setLongitudine(rs.getFloat("longitudine"));
@@ -101,7 +101,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setAzienda(rs.getString("azienda"));
                 t.setSuperficie(rs.getString("superfice"));
-                t.setImmagine(rs.getString("immagine"));
+                t.setImmagine(rs.getBytes("immagine"));
 
                 connection.commit();
             }

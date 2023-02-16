@@ -26,9 +26,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
 
-    <title>Title</title>
+    <title>Login</title>
 </head>
-<body class="background">
+<body >
 
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (u == null)  { %>
@@ -38,24 +38,24 @@
 }%>
 
 
-<div class="container h100">
-    <div class="row justify-content-center align-items-center h-100" style="width: 100%;">
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center" style="width: 100%;">
+        <h3 class="display-3 text-center py-4 ">Login</h3>
         <div class="card text-black text-center"
-             style="border-radius: 1rem; border: 6px solid green; font-size:  28px; background-color: rgb(208, 213, 218);">
-            <legend style="font-size: 40px; text-align:center; color: black; font-family: 'Lobster', cursive;">Login</legend>
-            <form class="row g-4 justify-content-center  py-3" action="ServletLogin" method="post">
+             style="border-radius: 1rem; border: 6px solid green; font-size:  28px; ">
+           <form class="row justify-content-center  py-1" action="ServletLogin" method="post">
 
-                <div class="col-6" style="font-family: 'Lora', serif; ">
+                <div class="col-7 justify-content-center" style="font-family: 'Lora', serif; ">
                     <div class="form-outline form-white mb-4">
                         <label for="inputEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="emanuele@gmail.com" name="email"
+                        <input type="email" style="background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="inputEmail" placeholder="emanuele@gmail.com" name="email"
                                required="" />
                     </div>
                 </div>
-                <div class="col-6" style="font-family: 'Lora', serif; ">
+                <div class="col-7 justify-content-center" style="font-family: 'Lora', serif; ">
                     <div class="form-outline form-white mb-4">
                         <label for="inputPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="******" name="password"
+                        <input type="password" style="background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="inputPassword" placeholder="******" name="password"
                                required="" />
                     </div>
                 </div>

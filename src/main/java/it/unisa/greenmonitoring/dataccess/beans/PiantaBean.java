@@ -47,7 +47,7 @@ public class PiantaBean {
     /**
      * Questo campo contiene la longitudine del terreno.
      */
-    private String immagine;
+    private byte[] immagine;
 
     /**
      * Questo metodo crea un TerrenoBean a partire da i seguenti parametri.
@@ -219,16 +219,16 @@ public class PiantaBean {
     }
     /**
      *
-     * @return Float
+     * @return byte[]
      */
-    public String getImmagine() {
+    public byte[] getImmagine() {
         return immagine;
     }
     /**
      *
      * @param Pimmagine
      */
-    public void setImmagine(String Pimmagine) {
+    public void setImmagine(byte[] Pimmagine) {
         this.immagine = Pimmagine;
     }
 

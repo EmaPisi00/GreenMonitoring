@@ -1,8 +1,4 @@
-<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Random" %>
-<%@ page import="java.lang.reflect.AnnotatedArrayType" %>
+<%@ page import="java.util.*" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %><%--
   Created by IntelliJ IDEA.
@@ -55,7 +51,7 @@
 
 
 <div class="bd py-5">
-    <legend style="font-family: 'Lobster', cursive; text-align: center; font-size: 35px;">Piante</legend>
+    <h3 class="display-3 text-center">Piante</h3>
     <form id="visualizza_piante" action="ServletPianta" method="post">
         <div class="container py-5">
             <div class="row">
@@ -97,25 +93,35 @@
                             PiantaManager p = new PiantaManager();
                             List<PiantaBean> list = p.ListaPianteManager(email);
                             int i = 0;
-                            for (PiantaBean pb : list) {
-                                out.print("<tr>" +
-                                        "<td>");
-                                out.print("</td>" +
-                                        "<td>" + pb.getId() + "</td>" +
-                                        "<td>" + pb.getNome() + "</td>" +
-                                        "<td><div class=\"overflow-auto\" style=\"max-width: 260px; max-height: 100px;\" >" + pb.getDescrizione() + "</div></td>" +
-                                        "<td>" + pb.getPh_min() + "</td>" +
-                                        "<td>" + pb.getPh_max() + "</td>" +
-                                        "<td>" + pb.getTemperatura_min() + "</td>" +
-                                        "<td>" + pb.getTemperatura_max() + "</td>" +
-                                        "<td>" + pb.getUmidita_min() + "</td>" +
-                                        "<td>" + pb.getUmidita_max() + "</td>" +
-                                        "<td> <img src=\"" + request.getContextPath() + "/../immagini/piante/" + pb.getImmagine() + "\" alt=\"Descrizione immagine\"></td>" +
-                                        "<td> <button type=\"submit\" name=\"rimuoviPianta_submit\" class=\"btn btn-danger\" value=\"" + pb.getId() + "\">Rimuovi</button>" +
-                                        " <button type=\"submit\" value=\"" + pb.getId() + "\"class=\"btn btn-danger\" name=\"modificaRange_submit\">Modifica</button></td>" +
-                                        "</tr>"
-                                );
-                                i++;
+                            if (list.size() != 0) {
+                                Iterator it = list.iterator();
+                                while (it.hasNext()) {
+                                    PiantaBean pb = (PiantaBean) it.next();
+                                    String immagine;
+                                    try {
+                                        immagine = new String(Base64.getEncoder().encode(pb.getImmagine()));
+                                    } catch (NullPointerException e) {
+                                       immagine = null;
+                                    }
+                                    out.print("<tr>" +
+                                            "<td>");
+                                    out.print("</td>" +
+                                            "<td>" + i + 1 + "</td>" +
+                                            "<td>" + pb.getNome() + "</td>" +
+                                            "<td><div class=\"overflow-auto\" style=\"max-width: 260px; max-height: 100px;\" >" + pb.getDescrizione() + "</div></td>" +
+                                            "<td>" + pb.getPh_min() + "</td>" +
+                                            "<td>" + pb.getPh_max() + "</td>" +
+                                            "<td>" + pb.getTemperatura_min() + "</td>" +
+                                            "<td>" + pb.getTemperatura_max() + "</td>" +
+                                            "<td>" + pb.getUmidita_min() + "</td>" +
+                                            "<td>" + pb.getUmidita_max() + "</td>" +
+                                            "<td><img id=\"immagine\" src=\"data:image/jpeg;base64," + immagine + "\">" +
+                                            "<td> <button type=\"submit\" name=\"rimuoviPianta_submit\" class=\"btn btn-danger\" value=\"" + pb.getId() + "\">Rimuovi</button>" +
+                                            " <button type=\"submit\" value=\"" + pb.getId() + "\"class=\"btn btn-danger\" name=\"modificaRange_submit\">Modifica</button></td>" +
+                                            "</tr>"
+                                    );
+                                    i++;
+                                }
                             }
                         %>
                         </tbody>
