@@ -49,7 +49,7 @@ public class PiantaDAOImpl implements PiantaDAO {
             preparedStatement.setFloat(7, Float.parseFloat(p.getTemperatura_max()));
             preparedStatement.setFloat(8, Float.parseFloat(p.getUmidita_min()));
             preparedStatement.setFloat(9, Float.parseFloat(p.getUmidita_max()));
-            preparedStatement.setString(10, p.getImmagine());
+            preparedStatement.setBytes(10, p.getImmagine());
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException s) {
@@ -91,7 +91,7 @@ public class PiantaDAOImpl implements PiantaDAO {
                 t.setTemperatura_max(rs.getString("temperatura_max"));
                 t.setUmidita_min(rs.getString("umidita_min"));
                 t.setUmidita_max(rs.getString("umidita_max"));
-                t.setImmagine(rs.getString("immagine"));
+                t.setImmagine(rs.getBytes("immagine"));
                 System.out.println(t);
                 connection.commit();
                 list.add(t);
@@ -165,7 +165,7 @@ public class PiantaDAOImpl implements PiantaDAO {
                 t.setTemperatura_max(rs.getString("temperatura_max"));
                 t.setUmidita_min(rs.getString("umidita_min"));
                 t.setUmidita_max(rs.getString("umidita_max"));
-                t.setImmagine(rs.getString("immagine"));
+                t.setImmagine(rs.getBytes("immagine"));
                 System.out.println(t);
                 connection.commit();
                 list.add(t);
@@ -206,7 +206,7 @@ public class PiantaDAOImpl implements PiantaDAO {
                 p.setTemperatura_max(String.valueOf(rs.getFloat("temperatura_max")));
                 p.setUmidita_min(String.valueOf(rs.getFloat("umidita_min")));
                 p.setUmidita_max(String.valueOf(rs.getFloat("umidita_max")));
-                p.setImmagine(rs.getString("immagine"));
+                p.setImmagine(rs.getBytes("immagine"));
 
                 System.out.println("singola pianta da ritornare" + p);
                 connection.commit();
@@ -285,7 +285,7 @@ public class PiantaDAOImpl implements PiantaDAO {
                 p.setTemperatura_max(String.valueOf(rs.getFloat("temperatura_max")));
                 p.setUmidita_min(String.valueOf(rs.getFloat("umidita_min")));
                 p.setUmidita_max(String.valueOf(rs.getFloat("umidita_max")));
-                p.setImmagine(rs.getString("immagine"));
+                p.setImmagine(rs.getBytes("immagine"));
 
                 System.out.println("singola pianta da ritornare" + p);
                 connection.commit();
