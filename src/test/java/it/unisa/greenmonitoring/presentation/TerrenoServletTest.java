@@ -56,7 +56,6 @@ public class TerrenoServletTest {
         request.setParameter("superficie", "50");
 
         request.setParameter("inserisciTerreno_submit","1");
-        Mockito.when(part.getSize()).thenReturn(2L);
         Mockito.when(request.getPart("immagine")).thenReturn(part);
         Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
         Mockito.when(part.getInputStream()).thenReturn(input);
@@ -74,7 +73,6 @@ public class TerrenoServletTest {
         request.setParameter("superfice", "50");
 
         request.setParameter("inserisciTerreno_submit","1");
-        Mockito.when(part.getSize()).thenReturn(2L);
         Mockito.when(request.getPart("immagine")).thenReturn(part);
         Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
         Mockito.when(part.getInputStream()).thenReturn(input);
@@ -91,7 +89,6 @@ public class TerrenoServletTest {
         request.setParameter("superficie", "dddssd");
 
         request.setParameter("inserisciTerreno_submit","1");
-        Mockito.when(part.getSize()).thenReturn(2L);
         Mockito.when(request.getPart("immagine")).thenReturn(part);
         Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
         Mockito.when(part.getInputStream()).thenReturn(input);
@@ -108,7 +105,6 @@ public class TerrenoServletTest {
         request.setParameter("longitudine", "14.7972");
         request.setParameter("superficie", "50");
         request.setParameter("inserisciTerreno_submit","1");
-        Mockito.when(part.getSize()).thenReturn(2L);
         Mockito.when(request.getPart("immagine")).thenReturn(part);
         Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
         Mockito.when(part.getInputStream()).thenReturn(input);
@@ -126,7 +122,6 @@ public class TerrenoServletTest {
         request.setParameter("superficie", "50");
 
         request.setParameter("inserisciTerreno_submit","1");
-        Mockito.when(part.getSize()).thenReturn(2L);
         Mockito.when(request.getPart("immagine")).thenReturn(part);
         Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
         Mockito.when(part.getInputStream()).thenReturn(input);
@@ -144,7 +139,6 @@ public class TerrenoServletTest {
         request.setParameter("superficie", "50");
 
         request.setParameter("inserisciTerreno_submit","1");
-        Mockito.when(part.getSize()).thenReturn(2L);
         Mockito.when(request.getPart("immagine")).thenReturn(part);
         Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
         Mockito.when(part.getInputStream()).thenReturn(input);
