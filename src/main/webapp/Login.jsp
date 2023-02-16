@@ -3,6 +3,8 @@
 <head>
     <meta charset="ISO-8859-1">
     <link rel="stylesheet"  href="css/login.css" type="text/css">
+    <link rel="stylesheet"  href="css/headerLogin.css" type="text/css">
+    <link rel="stylesheet"  href="css/footer.css" type="text/css">
 
 </head>
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
