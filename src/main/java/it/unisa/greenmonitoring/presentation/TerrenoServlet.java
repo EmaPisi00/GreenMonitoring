@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Enumeration;
 
@@ -47,9 +48,13 @@ public class TerrenoServlet extends HttpServlet {
             String nome = request.getParameter("nome");
             String azienda = request.getParameter("azienda");
             Part immagine = request.getPart("immagine");
-            byte[] imageData = immagine.getInputStream().readAllBytes();
-            Float latitudine, longitudine, superficie;
-            System.out.println("*****" + immagine.getSize());
+            InputStream oo = immagine.getInputStream();
+            byte[] imageData = oo.readAllBytes();
+            oo.close();
+
+            Float latitudine;
+            Float longitudine;
+            Float superficie;
             try {
                 latitudine = Float.parseFloat(request.getParameter("latitudine"));
             } catch (NumberFormatException num) {
@@ -96,7 +101,6 @@ public class TerrenoServlet extends HttpServlet {
                 dispatcher.forward(request, response);
 
             } else if (immagine.getSize() > 3145728L || immagine.getSize() <= 0) {
-                System.out.println("***** SBAGLIATAAAA" + immagine.getSize());
                 request.setAttribute("errore", "7");
                 request.setAttribute("descrizione", "errore dimensione immagine");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
@@ -107,8 +111,7 @@ public class TerrenoServlet extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
                 dispatcher.forward(request, response);
             } else {
-
-                if (tm.inserisciTerreno(terreno)!=null) {
+                if (tm.inserisciTerreno(terreno) != null) {
                     request.setAttribute("errore", "10");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/Terreni.jsp");
                     dispatcher.forward(request, response);
