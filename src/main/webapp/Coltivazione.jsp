@@ -70,6 +70,7 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
 </head>
+<title>Coltivazione</title>
 <body>
 
 

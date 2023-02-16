@@ -56,6 +56,7 @@
             object-fit: contain;
         }
     </style>
+    <title>Terreni</title>
 </head>
 <body>
 

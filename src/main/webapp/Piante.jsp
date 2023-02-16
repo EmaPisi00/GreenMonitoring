@@ -45,6 +45,7 @@
             object-fit: contain;
         }
     </style>
+    <title>Piante</title>
 </head>
 <body>
 

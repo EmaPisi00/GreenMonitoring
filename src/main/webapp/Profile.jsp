@@ -21,7 +21,7 @@
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
-
+    <title>Priflo</title>
 </head>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 

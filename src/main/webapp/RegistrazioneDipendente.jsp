@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
 
-    <title>Registrazione Azienda</title>
+    <title>Registrazione Dipendente</title>
 
 </head>
 <body>

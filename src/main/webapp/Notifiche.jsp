@@ -39,7 +39,9 @@
         List<NotificaBean> listaNotifiche = n.retriveNotifichePerAziendaDaVisualizzare(seo.getEmail());
         int numNotifiche = listaNotifiche.size(); // Recupera il numero di notifiche dal database o da un'altra fonte
     %>
+    <tiitle>Notifiche</tiitle>
 </head>
+
 <body class="p-3 m-0 border-0 bd-example bg-light">
 
 <!-- bottone notifica Code -->

@@ -40,6 +40,8 @@
     <!-- link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet"> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+
+<title>Lista Coltivazioni</title>
 <body>
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (u instanceof DipendenteBean)  { %>

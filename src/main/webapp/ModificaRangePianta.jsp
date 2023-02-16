@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
 
-    <title>Title</title>
+    <title>Modifica Range Pianta</title>
 </head>
 
 <body>
