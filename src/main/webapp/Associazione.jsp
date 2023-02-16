@@ -1,3 +1,5 @@
+<!-- Questa Jsp permette ad un dipendente loggato di potersi associare ad un azienda tramite un codice.-->
+
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %>
@@ -31,23 +33,28 @@
     <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
+    <title>Associazione Azienda</title>
 </head>
 
 <body>
-
 <% UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
-    if (user instanceof AziendaBean || ((DipendenteBean) user).getAzienda() != null) {
+    if (user == null) {
+        response.sendRedirect("error.jsp");
+    } else if (user instanceof AziendaBean) {
+        response.sendRedirect("error.jsp");
+    } else if (((DipendenteBean) user).getAzienda() != null) {
         //l'if controlla se l'utente è un dipendente e se è già associato ad un'azienda
         response.sendRedirect("Profile.jsp");
-    } else { %>
+    } else if (((DipendenteBean) user).getEmail() == null) { %>
 <%@include file="fragments/headerLoggedDipendente.html" %>
 
 <%} %>
 
+
 <div class="container py-5 border-1">
     <div class="row justify-content-center">
         <div class="col-5 py-5">
-            <legend style="font-size: 40px; text-align:center; color: black; font-family: 'Lobster', cursive;">
+            <legend style="font-size: 40px; text-align:center; color: black; ">
                 Associazione Azienda
             </legend>
             <form class="row g-4 justify-content-center  py-3" action="ServletAssociazione" id="associa_dipendente"

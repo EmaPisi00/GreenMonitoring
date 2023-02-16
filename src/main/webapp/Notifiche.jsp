@@ -34,7 +34,7 @@
         UtenteBean seo = (UtenteBean) session.getAttribute("currentUserSession");
         NotificaDAO n = new NotificaDAOImpl();
         if (!(seo instanceof AziendaBean)) {
-            response.sendError(401);
+            response.sendRedirect("error.jsp");
         }
         List<NotificaBean> listaNotifiche = n.retriveNotifichePerAziendaDaVisualizzare(seo.getEmail());
         int numNotifiche = listaNotifiche.size(); // Recupera il numero di notifiche dal database o da un'altra fonte

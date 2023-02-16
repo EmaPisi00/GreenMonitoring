@@ -51,7 +51,9 @@
 </head>
 
 <% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
-  if (!(u instanceof AziendaBean))  { %>
+  if(u == null){
+    response.sendRedirect("error.jsp");
+  } else if (!(u instanceof AziendaBean))  { %>
   <% response.sendRedirect("error.jsp"); %>
 <% } else{  %>
 <%@include file="fragments/headerLoggedAzienda.html"%>

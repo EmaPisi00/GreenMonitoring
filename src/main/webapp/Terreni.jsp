@@ -61,14 +61,19 @@
 
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    TerrenoBean terrenoBean = new TerrenoBean();
-    int idTerreno = 0;
+
+    if(u == null){
+        response.sendRedirect("error.jsp");
+    }
     if (u instanceof AziendaBean) { %>
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
-<%}%>
+<%
+
+    }%>
 
 
+<% if (u != null) {%>
 <div class="bd">
     <div id="alrt" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>
@@ -102,6 +107,8 @@
                     </thead>
 
                     <%
+                        TerrenoBean terrenoBean = new TerrenoBean();
+                        int idTerreno = 0;
                         /* -- INIZIO AUTENTICAZIONE -- */
                         Object seo = session.getAttribute("currentUserSession");
                         if (seo == null) {
@@ -183,6 +190,8 @@
         </div>
     </div>
 </div>
+
+<%}%>
 <%@include file="fragments/footer.html" %>
 </body>
 </html>
