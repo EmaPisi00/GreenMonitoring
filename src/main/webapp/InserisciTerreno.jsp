@@ -41,7 +41,7 @@
   <div class="row justify-content-center">
     <div class="card col-md-6">
       <div class="card-body">
-        <form id="inserisci_terreno" action="ServletTerreno" method="post" enctype="multipart/form-data"
+        <form id="inserisci_terreno" action="TerrenoServlet" method="post" enctype="multipart/form-data"
           class="needs-validation" >
 
           <input type="text" id="azienda" name="azienda" value="<%=u.getEmail()%>"  style="display: none">

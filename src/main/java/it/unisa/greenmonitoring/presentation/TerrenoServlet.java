@@ -15,9 +15,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Enumeration;
 
-@WebServlet(name = "ServletTerreno", value = "/ServletTerreno")
+@WebServlet(name = "TerrenoServlet", value = "/TerrenoServlet")
 @MultipartConfig
-public class ServletTerreno extends HttpServlet {
+public class TerrenoServlet extends HttpServlet {
     /**
      * Object that provides the methods to manage the Terreno.
      */
