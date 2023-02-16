@@ -45,8 +45,8 @@
     } else if (((DipendenteBean) user).getAzienda() != null) {
         //l'if controlla se l'utente è un dipendente e se è già associato ad un'azienda
         response.sendRedirect("Profile.jsp");
-    } else if (((DipendenteBean) user).getEmail() == null) { %>
-<%@include file="fragments/headerLoggedDipendente.html" %>
+    } else if (((DipendenteBean) user).getAzienda() == null) { %>
+<%@include file="fragments/headerLoggedDipendenteNonAssociato.html" %>
 
 <%} %>
 

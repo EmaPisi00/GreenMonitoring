@@ -23,14 +23,16 @@
 </head>
 <body>
 
-<% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (u instanceof DipendenteBean)  { %>
-<%@include file="/fragments/headerLoggedDipendente.html" %>
-<%} else if(u instanceof  AziendaBean){ %>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
-<%} else { %>
+<% UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if(u == null){ %>
 <%@include file="fragments/headerLogin.html"%>
-<% }%>
+    <% } else if (((DipendenteBean) u).getAzienda() != null) { %>
+<%@include file="/fragments/headerLoggedDipendente.html" %>
+<% } else if (((DipendenteBean) u).getAzienda() == null) {
+    response.sendRedirect("Associazione.jsp");
+} else if (u instanceof AziendaBean) { %>
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%}%>
 
 
 <!-- Div principale -->

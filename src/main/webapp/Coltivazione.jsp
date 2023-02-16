@@ -71,6 +71,8 @@
     <link rel="stylesheet" href="css/headerLogin.css">
 </head>
 <body>
+
+
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
 <%! String urlImmagine = new String("Foto coltivazione");
@@ -96,7 +98,7 @@
     ColtivazioneBean temporaryColtivazioneBean = new ColtivazioneBean();
 %>
 <% if (!(session.getAttribute("currentUserSession") instanceof UtenteBean)) {
-    response.sendError(401);
+    response.sendRedirect("error.jsp");
 } else if (session.getAttribute("coltivazioneID") != null) {
     coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
     temporaryColtivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);
