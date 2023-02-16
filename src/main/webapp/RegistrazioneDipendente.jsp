@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- Import Bootstrap -->
@@ -19,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
 
-    <title>Registrazione Azienda</title>
+    <title>Registrazione Dipendente</title>
 
 </head>
 <body>

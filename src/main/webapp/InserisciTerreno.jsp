@@ -12,7 +12,9 @@
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/headerLogin.css">
 
-  <title>Inserisci terreno</title>
+  <title>Inserisci Terreno</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
   <script src="./jquery/jquery-3.6.3.min.js"></script>
   <link href="/img/favicon.png" rel="icon">
   <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -41,7 +43,7 @@
   <div class="row justify-content-center">
     <div class="card col-md-6">
       <div class="card-body">
-        <form id="inserisci_terreno" action="ServletTerreno" method="post" enctype="multipart/form-data"
+        <form id="inserisci_terreno" action="TerrenoServlet" method="post" enctype="multipart/form-data"
           class="needs-validation" >
 
           <input type="text" id="azienda" name="azienda" value="<%=u.getEmail()%>"  style="display: none">

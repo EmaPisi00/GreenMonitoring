@@ -66,11 +66,16 @@
     <!-- Import Bootstrap -->
     <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
 </head>
+<title>Coltivazione</title>
 <body>
+
+
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
 <%! String urlImmagine = new String("Foto coltivazione");
@@ -96,7 +101,7 @@
     ColtivazioneBean temporaryColtivazioneBean = new ColtivazioneBean();
 %>
 <% if (!(session.getAttribute("currentUserSession") instanceof UtenteBean)) {
-    response.sendError(401);
+    response.sendRedirect("error.jsp");
 } else if (session.getAttribute("coltivazioneID") != null) {
     coltivazioneID = Integer.parseInt((String) session.getAttribute("coltivazioneID"));
     temporaryColtivazioneBean = cm.retrieveColtivazioneSingola(coltivazioneID);

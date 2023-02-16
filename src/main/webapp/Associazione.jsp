@@ -26,6 +26,8 @@
     <link href="/img/favicon.png" rel="icon">
     <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
@@ -45,8 +47,8 @@
     } else if (((DipendenteBean) user).getAzienda() != null) {
         //l'if controlla se l'utente è un dipendente e se è già associato ad un'azienda
         response.sendRedirect("Profile.jsp");
-    } else if (((DipendenteBean) user).getEmail() == null) { %>
-<%@include file="fragments/headerLoggedDipendente.html" %>
+    } else if (((DipendenteBean) user).getAzienda() == null) { %>
+<%@include file="fragments/headerLoggedDipendenteNonAssociato.html" %>
 
 <%} %>
 

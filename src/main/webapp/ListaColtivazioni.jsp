@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="css/headerLogin.css">
 
     <title>Coltivazioni</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <script src="bootstrap-5.2.3-dist/js/ListaColtivazioni.js"></script>
     <link href="/img/favicon.png" rel="icon">
@@ -40,6 +42,8 @@
     <!-- link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet"> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+
+<title>Lista Coltivazioni</title>
 <body>
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (u instanceof DipendenteBean)  { %>

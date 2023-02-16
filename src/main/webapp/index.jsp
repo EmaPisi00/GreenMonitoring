@@ -18,19 +18,21 @@
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
 
-    <title>Title</title>
+    <title>HomePage</title>
 </head>
 <body>
 
-<% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (u instanceof DipendenteBean)  { %>
-<%@include file="/fragments/headerLoggedDipendente.html" %>
-<%} else if(u instanceof  AziendaBean){ %>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
-<%} else { %>
+<% UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if(u == null){ %>
 <%@include file="fragments/headerLogin.html"%>
-<% }%>
+    <% } else if (u instanceof DipendenteBean) { %>
+<%@include file="/fragments/headerLoggedDipendente.html" %>
+
+<% } else if (u instanceof AziendaBean) { %>
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%}%>
 
 
 <!-- Div principale -->

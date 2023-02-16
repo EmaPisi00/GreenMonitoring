@@ -12,6 +12,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <!-- Import Bootstrap -->
     <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>

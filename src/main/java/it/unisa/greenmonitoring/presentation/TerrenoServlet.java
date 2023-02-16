@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Enumeration;
 
-@WebServlet(name = "ServletTerreno", value = "/ServletTerreno")
+@WebServlet(name = "TerrenoServlet", value = "/TerrenoServlet")
 @MultipartConfig
 public class TerrenoServlet extends HttpServlet {
     /**
