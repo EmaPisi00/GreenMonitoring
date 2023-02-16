@@ -12,7 +12,7 @@
 
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/headerLogin.css">
+    <link rel="stylesheet" href="css/login.css">
 
     <style>
         @media screen and (max-width: 768px) {
@@ -26,8 +26,6 @@
     <link href="/img/favicon.png" rel="icon">
     <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <meta charset="utf-8">
-    <link rel="icon" type="image/x-icon" href="img/favicon.png">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
@@ -38,55 +36,52 @@
     <title>Associazione Azienda</title>
 </head>
 
-<body>
-<% UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
-    if (user == null) {
+<body class="assotiationBody">
+<% UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+    if (u == null) {
         response.sendRedirect("error.jsp");
-    } else if (user instanceof AziendaBean) {
+    } else if (u instanceof AziendaBean) {
         response.sendRedirect("error.jsp");
-    } else if (((DipendenteBean) user).getAzienda() != null) {
+    } else if (((DipendenteBean) u).getAzienda() != null) {
         //l'if controlla se l'utente è un dipendente e se è già associato ad un'azienda
         response.sendRedirect("Profile.jsp");
-    } else if (((DipendenteBean) user).getAzienda() == null) { %>
-<%@include file="fragments/headerLoggedDipendenteNonAssociato.html" %>
+    }
+%>
+<%@ include file="fragments/headerLoggedDipendente.html"%>
 
-<%} %>
 
-
-<div class="container py-5 border-1">
-    <div class="row justify-content-center">
-        <div class="col-5 py-5">
-            <legend style="font-size: 40px; text-align:center; color: black; ">
-                Associazione Azienda
-            </legend>
-            <form class="row g-4 justify-content-center  py-3" action="ServletAssociazione" id="associa_dipendente"
-                  method="post">
-                <div class="col-6" style="font-family: 'Lora', serif; ">
-                    <div class="form-outline form-white mb-4">
-                        <label for="codiceAzienda" class="form-label">Codice Azienda:</label>
-                        <input type="text" class="form-control" id="codiceAzienda" placeholder="12345"
-                               name="codiceAzienda"
-                               required=""/>
-                    </div>
+    <div class="loginContainer">
+        <div id="formLogin">
+            <form method="post" action="ServletAssociazione">
+                <div class="formValidation">
+                    <label for="codiceAzienda" class="form-label">Codice Azienda:</label>
+                    <input type="text" class="textInputStyle" id="codiceAzienda" placeholder="AA22ss33"
+                           name="codiceAzienda"/>
                 </div>
-
+                <br>
                 <!-- Button trigger modal -->
                 <button id="showModal" type="button" class="btn btn-outline-success btn-lg px-3" data-toggle="Modal"
                         data-target="#exampleModalCenter">
                     Associa
                 </button>
+                <br>
             </form>
-
+            <br>
         </div>
     </div>
-</div>
 <!-- Modal -->
 <div id=Modal class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                Sei sicuro di voler effettuare l'associazione?
+                Nome Azienda:
+                <h5 id="nomeAzienda"></h5> <br>
+                Indirizzo Azienda:
+                <h5 id="indirizzoAzienda"></h5> <br>
+                Provincia Azienda:
+                <h5 id="provinciaAzienda"></h5> <br>
+                Cliccare su "Conferma" per associarsi oppure su "Esci" per annullare l'operazione.
             </div>
             <div class="modal-footer">
                 <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Esci</button>
@@ -95,6 +90,42 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#codiceAzienda").blur(function(){
+
+            var codice =$("#codiceAzienda").val();
+
+            if(codice.length >= 1)
+            {
+                $.ajax({
+                    url:"CheckAzienda",
+                    type:"post",
+                    data:"codiceAzienda="+codice,
+                    dataType:"text",
+                    success:function(data)
+                    {
+                        var object = JSON.parse(data);
+                        if(object["success"] === 1) {
+                            $("#nomeAzienda").html(object["nome"]);
+                            $("#indirizzoAzienda").html(object["indirizzo"]);
+                            $("#provinciaAzienda").html(object["provincia"]);
+                        }
+                        else
+                        {
+                            $("#nomeAzienda").html(object["errore"]);
+                            $("#indirizzoAzienda").html(object["errore"]);
+                            $("#provinciaAzienda").html(object["errore"]);
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
 
 <%@include file="fragments/footer.html" %>
 </body>
