@@ -40,7 +40,6 @@ public class TerrenoServletTest {
 
     @Before
     public void setUp() throws Exception {
-        //request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
     }
 
