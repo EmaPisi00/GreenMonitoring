@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="css/headerLogin.css">
 
   <title>Inserisci Terreno</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
   <script src="./jquery/jquery-3.6.3.min.js"></script>
   <link href="/img/favicon.png" rel="icon">
   <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">

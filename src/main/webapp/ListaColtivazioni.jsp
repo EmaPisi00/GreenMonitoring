@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="css/headerLogin.css">
 
     <title>Coltivazioni</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <script src="bootstrap-5.2.3-dist/js/ListaColtivazioni.js"></script>
     <link href="/img/favicon.png" rel="icon">
