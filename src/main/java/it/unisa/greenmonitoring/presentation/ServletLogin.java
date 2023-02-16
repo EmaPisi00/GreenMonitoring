@@ -6,6 +6,7 @@ import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -67,8 +68,9 @@ public class ServletLogin extends HttpServlet {
                     response.sendRedirect("Associazione.jsp");
                 }
             } else {
-                response.sendRedirect("index.jsp?error=true");
-                //fare un response.setParameter per dare un valore ad error
+                request.setAttribute("errorMessage", "Le credenziali inserite non sono valide");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Login.jsp");
+                dispatcher.forward(request, response);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
