@@ -1,0 +1,74 @@
+.loginBody
+{
+    margin: 0;
+    height: 69%;
+
+}
+
+.assotiationBody
+{
+    margin: 0;
+    height: 569px;
+
+}
+.textInputStyle
+{
+    font-size: inherit;
+    width: 75%;
+    padding: 10px 5px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+}
+
+.loginContainer
+{
+    height: 100%;
+}
+
+#formLogin
+{
+    text-align: center;
+    position: relative;
+    width: 50%;
+    margin: auto;
+    margin-top: 5%;
+    background-color: white;
+    border-radius: 20px;
+    margin-bottom:5px;
+    outline: #1E6B27 solid 2px;
+}
+
+.formValidation
+{
+    font-size: xx-large;
+    font-weight: bold;
+    text-align: center;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+
+#loginButton
+{
+    background-color: #258530;
+    font-size: xx-large;
+    width: 50%;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    margin-top: 4%;
+    /* margin: auto; */
+    margin-bottom: 4%;
+    cursor: pointer;
+}
+#errorText
+{
+    text-align: center;
+    font-weight: bold;
+    margin: auto;
+    color: red;
+}
