@@ -46,24 +46,77 @@ public class TerrenoServlet extends HttpServlet {
             //setta i parametri
             String nome = request.getParameter("nome");
             String azienda = request.getParameter("azienda");
-
-
             Part immagine = request.getPart("immagine");
             byte[] imageData = immagine.getInputStream().readAllBytes();
+            Float latitudine, longitudine, superficie;
+            System.out.println("*****" + immagine.getSize());
+            try {
+                latitudine = Float.parseFloat(request.getParameter("latitudine"));
+            } catch (NumberFormatException num) {
+                request.setAttribute("errore", "1");
+                request.setAttribute("descrizione", "errore latitudine formato");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+            try {
+                longitudine = Float.parseFloat(request.getParameter("longitudine"));
+            } catch (NumberFormatException num) {
+                request.setAttribute("errore", "2");
+                request.setAttribute("descrizione", "errore longitudine formato");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+            try {
+                superficie = Float.parseFloat(request.getParameter("superficie"));
+            } catch (NumberFormatException num) {
+                request.setAttribute("errore", "3");
+                request.setAttribute("descrizione", "errore superficie");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+            TerrenoBean terreno = new TerrenoBean(nome, latitudine, longitudine, superficie, imageData, azienda);
 
-            Float latitudine = Float.parseFloat(request.getParameter("latitudine"));
-            Float longitudine = Float.parseFloat(request.getParameter("longitudine"));
-            String superfice = request.getParameter("superfice");
-            //creo il bean da inserire
-            TerrenoBean terreno = new TerrenoBean(nome, latitudine, longitudine, superfice, imageData, azienda);
-            //errori ritorna il bean terreno con i parametri settati null se ci sono errori
-            if (tm.inserisciTerreno(terreno) == null) {
-                request.setAttribute("erroriTerrenoBean", "errore nell'inserimento dei dati");
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/InserisciTerreno.jsp");
+            if (!terreno.getNome().matches("^[a-zA-Z0-9 ]{3,30}")) {
+                request.setAttribute("errore", "4");
+                request.setAttribute("descrizione", "errore nome");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
+                dispatcher.forward(request, response);
+            } else if (terreno.getLatitudine() < 0 || terreno.getLatitudine() > 90) {
+                request.setAttribute("errore", "5");
+                request.setAttribute("descrizione", "errore latitudine");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
+                dispatcher.forward(request, response);
+            } else if (terreno.getLongitudine() < 0 || terreno.getLongitudine() > 180) {
+                request.setAttribute("errore", "6");
+                request.setAttribute("descrizione", "errore longitudine");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
+                dispatcher.forward(request, response);
+
+            } else if (immagine.getSize() > 3145728L || immagine.getSize() <= 0) {
+                System.out.println("***** SBAGLIATAAAA" + immagine.getSize());
+                request.setAttribute("errore", "7");
+                request.setAttribute("descrizione", "errore dimensione immagine");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
+                dispatcher.forward(request, response);
+            } else if (!immagine.getContentType().contains("image")) {
+                request.setAttribute("errore", "8");
+                request.setAttribute("descrizione", "errore tipo immagine");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
                 dispatcher.forward(request, response);
             } else {
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Terreni.jsp");
-                dispatcher.forward(request, response);
+
+                if (tm.inserisciTerreno(terreno)!=null) {
+                    request.setAttribute("errore", "10");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/Terreni.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("errore", "9");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
+                    dispatcher.forward(request, response);
+                }
             }
         } else if (request.getParameter("inserisciTerreno_submit") == null) {
             Enumeration<String> parameters = request.getParameterNames();

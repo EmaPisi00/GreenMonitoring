@@ -8,7 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
+    <title>Error</title>
 </head>
 <body>
 

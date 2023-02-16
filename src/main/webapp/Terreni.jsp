@@ -31,7 +31,8 @@
     </style>
     <title>Terreni</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
-    <link href="/img/favicon.png" rel="icon">
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,6 +57,7 @@
             object-fit: contain;
         }
     </style>
+    <title>Terreni</title>
 </head>
 <body>
 

@@ -8,6 +8,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -39,13 +41,15 @@
         List<NotificaBean> listaNotifiche = n.retriveNotifichePerAziendaDaVisualizzare(seo.getEmail());
         int numNotifiche = listaNotifiche.size(); // Recupera il numero di notifiche dal database o da un'altra fonte
     %>
+    <tiitle>Notifiche</tiitle>
 </head>
+
 <body class="p-3 m-0 border-0 bd-example bg-light">
 
 <!-- bottone notifica Code -->
 <button type="button" class="btn btn-primary position-relative" id="notificationButton">
     Inbox
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationBadge">
     <%=numNotifiche%>
     <span class="visually-hidden">unread messages</span>
   </span>
@@ -64,7 +68,7 @@
                                 "      <img src=\"img/logo.png\" class=\"rounded me-2\" alt=\"...\">" +
                                 "      <strong class=\"me-auto\">"+ notifica.getTipo()+"</strong>" +
                                 "      <small class=\"text-muted\">" +notifica.getData() + "</small>" +
-                                "      <button class=\"m-lg-1\"onclick='showModal(\""+ notifica.getTipo() + "\")'>Leggi</button>" +
+                                "      <button class=\"m-lg-1\"onclick='showModal(\""+notifica.getId() +"\",\""+ notifica.getTipo() + "\",\""+ notifica.getData() + "\",\""+notifica.getContenuto() + "\",\""+ notifica.getColtivazioneID() +"\")'>Leggi</button>" +
                                 "    </div>"
                               );
                 i++;
@@ -84,26 +88,37 @@
 
 <!-- Modal HTML -->
 <!-- Modal HTML -->
+<!-- Modal -->
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Modal Title</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Dettagli notifica</h4>
             </div>
             <!-- Modal body -->
-            <div class="modal-body">
-                Modal Body
+            <div class="card text-center modal-body">
+                <div class="card-header">
+                    <h5><span id="notifica-titolo"></span></h5>
+                </div>
+                <div class="card-body">
+                    <p id="notifica-contenuto"> </p>
+                    <button type="button" class="btn btn-primary" id="coltivazioneBtn" value="">
+                        <span id="notifica-coltivazione"></span>
+                    </button>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <p>Data: <span id="notifica-data"></span></p>
+                </div>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="myModal">Chiudi</button>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- End Example Code -->
 
@@ -116,11 +131,40 @@
             notificationArea.style.display = "none";
         }
     });
-    function showModal(messaggio) {
-        $("#myModal .modal-body").text("ID passato: " + messaggio);
+        function showModal(idNotifica,notifica, data, contenuto,coltivazione) {
+        // Imposta il titolo della notifica
+        document.getElementById("notifica-titolo").innerText = notifica;
+
+        // Imposta il contenuto della notifica
+        document.getElementById("notifica-contenuto").innerText = contenuto + " della coltivazione ";
+
+        //coltivazioneid
+        document.getElementById("notifica-coltivazione").innerText = coltivazione;
+
+        // Imposta la data della notifica
+        document.getElementById("notifica-data").innerText = data ;
+
+        // Mostra il modal
         $("#myModal").modal("show");
+
+        // Nasconde l'area delle notifiche
         document.getElementById("notificationArea").style.display = "none";
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var numNotifiche = xhr.responseText;
+                    document.getElementById("notificationBadge").innerHTML = numNotifiche;
+                }
+            };
+            xhr.open("GET", "ServletNotifica?numNotifiche=true&idNotifica=" + idNotifica, true);
+            xhr.send();
+
     }
+    document.getElementById("coltivazioneBtn").addEventListener("click", function() {
+        var coltivazioneId = document.getElementById("notifica-coltivazione").innerText;
+        var url = "ServletColtivazioni?coltivazione=" + coltivazioneId;
+        window.location.href = url;
+    });
 </script>
 
 </body>

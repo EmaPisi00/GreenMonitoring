@@ -37,7 +37,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
             preparedStatement.setBytes(3, t.getImmagine());
             preparedStatement.setFloat(4, t.getLatitudine());
             preparedStatement.setFloat(5, t.getLongitudine());
-            preparedStatement.setString(6, t.getSuperficie());
+            preparedStatement.setFloat(6, t.getSuperficie());
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException s) {
@@ -66,7 +66,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
                 t.setImmagine(rs.getBytes("immagine"));
-                t.setSuperficie(rs.getString("superfice"));
+                t.setSuperficie(rs.getFloat("superfice"));
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setLongitudine(rs.getFloat("longitudine"));
                 t.setAzienda(rs.getString("azienda"));
@@ -100,7 +100,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setLongitudine(rs.getFloat("longitudine"));
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setAzienda(rs.getString("azienda"));
-                t.setSuperficie(rs.getString("superfice"));
+                t.setSuperficie(rs.getFloat("superfice"));
                 t.setImmagine(rs.getBytes("immagine"));
 
                 connection.commit();
