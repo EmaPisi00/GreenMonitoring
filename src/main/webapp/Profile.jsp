@@ -3,7 +3,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
 <%@ page import="java.sql.SQLException" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %><%--
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.UtenteManager" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl" %><%--
   Created by IntelliJ IDEA.
   User: franc
   Date: 17/01/2023
@@ -31,6 +33,7 @@
 <%@ include file="/fragments/headerLoggedAzienda.html" %>
 <%} else if (user instanceof DipendenteBean){ %>
 <%@ include file="/fragments/headerLoggedDipendente.html" %>
+
 <% }%>
 <html>
 <body>
@@ -64,6 +67,8 @@
     </tr>
 
     <%  if (user instanceof DipendenteBean)  {
+        AziendaDAO aziendaDAO = new AziendaDAOImpl();
+        AziendaBean azienda = aziendaDAO.retrieveForKey(((DipendenteBean) user).getAzienda());
     %>
 
     <tr>
@@ -76,7 +81,7 @@
     </tr>
     <tr>
         <td>Azienda:</td>
-        <td><%= ((DipendenteBean) user).getAzienda() %></td>
+        <td><%= azienda.getNome_azienda() %></td>
     </tr>
     <% } else if (user instanceof AziendaBean) { %>
     <tr>
