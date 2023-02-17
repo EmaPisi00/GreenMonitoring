@@ -5,6 +5,7 @@ import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -49,10 +50,17 @@ public class ServletSensore extends HttpServlet {
             sns.setIdM(id_mosquitto);
             try {
                 sensoreManager.creaSensore(sns);
+                request.setAttribute("success", "1");
+                request.setAttribute("successMessage", "Sensore inserito con successo.");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/InserisciSensore.jsp");
+                dispatcher.forward(request, response);
             } catch (SQLException e) {
+                request.setAttribute("success", "2");
+                request.setAttribute("successMessage", "Sensore non inserito.");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/InserisciSensore.jsp");
                 throw new RuntimeException(e);
             }
-            response.sendRedirect("InserisciSensore.jsp");
+
         } else if (request.getParameter("AssociaSensore") != null) {
             int coltivazione = Integer.parseInt(request.getParameter("id_coltivazione"));
             int id_sensore = Integer.parseInt(request.getParameter("id_sensore"));
@@ -62,6 +70,10 @@ public class ServletSensore extends HttpServlet {
                 throw new RuntimeException(e);
             }
             sensoreManager.aggiungiAssociazioneSensore(coltivazione, sns);
+            request.setAttribute("success", "1");
+            request.setAttribute("successMessage", "Sensore associato con successo.");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ListaSensori.jsp");
+            dispatcher.forward(request, response);
         } else if (request.getParameter("CancellaAssociazioneSensore") != null) {
             int id_sensore = Integer.parseInt(request.getParameter("id_sensore"));
             try {
@@ -70,6 +82,10 @@ public class ServletSensore extends HttpServlet {
                 throw new RuntimeException(e);
             }
             sensoreManager.cancellaAssociazioneSensore(sns);
+            request.setAttribute("success", "2");
+            request.setAttribute("successMessage", "Sensore rimosso con successo.");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ListaSensori.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
