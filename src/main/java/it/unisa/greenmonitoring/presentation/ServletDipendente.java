@@ -59,16 +59,45 @@ public class ServletDipendente extends HttpServlet {
             dipendenteBean.setProvincia(provincia);
             dipendenteBean.setIndirizzo(indirizzo);
 
-            try {
-                aziendaManager.registraDipendente(dipendenteBean);
-                response.sendRedirect("index.jsp");
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            if (!(dipendenteBean.getCitta().matches("^[a-zA-Z]+$"))) {
+                request.setAttribute("errore", "1");
+                request.setAttribute("descrizione", "descrizione...");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                dispatcher.forward(request, response);
+            } else if (!(dipendenteBean.getProvincia().matches("^[a-zA-Z]+$"))) {
+                System.out.println("\nErrore nel nome della Provincia\n");
+                request.setAttribute("errore", "2");
+                request.setAttribute("descrizione", "descrizione...");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                dispatcher.forward(request, response);
+            } else if (!(dipendenteBean.getPassword().matches("^[a-zA-Z0-9!@#$%^&*]+$"))) {
+                System.out.println("\nErrore nella password\n");
+                request.setAttribute("errore", "3");
+                request.setAttribute("descrizione", "descrizione...");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                dispatcher.forward(request, response);
+            } else if (!(dipendenteBean.getNome().matches("^[a-zA-Z]+$"))) {
+                System.out.println("\nErrore nel nome");
+                request.setAttribute("errore", "4");
+                request.setAttribute("descrizione", "descrizione...");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                dispatcher.forward(request, response);
+            } else if (!(dipendenteBean.getCognome().matches("^[a-zA-Z]+$"))) {
+                System.out.println("\nErrore nel nome");
+                request.setAttribute("errore", "5");
+                request.setAttribute("descrizione", "descrizione...");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                try {
+                    aziendaManager.registraDipendente(dipendenteBean);
+                    response.sendRedirect("index.jsp");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-
-            }
-
         }
+    }
 
     /**
      * Metodo post.

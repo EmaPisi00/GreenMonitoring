@@ -23,27 +23,27 @@ public class PiantaBean {
     /**
      * Questo campo contiene la longitudine del terreno.
      */
-    private String ph_min;
+    private Float ph_min;
     /**
      * Questo campo contiene la longitudine del terreno.
      */
-    private String ph_max;
+    private Float ph_max;
     /**
      * Questo campo contiene la longitudine del terreno.
      */
-    private String temperatura_min;
+    private Float temperatura_min;
     /**
      * Questo campo contiene la longitudine del terreno.
      */
-    private String temperatura_max;
+    private Float temperatura_max;
     /**
      * Questo campo contiene la longitudine del terreno.
      */
-    private String umidita_min;
+    private Float umidita_min;
     /**
      * Questo campo contiene la longitudine del terreno.
      */
-    private String umidita_max;
+    private Float umidita_max;
     /**
      * Questo campo contiene la longitudine del terreno.
      */
@@ -59,8 +59,8 @@ public class PiantaBean {
      * @param Ptemperatura_min
      * @param Ptemperatura_max
      */
-    public PiantaBean(String Pazienda, String Pnome, String Pdescrizione, String Pph_min, String Pph_max,
-                      String Ptemperatura_min, String Ptemperatura_max) {
+    public PiantaBean(String Pazienda, String Pnome, String Pdescrizione, Float Pph_min, Float Pph_max,
+                      Float Ptemperatura_min, Float Ptemperatura_max) {
         this.azienda = Pazienda;
         this.nome = Pnome;
         this.descrizione = Pdescrizione;
@@ -136,7 +136,7 @@ public class PiantaBean {
      *
      * @return Float
      */
-    public String getPh_min() {
+    public Float getPh_min() {
         return ph_min;
     }
 
@@ -144,77 +144,77 @@ public class PiantaBean {
      *
      * @param Pph_min
      */
-    public void setPh_min(String Pph_min) {
+    public void setPh_min(Float Pph_min) {
         this.ph_min = Pph_min;
     }
     /**
      *
      * @return Float
      */
-    public String getPh_max() {
+    public Float getPh_max() {
         return ph_max;
     }
     /**
      *
      * @param Pph_max
      */
-    public void setPh_max(String Pph_max) {
+    public void setPh_max(Float Pph_max) {
         this.ph_max = Pph_max;
     }
     /**
      *
      * @return Float
      */
-    public String getTemperatura_min() {
+    public Float getTemperatura_min() {
         return temperatura_min;
     }
     /**
      *
      * @param Ptemperatura_min
      */
-    public void setTemperatura_min(String Ptemperatura_min) {
+    public void setTemperatura_min(Float Ptemperatura_min) {
         this.temperatura_min = Ptemperatura_min;
     }
     /**
      *
      * @return Float
      */
-    public String getTemperatura_max() {
+    public Float getTemperatura_max() {
         return temperatura_max;
     }
     /**
      *
      * @param Ptemperatura_max
      */
-    public void setTemperatura_max(String Ptemperatura_max) {
+    public void setTemperatura_max(Float Ptemperatura_max) {
         this.temperatura_max = Ptemperatura_max;
     }
     /**
      *
      * @return Float
      */
-    public String getUmidita_min() {
+    public Float getUmidita_min() {
         return umidita_min;
     }
     /**
      *
      * @param Pumidita_min
      */
-    public void setUmidita_min(String Pumidita_min) {
+    public void setUmidita_min(Float Pumidita_min) {
         this.umidita_min = Pumidita_min;
     }
     /**
      *
      * @return Float
      */
-    public String getUmidita_max() {
+    public Float getUmidita_max() {
         return umidita_max;
     }
     /**
      *
      * @param Pumidita_max
      */
-    public void setUmidita_max(String Pumidita_max) {
+    public void setUmidita_max(Float Pumidita_max) {
         this.umidita_max = Pumidita_max;
     }
     /**

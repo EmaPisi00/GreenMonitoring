@@ -239,7 +239,7 @@ public class SensoreDAOImpl implements SensoreDAO {
     @Override
     public ArrayList<SensoreBean> SensoriColtivazioneAvviata() {
         //select * from Sensore where Coltivazione in (select id from Coltivazione as c where c.stato_archiviazione=1)
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE Coltivazione in (SELECT id from Coltivazione as c where c.stato_archiviazione=1)";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE Coltivazione in (SELECT id from Coltivazione as c where c.stato_archiviazione=0)";
         ArrayList<SensoreBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();

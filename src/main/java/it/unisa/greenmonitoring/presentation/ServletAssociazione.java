@@ -4,6 +4,7 @@ import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.UtenteManag
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -50,15 +51,33 @@ public class ServletAssociazione extends HttpServlet {
         UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
 
         if (user instanceof DipendenteBean) {
-            try {
-                if (utenteManager.associazioneDipendente((DipendenteBean) user, codiceAzienda)) {
-                    response.sendRedirect("Profile.jsp");
+            if (((DipendenteBean) user).getAzienda() != null) { //controlla se l'utente è già associato
+                request.setAttribute("errore", "1");
+                request.setAttribute("descrizione", "descrizione...");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Associazione.jsp");
+                dispatcher.forward(request, response);
+            } else if (!(codiceAzienda.matches("^\\w{8}$"))) { //stringa di 8 char, es: ASDdd234
+                request.setAttribute("errore", "2");
+                request.setAttribute("descrizione", "descrizione...");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Associazione.jsp");
+                dispatcher.forward(request, response);
             } else {
-                response.sendRedirect("Associazione.jsp");
+                try {
+                    if (utenteManager.associazioneDipendente((DipendenteBean) user, codiceAzienda)) {
+                        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Profile.jsp");
+                        dispatcher.forward(request, response);
+                    } else {
+                        request.setAttribute("errore", "3");
+                        request.setAttribute("descrizione", "non combacia");
+                        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Associazione.jsp");
+                        dispatcher.forward(request, response);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+
         } else {
             response.sendRedirect("Profile.jsp");
         }

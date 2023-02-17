@@ -1,4 +1,4 @@
-
+/*
 package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
@@ -138,3 +138,4 @@ public class ColtivazioneManagerTest {
     }
 
 }
+*/

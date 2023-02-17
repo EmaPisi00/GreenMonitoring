@@ -43,12 +43,12 @@ public class PiantaDAOImpl implements PiantaDAO {
             preparedStatement.setString(1, p.getAzienda());
             preparedStatement.setString(2, p.getNome());
             preparedStatement.setString(3, p.getDescrizione());
-            preparedStatement.setFloat(4, Float.parseFloat(p.getPh_min()));
-            preparedStatement.setFloat(5, Float.parseFloat(p.getPh_max()));
-            preparedStatement.setFloat(6, Float.parseFloat(p.getTemperatura_min()));
-            preparedStatement.setFloat(7, Float.parseFloat(p.getTemperatura_max()));
-            preparedStatement.setFloat(8, Float.parseFloat(p.getUmidita_min()));
-            preparedStatement.setFloat(9, Float.parseFloat(p.getUmidita_max()));
+            preparedStatement.setFloat(4, p.getPh_min());
+            preparedStatement.setFloat(5, p.getPh_max());
+            preparedStatement.setFloat(6, p.getTemperatura_min());
+            preparedStatement.setFloat(7, p.getTemperatura_max());
+            preparedStatement.setFloat(8, p.getUmidita_min());
+            preparedStatement.setFloat(9, p.getUmidita_max());
             preparedStatement.setBytes(10, p.getImmagine());
             preparedStatement.executeUpdate();
             connection.commit();
@@ -85,12 +85,12 @@ public class PiantaDAOImpl implements PiantaDAO {
                 t.setNome(rs.getString("nome"));
                 t.setDescrizione(rs.getString("descrizione"));
 
-                t.setPh_min(Float.toString(rs.getFloat("ph_min")));
-                t.setPh_max(rs.getString("ph_max"));
-                t.setTemperatura_min(rs.getString("temperatura_min"));
-                t.setTemperatura_max(rs.getString("temperatura_max"));
-                t.setUmidita_min(rs.getString("umidita_min"));
-                t.setUmidita_max(rs.getString("umidita_max"));
+                t.setPh_min(rs.getFloat("ph_min"));
+                t.setPh_max(rs.getFloat("ph_max"));
+                t.setTemperatura_min(rs.getFloat("temperatura_min"));
+                t.setTemperatura_max(rs.getFloat("temperatura_max"));
+                t.setUmidita_min(rs.getFloat("umidita_min"));
+                t.setUmidita_max(rs.getFloat("umidita_max"));
                 t.setImmagine(rs.getBytes("immagine"));
                 System.out.println(t);
                 connection.commit();
@@ -159,14 +159,13 @@ public class PiantaDAOImpl implements PiantaDAO {
                 t.setNome(rs.getString("nome"));
                 t.setDescrizione(rs.getString("descrizione"));
 
-                t.setPh_min(Float.toString(rs.getFloat("ph_min")));
-                t.setPh_max(rs.getString("ph_max"));
-                t.setTemperatura_min(rs.getString("temperatura_min"));
-                t.setTemperatura_max(rs.getString("temperatura_max"));
-                t.setUmidita_min(rs.getString("umidita_min"));
-                t.setUmidita_max(rs.getString("umidita_max"));
+                t.setPh_min(rs.getFloat("ph_min"));
+                t.setPh_max(rs.getFloat("ph_max"));
+                t.setTemperatura_min(rs.getFloat("temperatura_min"));
+                t.setTemperatura_max(rs.getFloat("temperatura_max"));
+                t.setUmidita_min(rs.getFloat("umidita_min"));
+                t.setUmidita_max(rs.getFloat("umidita_max"));
                 t.setImmagine(rs.getBytes("immagine"));
-                System.out.println(t);
                 connection.commit();
                 list.add(t);
             }
@@ -200,12 +199,12 @@ public class PiantaDAOImpl implements PiantaDAO {
                 p.setAzienda(rs.getString("azienda"));
                 p.setNome(rs.getString("nome"));
                 p.setDescrizione(rs.getString("descrizione"));
-                p.setPh_min(String.valueOf(rs.getFloat("ph_min")));
-                p.setPh_max(String.valueOf(rs.getFloat("ph_max")));
-                p.setTemperatura_min(String.valueOf(rs.getFloat("temperatura_min")));
-                p.setTemperatura_max(String.valueOf(rs.getFloat("temperatura_max")));
-                p.setUmidita_min(String.valueOf(rs.getFloat("umidita_min")));
-                p.setUmidita_max(String.valueOf(rs.getFloat("umidita_max")));
+                p.setPh_min(rs.getFloat("ph_min"));
+                p.setPh_max(rs.getFloat("ph_max"));
+                p.setTemperatura_min(rs.getFloat("temperatura_min"));
+                p.setTemperatura_max(rs.getFloat("temperatura_max"));
+                p.setUmidita_min(rs.getFloat("umidita_min"));
+                p.setUmidita_max(rs.getFloat("umidita_max"));
                 p.setImmagine(rs.getBytes("immagine"));
 
                 System.out.println("singola pianta da ritornare" + p);
@@ -239,12 +238,12 @@ public class PiantaDAOImpl implements PiantaDAO {
             connection = ConnectionPool.getConnection();
 
             preparedStatement = connection.prepareStatement(retrieveSQL);
-            preparedStatement.setFloat(1, Float.parseFloat(p.getPh_min()));
-            preparedStatement.setFloat(2, Float.parseFloat(p.getPh_max()));
-            preparedStatement.setFloat(3, Float.parseFloat(p.getTemperatura_min()));
-            preparedStatement.setFloat(4, Float.parseFloat(p.getTemperatura_max()));
-            preparedStatement.setFloat(5, Float.parseFloat(p.getUmidita_min()));
-            preparedStatement.setFloat(6, Float.parseFloat(p.getUmidita_max()));
+            preparedStatement.setFloat(1, p.getPh_min());
+            preparedStatement.setFloat(2, p.getPh_max());
+            preparedStatement.setFloat(3, p.getTemperatura_min());
+            preparedStatement.setFloat(4, p.getTemperatura_max());
+            preparedStatement.setFloat(5, p.getUmidita_min());
+            preparedStatement.setFloat(6, p.getUmidita_max());
             preparedStatement.setInt(7, p.getId());
 
             preparedStatement.executeUpdate();
@@ -279,12 +278,12 @@ public class PiantaDAOImpl implements PiantaDAO {
                 p.setAzienda(rs.getString("azienda"));
                 p.setNome(rs.getString("nome"));
                 p.setDescrizione(rs.getString("descrizione"));
-                p.setPh_min(String.valueOf(rs.getFloat("ph_min")));
-                p.setPh_max(String.valueOf(rs.getFloat("ph_max")));
-                p.setTemperatura_min(String.valueOf(rs.getFloat("temperatura_min")));
-                p.setTemperatura_max(String.valueOf(rs.getFloat("temperatura_max")));
-                p.setUmidita_min(String.valueOf(rs.getFloat("umidita_min")));
-                p.setUmidita_max(String.valueOf(rs.getFloat("umidita_max")));
+                p.setPh_min(rs.getFloat("ph_min"));
+                p.setPh_max(rs.getFloat("ph_max"));
+                p.setTemperatura_min(rs.getFloat("temperatura_min"));
+                p.setTemperatura_max(rs.getFloat("temperatura_max"));
+                p.setUmidita_min(rs.getFloat("umidita_min"));
+                p.setUmidita_max(rs.getFloat("umidita_max"));
                 p.setImmagine(rs.getBytes("immagine"));
 
                 System.out.println("singola pianta da ritornare" + p);

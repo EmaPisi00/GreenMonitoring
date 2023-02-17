@@ -1,6 +1,7 @@
 
 package my;
 
+
 import it.unisa.greenmonitoring.dataccess.beans.SensoreBean;
 import it.unisa.greenmonitoring.dataccess.dao.SensoreDAO;
 import it.unisa.greenmonitoring.dataccess.dao.SensoreDAOImpl;
@@ -53,12 +54,6 @@ public class Listener implements ServletContextListener {
             MqttMessagePrinter printer = new MqttMessagePrinter();
             client.setCallback(printer);
 
-            /*start the message processing loop
-            for (String sensor : sensors) {
-                // subscribe to the MQTT topic
-                client.subscribe(sensor);
-            }
-             */
             for (SensoreBean sensori : listaSensori) {
                 client.subscribe(sensori.getIdM());
             }

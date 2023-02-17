@@ -1,4 +1,5 @@
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
+        <%@ page import="it.unisa.greenmonitoring.dataccess.beans.*" %>
+<%@ page import="java.util.Base64" %>
 <%--
   Created by IntelliJ IDEA.
   User: stefa
@@ -20,19 +21,43 @@
     <link rel="stylesheet" href="css/headerLogin.css">
 
     <title>Modifica Range Pianta</title>
+    <style>
+        img {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+    </style>
 </head>
 
 <body>
 
-<% UtenteBean u= (UtenteBean) session.getAttribute("currentUserSession");
-PiantaBean pianta = (PiantaBean) request.getAttribute("piantaModificare");
-String errori = (String)request.getAttribute("erroreDatiPianta");
-session.setAttribute("pianta",pianta);
-    if (!(u instanceof AziendaBean))  { %>
+<% UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+    PiantaBean pianta = (PiantaBean) request.getAttribute("piantaModificare");
+    String errori = (String) request.getAttribute("errore");
+    session.setAttribute("pianta", pianta);
+    String immagine = null;
+    if (!(u instanceof AziendaBean)) { %>
 <% response.sendRedirect("error.jsp"); %>
-<% } else{%>
+<% } else {
+    immagine = null;
+    try {
+        immagine = new String(Base64.getEncoder().encode(pianta.getImmagine()));
+    } catch (NullPointerException e) {
+        immagine = null;
+    }
+
+
+%>
 
 <%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%}%>
+
+<% if (errori !=null) {%>
+<div class="alert alert-danger">
+    <h3>Errore</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
 <%}%>
 
 <div class="container rounded bg-white mt-5 mb-5">
@@ -45,64 +70,42 @@ session.setAttribute("pianta",pianta);
 
                 <div class="col-md-3 border-right"></div>
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                    <img class="rounded-circle mt-5" width="150px" src="<%= request.getContextPath() %>/../immagini/piante/<%= pianta.getImmagine() %>" alt="Descrizione immagine">
+                    <img id="immagine" src="data:image/jpeg;base64,<%=immagine%>">
                     <span class="font-weight-bold">GreenMonitoring</span>
                 </div>
-                <% if (errori != null) { %>
-                <div class="text-danger"> <%= errori%> </div>
-                <% } %>
-                <form id="ModificaRange" action="ServletPianta" method="post">
-                    <input type="text" id="idPianta" name="idPianta" value="<%= pianta.getId()%>"  style="display: none">
-                    <div class="row mt-2">
-                        <label>Azienda</label>
-                        <div class="form-floating mb-3 ">
-                            <input type="text" class="form-control"  readonly id="azienda" name="azienda" value="<%= pianta.getAzienda() %>"  placeholder="null">
-                        </div>
-
-                        <label>nome</label>
-                        <div class="form-floating mb-3">
-                            <input type="tex" class="form-control" id="nome" readonly value="<%= pianta.getNome()%>" name="nome" placeholder="null">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <label>descrizione</label>
-                        <div class="form-floating mb-3 ">
-                            <input type="text" class="form-control"  value="<%=pianta.getDescrizione() %>"  readonly id="descrizione" name="descrizione"  placeholder="null">
-                        </div>
+                <form id="ModificaRange" action="RimuoviPiantaServlet" method="post">
                         <label>ph_min</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"  id="ph_min" name="ph_min"  placeholder="null">
-                            <label for="ph_min"><%= pianta.getPh_min() %></label>
+                            <label for="ph_min"><%=pianta.getPh_min()%></label>
                         </div>
                         <label>ph_max</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control" id="ph_max" name="ph_max"  placeholder="null">
-                            <label for="ph_max"><%= pianta.getPh_max() %></label>
+                            <label for="ph_max"><%=pianta.getPh_max()%></label>
                         </div>
                         <label>temperatura_min</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"  id="temperatura_min" name="temperatura_min"  placeholder="null">
-                            <label for="temperatura_min"><%= pianta.getTemperatura_min()%></label>
+                            <label for="temperatura_min"><%=pianta.getTemperatura_min()%></label>
                         </div>
-                    </div>
-
                     <div class="row">
                         <label>temperatura_max</label>
                         <div class="form-floating col mb-3 ">
                             <input type="text" class="form-control" id="temperatura_max" name="temperatura_max"  placeholder="null">
-                            <label for="temperatura_max"><%= pianta.getTemperatura_max()  %></label>
+                            <label for="temperatura_max"><%=pianta.getTemperatura_max()%></label>
                         </div>
                         <label>umidita_min</label>
                         <div class="form-floating col mb-3 ">
                             <input type="text" class="form-control"  id="umidita_min" name="umidita_min"  placeholder="null">
-                            <label for="umidita_min"><%= pianta.getUmidita_min()%></label>
+                            <label for="umidita_min"><%=pianta.getUmidita_min()%></label>
                         </div>
                     </div>
                     <div class="row">
                         <label>umidita_max</label>
                         <div class="form-floating col mb-3 ">
                             <input type="text" class="form-control" id="umidita_max" name="umidita_max"  placeholder="null">
-                            <label for="umidita_max"><%= pianta.getUmidita_max()  %></label>
+                            <label for="umidita_max"><%=pianta.getUmidita_max()%></label>
                         </div>
                     </div>
 

@@ -63,17 +63,11 @@
 
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-
     if(u == null){
         response.sendRedirect("error.jsp");
     }
     if (u instanceof AziendaBean) { %>
 <%@include file="fragments/headerLoggedAzienda.html" %>
-
-<%
-
-    }%>
-
 
 <% if (u != null) {%>
 <div class="bd">
@@ -87,6 +81,7 @@
     </div>
     <%
             session.removeAttribute("terrenoOccupato");
+        }
         }
     %>
 
@@ -132,12 +127,19 @@
                             if (list.size() != 0) {
                                 Iterator it = list.iterator();
                                 while (it.hasNext()) {
-                                    terrenoBean = (TerrenoBean) it.next(); %>
+                                    terrenoBean = (TerrenoBean) it.next();
+                                    String immagine;
+                                    try {
+                                        immagine = new String(Base64.getEncoder().encode(terrenoBean.getImmagine()));
+                                    } catch (NullPointerException e) {
+                                        immagine = null;
+                                    }
+                    %>
 
                     <tr class="justify-content-center">
                         <td><%= terrenoBean.getNome()%>
                         </td>
-                        <td><img id="immagine" src="data:image/jpeg;base64,<%= new String(Base64.getEncoder().encode(terrenoBean.getImmagine())) %>">
+                        <td><img id="immagine" src="data:image/jpeg;base64,<%=immagine%>">
                         </td>
                         <td><%= terrenoBean.getLatitudine()%>
                         </td>
