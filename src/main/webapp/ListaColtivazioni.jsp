@@ -224,7 +224,7 @@
                     java.sql.Date todayDate = new java.sql.Date(System.currentTimeMillis());
                 %>
                 <label>Inserire la data di inizio della coltivazione</label><br>
-                <input type="date" id="dataInizio" name="datainizio" max="<%=todayDate%>" required><br><br>
+                <input type="date" id="dataInizio" name="datainizio" min="<%=todayDate%>" required><br><br>
                 <button type="button" id="summit" class="btn btn-primary">Aggiungi coltivazione</button>
             </form>
         </div>
