@@ -24,7 +24,7 @@ public class TerrenoBean {
     /**
      * Questo campo contiene il tipo di superficie.
      */
-    private String superficie;
+    private Float superficie;
     /**
      * Questo campo contiene il link all'immagine.
      */
@@ -43,7 +43,7 @@ public class TerrenoBean {
      * @param given_immagine
      * @param given_azienda
      */
-    public TerrenoBean(String given_nome, Float given_latitudine, Float given_longitudine, String given_superficie, byte[] given_immagine, String given_azienda) {
+    public TerrenoBean(String given_nome, Float given_latitudine, Float given_longitudine, Float given_superficie, byte[] given_immagine, String given_azienda) {
         this.nome = given_nome;
         this.latitudine = given_latitudine;
         this.longitudine = given_longitudine;
@@ -124,7 +124,7 @@ public class TerrenoBean {
      *
      * @return String
      */
-    public String getSuperficie() {
+    public Float getSuperficie() {
         return superficie;
     }
 
@@ -132,7 +132,7 @@ public class TerrenoBean {
      *
      * @param given_superficie
      */
-    public void setSuperficie(String given_superficie) {
+    public void setSuperficie(Float given_superficie) {
         this.superficie = given_superficie;
     }
 

@@ -69,8 +69,8 @@
 
 
           <div>
-            <label for="superfice" class="form-label" >superfice:</label>
-            <input type="text" class="form-control" id="superfice" name="superfice" required>
+            <label for="superficie" class="form-label" >superficie:</label>
+            <input type="text" class="form-control" id="superficie" name="superficie" required>
           </div>
 
 

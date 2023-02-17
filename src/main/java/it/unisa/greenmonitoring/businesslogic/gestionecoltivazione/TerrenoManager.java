@@ -36,25 +36,6 @@ public class TerrenoManager {
      */
     public TerrenoBean inserisciTerreno(TerrenoBean t)  {
 
-        if (!(t.getSuperficie().matches("^[0-9]+$"))) {
-            System.out.println("errore nella superfice");
-            return null;
-        }
-        if (t.getNome().length() < 2 || t.getNome().length() > 30) {
-            System.out.println("errore nella dimensione del nome");
-            return null;
-        }
-
-        if (t.getLatitudine() < 0 || t.getLatitudine() > 90) {
-            System.out.println("errore: latitudine minore di 0 ");
-            System.out.println("errore: latitudine maggiore di 90");
-            return null;
-        }
-        if (t.getLongitudine() < 0 || t.getLongitudine() > 180) {
-            System.out.println("errore: longitudine minore di 0 ");
-            System.out.println("errore: longitudine maggiore di 180");
-            return null;
-        }
         List<TerrenoBean> listaterreni = td.retrieveAll();
         for (TerrenoBean tt : listaterreni) {
             System.out.println(tt.getId());

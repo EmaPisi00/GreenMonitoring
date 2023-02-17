@@ -1,17 +1,10 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.UtenteBean" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.AziendaBean" %>
-<%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %><%--
-  Created by IntelliJ IDEA.
-  User: emanu
-  Date: 23/01/2023
-  Time: 17:56
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="icon" type="image/x-icon" href="img/favicon.png">
-
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet"  href="css/login.css" type="text/css">
+    <link rel="stylesheet"  href="css/headerLogin.css" type="text/css">
+    <link rel="stylesheet"  href="css/footer.css" type="text/css">
 
     <!-- Import Bootstrap -->
     <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,56 +21,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
 
-    <title>Login</title>
 </head>
-<body >
-
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (u == null)  { %>
-<%@include file="/fragments/headerLogin.html" %>
-<%} else{
-    request.getSession(false).invalidate();
-}%>
-
-
-<div class="container py-5">
-    <div class="row justify-content-center align-items-center" style="width: 100%;">
-        <h3 class="display-3 text-center py-4 ">Login</h3>
-        <div class="card text-black text-center"
-             style="border-radius: 1rem; border: 6px solid green; font-size:  28px; ">
-           <form class="row justify-content-center  py-1" action="ServletLogin" method="post">
-
-                <div class="col-7 justify-content-center" style="font-family: 'Lora', serif; ">
-                    <div class="form-outline form-white mb-4">
-                        <label for="inputEmail" class="form-label">Email</label>
-                        <input type="email" style="background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="inputEmail" placeholder="emanuele@gmail.com" name="email"
-                               required="" />
-                    </div>
+    if (u != null)  {
+        request.getSession(false).invalidate();
+    }%>
+<%@ include file="fragments/headerLogin.html"%>
+    <body class="loginBody">
+    <div class="loginContainer">
+        <div id="formLogin">
+            <form method="post" action="ServletLogin">
+                <div class="formValidation">
+                    <br>Email<br>
+                    <input class="textInputStyle" type="text" placeholder='Inserisci email' name="email" id="email"/>
                 </div>
-                <div class="col-7 justify-content-center" style="font-family: 'Lora', serif; ">
-                    <div class="form-outline form-white mb-4">
-                        <label for="inputPassword" class="form-label">Password</label>
-                        <input type="password" style="background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="inputPassword" placeholder="******" name="password"
-                               required="" />
-                    </div>
+                <div class="formValidation">
+                    <br>Password<br>
+                    <input class="textInputStyle" type="password" placeholder='********' name="password" id="password"/>
                 </div>
-                <div class="col-12" style="text-align: center; margin-bottom: 16px; font-family: 'Lora', serif; ">
-                    <input type="submit" class="btn btn-outline-success btn-lg px-5" style="font-size: 25px;" value="Login" />
+                <%
+                    String errorMessage = (String)request.getAttribute("errorMessage");
+                    if(errorMessage != null) {
+                %>
+                <div id="errorPopup" class="errorPopup">
+                    <p id="errorText" class="error"><%= errorMessage %></p>
                 </div>
+                <%
+                    }
+                %>
+                <input type="submit" name="signin" id="loginButton" value="Accedi" />
             </form>
         </div>
     </div>
-</div>
 
+    <%@ include file="fragments/footer.html"%>
 
-
-
-
-
-
-</body>
-
-</html>
-<%@include file="/fragments/footer.html"%>
-</body>
+    <script>
+        // Mostra il popup di errore se necessario
+        var errorPopup = document.getElementById("errorPopup");
+        if (errorPopup) {
+            errorPopup.style.display = "block";
+        }
+    </script>
+    </body>
 </html>

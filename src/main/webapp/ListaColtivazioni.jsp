@@ -24,7 +24,7 @@
 
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/headerLogin.css">
+    <link rel="stylesheet" href="css/header.css">
 
     <title>Coltivazioni</title>
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
@@ -45,9 +45,9 @@
 <body>
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (u instanceof DipendenteBean)  { %>
-<%@include file="/fragments/headerLoggedDipendente.html" %>
+<%@include file="/fragments/header.jsp" %>
 <%} else if(u instanceof  AziendaBean){ %>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%@ include file="/fragments/header.jsp" %>
 <%} else { %>
 <%@include file="fragments/headerLogin.html"%>
 <% }%>
@@ -236,6 +236,6 @@
 %>
 </div>
 </div>
-<%@include file="fragments/footer.html" %>
+<%@include file="fragments/footer.jsp" %>
 </body>
 </html>

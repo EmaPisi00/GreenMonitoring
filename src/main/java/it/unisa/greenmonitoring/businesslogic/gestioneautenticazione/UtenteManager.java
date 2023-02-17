@@ -90,6 +90,14 @@ public class UtenteManager {
 
         }
     }
+    /**
+     * retrieve dati azienda basandosi sul codice di associazione.
+     * @param codice_associazione
+     * @return AziendaBean
+     */
+    public AziendaBean visualizzaAziendaPerCodiceAssociazione(String codice_associazione) throws SQLException {
+        return aziendaDAO.retrieveByCode(codice_associazione);
+    }
 }
 
 

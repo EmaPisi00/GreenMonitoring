@@ -49,7 +49,6 @@
         <td>Temperatura minima: <%= meteo.getTemperatura_min() %>°<br>
             Temperatura massima: <%= meteo.getTemperatura_max() %>°<br>
             Millimetri di pioggia: <%= meteo.getRain() %><br>
-            Codice meteo: <%= meteo.getWeather_code() %></td>
     </tr>
 </table>
 <table>
@@ -59,6 +58,7 @@
             if (weather_code < 56 && (misurazione > umidMax || (umidMax - misurazione)<= 5)) {
                 out.println("Domani non pioverà però è consigliato disattivare l'irrigazione in quanto " +
                         "l'umidità della pianta è quasi ai suoi limiti.");
+               %> <img src="img\NonIrrigare.jpg" alt="NonIrrigare"> <%
             }else if (weather_code < 56 && (umidMax - misurazione) >= (umidMax - umidMin)/2) {
                 out.println("Domani non pioverà ed è consigliato di attivare l'irrigazione in quanto " +
                         "il terreno risulta alquanto secca e ha bisogno di idratazione.");
