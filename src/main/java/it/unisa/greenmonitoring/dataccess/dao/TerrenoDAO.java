@@ -26,7 +26,7 @@ public interface TerrenoDAO {
      * @throws SQLException
      * @return TerrenoBean.
      */
-    TerrenoBean retrieveByKey(int id_terreno) throws SQLException;
+    TerrenoBean retrieveByKey(int id_terreno);
     /**
      * Questo metodo distrugge un record nella tabella TERRENO.
      * @param id_terreno

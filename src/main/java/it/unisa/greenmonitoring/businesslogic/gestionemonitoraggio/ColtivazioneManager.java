@@ -62,16 +62,7 @@ public class ColtivazioneManager {
 
     public ColtivazioneBean avvioColtivazione(ColtivazioneBean c, String id_azienda, ArrayList<SensoreBean> collezioneSensori) throws Exception {
          try {
-            /* Verifico l'esistenza della pianta associata a una certa coltivazione c */
-             PiantaBean piantaBean = pd.retrieveByKey(c.getPianta());
-             if (piantaBean == null) {
-                 return null;
-             }
-
              TerrenoBean terrenoBean = td.retrieveByKey(c.getTerreno());
-             if (terrenoBean == null) {
-                 return null;
-             } else {
                  //prende tutte le coltivazioni e cerca il terreno
                  ArrayList<ColtivazioneBean> listaColtivazioni = cd.retrieveColtivazione(id_azienda);
                  for (ColtivazioneBean coltivazione : listaColtivazioni) {
@@ -79,29 +70,12 @@ public class ColtivazioneManager {
                          return null;
                      }
                  }
-             }
-
-            /* Verifico il formato della data */
-            if (c.getData_inizio().toString().matches("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$")) {
-                long millis = System.currentTimeMillis();
-                java.sql.Date date = new java.sql.Date(millis);
-                if (!(java.sql.Date.valueOf(c.getData_inizio().toString()).before(date))) {
-                    return null;
-                }
-            } else {
-                return null;
-            }
-
             /* Verifico che i sensori associati siano > 0, presenti nel db e non occupati */
-             if (collezioneSensori.size() == 0) {
-                 return null;
-             } else {
-                 for (SensoreBean sensore : collezioneSensori) {
-                     if (sensore.getColtivazione() != null) {
-                         return null;
-                     }
-                 }
-             }
+             for (SensoreBean sensore : collezioneSensori) {
+                if (sensore.getColtivazione() != 0) {
+                    return null;
+                    }
+                }
             cd.createColtivazione(c);
         } catch (SQLException e) {
             throw new RuntimeException(e);

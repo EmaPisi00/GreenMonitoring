@@ -90,6 +90,21 @@
                 </div>
             </div>
         </div>
+        <%
+            String success = (String)request.getAttribute("success");
+            String successMessage = (String)request.getAttribute("successMessage");
+            if(success == "1") {
+        %>
+        <div id="successPopup" class="successPopup">
+            <h3 class="display-3 text-center"> <%= successMessage %> </h3>
+        </div>
+        <%
+        } else if (success == "2") {
+        %>
+        <div id="errorPopup" class="errorPopup">
+            <h5 class="display-5 text-center"> <%= successMessage %> </h5>
+        </div>
+        <%}%>
     </div>
     <div class="container py-3">
         <div class="row justify-content-center">
@@ -100,6 +115,18 @@
         </div>
     </div>
 </form>
+<script>
+    // Mostra il popup di errore se necessario
+    var errorPopup = document.getElementById("errorPopup");
+    if (errorPopup) {
+        errorPopup.style.display = "block";
+    }
+
+    var successPopup = document.getElementById("errorPopup");
+    if (successPopup) {
+        successPopup.style.display = "block";
+    }
+</script>
 
 <%@include file="/fragments/footer.html" %>
 

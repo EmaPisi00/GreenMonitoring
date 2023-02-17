@@ -57,8 +57,8 @@ public class TerrenoManager {
      * @throws SQLException
      */
     //visualizzaTerreno
-    public TerrenoBean restituisciTerrenoDaInt(int id_terreno) throws SQLException {
-        return td.retrieveByKey(id_terreno);
+    public TerrenoBean restituisciTerrenoDaInt(int id_terreno) {
+            return td.retrieveByKey(id_terreno);
     }
 
     /**

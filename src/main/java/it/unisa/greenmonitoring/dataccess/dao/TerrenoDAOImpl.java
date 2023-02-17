@@ -86,7 +86,7 @@ public class TerrenoDAOImpl implements TerrenoDAO {
     }
 
     @Override
-    public TerrenoBean retrieveByKey(int id_terreno) throws SQLException {
+    public TerrenoBean retrieveByKey(int id_terreno) {
         String selectSQL = "SELECT * FROM Terreno WHERE id = ?";
         TerrenoBean t = new TerrenoBean();
         try {
@@ -104,11 +104,18 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 t.setImmagine(rs.getBytes("immagine"));
 
                 connection.commit();
+            } else {
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
-        connection.close();
         return t;
     }
 

@@ -1,11 +1,14 @@
 package it.unisa.greenmonitoring.presentation;
 
+import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager;
+import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager;
 import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +24,22 @@ import java.util.List;
 
 @WebServlet(name = "ServletColtivazioni", value = "/ServletColtivazioni")
 public class ServletColtivazioni extends HttpServlet {
+    /**
+     * Sensore manager.
+     */
+    private SensoreManager sensoreManager = new SensoreManager();
+    /**
+     * Pianta manager.
+     */
+    private PiantaManager piantaManager = new PiantaManager();
+    /**
+     * Terreno manager.
+     */
+    private TerrenoManager terrenoManager = new TerrenoManager();
+    /**
+     * Coltivazione manager.
+     */
+    private ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
@@ -43,48 +63,97 @@ public class ServletColtivazioni extends HttpServlet {
         if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
             response.sendError(401);
         } else if (request.getParameter("moduloInserimentoColtivazione") != null) {
-                java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
-                if (request.getParameter("nomepianta") == null || request.getParameter("terreno") == null) {
-                    String errore = "L'operazione non è stata eseguita: La pianta o il terreno sono vuoti.";
-                    request.getSession().setAttribute("errore", errore);
-                    response.sendRedirect("ListaColtivazioni.jsp");
-                } else if (java.sql.Date.valueOf(request.getParameter("datainizio")).after(date)) {
-                    String errore = "La data non è corretta.";
-                    request.getSession().setAttribute("errore", errore);
-                } else {
-                    AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
-                    String utente = aziendaBean.getEmail();
-                    String nomepianta = request.getParameter("nomepianta"); //id
-                    String[] sensorePh = request.getParameterValues("sensorePh"); //id
-                    String[] sensoreTemperatura = request.getParameterValues("sensoreTemperatura"); //id
-                    String[] sensoreUmidita = request.getParameterValues("sensoreUmidita"); //id
-                    ArrayList<String> sensori = new ArrayList<>();
-                    if (sensorePh != null) {
-                        Collections.addAll(sensori, sensorePh);
-                    }
-                    if (sensoreTemperatura != null) {
-                        Collections.addAll(sensori, sensoreTemperatura);
-                    }
-                    if (sensoreUmidita != null) {
-                        Collections.addAll(sensori, sensoreUmidita);
-                    }
-                    String dataInizio = request.getParameter("datainizio");
-                    java.sql.Date dataInizioDate = java.sql.Date.valueOf(dataInizio);
-                    int terreno = Integer.parseInt(request.getParameter("terreno")); //id
+                Date date = new java.sql.Date(System.currentTimeMillis());
+                AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
+                String utente = aziendaBean.getEmail();
+                String[] sensorePh = request.getParameterValues("sensorePh"); //id
+                String[] sensoreTemperatura = request.getParameterValues("sensoreTemperatura"); //id
+                String[] sensoreUmidita = request.getParameterValues("sensoreUmidita"); //id
+                ArrayList<String> sensori = new ArrayList<>();
+
+                int idPianta;
+                int idterreno;
+                Date dataInizio;
+                try {
+                    idPianta = Integer.parseInt(request.getParameter("nomepianta"));
+                } catch (NumberFormatException | NullPointerException numberFormatException) {
+                    request.setAttribute("errore", "1");
+                    request.setAttribute("descrizione", " Formato id pianta errato");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                    dispatcher.forward(request, response);
+                    return;
+                }
+            try {
+                idterreno = Integer.parseInt(request.getParameter("terreno"));
+            } catch (NumberFormatException | NullPointerException numberFormatException) {
+                request.setAttribute("errore", "2");
+                request.setAttribute("descrizione", " Formato terreno errato");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+            try {
+                dataInizio = Date.valueOf(request.getParameter("datainizio"));
+            } catch (IllegalArgumentException | NullPointerException numberFormatException) {
+                request.setAttribute("errore", "3");
+                request.setAttribute("descrizione", " Formato data errato");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+            if (piantaManager.visualizzaPianta(idPianta) == null) {
+                request.setAttribute("errore", "4");
+                request.setAttribute("descrizione", " Pianta ines,istente");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                dispatcher.forward(request, response);
+                return;
+            } else if (terrenoManager.restituisciTerrenoDaInt(idterreno) == null) {
+                request.setAttribute("errore", "5");
+                request.setAttribute("descrizione", " Terreno inesistente");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                dispatcher.forward(request, response);
+                return;
+            } else if (dataInizio.after(new Date(System.currentTimeMillis()))) {
+                request.setAttribute("errore", "6");
+                request.setAttribute("descrizione", " Data non valida");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                dispatcher.forward(request, response);
+                return;
+            } else if ((sensorePh == null || sensorePh.length == 0) && (sensoreTemperatura == null || sensoreTemperatura.length == 0) && (sensoreUmidita == null || sensoreUmidita.length == 0)) {
+                request.setAttribute("errore", "7");
+                request.setAttribute("descrizione", " Nessun sensore selezionato");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                dispatcher.forward(request, response);
+                return;
+            } else {
+                if (sensorePh != null) {
+                    Collections.addAll(sensori, sensorePh);
+                }
+                if (sensoreTemperatura != null) {
+                    Collections.addAll(sensori, sensoreTemperatura);
+                }
+                if (sensoreUmidita != null) {
+                    Collections.addAll(sensori, sensoreUmidita);
+                }
+            }
                     ColtivazioneBean cb = new ColtivazioneBean();
-                    cb.setPianta(Integer.valueOf(nomepianta));
+                    cb.setPianta(idPianta);
                     cb.setStato_archiviazione(Byte.parseByte("0"));
-                    cb.setTerreno(terreno);
-                    SensoreManager sensoreManager = new SensoreManager();
-                    ColtivazioneManager cm = new ColtivazioneManager();
-                    cb.setData_inizio(dataInizioDate);
+                    cb.setTerreno(idterreno);
+                    cb.setData_inizio(dataInizio);
                     try {
                         ArrayList<SensoreBean> listaSensoriBean = new ArrayList<>();
                         for (String id_sensore : sensori) {
                             listaSensoriBean.add(sensoreManager.visualizzaSensore(Integer.parseInt(id_sensore)));
                         }
-                        cm.avvioColtivazione(cb, utente, listaSensoriBean);
-                        ArrayList<ColtivazioneBean> coltivazioneBeans = cm.visualizzaStatoColtivazioni(aziendaBean.getEmail());
+                        if (coltivazioneManager.avvioColtivazione(cb, utente, listaSensoriBean) == null) {
+                            request.setAttribute("errore", "8");
+                            request.setAttribute("descrizione", " Errore nel salvataggio della coltivazione");
+                            RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                            dispatcher.forward(request, response);
+                            return;
+                        }
+                        ArrayList<ColtivazioneBean> coltivazioneBeans = coltivazioneManager.visualizzaStatoColtivazioni(aziendaBean.getEmail());
                         Integer id_coltivazione = coltivazioneBeans.get(coltivazioneBeans.size() - 1).getId();
                         cb.setId(id_coltivazione);
                         SensoreBean sensoreBean;
@@ -92,32 +161,13 @@ public class ServletColtivazioni extends HttpServlet {
                             sensoreBean = sensoreManager.visualizzaSensore(Integer.parseInt(sensore));
                             sensoreManager.aggiungiAssociazioneSensore(cb.getId(), sensoreBean);
                         }
-
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                }
-            }  else if (request.getParameter("sensoreDaRimuovere") != null) {
-                String sensoreDaRimuovere = request.getParameter("sensoreDaRimuovere");
-                AziendaBean aziendaBean = (AziendaBean) ((UtenteBean) request.getSession().getAttribute("currentUserSession"));
-                SensoreManager sm = new SensoreManager();
-                List<SensoreBean> sensoreBeanList = sm.visualizzaListaSensori(aziendaBean.getEmail());
-                SensoreBean SensoreDaRimuovere = null;
-                for (int i = 0; i < sensoreBeanList.size(); i++) {
-                    if (sensoreBeanList.get(i).getId() == Integer.valueOf(sensoreDaRimuovere)) {
-                        SensoreDaRimuovere = sensoreBeanList.get(i);
-                        break;
-                    }
-                }
-                try {
-                    SensoreDaRimuovere.setColtivazione(null);
-                    sm.cancellaAssociazioneSensore(SensoreDaRimuovere);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                response.sendRedirect("Coltivazione.jsp");
-            } else if (request.getParameter("today") != null) {
-                ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                    dispatcher.forward(request, response);
+
+                } else if (request.getParameter("today") != null) {
                 java.sql.Date today = new java.sql.Date(System.currentTimeMillis());
                 Integer coltivazioneId = Integer.valueOf(request.getSession().getAttribute("coltivazioneID").toString());
                 String jsonColtivazioni = null;
@@ -136,7 +186,6 @@ public class ServletColtivazioni extends HttpServlet {
                 request.getSession().setAttribute("erroreDataPeriodo", "Periodo non valido");
                 response.sendRedirect("Coltivazione.jsp");
             } else { */
-                ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
                 System.out.println("Data Inizio Periodo "  + request.getParameter("data_inizio_periodo"));
                 System.out.println("Data Fine Periodo " + request.getParameter("data_inizio_periodo"));
                 java.sql.Date inizioPeriodo = java.sql.Date.valueOf(request.getParameter("data_inizio_periodo"));
@@ -162,9 +211,7 @@ public class ServletColtivazioni extends HttpServlet {
      * @return string
      */
     public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId, String tipo) {
-        ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
         List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
-        String InizioJson = "{\"theme\":\"light1\",\"animationEnabled\":\"false\",\"title\":{\"text\":\"\"},\"data\":[{\"type\":\"spline\",\"dataPoints\":[";
         JSONObject jsonObject = new JSONObject();
         JSONObject title = new JSONObject();
         JSONArray data = new JSONArray();
@@ -178,7 +225,7 @@ public class ServletColtivazioni extends HttpServlet {
 
         for (int i = 0; i < misurazioneSensoreBeanList.size(); i++) {
             JSONObject dataPoint = new JSONObject();
-            dataPoint.put("label", misurazioneSensoreBeanList.get(i).getData());
+            dataPoint.put("label", "\"" + misurazioneSensoreBeanList.get(i).getData().toString() + "\"");
             dataPoint.put("y", misurazioneSensoreBeanList.get(i).getValore());
             dataPoints.add(dataPoint);
         }
@@ -195,7 +242,6 @@ public class ServletColtivazioni extends HttpServlet {
      * @return string
      */
     public String costruisciJson(Integer coltivazioneId) throws SQLException {
-        ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
         List<MisurazioneSensoreBean> misurazioneSensoreBeanListPH = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, "pH");
         List<MisurazioneSensoreBean> misurazioneSensoreBeanListTemperatura = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, "temperatura");
         List<MisurazioneSensoreBean> misurazioneSensoreBeanListUmidita = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, "umidita");
