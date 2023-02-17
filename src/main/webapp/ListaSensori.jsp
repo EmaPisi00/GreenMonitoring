@@ -30,6 +30,7 @@
 
     if(u == null){
         response.sendRedirect("error.jsp");
+
     }else if (!(u instanceof AziendaBean))  {
  response.sendRedirect("error.jsp");
  } else{  %>
@@ -42,7 +43,7 @@
     <div class="row justify-content-center">
         <div class="col-5 text-center">
 
-            <h1 style="font-family: 'Lobster', cursive; font-size: 35px;">Visualizza Sensori</h1>
+            <h3 class="display-3 text-center">Lista Sensori</h3>
         </div>
         <div class="col-12 py-5">
             <table  class="table table-group-divider" style="font-size: 30px;">

@@ -78,7 +78,7 @@
 
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
-<%! String urlImmagine = new String("Foto coltivazione");
+<%! byte[] Immagine = null;
     List<ColtivazioneBean> list = null;
     List<SensoreBean> sList = null;
     List<PiantaBean> piantaBeanList = null;
@@ -108,7 +108,7 @@
     idPianta = temporaryColtivazioneBean.getPianta();
     temporaryPiantaBean = pm.visualizzaPianta(idPianta);
     nomePianta = temporaryPiantaBean.getNome();
-    urlImmagine = temporaryPiantaBean.getImmagine();
+    Immagine = temporaryPiantaBean.getImmagine();
     temporaryTerrenoBean = tm.restituisciTerrenoDaInt(temporaryColtivazioneBean.getTerreno());
     descrizioneTerreno = temporaryTerrenoBean.getNome();
     resultUmidita = cm.restituisciMisurazioniRecenti("umidita", coltivazioneID);
@@ -133,7 +133,7 @@
                 </div>
             </div>
             <div class="row">
-                <img src="<%=urlImmagine%>" alt="Foto coltivazione"/>
+                <img id="immagine" src="data:image/jpeg;base64,<%=Immagine%>" alt="Foto coltivazione">
             </div>
             <div class="row row-cols-2">
                 <div class="col">
@@ -229,6 +229,8 @@
 </div>
 <!-- contenuto dei tab -->
 <div class="tab-content" id="myTabContent">
+    <div class="row">
+        <div class="col-sm">
     <!-- Generale -->
     <div class="tab-pane fade show active" id="generale-tab-pane" role="tabpanel" aria-labelledby="generale-tab-pane"
          tabindex="0">
@@ -467,7 +469,7 @@
                 <option name="tipoSensore" value="pH">pH</option>
                 <option name="tipoSensore" value="temperatura">Temperatura</option>
             </select>
-            <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success" onclick="loadJsonAndPrintChart()">Mostra per questi periodi</button>
+            <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success" onclick="loadJsonAndPrintChart()" style="height: 370px; width: 500px;">Mostra per questi periodi</button>
         </form>
         <div id="rilevamentiPerPeriodoCanvas" style="height: 370px; width: 500px;"></div>
         <script type="text/javascript">
@@ -509,8 +511,6 @@
         <script src="canvas/canvasjs.min.js"></script>
     </div>
     <!-- lista dei sensori e form rimuovi sensore -->
-    <div class="container">
-        <div class="row">
             <div class="col-sm-6">
                 <div class="card" style="width: auto;">
                     <h5 class="card-title">Sensori</h5>

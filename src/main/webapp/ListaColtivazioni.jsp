@@ -42,8 +42,6 @@
     <!-- link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet"> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-
-<title>Lista Coltivazioni</title>
 <body>
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (u instanceof DipendenteBean)  { %>
@@ -226,7 +224,7 @@
                     java.sql.Date todayDate = new java.sql.Date(System.currentTimeMillis());
                 %>
                 <label>Inserire la data di inizio della coltivazione</label><br>
-                <input type="date" id="dataInizio" name="datainizio" max="<%=todayDate%>" required><br><br>
+                <input type="date" id="dataInizio" name="datainizio" min="<%=todayDate%>" required><br><br>
                 <button type="button" id="summit" class="btn btn-primary">Aggiungi coltivazione</button>
             </form>
         </div>
