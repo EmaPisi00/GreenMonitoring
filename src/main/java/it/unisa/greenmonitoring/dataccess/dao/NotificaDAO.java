@@ -8,8 +8,9 @@ public interface NotificaDAO {
     /**
      * crep una notifica da inserire nl de.
      * @param notifica
+     * @param dipendenti
      */
-    void aggiungiNotifica(NotificaBean notifica);
+    void aggiungiNotifica(NotificaBean notifica, List<String> dipendenti);
 
     /**
      *
@@ -20,14 +21,21 @@ public interface NotificaDAO {
 
     /**
      *
-     * @param azienda
-     * @return List
+     * @param id
      */
-    List<NotificaBean> retriveNotifichePerAziendaDaVisualizzare(String azienda);
+    void updateLetturaNotificaAzienda(int id);
 
     /**
      *
      * @param id
+     * @param idDipendente
      */
-    void updateLetturaNotifica(int id);
+    void updateLetturaNotificaDipendente(int id, String idDipendente);
+
+    /**
+     *
+     * @param emailDipendente
+     * @return List
+     */
+    List<NotificaBean> retriveNotifichePerDipendente(String emailDipendente);
 }

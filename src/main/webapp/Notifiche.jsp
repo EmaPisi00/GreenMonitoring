@@ -5,6 +5,8 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.NotificaBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %>
+<%@ page import="java.util.ArrayList" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,10 +37,15 @@
         /* -- INIZIO AUTENTICAZIONE --*/
         UtenteBean seo = (UtenteBean) session.getAttribute("currentUserSession");
         NotificaDAO n = new NotificaDAOImpl();
-        if (!(seo instanceof AziendaBean)) {
+        List<NotificaBean> listaNotifiche=null;
+        if (seo instanceof AziendaBean) {
+            listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());
+        } else if (seo instanceof DipendenteBean) {
+            listaNotifiche = n.retriveNotifichePerDipendente(seo.getEmail());
+        } else {
             response.sendRedirect("error.jsp");
         }
-        List<NotificaBean> listaNotifiche = n.retriveNotifichePerAziendaDaVisualizzare(seo.getEmail());
+
         int numNotifiche = listaNotifiche.size(); // Recupera il numero di notifiche dal database o da un'altra fonte
     %>
     <tiitle>Notifiche</tiitle>
@@ -58,7 +65,11 @@
 <div class="toast-container">
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="notificationArea" style="display: none;">
     <% int i=0;
-        for (NotificaBean notifica : listaNotifiche ) {
+    List<NotificaBean> listaDaVisualizzare= new ArrayList<>();
+    for (NotificaBean not: listaNotifiche) {
+        listaDaVisualizzare.add(not);
+    }
+        for (NotificaBean notifica : listaDaVisualizzare ) {
             System.out.println(notifica);
             if(i<4) {
 
@@ -136,7 +147,7 @@
         document.getElementById("notifica-titolo").innerText = notifica;
 
         // Imposta il contenuto della notifica
-        document.getElementById("notifica-contenuto").innerText = contenuto + " della coltivazione ";
+        document.getElementById("notifica-contenuto").innerText = contenuto + "\nappartenente alla coltivazione ";
 
         //coltivazioneid
         document.getElementById("notifica-coltivazione").innerText = coltivazione;

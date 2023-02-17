@@ -4,6 +4,7 @@ package it.unisa.greenmonitoring.dataccess.dao;
 import it.unisa.greenmonitoring.dataccess.beans.NotificaBean;
 
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +26,21 @@ public class NotificaDAOImpl implements NotificaDAO {
      * Dichiaro la Variabile final "azienda" che mi identifica la tabella nel db.
      */
     private static final String TABLE_NAME = "Notifica";
+
     /**
      * crep una notifica da inserire nl de.
      *
      * @param notifica
      */
     @Override
-    public void aggiungiNotifica(NotificaBean notifica) {
+    public void aggiungiNotifica(NotificaBean notifica, List<String> dipendenti) {
+        System.out.println("*****" + notifica + dipendenti.size());
         PreparedStatement preparedStatement = null;
         String insertSQL = "INSERT " + TABLE_NAME + "(coltivazione,azienda,tipo,data_ora,contenuto,visualizzazioneNotifica)" + " VALUES (?,?,?,?,?,?)";
+        String insertSQL2 = "INSERT NotificaDipendenti" + "(notifica,dipendente,visualizzazioneNotifica)" + " VALUES (?,?,?)";
         try {
             connection = ConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(insertSQL);
+            preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, notifica.getColtivazioneID());
             preparedStatement.setString(2, notifica.getAziendaID());
             preparedStatement.setString(3, notifica.getTipo());
@@ -44,7 +48,28 @@ public class NotificaDAOImpl implements NotificaDAO {
             preparedStatement.setString(5, notifica.getContenuto());
             preparedStatement.setBoolean(6, notifica.getVisualizzazioneNotifica());
             preparedStatement.executeUpdate();
+
+            preparedStatement.executeUpdate();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int id = generatedKeys.getInt(1);
+                notifica.setId(id);
+                System.out.println("Id della notifica appena generato: " + id);
+            }
+
+            ///prendi Lid appena inserito da sensore
+            preparedStatement = connection.prepareStatement(insertSQL2);
+            for (String idD : dipendenti) {
+                System.out.println("notificaID****** " + notifica.getId());
+                preparedStatement.setInt(1, notifica.getId());
+                preparedStatement.setString(2, idD);
+                preparedStatement.setBoolean(3, false);
+                preparedStatement.executeUpdate();
+            }
+
             connection.commit();
+
+
         } catch (SQLException s) {
             s.printStackTrace();
         } finally {
@@ -90,14 +115,71 @@ public class NotificaDAOImpl implements NotificaDAO {
         }
         return list;
     }
+
+    /**
+     *
+     * @param id
+     */
     @Override
-    public List<NotificaBean> retriveNotifichePerAziendaDaVisualizzare(String azienda) {
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE azienda = ? and visualizzazioneNotifica=0 order by data_ora DESC";
+    public  void updateLetturaNotificaAzienda(int id) {
+        String updateSQL = "UPDATE " + TABLE_NAME + " SET visualizzazioneNotifica = ? WHERE id = ?";
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+            connection.commit();
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    /**
+     * @param idNotifica
+     * @param idDipendente
+     */
+    @Override
+    public void updateLetturaNotificaDipendente(int idNotifica, String idDipendente) {
+        String updateSQL = "UPDATE NotificaDipendenti SET visualizzazioneNotifica = ? WHERE id = ? AND dipendente = ?";
+        try {
+            connection = ConnectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
+            preparedStatement.setBoolean(3, true);
+            preparedStatement.setInt(2, idNotifica);
+            preparedStatement.setString(3, idDipendente);
+
+            preparedStatement.executeUpdate();
+            connection.commit();
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    /**
+     *
+     * @param emailDipendente
+     * @return List
+     */
+    public List<NotificaBean> retriveNotifichePerDipendente(String emailDipendente) {
+        String selectSQL = "select * from Notifica where id in(select notifica from NotificaDipendenti as n where notifica=Notifica.id and dipendente=?";
         List<NotificaBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setString(1, azienda);
+            preparedStatement.setString(1, emailDipendente);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -124,31 +206,6 @@ public class NotificaDAOImpl implements NotificaDAO {
             }
         }
         return list;
-    }
-
-    /**
-     *
-     * @param id
-     */
-    @Override
-    public  void updateLetturaNotifica(int id) {
-        String updateSQL = "UPDATE " + TABLE_NAME + " SET visualizzazioneNotifica = ? WHERE id = ?";
-        try {
-            connection = ConnectionPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
-            preparedStatement.setBoolean(1, true);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException s) {
-            s.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-        }
     }
 }
 

@@ -1,6 +1,7 @@
 package it.unisa.greenmonitoring.dataccess.beans;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 
 public class NotificaBean {
     /**
@@ -31,6 +32,26 @@ public class NotificaBean {
      * visualizzazione.
      */
     private boolean visualizzazioneNotifica;
+    /**
+     * listaDipendenti.
+     */
+    private HashMap<String, Boolean> ListaDipendenti;
+
+    /**
+     *
+     * @return HashMap
+     */
+    public HashMap<String, Boolean> getListaDipendenti() {
+        return ListaDipendenti;
+    }
+
+    /**
+     *
+     * @param listaDipendenti
+     */
+    public void setListaDipendenti(HashMap<String, Boolean> listaDipendenti) {
+        ListaDipendenti = listaDipendenti;
+    }
 
     /**
      *
@@ -39,7 +60,6 @@ public class NotificaBean {
     public boolean getVisualizzazioneNotifica() {
         return visualizzazioneNotifica;
     }
-
     /**
      *
      * @param param_visualizzazioneNotifica
@@ -47,7 +67,6 @@ public class NotificaBean {
     public void setVisualizzazioneNotifica(boolean param_visualizzazioneNotifica) {
         this.visualizzazioneNotifica = param_visualizzazioneNotifica;
     }
-
     /**
      *
      * @param Param_coltivazioneID

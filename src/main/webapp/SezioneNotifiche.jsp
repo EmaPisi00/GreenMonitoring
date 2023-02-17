@@ -16,8 +16,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="icon" type="image/x-icon" href="img/favicon.png">
-
     <!-- Import Bootstrap -->
     <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
@@ -37,28 +35,23 @@
     <script src="bootstrap-5.2.3-dist/js/TerreniJS.js"></script>
     <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Sezione Notifiche</title>
+    <%
+        /* -- INIZIO AUTENTICAZIONE --*/
+        UtenteBean seo = (UtenteBean) session.getAttribute("currentUserSession");
+        NotificaDAO n = new NotificaDAOImpl();
+        List<NotificaBean> listaNotifiche = null;
+        if (seo instanceof AziendaBean) {
+            listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());
+        } else if (seo instanceof DipendenteBean) {
+            listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());
+        } else {
+            response.sendRedirect("error.jsp");
+        }
+
+    %>
+    <%@ include file="/fragments/headerLoggedAzienda.html" %>
 </head>
-
-
 <body>
-<%
-    /* -- INIZIO AUTENTICAZIONE --*/
-    UtenteBean seo = (UtenteBean) session.getAttribute("currentUserSession");
-    NotificaDAO n = new NotificaDAOImpl();
-    if (!(seo instanceof AziendaBean)) {
-        response.sendRedirect("error.jsp");
-    }
-
-%>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
-
-<% if(seo != null){%>
-
-<%
-    List<NotificaBean> listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());
-%>
-
 <div class="container mt-5">
     <h3 class="display-3 text-center">Sezione Notifiche</h3>
     <table class="table table-striped table-hover">
@@ -78,7 +71,7 @@
             for (NotificaBean notifica : listaNotifiche) {
                 out.print("<tr style=\"cursor: pointer;" +
                         (!notifica.getVisualizzazioneNotifica() ? "background-color: red;" : "") +
-                        "\" onclick='showModal("+ notifica.getId() + ")' >" +
+                        "\" onclick='showModal(\""+notifica.getId() +"\",\""+ notifica.getTipo() + "\",\""+ notifica.getData() + "\",\""+notifica.getContenuto() + "\",\""+ notifica.getColtivazioneID() +"\")'>" +
                         "<td>" + i + "</td>" +
                         "<td>" + notifica.getAziendaID() + "</td>" +
                         "<td>" + notifica.getColtivazioneID() + "</td>" +
@@ -93,38 +86,96 @@
         </tbody>
     </table>
 </div>
-
-<!-- Modal HTML -->
-<div class="modal fade" id="myModal">
+<!-- Modal -->
+<div class="modal fade" id="myModal" >
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Modal Title</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Dettagli notifica</h4>
             </div>
             <!-- Modal body -->
-            <div class="modal-body">
-                Modal Body
+            <div class="card text-center modal-body">
+                <div class="card-header">
+                    <h5><span id="notifica-titolo"></span></h5>
+                </div>
+                <div class="card-body">
+                    <p><span id="notifica-contenuto"></span></p>
+                    <button type="button" class="btn btn-primary" id="coltivazioneBtn" value="">
+                        <span id="notifica-coltivazione"></span>
+                    </button>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <p>Data: <span id="notifica-data"></span></p>
+                </div>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger"  onclick="closeModal()">Chiudi</button>
             </div>
         </div>
     </div>
 </div>
 
-<script>
+<!-- End Example Code -->
 
-    function showModal(messaggio) {
-        $("#myModal .modal-body").text("ID passato: " + messaggio);
+<script>
+    var idN;
+    function showModal(idNotifica,notifica, data, contenuto,coltivazione) {
+
+        idN= idNotifica
+        // Imposta il titolo della notifica
+        document.getElementById("notifica-titolo").innerText = notifica;
+
+        // Imposta il contenuto della notifica
+        document.getElementById("notifica-contenuto").innerText = contenuto;
+
+        //coltivazioneid
+        document.getElementById("notifica-coltivazione").innerText = coltivazione;
+
+        // Imposta la data della notifica
+        document.getElementById("notifica-data").innerText = data ;
+
+        // Mostra il modal
         $("#myModal").modal("show");
+
+        // Nasconde l'area delle notifiche
         document.getElementById("notificationArea").style.display = "none";
+
+    }
+    document.getElementById("coltivazioneBtn").addEventListener("click", function() {
+        var coltivazioneId = document.getElementById("notifica-coltivazione").innerText;
+        var url = "ServletColtivazioni?coltivazione=" + coltivazioneId;
+        window.location.href = url;
+    });
+
+    window.onbeforeunload = function () {
+        // Salva la posizione dello scroll nella memoria di sessione
+        var scrollPosition = window.scrollY;
+        sessionStorage.setItem('scrollPosition', scrollPosition);
     }
 
+    window.onload = function () {
+        // Ottiene la posizione dello scroll salvata nella memoria di sessione
+        var scrollPosition = sessionStorage.getItem('scrollPosition');
+
+        // Se c'è una posizione salvata, reimposta la posizione dello scroll
+        if (scrollPosition !== null) {
+            window.scrollBy(0, scrollPosition);
+            // Cancella la posizione salvata dalla memoria di sessione
+            sessionStorage.removeItem('scrollPosition');
+        }
+    }
+
+    function closeModal() {
+        $("#myModal").modal("hide");
+        var url = "ServletNotifica?aggiorna=true&idNotifica=" + idN;
+        window.location.href = url;
+
+
+    }
 </script>
-<%}%>
 <%@include file="fragments/footer.html"%>
 </body>
 </html>

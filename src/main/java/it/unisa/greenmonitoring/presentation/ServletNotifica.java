@@ -1,21 +1,46 @@
 package it.unisa.greenmonitoring.presentation;
 import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.NotificaManager;
+import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
+import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 
 @WebServlet(name = "ServletNotifica", value = "/ServletNotifica")
 public class ServletNotifica extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+        HttpSession session = request.getSession();
+        UtenteBean utente = (UtenteBean) session.getAttribute("currentUserSession");
+        if (request.getParameter("aggiorna") != null) {
+            int idNotifica = Integer.parseInt(request.getParameter("idNotifica"));
+            NotificaManager nm = new NotificaManager();
+            if (utente instanceof AziendaBean) {
+                nm.LeggiNotificaAziendaManager(idNotifica);
+            } else {
+                nm.LeggiNotificaDipendenteManager(idNotifica, utente.getEmail());
+            }
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/SezioneNotifiche.jsp");
+            dispatcher.forward(request, response);
+        }
+        if ("true".equals(request.getParameter("numNotifiche"))) {
+            if (utente instanceof AziendaBean) {
+                NotificaManager nm = new NotificaManager();
+                nm.LeggiNotificaAziendaManager(Integer.parseInt(request.getParameter("idNotifica")));
+                int numNotifiche = nm.NotificheNonLette(utente.getEmail()).size();
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(String.valueOf(numNotifiche));
+            }
+        }
     }
 
     /**
@@ -27,17 +52,6 @@ public class ServletNotifica extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        System.out.println("asdasd");
-        //leggo la notifica
-        Integer idNotifica = Integer.valueOf(request.getParameter("id"));
-
-        NotificaManager nm = new NotificaManager();
-        nm.LeggiNotificaAziendaManager(idNotifica);
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        out.print("{\"status\":\"success\"}");
-        out.flush();
 
     }
 }
