@@ -62,5 +62,13 @@ public interface AziendaDAO {
      * @throws SQLException
      */
     void delete(String email) throws SQLException;
+
+    /**
+     *
+     * @param email
+     * @return List
+     * @throws SQLException
+     */
+    List<String> ListaEmailDipendenti(String email) throws SQLException;
 }
 

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 /**
@@ -360,5 +361,43 @@ public class AziendaDAOImpl implements AziendaDAO {
                 }
             }
         }
+    }
+
+    /**
+     * @param email
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<String> ListaEmailDipendenti(String email) throws SQLException {
+        System.out.println("*****" + email);
+        PreparedStatement preparedStatement = null;
+        List<String> Emaildipendenti = new ArrayList<>();
+        String retrieveSQL = "SELECT email FROM Dipendente WHERE azienda=?";
+
+        try {
+            connection = ConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(retrieveSQL);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String emailDip = (resultSet.getString("email"));
+                System.out.println("*****email" + emailDip);
+                connection.commit();
+                Emaildipendenti.add(emailDip);
+            }
+
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return Emaildipendenti;
     }
 }
