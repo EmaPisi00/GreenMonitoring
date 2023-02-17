@@ -47,9 +47,9 @@
 <body>
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (u instanceof DipendenteBean)  { %>
-<%@include file="/fragments/header.jsp" %>
+<%@include file="/fragments/headerLoggedDipendente.html" %>
 <%} else if(u instanceof  AziendaBean){ %>
-<%@ include file="/fragments/header.jsp" %>
+<%@ include file="/fragments/headerLoggedAzienda.html" %>
 <%} else { %>
 <%@include file="fragments/headerLogin.html"%>
 <% }%>
@@ -238,6 +238,6 @@
 %>
 </div>
 </div>
-<%@include file="fragments/footer.jsp" %>
+<%@include file="fragments/footer.html" %>
 </body>
 </html>
