@@ -63,7 +63,11 @@
 
   <body >
   <form method="post" action="ServletSensore">
-    <table>
+    <div class="container py-5">
+      <h5 class="display-3 text-center">Inserisci Un Sensore</h5>
+      <div class="row justify-content-center">
+        <div class="col-3">
+    <table class="table ">
       <tr>
         <td>Tipo sensore:</td>
         <td>
@@ -80,9 +84,12 @@
       </tr>
       <tr>
         <td></td>
-        <td><input type="submit" value="Registra Sensore" name="RegistraSensore"></td>
+        <td><input type="submit" class="btn btn-outline-success btn-lg px-3" value="Registra Sensore" name="RegistraSensore"></td>
       </tr>
     </table>
+        </div>
+      </div>
+    </div>
   </form>
 
   <%@include file="/fragments/footer.html"%>

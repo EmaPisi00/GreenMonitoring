@@ -30,6 +30,7 @@
 
     if(u == null){
         response.sendRedirect("error.jsp");
+
     }else if (!(u instanceof AziendaBean))  {
  response.sendRedirect("error.jsp");
  } else{  %>
