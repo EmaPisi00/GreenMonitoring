@@ -60,7 +60,7 @@
 %>
 
 <div class="container mt-5">
-    <h2>Notifiche</h2>
+    <h3 class="display-3 text-center">Sezione Notifiche</h3>
     <table class="table table-striped table-hover">
         <thead>
         <tr>

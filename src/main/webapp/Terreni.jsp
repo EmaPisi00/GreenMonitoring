@@ -93,7 +93,7 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-12 text-center">
-                <h1 style="font-family: 'Lobster', cursive; font-size: 35px; text-align: center">Terreni Presenti</h1>
+                <h3 class="display-3 text-center">Terreni Presenti</h3>
             </div>
             <div class="col-14 py-5">
                 <table class="table table-group-divider">

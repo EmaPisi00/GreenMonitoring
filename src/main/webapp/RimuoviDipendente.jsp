@@ -61,7 +61,7 @@
     <div class="row">
         <div class="col-12 text-center">
 
-            <h1 style="font-family: 'Lobster', cursive; font-size: 35px;">Dipendenti</h1>
+            <h3 class="display-3 text-center">Dipendenti</h3>
         </div>
         <div class="col-14 py-5 " style="font-size: 20px;">
             <table class="table table-group-divider">
