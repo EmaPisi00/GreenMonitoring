@@ -109,6 +109,8 @@
         </div>
     </div>
     <!-- Fine coltivazioni -->
+<% }
+%>
     <button type="submit" class="btn" onclick="location.href='AggiungiColtivazione.jsp'">Aggiungi Coltivazione</button>
 </div>
 </div>
