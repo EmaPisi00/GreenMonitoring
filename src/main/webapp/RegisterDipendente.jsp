@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,8 +41,7 @@
     <div class="row justify-content-center align-items-center h-100" style="width: 100%;">
         <h3 class="display-3 text-center py-5">Registrazione Dipendente</h3>
         <div class="card text-black"
-             style="border-radius: 1rem; border: 6px solid green; font-size:  22px;">
-
+             style="border-radius: 1rem; border: 2px solid green; font-size:  22px;">
             <form class="row g-3 " style="font-family: 'Lora', serif; " action="ServletDipendente" method="get">
 
                 <div class="col-md-6 ">
