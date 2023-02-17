@@ -24,7 +24,7 @@
 
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/headerLogin.css">
 
     <title>Coltivazioni</title>
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
@@ -59,7 +59,6 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Coltivazioni</h5>
-
             <% /* -- INIZIO AUTENTICAZIONE -- */
                 Object sa = session.getAttribute("currentUserSession");
                 if (sa == null) {
@@ -85,19 +84,19 @@
                     }
                     if (list.size() == 0) { %>
             <h7>Non ci sono coltivazioni.</h7>
-            <% } else {
+            <% } else { TerrenoManager terrenoManager = new TerrenoManager();
             %>
             <ul class="list-group">
                 <% for (ColtivazioneBean cb : list) {
                     if (cb.getStato_archiviazione() == 1) { %>
                 <li class="list-group-item disabled">
-                    Coltivazione <%=cb.getId()%><br>Terreno associato: <%=cb.getTerreno()%>
+                    Coltivazione <%=cb.getId()%><br>Terreno: <%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getNome()%>
                     <br>(Archiviata)
                 </li>
                 <% } else {
                 %>
                 <li class="list-group-item ">Coltivazione <%=cb.getId()%>
-                    <br>id terreno associato: <%=cb.getTerreno()%>
+                    <br>Terreno: <%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getNome()%>
                     <form action="ServletColtivazioni" method="get">
                         <input type="hidden" name="coltivazione" value="<%=cb.getId()%>">
                         <button type="submit" class="btn btn-success">Visualizza stato</button>
@@ -118,14 +117,13 @@
     <div class="card" style="width: 30rem;">
         <div class="card-body">
             <h5 class="card-title">Modulo inserimento coltivazione</h5>
-            <% if (session.getAttribute("errore") != null) {
+            <% if (request.getAttribute("errore") != null) {
             %>
             <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle me-1"><%=session.getAttribute("errore")%>
+                <i class="bi bi-exclamation-triangle me-1"><%=request.getAttribute("descrizione")%>
                 </i>
             </div>
             <%
-                    session.removeAttribute("errore");
                 }
             %>
             <div id="alrt" class="alert alert-warning fade show" role="alert">
@@ -150,7 +148,7 @@
                             for (int i = 0; i < tbList.size(); i++) {
                                 if (!ids.contains(tbList.get(i).getId())) {
                     %>
-                    <option value=" <%=tbList.get(i).getId()%>"> nome: <%=tbList.get(i).getNome()%>
+                    <option value="<%=tbList.get(i).getId()%>"> nome: <%=tbList.get(i).getNome()%>
                     </option>
                     <% }
                     }%>
@@ -176,7 +174,7 @@
                 <%
                 } else {
                 %>
-                <select type=\"text\" name=\"nomepianta\" required><br>\n");
+                <select type="text" name="nomepianta" required><br>\n");
                     <% for (int i = 0; i < pList.size(); i++) { %>
                     <option value="<%=pList.get(i).getId()%>"><%=pList.get(i).getNome()%>
                     </option>
@@ -198,7 +196,7 @@
                     for (int i = 0; i < sbList.size(); i++) {
                         if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
                 %>
-                <input type="checkbox" id="chk" name="sensorePh" value=" + sbList.get(i).getId() + "> Codice
+                <input type="checkbox" id="chk" name="sensorePh" value="<%=sbList.get(i).getId()%>"> Codice
                 sensore: <%=sbList.get(i).getId()%><br>
                 <% }
                 } %>
@@ -224,7 +222,7 @@
                     java.sql.Date todayDate = new java.sql.Date(System.currentTimeMillis());
                 %>
                 <label>Inserire la data di inizio della coltivazione</label><br>
-                <input type="date" id="dataInizio" name="datainizio" min="<%=todayDate%>" required><br><br>
+                <input type="date" id="dataInizio" name="datainizio" max="<%=todayDate%>" required><br><br>
                 <button type="button" id="summit" class="btn btn-primary">Aggiungi coltivazione</button>
             </form>
         </div>

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.Enumeration;
 
 @WebServlet(name = "TerrenoServlet", value = "/TerrenoServlet")
@@ -129,11 +128,7 @@ public class TerrenoServlet extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter(parameters.nextElement()));
                 result = tm.rimuoviTerreno(id);
                 if (!result) {
-                    try {
-                        temporaryTerrenoBean = tm.restituisciTerrenoDaInt(id);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    temporaryTerrenoBean = tm.restituisciTerrenoDaInt(id);
                     request.getSession().setAttribute("terrenoOccupato", " Il terreno " + temporaryTerrenoBean.getNome() + " è impegnato con una coltivazione.");
                     break;
                 }

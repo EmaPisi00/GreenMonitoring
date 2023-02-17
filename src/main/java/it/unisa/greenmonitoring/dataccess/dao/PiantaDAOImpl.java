@@ -209,6 +209,8 @@ public class PiantaDAOImpl implements PiantaDAO {
 
                 System.out.println("singola pianta da ritornare" + p);
                 connection.commit();
+            } else {
+                return null;
             }
         } catch (SQLException s) {
             s.printStackTrace();
