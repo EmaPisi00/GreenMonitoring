@@ -21,7 +21,16 @@
   <!-- Import Bootstrap -->
   <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
-
+  <style>
+    @media screen and (max-width: 768px) {
+      #formCard {
+        margin-left: 0rem;
+      }
+    }
+    #formCard {
+      margin-left: 33rem;
+    }
+  </style>
   <!-- Import css -->
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/headerLogin.css">
@@ -54,15 +63,14 @@
 
 
 <div class="bd" style="align-content: center">
-  <legend style="text-align:center;">Coltivazioni</legend>
+  <legend style="text-align:center;">Aggiungi una coltivazione</legend>
   <%
     /* Stampa il form per inserire la coltivazione solo se ad accedere alla pagina è un'azienda */
     if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
       AziendaBean ab = (AziendaBean) session.getAttribute("currentUserSession");
   %> <!-- Inserisci coltivazione -->
-  <div class="card" style="width: 30rem;">
+  <div class="card" id="formCard" style="width: 30rem;">
     <div class="card-body">
-      <h5 class="card-title">Modulo inserimento coltivazione</h5>
       <% if (request.getAttribute("errore") != null) {
       %>
       <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
