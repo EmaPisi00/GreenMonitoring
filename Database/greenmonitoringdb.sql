@@ -37,7 +37,7 @@ temperatura_min float not null,
 temperatura_max float not null,
 umidita_min float not null,
 umidita_max float not null,
-immagine varchar(100),
+immagine longblob,
 foreign key (azienda) references Azienda(email) on delete set null on update cascade
 );
 
@@ -59,7 +59,7 @@ create table Terreno(
 id int primary key auto_increment ,
 nome varchar(30),
 azienda varchar(100) not null,
-immagine varchar(100),
+immagine longblob,
 latitudine float not null,
 longitudine float not null,
 superfice varchar(100) not null,
