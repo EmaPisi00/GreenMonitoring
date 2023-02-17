@@ -39,7 +39,7 @@
 
 
 <% if (user != null) {%>
-<form action="ServletPianta" method="post" enctype="multipart/form-data">
+<form action="PiantaServlet" method="post" enctype="multipart/form-data">
 
     <%
         String errori = (String) request.getAttribute("erroriPiantaBean");

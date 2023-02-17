@@ -9,14 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%
-    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    if (u instanceof AziendaBean) { %>
-<%@include file="fragments/headerLoggedAzienda.html"%>
-<%
-    }
-%>
-<html>
+<html lang="en">
 <head>
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
 
@@ -46,16 +39,34 @@
             width: auto;
             object-fit: contain;
         }
+
     </style>
     <title>Piante</title>
 </head>
 <body>
-
-
+<%
+    UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
+    if (u instanceof AziendaBean) { %>
+<%@include file="fragments/headerLoggedAzienda.html"%>
+<%
+    }
+%>
+<% if (request.getAttribute("conferma")!=null) {%>
+<div class="alert alert-success">
+    <h3>Confermato</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
+<% if (request.getAttribute("errore")!=null) {%>
+<div class="alert alert-danger">
+    <h3>Errore</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
 
 <div class="bd py-5">
     <h3 class="display-3 text-center">Piante</h3>
-    <form id="visualizza_piante" action="ServletPianta" method="post">
+    <form id="visualizza_piante" action="RimuoviPiantaServlet" method="post">
         <div class="container py-5">
             <div class="row">
                 <div class="col-14 py-5">
@@ -118,11 +129,13 @@
                                             "<td>" + pb.getTemperatura_max() + "</td>" +
                                             "<td>" + pb.getUmidita_min() + "</td>" +
                                             "<td>" + pb.getUmidita_max() + "</td>" +
-                                            "<td><img id=\"immagine\" src=\"data:image/jpeg;base64," + immagine + "\">" +
-                                            "<td> <button type=\"submit\" name=\"rimuoviPianta_submit\" class=\"btn btn-danger\" value=\"" + pb.getId() + "\">Rimuovi</button>" +
+                                            "<td><img id=\"immagine\" src=\"data:image/jpeg;base64," + immagine + "\">");
+                                            if (pb.getAzienda()!=null) {
+                                    out.print(
+                                            "<td> <button type=\"submit\" id=\"rimuoviPianta_submit\" name=\"rimuoviPianta_submit\" class=\"btn btn-danger\" value=\"" + pb.getId() + "\">Rimuovi</button>" +
                                             " <button type=\"submit\" value=\"" + pb.getId() + "\"class=\"btn btn-danger\" name=\"modificaRange_submit\">Modifica</button></td>" +
                                             "</tr>"
-                                    );
+                                    );}
                                     i++;
                                 }
                             }
@@ -133,7 +146,6 @@
                 </div>
             </div>
         </div>
-
     </form>
     <div class="container py-2">
         <div class="row justify-content-center">
@@ -147,7 +159,6 @@
         </div>
     </div>
 </div><!-- End bd -->
-
 
 <%@include file="fragments/footer.html" %>
 </body>
