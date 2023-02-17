@@ -10,10 +10,12 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import javax.swing.*;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 public class MqttMessagePrinter implements MqttCallback {
@@ -38,34 +40,67 @@ public class MqttMessagePrinter implements MqttCallback {
     //chiama i DAO
     public void messageArrived(String topic, MqttMessage message) throws MqttException, SQLException {
         System.out.println("Received message: " + "Topic= " + topic + new String(message.getPayload()));
-
-        //prendo il valore dal messaggio
         String messaggio = new String(message.getPayload());
         float valore = prelevaNumero(messaggio);
         if (valore != 0.0f) {
-            System.out.println("Number found: " + valore);
             MisurazioneSensoreDAO msd = new MisurazioneSensoreDAOImpl();
             SensoreDAO sensoreDAO = new SensoreDAOImpl();
-            //prendi il sensore con l idM
-            SensoreBean sensore = sensoreDAO.retrieveByidM(topic);
-            //crea uno storico.
-            MisurazioneSensoreBean storico = new MisurazioneSensoreBean(new Date(System.currentTimeMillis()), new Time(System.currentTimeMillis()),
-                    sensore.getTipo(), (int) valore, sensore.getId(), sensore.getColtivazione());
-            msd.createMisurazioneManuel(storico);
+            AziendaDAO azienda = new AziendaDAOImpl();
             PiantaDAO pd = new PiantaDAOImpl();
+            SensoreBean sensore = sensoreDAO.retrieveByidM(topic);
+            MisurazioneSensoreBean storico = new MisurazioneSensoreBean(new Date(System.currentTimeMillis()), new Time(System.currentTimeMillis()),
+                    sensore.getTipo(), (int) valore, sensore.getColtivazione(), sensore.getId());
+            msd.createMisurazioneManuel(storico);
             if (storico.getTipo().matches("temperature")) {
-
+                PiantaBean pianta = pd.ritornaPiantaPerColtivazione(sensore.getColtivazione());
+                if (storico.getValore() > pianta.getTemperatura_max()
+                        || storico.getValore() < pianta.getTemperatura_min()) {
+                    NotificaDAO nd = new NotificaDAOImpl();
+                    String erroreTemp = "Sensore id " + sensore.getId()
+                            + "\\n Tipo " + sensore.getTipo()
+                            + "\\nValore " + valore
+                            + "\\nHa rilevato un errore sulla temperatura della pianta " + pianta.getNome() + " con"
+                            + "\\nTemperatura massima " + pianta.getTemperatura_max()
+                            + "\\nTemperatura minima " + pianta.getTemperatura_min();
+                    NotificaBean notificaBean = new NotificaBean(sensore.getColtivazione(), sensore.getAzienda(),
+                            "ErroreTemperatura", new Timestamp(storico.getOra().getTime()), erroreTemp);
+                    System.out.println("***************+" + notificaBean);
+                    List<String> listaDipendenti = azienda.ListaEmailDipendenti(sensore.getAzienda());
+                    nd.aggiungiNotifica(notificaBean, listaDipendenti);
+                }
+            } else if (storico.getTipo().matches("humidity")) {
                 //prendo la pianta dal sensore che mi da la coltivazione.
                 PiantaBean pianta = pd.ritornaPiantaPerColtivazione(sensore.getColtivazione());
-
                 // se temperatura del sensore rilevata è diversa da max e min della pianta
-                if (storico.getValore() > Float.parseFloat(pianta.getTemperatura_max())
-                        || storico.getValore() < Float.parseFloat(pianta.getTemperatura_min())) {
+                if (storico.getValore() > pianta.getUmidita_max()
+                        || storico.getValore() < pianta.getUmidita_min()) {
                     NotificaDAO nd = new NotificaDAOImpl();
+                    String erroreTemp = "Sensore id: " + sensore.getId()
+                            + "\\n Tipo " + sensore.getTipo()
+                            + "\\nValore " + valore
+                            + "\\nHa rilevato un errore sull'umidità della pianta " + pianta.getNome() + " con"
+                            + "\\Umidità massima " + pianta.getUmidita_max()
+                            + "\\Umidità minima " + pianta.getUmidita_min();
                     NotificaBean nb = new NotificaBean(sensore.getColtivazione(), sensore.getAzienda(),
-                            "ErroreTemperatura", new Timestamp(storico.getOra().getTime()), "errore nella temperatura");
-                    System.out.println(nb);
-                    nd.aggiungiNotifica(nb);
+                            "ErroreUmidita", new Timestamp(storico.getOra().getTime()), erroreTemp);
+                    nd.aggiungiNotifica(nb, azienda.ListaEmailDipendenti(sensore.getAzienda()));
+                }
+            } else if (storico.getTipo().matches("ph")) {
+                //prendo la pianta dal sensore che mi da la coltivazione.
+                PiantaBean pianta = pd.ritornaPiantaPerColtivazione(sensore.getColtivazione());
+                // se temperatura del sensore rilevata è diversa da max e min della pianta
+                if (storico.getValore() > pianta.getPh_max()
+                        || storico.getValore() < pianta.getPh_min()) {
+                    NotificaDAO nd = new NotificaDAOImpl();
+                    String errorePh = "Sensore id: " + sensore.getId()
+                            + "\\n Tipo " + sensore.getTipo()
+                            + "\\nValore " + valore
+                            + "\\nHa rilevato un errore sulla temperatura della pianta " + pianta.getNome() + " con"
+                            + "\\Ph massimo " + pianta.getPh_max()
+                            + "\\Ph minimo " + pianta.getPh_min();
+                    NotificaBean nb = new NotificaBean(sensore.getColtivazione(), sensore.getAzienda(),
+                            "ErrorePH", new Timestamp(storico.getOra().getTime()),  errorePh);
+                    nd.aggiungiNotifica(nb, azienda.ListaEmailDipendenti(sensore.getAzienda()));
                 }
             }
 
