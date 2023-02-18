@@ -183,6 +183,18 @@ public class UtenteBean {
     }
 
     @Override
+    public String toString() {
+        return "UtenteBean{"
+                + "email='" + email + '\''
+                + ", password='" + password + '\''
+                + ", telefono='" + telefono + '\''
+                + ", citta='" + citta + '\''
+                + ", indirizzo='" + indirizzo + '\''
+                + ", provincia='" + provincia + '\''
+                + '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(email, password, telefono, citta, indirizzo, provincia);
     }

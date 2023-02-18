@@ -56,7 +56,7 @@ public class ServletGestioneProfilo extends HttpServlet {
         String citta = request.getParameter("citta").isEmpty() ? utente.getCitta() : request.getParameter("citta");
         String provincia = request.getParameter("provincia").isEmpty() ? utente.getProvincia() : request.getParameter("provincia");
         String indirizzo = request.getParameter("indirizzo").isEmpty() ? utente.getIndirizzo() : request.getParameter("indirizzo");
-        System.out.println(emailNuova);
+        System.out.println(emailNuova + password + telefono + citta + provincia + indirizzo);
         //controlli utente generale
         if (!emailNuova.matches("^[\\w\\d]+@[\\w\\d]+\\.[\\w\\d]+$")) {
             System.out.println("Errore nell'email");
@@ -92,7 +92,7 @@ public class ServletGestioneProfilo extends HttpServlet {
         } else if (!(indirizzo.matches("^[a-zA-Z0-9 ]{3,30}"))) {
             System.out.println("\nErrore nel nome dell'indirizzo \n");
             request.setAttribute("errore", "6");
-            request.setAttribute("descrizione", "Errore nell'inserimento delle descrizione");
+            request.setAttribute("descrizione", "Errore nell'inserimento dell' indirizzo");
             RequestDispatcher rd = request.getRequestDispatcher("/ModificaProfilo.jsp");
             rd.forward(request, response);
         } else {
@@ -137,9 +137,10 @@ public class ServletGestioneProfilo extends HttpServlet {
                 }
 
             } else if (utente instanceof DipendenteBean) {
-                String nome = request.getParameter("nome");
-                String cognome = request.getParameter("cognome");
-                String Nome_aziendaDipendente = request.getParameter("Nome_aziendaDipendente");
+                String nome = request.getParameter("nome").isEmpty() ? ((DipendenteBean) utente).getNome() : request.getParameter("nome");
+                String cognome = request.getParameter("cognome").isEmpty() ? ((DipendenteBean) utente).getNome() : request.getParameter("cognome");
+                String Nome_aziendaDipendente = request.getParameter("Nome_aziendaDipendente").isEmpty() ? ((DipendenteBean) utente).getNome() : request.getParameter("Nome_aziendaDipendente");
+                System.out.println("Dipendente " + nome + cognome + Nome_aziendaDipendente);
 
                 if (!(nome.matches("^[a-zA-Z]+$"))) {
                     System.out.println("\nErrore nel nome");
@@ -147,17 +148,20 @@ public class ServletGestioneProfilo extends HttpServlet {
                     request.setAttribute("descrizione", "Errore nell'inserimento del nome dipendente");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/Dipendente.jsp");
                     dispatcher.forward(request, response);
+                    return;
                 } else if (!(cognome.matches("^[a-zA-Z]+$"))) {
-                    System.out.println("\nErrore nel nome");
+                    System.out.println("\nErrore nel cognome");
                     request.setAttribute("errore", "10");
                     request.setAttribute("descrizione", "Errore nell'inserimento cognome Dipendente");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/ModificaProfilo.jsp");
                     dispatcher.forward(request, response);
+                    return;
                 }
                 DipendenteBean utenteNuovo = new DipendenteBean(emailNuova, password, telefono, citta, indirizzo, provincia);
                 utenteNuovo.setNome(nome);
                 utenteNuovo.setCognome(cognome);
                 utenteNuovo.setAzienda(Nome_aziendaDipendente);
+                System.out.println(utenteNuovo);
 
                 try {
                     if (u.modificaDatiUtente(utenteNuovo, utente) != null) {
