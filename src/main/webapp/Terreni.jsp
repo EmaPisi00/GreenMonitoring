@@ -72,6 +72,18 @@
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
 <% if (u != null) {%>
+<% if (request.getAttribute("conferma")!=null) {%>
+<div class="alert alert-success">
+    <h3>Confermato</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
+<% if (request.getAttribute("errore")!=null) {%>
+<div class="alert alert-danger">
+    <h3>Errore</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
 <div class="bd">
     <div id="alrt" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>

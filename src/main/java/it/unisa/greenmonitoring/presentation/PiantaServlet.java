@@ -57,8 +57,9 @@ public class PiantaServlet extends HttpServlet {
 
             //errore formato ph_min
             try {
-                 ph_min = Float.valueOf(request.getParameter("ph_min"));
+                 ph_min = Float.parseFloat(request.getParameter("ph_min"));
             } catch (NumberFormatException e) {
+                System.out.println("1");
                 request.setAttribute("errore", "1");
                 request.setAttribute("descrizione", "errore ph_min formato");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
@@ -67,7 +68,7 @@ public class PiantaServlet extends HttpServlet {
             }
             //errore formato ph_max
             try {
-                ph_max = Float.valueOf(request.getParameter("ph_max"));
+                ph_max = Float.parseFloat(request.getParameter("ph_max"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "2");
                 request.setAttribute("descrizione", "errore ph_max formato");
@@ -77,7 +78,7 @@ public class PiantaServlet extends HttpServlet {
             }
             //errore formato temp_min
             try {
-                temperatura_min = Float.valueOf(request.getParameter("temperatura_min"));
+                temperatura_min = Float.parseFloat(request.getParameter("temperatura_min"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "3");
                 request.setAttribute("descrizione", "errore temperatura_min formato");
@@ -87,7 +88,7 @@ public class PiantaServlet extends HttpServlet {
             }
             //errore formato temp_max
             try {
-                temperatura_max = Float.valueOf(request.getParameter("temperatura_max"));
+                temperatura_max = Float.parseFloat(request.getParameter("temperatura_max"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "4");
                 request.setAttribute("descrizione", "errore temperatura_max formato");
@@ -97,7 +98,7 @@ public class PiantaServlet extends HttpServlet {
             }
             //errore formato umidita_min
             try {
-               umidita_min = Float.valueOf(request.getParameter("umidita_min"));
+               umidita_min = Float.parseFloat(request.getParameter("umidita_min"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "5");
                 request.setAttribute("descrizione", "errore umidita_min formato");
@@ -107,7 +108,7 @@ public class PiantaServlet extends HttpServlet {
             }
             //errore formato umidita_max
             try {
-                umidita_max = Float.valueOf(request.getParameter("umidita_max"));
+                umidita_max = Float.parseFloat(request.getParameter("umidita_max"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "6");
                 request.setAttribute("descrizione", "errore umidita_max formato");
@@ -161,6 +162,7 @@ public class PiantaServlet extends HttpServlet {
                 if (pm.inserisciPianta(pianta) == null) {
                     // se l'inserimento nel db non è andato a buon fine.
                     request.setAttribute("errore", "14");
+                    request.setAttribute("descrizione", "errore nell'inserimento nel DB");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                     dispatcher.forward(request, response);
                 } else {

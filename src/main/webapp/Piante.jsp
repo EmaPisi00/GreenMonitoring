@@ -46,11 +46,13 @@
 <body>
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    if (u instanceof AziendaBean) { %>
+    System.out.println(request.getAttribute("errore"));
+    System.out.println(request.getAttribute("descrizione"));
+    if (!(u instanceof AziendaBean)) {
+        response.sendRedirect("error");
+    }%>
 <%@include file="fragments/headerLoggedAzienda.html"%>
-<%
-    }
-%>
+
 <% if (request.getAttribute("conferma")!=null) {%>
 <div class="alert alert-success">
     <h3>Confermato</h3>

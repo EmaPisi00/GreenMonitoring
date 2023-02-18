@@ -36,17 +36,22 @@
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
 <%} %>
+<% if (request.getAttribute("conferma")!=null) {%>
+<div class="alert alert-success">
+    <h3>Confermato</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
+<% if (request.getAttribute("errore")!=null) {%>
+<div class="alert alert-danger">
+    <h3>Errore</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
 
 
 <% if (user != null) {%>
 <form action="PiantaServlet" method="post" enctype="multipart/form-data">
-
-    <%
-        String errori = (String) request.getAttribute("erroriPiantaBean");
-        if (errori != null) { %>
-    <div class="text-danger"><%= errori%>
-    </div>
-    <% } %>
 
     </div>
     <div class="container py-5">
