@@ -72,22 +72,27 @@ public class UtenteManager {
      * @param utenteNuovo
      * @param vecchioUtente
      * @throws SQLException
+     * @return UtenteBean
      */
-    public void modificaDatiUtente(UtenteBean utenteNuovo, UtenteBean vecchioUtente) throws SQLException {
+    public UtenteBean modificaDatiUtente(UtenteBean utenteNuovo, UtenteBean vecchioUtente) throws SQLException {
 
-        if (utenteNuovo instanceof AziendaBean) {
-            if (((AziendaBean) utenteNuovo).compareTo((AziendaBean) vecchioUtente) != 0) {
-                this.aziendaDAO.update((AziendaBean) utenteNuovo, vecchioUtente.getEmail());
+        try {
+            if (utenteNuovo instanceof AziendaBean) {
+                //se ci sono delle modifiche da aggiornare
+                if (((AziendaBean) utenteNuovo).compareTo((AziendaBean) vecchioUtente) != 0) {
+                    this.aziendaDAO.update((AziendaBean) utenteNuovo, vecchioUtente.getEmail());
+                }
+
+            } else if (utenteNuovo instanceof DipendenteBean) {
+                if (((DipendenteBean) utenteNuovo).compareTo((DipendenteBean) vecchioUtente) != 0) {
+                    System.out.println("ci sono modifiche da aggiornare");
+                    this.dipendenteDAO.update((DipendenteBean) utenteNuovo, vecchioUtente.getEmail());
+                }
             }
-
-        } else if (utenteNuovo instanceof DipendenteBean) {
-
-            if (((DipendenteBean) utenteNuovo).compareTo((DipendenteBean) vecchioUtente) != 0) {
-                System.out.println("ci sono modifiche da aggiornare");
-                this.dipendenteDAO.update((DipendenteBean) utenteNuovo, vecchioUtente.getEmail());
-            }
-
+        } catch (Exception e) {
+            return null;
         }
+        return utenteNuovo;
     }
     /**
      * retrieve dati azienda basandosi sul codice di associazione.

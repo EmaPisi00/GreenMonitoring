@@ -39,7 +39,18 @@
 <% }%>
 <html>
 <body>
-
+<% if (request.getAttribute("conferma")!=null) {%>
+<div class="alert alert-success">
+    <h3>Confermato</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
+<% if (request.getAttribute("errore")!=null) {%>
+<div class="alert alert-danger">
+    <h3>Errore</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
 <h1>Dettagli utente attualmente in sessione</h1>
 
 <table>

@@ -41,10 +41,22 @@
 <%@ include file="/fragments/headerLoggedDipendente.html" %>
    <% }%>
 <body>
+<% if (request.getAttribute("conferma")!=null) {%>
+<div class="alert alert-success">
+    <h3>Confermato</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
+<% if (request.getAttribute("errore")!=null) {%>
+<div class="alert alert-danger">
+    <h3>Errore</h3>
+    <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="C:\Users\stefa\IdeaProjects\GreenMonitoring\src\main\webapp\img\Logo.png"><span class="font-weight-bold">GreenMonitoring</span></div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="C:\Users\stefa\IdeaProjects\GreenMonitoring\src\main\webapp\img\logo.png"><span class="font-weight-bold">GreenMonitoring</span></div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
