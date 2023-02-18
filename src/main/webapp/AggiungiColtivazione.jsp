@@ -24,10 +24,12 @@
   <style>
     #formCard {
       margin-left: 33rem;
+      margin-right: 33rem;
     }
     @media screen and (max-width: 768px) {
       #formCard {
         margin-left: 0rem;
+        margin-right: 0rem;
       }
     }
   </style>
