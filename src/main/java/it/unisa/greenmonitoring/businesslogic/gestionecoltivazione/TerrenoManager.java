@@ -62,25 +62,6 @@ public class TerrenoManager {
     }
 
     /**
-     * Questo metodo restituisce un terreno a partire da un id.
-     * @param id_terreno
-     * @return TerrenoBean
-     * @throws SQLException
-     */
-    //rimuovere ed usare solo quellodi sebastian
-    public TerrenoBean restituisciTerreno(String id_terreno) throws SQLException {
-        List<TerrenoBean> terrenoBeanList = td.retrieveAll();
-        TerrenoBean result = new TerrenoBean();
-        for (int i = 0; i < terrenoBeanList.size(); i++) {
-            if (terrenoBeanList.get(i).getId().equals(id_terreno)) {
-                result = terrenoBeanList.get(i);
-            }
-        }
-        return result;
-    }
-
-
-    /**
      * Metodo usato per rimuovere un terreno.
      * @param id_terreno
      * @pre t ha un id che esiste nel database.
