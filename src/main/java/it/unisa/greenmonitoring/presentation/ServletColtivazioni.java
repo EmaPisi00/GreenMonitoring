@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -168,14 +167,10 @@ public class ServletColtivazioni extends HttpServlet {
                     dispatcher.forward(request, response);
 
                 } else if (request.getParameter("today") != null) {
-                java.sql.Date today = new java.sql.Date(System.currentTimeMillis());
                 Integer coltivazioneId = Integer.valueOf(request.getSession().getAttribute("coltivazioneID").toString());
+                String tipo = request.getParameter("tipoSensore");
                 String jsonColtivazioni = null;
-                try {
-                    jsonColtivazioni = costruisciJson(coltivazioneId);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                jsonColtivazioni = costruisciJsonPeriodo(null, null, coltivazioneId, tipo);
                 PrintWriter out = response.getWriter();
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
@@ -203,7 +198,7 @@ public class ServletColtivazioni extends HttpServlet {
     }
 
     /**
-     * Questo metodo genera un json per mostrare l'andamento delle misurazioni di un tipo di sensore in un certo periodo.
+     * Questo metodo genera un json per mostrare l'andamento delle misurazioni di un tipo di sensore e / o un certo periodo.
      * @param inizioPeriodo
      * @param finePeriodo
      * @param coltivazioneId
@@ -211,7 +206,12 @@ public class ServletColtivazioni extends HttpServlet {
      * @return string
      */
     public String costruisciJsonPeriodo(java.sql.Date inizioPeriodo, java.sql.Date finePeriodo, Integer coltivazioneId, String tipo) {
-        List<MisurazioneSensoreBean> misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
+        List<MisurazioneSensoreBean> misurazioneSensoreBeanList = new ArrayList<>();
+        if (inizioPeriodo == null && finePeriodo == null) {
+            misurazioneSensoreBeanList = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, tipo);
+        } else {
+            misurazioneSensoreBeanList = coltivazioneManager.restituisciMisurazioniPerPeriodo(inizioPeriodo, finePeriodo, coltivazioneId, tipo);
+        }
         JSONObject jsonObject = new JSONObject();
         JSONObject title = new JSONObject();
         JSONArray data = new JSONArray();
@@ -235,22 +235,18 @@ public class ServletColtivazioni extends HttpServlet {
         System.out.println("JSON : " + jsonObject);
         return jsonObject.toJSONString();
     }
-
+/*
     /**
      * Questo metodo genera un json per mostrare l'andamento delle misurazioni in una colivazione in un certo periodo.
      * @param coltivazioneId
      * @return string
      */
-    public String costruisciJson(Integer coltivazioneId) throws SQLException {
-        List<MisurazioneSensoreBean> misurazioneSensoreBeanListPH = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, "pH");
-        List<MisurazioneSensoreBean> misurazioneSensoreBeanListTemperatura = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, "temperatura");
-        List<MisurazioneSensoreBean> misurazioneSensoreBeanListUmidita = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, "umidita");
+  /*  public String costruisciJson(Integer coltivazioneId, String tipo) {
+        List<MisurazioneSensoreBean> misurazioneSensoreBeanListPH = coltivazioneManager.visualizzaMisurazioneColtivazione(coltivazioneId, tipo);
         JSONObject jsonObject = new JSONObject();
         JSONObject title = new JSONObject();
         JSONArray data = new JSONArray();
-        JSONObject dataContentPH = new JSONObject();
-        JSONObject dataContentTemperatura = new JSONObject();
-        JSONObject dataContentUmidità = new JSONObject();
+        JSONObject dataContent = new JSONObject();
         JSONArray dataPoints = new JSONArray();
         jsonObject.put("theme", "light1");
         jsonObject.put("animationEnabled", "false");
@@ -288,5 +284,5 @@ public class ServletColtivazioni extends HttpServlet {
         jsonObject.put("data", data);
         System.out.println("JSON : " + jsonObject);
         return jsonObject.toJSONString();
-    }
+    } */
 }

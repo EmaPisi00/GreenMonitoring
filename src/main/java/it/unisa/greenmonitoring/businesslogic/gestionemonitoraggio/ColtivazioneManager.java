@@ -154,7 +154,7 @@ public class ColtivazioneManager {
      * @param tipo
      * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      */
-    public List<MisurazioneSensoreBean> visualizzaMisurazioneColtivazione(Integer id_coltivazione, String tipo) throws SQLException {
+    public List<MisurazioneSensoreBean> visualizzaMisurazioneColtivazione(Integer id_coltivazione, String tipo) {
         return misurazioneSensoreDAO.retreiveMisurazioneOggiColtivazione(id_coltivazione, tipo);
     }
     /**

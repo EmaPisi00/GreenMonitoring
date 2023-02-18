@@ -154,7 +154,7 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
     }
 
     @Override
-    public synchronized List<MisurazioneSensoreBean> retreiveMisurazioneOggiColtivazione(Integer id_coltivazione, String tipo) throws SQLException {
+    public synchronized List<MisurazioneSensoreBean> retreiveMisurazioneOggiColtivazione(Integer id_coltivazione, String tipo) {
         String selectSQL = "SELECT * FROM misurazione_sensore WHERE misurazione_sensore.coltivazione = ? and misurazione_sensore.tipo = ? and misurazione_sensore.data >= ?";
         List<MisurazioneSensoreBean> misurazioneSensoreBeans = new ArrayList<>();
         try {
@@ -181,7 +181,11 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
         } catch (SQLException s) {
             s.printStackTrace();
         } finally {
-            connection.close();
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
         return misurazioneSensoreBeans;
     }
@@ -218,22 +222,16 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
             preparedStatement.setInt(1, id_coltivazione);
-            System.out.println("MisurazioneSensoreDAOImpl -- id_coltivazione : " + id_coltivazione);
             preparedStatement.setString(2, tipo);
-            System.out.println("MisurazioneSensoreDAOImpl -- tipo : " + tipo);
             preparedStatement.setDate(3, data_inizio);
-            System.out.println("MisurazioneSensoreDAOImpl -- data_inizio : " + data_inizio);
             preparedStatement.setDate(4, data_fine);
-            System.out.println("MisurazioneSensoreDAOImpl -- data_fine : " + data_fine);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                System.out.println("Sono nel while");
                 MisurazioneSensoreBean misurazioneSensoreBean = new MisurazioneSensoreBean();
                 misurazioneSensoreBean.setData(rs.getDate("data"));
                 misurazioneSensoreBean.setValore(rs.getInt("avg(valore)"));
                 misurazioneSensoreBean.setTipo(rs.getString("tipo"));
                 misurazioneSensoreBean.setColtivazione(id_coltivazione);
-                System.out.println("MisurazioneSensoreBean : " + misurazioneSensoreBean);
                 misurazioneSensoreBeanList.add(misurazioneSensoreBean);
                 connection.commit();
 
@@ -242,7 +240,6 @@ public class MisurazioneSensoreDAOImpl implements MisurazioneSensoreDAO {
             e.printStackTrace();
         }
         connection.close();
-        System.out.println("MisurazioneSensoreDAOImpl -- " + misurazioneSensoreBeanList);
         return misurazioneSensoreBeanList;
     }
 }

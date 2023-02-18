@@ -25,7 +25,17 @@
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
-
+    <style>
+        .tableColtivazione {
+            width: 100%;
+        }
+        @media screen and (max-width: 768px) {
+            .tohide {
+                width: 100%;
+                display: none;
+            }
+        }
+    </style>
     <title>Coltivazioni</title>
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
 
@@ -52,7 +62,13 @@
 <%@include file="fragments/headerLogin.html"%>
 <% }%>
 
-
+<%! ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
+    TerrenoManager terrenoManager = new TerrenoManager();
+    PiantaManager piantaManager = new PiantaManager();
+    Double resultUmidità = null;
+    Double resultPh = null;
+    Double resultTemperatura = null;
+%>
 <div class="bd">
     <legend style="text-align:center;">Coltivazioni</legend>
     <!-- Coltivazioni -->
@@ -88,23 +104,77 @@
             %>
             <ul class="list-group">
                 <% for (ColtivazioneBean cb : list) {
-                    if (cb.getStato_archiviazione() == 1) { %>
-                <li class="list-group-item disabled">
-                    Coltivazione <%=cb.getId()%><br>Terreno: <%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getNome()%>
-                    <br>(Archiviata)
-                </li>
-                <% } else {
-                %>
-                <li class="list-group-item ">Coltivazione <%=cb.getId()%>
-                    <br>Terreno: <%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getNome()%>
+                     %>
+                <li class="list-group-item ">
+                <table class="tableColtivazione">
+                    <tr>
+                        <th></th><!-- foto del terreno -->
+                    <th>Coltivazione</th>
+                        <th class="tohide">Terreno</th>
+                        <th class="tohide">Pianta</th>
+                        <th class="tohide">media pH</th>
+                        <th class="tohide">media Temperatura</th>
+                        <th class="tohide">media Umidità</th>
+                    </tr>
+                    <tr>
+                        <td>
+                        <img id="immagine" src="data:image/jpeg;base64,<%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()%>" alt="Foto coltivazione">
+                        </td>
+                        <td><%=cb.getId()%></td>
+                        <%if (cb.getStato_archiviazione() == 1)
+                        {%>
+                        (Archiviata)
+                        <% }%>
+                        <td class="tohide">
+                            <%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getNome()%></td>
+                        <td>
+                            <%=piantaManager.visualizzaPianta(cb.getPianta()).getNome()%></td>
+                        <td class="tohide">
+                            <%
+                            resultPh = coltivazioneManager.restituisciMisurazioniRecenti("pH", cb.getId());
+                            String colorPh = "green";
+                            /*
+                            if (resultUmidita è lontano dal valore ottimale) {
+                                colorPh  = "red";
+                            }
+                            */%>
+                            <%=resultPh%><br>
+                            <div class="value-status" style="background-color: <%=colorPh%>"></div>
+                        </td>
+                        <td class="tohide">
+                            <%
+                            resultUmidità = coltivazioneManager.restituisciMisurazioniRecenti("umidita", cb.getId());
+                            String colorUmidità = "green";
+                            /*
+                            if (resultUmidita è lontano dal valore ottimale) {
+                                colorUmidità = "red";
+                            }
+                            */%>
+                            <%=resultUmidità%>%<br>
+                            <div class="value-status" style="background-color: <%=colorUmidità%>"></div>
+                        </td>
+                        <td class="tohide">
+                            <%
+                        resultTemperatura = coltivazioneManager.restituisciMisurazioniRecenti("Temperatura", cb.getId());
+                        String colorTemperatura = "green";
+                            /*
+                            if (resultUmidita è lontano dal valore ottimale) {
+                                colorUmidità = "red";
+                            }
+                            */%>
+                        <%=resultTemperatura%>&deg<br>
+                        <div class="value-status" style="background-color: <%=colorTemperatura%>"></div>
+                    </td>
+                    </tr>
+                </table><br>
                     <form action="ServletColtivazioni" method="get">
                         <input type="hidden" name="coltivazione" value="<%=cb.getId()%>">
                         <button type="submit" class="btn btn-success">Visualizza stato</button>
                     </form>
                 </li>
                 <% }
-                }
                 } %>
+
             </ul>
         </div>
     </div>

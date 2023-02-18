@@ -19,16 +19,16 @@
 <head>
 
   <!-- Import Bootstrap -->
-  <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="styleshee  t">
   <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
   <style>
+    #formCard {
+      margin-left: 33rem;
+    }
     @media screen and (max-width: 768px) {
       #formCard {
         margin-left: 0rem;
       }
-    }
-    #formCard {
-      margin-left: 33rem;
     }
   </style>
   <!-- Import css -->
@@ -62,14 +62,14 @@
 <% }%>
 
 
-<div class="bd" style="align-content: center">
+<div class="bd">
   <legend style="text-align:center;">Aggiungi una coltivazione</legend>
   <%
     /* Stampa il form per inserire la coltivazione solo se ad accedere alla pagina è un'azienda */
     if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
       AziendaBean ab = (AziendaBean) session.getAttribute("currentUserSession");
   %> <!-- Inserisci coltivazione -->
-  <div class="card" id="formCard" style="width: 30rem;">
+  <div class="card" id="formCard">
     <div class="card-body">
       <% if (request.getAttribute("errore") != null) {
       %>

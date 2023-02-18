@@ -66,5 +66,5 @@ public interface MisurazioneSensoreDAO {
      * @return List&ltMisurazioneSensoreBean&gt l con l.size() > 0 se e solo se ci sono record nel db.
      * @throws SQLException
      */
-    List<MisurazioneSensoreBean> retreiveMisurazioneOggiColtivazione(Integer id_coltivazione, String tipo) throws SQLException;
+    List<MisurazioneSensoreBean> retreiveMisurazioneOggiColtivazione(Integer id_coltivazione, String tipo);
 }
