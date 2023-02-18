@@ -63,7 +63,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Modifica Profilo</h4>
                 </div>
-                <form id="GestioneProfilo" action="ServletGestioneProfilo" method="post">
+                <form id="GestioneProfilo" action="ModificaProfiloServlet" method="post">
                     <div class="row mt-2">
                         <label>Email</label>
                         <div class="form-floating mb-3 ">

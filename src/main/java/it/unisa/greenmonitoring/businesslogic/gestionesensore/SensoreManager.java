@@ -81,14 +81,4 @@ public class SensoreManager {
         }
         return list;
     }
-
-    /**
-     *
-     * @return ArrayList
-     */
-    public ArrayList<SensoreBean> SensoriColtivazioneAvviataManager() {
-        SensoreDAO td = new SensoreDAOImpl();
-        return (ArrayList<SensoreBean>) td.SensoriColtivazioneAvviata();
-    }
-
 }

@@ -22,9 +22,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-@WebServlet(name = "ServletGestioneProfilo", value = "/ServletGestioneProfilo")
+@WebServlet(name = "ModificaProfiloServlet", value = "/ModificaProfiloServlet")
 @MultipartConfig
-public class ServletGestioneProfilo extends HttpServlet {
+public class ModificaProfiloServlet extends HttpServlet {
 
     /**
      * Method that handle the GET requests.

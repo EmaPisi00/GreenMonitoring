@@ -10,8 +10,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 
-@WebServlet(name = "ServletRemoveTerreno", value = "/ServletRemoveTerreno")
-public class ServletRemoveTerreno extends HttpServlet {
+@WebServlet(name = "RimuoviTerrenoServlet", value = "/RimuoviTerrenoServlet")
+public class RimuoviTerrenoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -14,12 +14,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ServletAssociazione", value = "/ServletAssociazione")
-public class ServletAssociazione extends HttpServlet {
+@WebServlet(name = "AssociazioneServlet", value = "/AssociazioneServlet")
+public class AssociazioneServlet extends HttpServlet {
 
     /** Non lo so, l'ha messa intellij sta roba sotto.
     */
-    public ServletAssociazione() throws SQLException {
+    public AssociazioneServlet() throws SQLException {
     }
 
 

@@ -69,7 +69,7 @@
 <%}%>
 
 <body>
-<form method="post" action="ServletSensore">
+<form method="post" action="SensoreServlet">
     <div class="container py-5">
         <h5 class="display-5 text-center">Inserisci Un Sensore</h5>
         <div class="row justify-content-center">

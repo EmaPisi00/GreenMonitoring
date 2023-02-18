@@ -41,7 +41,6 @@
   <link rel="icon" type="image/x-icon" href="img/favicon.png">
 
   <script src="./jquery/jquery-3.6.3.min.js"></script>
-  <script src="bootstrap-5.2.3-dist/js/ListaColtivazioni.js"></script>
   <link href="/img/favicon.png" rel="icon">
   <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <meta charset="utf-8">
@@ -74,7 +73,7 @@
   <div class="card" id="formCard">
     <div class="card-body">
       <% if (request.getAttribute("errore") != null) {
-      %>
+      %><br>
       <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1"><%=request.getAttribute("descrizione")%>
         </i>
@@ -82,9 +81,7 @@
       <%
         }
       %>
-      <div id="alrt" class="alert alert-warning fade show" role="alert">
-        <i class="bi bi-exclamation-triangle me-1"> Selezionare almeno un sensore.</i></div>
-      <form action="ServletColtivazioni" method="post" id="aggiungi_coltivazione">
+      <form action="ColtivazioniServlet" method="post" id="aggiungi_coltivazione">
         <input type="hidden" name="moduloInserimentoColtivazione" required><br>
         <label>Scegliere il terreno di cui avviare una coltivazione</label><br>
         <% //Se servletColtivazione invia un errore viene stampato un alert
@@ -178,8 +175,8 @@
           java.sql.Date todayDate = new java.sql.Date(System.currentTimeMillis());
         %>
         <label>Inserire la data di inizio della coltivazione</label><br>
-        <input type="date" id="dataInizio" name="datainizio" max="<%=todayDate%>" required><br><br>
-        <button type="button" id="summit" class="btn btn-primary">Aggiungi coltivazione</button>
+        <input type="date" id="dataInizio" name="datainizio" max="" required><br><br>
+        <button type="submit" id="summit" class="btn btn-primary">Aggiungi coltivazione</button>
       </form>
     </div>
   </div>

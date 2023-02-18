@@ -53,7 +53,7 @@
 
     <div class="loginContainer">
         <div id="formLogin">
-            <form method="post" action="ServletAssociazione">
+            <form method="post" action="AssociazioneServlet">
                 <div class="formValidation">
                     <label for="codiceAzienda" class="form-label">Codice Azienda:</label>
                     <input type="text" class="textInputStyle" id="codiceAzienda" placeholder="AA22ss33"

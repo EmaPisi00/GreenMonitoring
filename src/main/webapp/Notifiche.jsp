@@ -171,13 +171,13 @@
                     document.getElementById("notificationBadge").innerHTML = numNotifiche;
                 }
             };
-            xhr.open("GET", "ServletNotifica?numNotifiche=true&idNotifica=" + idNotifica, true);
+            xhr.open("GET", "NotificaServlet?numNotifiche=true&idNotifica=" + idNotifica, true);
             xhr.send();
 
     }
     document.getElementById("coltivazioneBtn").addEventListener("click", function() {
         var coltivazioneId = document.getElementById("notifica-coltivazione").innerText;
-        var url = "ServletColtivazioni?coltivazione=" + coltivazioneId;
+        var url = "ColtivazioniServlet?coltivazione=" + coltivazioneId;
         window.location.href = url;
     });
 

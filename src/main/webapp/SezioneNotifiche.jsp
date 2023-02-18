@@ -142,7 +142,7 @@
     }
     document.getElementById("coltivazioneBtn").addEventListener("click", function() {
         var coltivazioneId = document.getElementById("notifica-coltivazione").innerText;
-        var url = "ServletColtivazioni?coltivazione=" + coltivazioneId;
+        var url = "ColtivazioniServlet?coltivazione=" + coltivazioneId;
         window.location.href = url;
     });
 
@@ -166,7 +166,7 @@
 
     function closeModal() {
         $("#myModal").modal("hide");
-        var url = "ServletNotifica?aggiorna=true&idNotifica=" + idN;
+        var url = "NotificaServlet?aggiorna=true&idNotifica=" + idN;
         window.location.href = url;
 
 

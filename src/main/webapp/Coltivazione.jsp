@@ -217,7 +217,7 @@
                     if (sList != null) {
                         out.print("<div id=\"overFlow\" style=\"width: auto;\">");
                         for (int i = 0; i < sList.size(); i++) {
-                            out.print("<form id=\"rimuoviSensore\" action=\"ServletRimozioneSensore\" method=\"post\" style=\"margin: 1px\">");
+                            out.print("<form id=\"rimuoviSensore\" action=\"RimuoviAssociazioneSensoreServlet\" method=\"post\" style=\"margin: 1px\">");
                             out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getIdM());
                             out.print("<input type=\"hidden\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">");
                             if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
@@ -276,11 +276,13 @@
                     type="button" role="tab" aria-controls="fisiopatie-tab-pane" aria-selected="false">Fisiopatie
             </button>
         </li>
+        <%if (misurazioneSensoreBeansUmidita.size() != 0 || misurazioneSensoreBeansPh.size() != 0 || misurazioneSensoreBeansTemperatura.size() != 0) {%>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="storico-tab" data-bs-toggle="tab" data-bs-target="#storico-tab-pane"
                     type="button" role="tab" aria-controls="storico-tab-pane" aria-selected="false">Storico
             </button>
         </li>
+        <%}%>
     </ul>
 </div>
 <!-- contenuto dei tab -->
@@ -292,6 +294,9 @@
             <div class="card-body">
                 <div style="width: auto;" class="row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
+                        <%if (misurazioneSensoreBeansUmidita.size() == 0 && misurazioneSensoreBeansPh.size() == 0 && misurazioneSensoreBeansTemperatura.size() == 0) {%>
+                        <h5>Non ci sono misurazioni</h5>
+                        <%}%>
                         <%if (misurazioneSensoreBeansUmidita.size() != 0) {%>
                         <!--Media umidità -->
                         <h5>Umidità media</h5>
@@ -349,7 +354,7 @@
                                         var coltivazioneID = <%=coltivazioneID%>;
                                         var tipoSensore = "umidita"
                                             var xhr = new XMLHttpRequest();
-                                            xhr.open("POST", "ServletColtivazioni");
+                                            xhr.open("POST", "ColtivazioniServlet");
                                             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                             xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                             xhr.onreadystatechange = function () {
@@ -380,11 +385,11 @@
                         <% cm = new ColtivazioneManager();
                             for (int i = 0; i < misurazioneSensoreBeansUmidita.size(); i++) {
                                 colorUmidità = "green";
-                                System.out.println("Sono nel for");
-                                //if (resultUmidita è lontano dal valore ottimale)
-                                //{
-                                //colorUmidità = "red";
-                                //} %>
+
+                                if (resultUmidita >= temporaryPiantaBean.getUmidita_max() || resultUmidita <= temporaryPiantaBean.getUmidita_min()) {
+                                    colorUmidità = "red";
+                                }
+                                %>
                         <h8>Sensore Umidità <%=misurazioneSensoreBeansUmidita.get(i).getSensore_id()%>
                             : <%=misurazioneSensoreBeansUmidita.get(i).getValore()%>%
                         </h8><br>
@@ -392,7 +397,7 @@
                     </div>
                 <% out.print("<br>" +
                         // ho aggiunto questo form, poi te lo gestisci tu, basta che chiama servletSuggerimenti e c'è l'id della coltivazione
-                        "<form action=\"ServletSuggerimenti\" method=\"get\">\n" +
+                        "<form action=\"SuggerimentiServlet\" method=\"get\">\n" +
                         "<input type=\"hidden\" name=\"coltivazione\" value=\"" + coltivazioneID + "\">" +
                         "<button type=\"submit\" class=\"btn btn-success\">Suggerimenti</button>"
                         + "</form>" +
@@ -415,7 +420,7 @@
                                 var coltivazioneID = <%=coltivazioneID%>;
                                 var tipoSensore = "pH"
                                     var xhr = new XMLHttpRequest();
-                                    xhr.open("POST", "ServletColtivazioni");
+                                    xhr.open("POST", "ColtivazioniServlet");
                                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                     xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                     xhr.onreadystatechange = function () {
@@ -446,11 +451,11 @@
                         </div>
                         <% for (int i = 0; i < misurazioneSensoreBeansPh.size(); i++) {
                                 colorPH = "green";
-                            /*
-                            if (resultPH è lontano dal valore ottimale) {
+
+                            if (resultPH >= temporaryPiantaBean.getPh_max() || resultPH <= temporaryPiantaBean.getPh_min()) {
                                 colorPH = "red";
                             }
-                            */%>
+                            %>
                         <h8>Sensore pH <%=misurazioneSensoreBeansPh.get(i).getSensore_id()%>
                             : <%=misurazioneSensoreBeansPh.get(i).getValore()%>
                         </h8><br>
@@ -473,7 +478,7 @@
                                     var coltivazioneID = <%=coltivazioneID%>;
                                     var tipoSensore = "Temperatura"
                                         var xhr = new XMLHttpRequest();
-                                        xhr.open("POST", "ServletColtivazioni");
+                                        xhr.open("POST", "ColtivazioniServlet");
                                         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                         xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                         xhr.onreadystatechange = function () {
@@ -503,11 +508,11 @@
                         </div>
                         <%  for (int i = 0; i < misurazioneSensoreBeansTemperatura.size(); i++) {
                                 colorTemperatura = "green";
-                            /*
-                            if (resultTemperatura è lontano dal valore ottimale) {
+
+                                if (resultTemperatura >= temporaryPiantaBean.getTemperatura_max() || resultTemperatura <= temporaryPiantaBean.getTemperatura_min()) {
                                 colorTemperatura = "red";
                             }
-                            */%>
+                        %>
                         <h8>Sensore temperatura <%=misurazioneSensoreBeansTemperatura.get(i).getSensore_id()%>
                             : <%=misurazioneSensoreBeansTemperatura.get(i).getValore()%>&degC
                         </h8><br>
@@ -579,7 +584,7 @@
     <!-- Storico -->
     <div class="tab-pane fade" id="storico-tab-pane" role="tabpanel" aria-labelledby="storico-tab-pane" tabindex="0">
         <h5 class="card-title">Rilevamenti per periodo</h5>
-        <form method="ServletColtivazioni" action="post">
+        <form method="ColtivazioniServlet" action="post">
             <input id="periodo-inizio" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>"
                    name="data_inizio_periodo" required>
             <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>"
@@ -600,7 +605,7 @@
                 var tipoSensore = document.getElementById("selectSensore").value;
                 if (inputInizio != null && inputFine != null) {
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "ServletColtivazioni");
+                    xhr.open("POST", "ColtivazioniServlet");
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhr.send("data_inizio_periodo="+ inputInizio +"&data_fine_periodo="+ inputFine +"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                     xhr.onreadystatechange = function () {
