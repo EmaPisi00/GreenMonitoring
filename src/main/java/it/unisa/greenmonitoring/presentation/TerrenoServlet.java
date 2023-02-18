@@ -111,11 +111,13 @@ public class TerrenoServlet extends HttpServlet {
                 dispatcher.forward(request, response);
             } else {
                 if (tm.inserisciTerreno(terreno) != null) {
-                    request.setAttribute("errore", "10");
+                    request.setAttribute("conferma", "10");
+                    request.setAttribute("descrizione", "Inserimento avvenuto con successo");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/Terreni.jsp");
                     dispatcher.forward(request, response);
                 } else {
                     request.setAttribute("errore", "9");
+                    request.setAttribute("descrizione", "errore nell'inserimento dell'immagine");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
                     dispatcher.forward(request, response);
                 }
