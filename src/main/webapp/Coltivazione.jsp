@@ -247,21 +247,30 @@
                     type="button" role="tab" aria-controls="generale-tab-pane" aria-selected="true">Generale
             </button>
         </li>
+        <%  List<MisurazioneSensoreBean> misurazioneSensoreBeansUmidita = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "umidita");
+            if (misurazioneSensoreBeansUmidita.size() != 0) { %>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="umidità-tab" data-bs-toggle="tab" data-bs-target="#umidità-tab-pane"
                     type="button" role="tab" aria-controls="umidità-tab-pane" aria-selected="false" onclick="findUmiditaChart()">Dati Umidità
             </button>
         </li>
+        <% } %>
+        <%  List<MisurazioneSensoreBean> misurazioneSensoreBeansPh = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "pH");
+            if (misurazioneSensoreBeansPh.size() != 0) { %>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="ph-tab" data-bs-toggle="tab" data-bs-target="#ph-tab-pane" type="button"
                     role="tab" aria-controls="ph-tab-pane" aria-selected="false" onclick="findPhChart()">Dati ph
             </button>
         </li>
+        <% } %>
+        <%  List<MisurazioneSensoreBean> misurazioneSensoreBeansTemperatura = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "Temperatura");
+            if (misurazioneSensoreBeansTemperatura.size() !=  0) {%>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="temperatura-tab" data-bs-toggle="tab" data-bs-target="#temperatura-tab-pane"
                     type="button" role="tab" aria-controls="temperatura-tab-pane" aria-selected="false" onclick="findTemperaturaChart()">Dati Temperatura
             </button>
         </li>
+        <% } %>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="fisiopatie-tab" data-bs-toggle="tab" data-bs-target="#fisiopatie-tab-pane"
                     type="button" role="tab" aria-controls="fisiopatie-tab-pane" aria-selected="false">Fisiopatie
@@ -283,6 +292,7 @@
             <div class="card-body">
                 <div style="width: auto;" class="row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
+                        <%if (misurazioneSensoreBeansUmidita.size() != 0) {%>
                         <!--Media umidità -->
                         <h5>Umidità media</h5>
                         <div class="row">
@@ -294,6 +304,8 @@
                                 <div class="value-status" style="background-color: <%=colorUmidità%>;"></div>
                             </div>
                         </div>
+                        <%}%>
+                        <%if (misurazioneSensoreBeansTemperatura.size() != 0) {%>
                         <!--Media temperatura -->
                         <h5>Temperatura media</h5>
                         <div class="row">
@@ -305,6 +317,8 @@
                                 <div class="value-status" style="background-color: <%=colorTemperatura%>;"></div>
                             </div>
                         </div>
+                        <%}%>
+                        <%if (misurazioneSensoreBeansPh.size() != 0) {%>
                         <!--Media ph -->
                         <h5>pH media</h5>
                         <div class="row">
@@ -317,6 +331,7 @@
                                 <div class="value-status" style="background-color: <%=colorPH%>;"></div>
                             </div>
                         </div>
+                        <%}%>
                     </div>
                 </div>
             </div>
@@ -363,16 +378,15 @@
                             </div>
                         </div>
                         <% cm = new ColtivazioneManager();
-                            List<MisurazioneSensoreBean> misurazioneSensoreBeans = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "umidita");
-                            for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
+                            for (int i = 0; i < misurazioneSensoreBeansUmidita.size(); i++) {
                                 colorUmidità = "green";
                                 System.out.println("Sono nel for");
                                 //if (resultUmidita è lontano dal valore ottimale)
                                 //{
                                 //colorUmidità = "red";
                                 //} %>
-                        <h8>Sensore Umidità <%=misurazioneSensoreBeans.get(i).getSensore_id()%>
-                            : <%=misurazioneSensoreBeans.get(i).getValore()%>%
+                        <h8>Sensore Umidità <%=misurazioneSensoreBeansUmidita.get(i).getSensore_id()%>
+                            : <%=misurazioneSensoreBeansUmidita.get(i).getValore()%>%
                         </h8><br>
                         <%}%>
                     </div>
@@ -430,17 +444,15 @@
                                 <div class="value-status" style="background-color: <%=colorPH%>;"></div>
                             </div>
                         </div>
-                        <% cm = new ColtivazioneManager();
-                            misurazioneSensoreBeans = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "pH");
-                            for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
+                        <% for (int i = 0; i < misurazioneSensoreBeansPh.size(); i++) {
                                 colorPH = "green";
                             /*
                             if (resultPH è lontano dal valore ottimale) {
                                 colorPH = "red";
                             }
                             */%>
-                        <h8>Sensore pH <%=misurazioneSensoreBeans.get(i).getSensore_id()%>
-                            : <%=misurazioneSensoreBeans.get(i).getValore()%>
+                        <h8>Sensore pH <%=misurazioneSensoreBeansPh.get(i).getSensore_id()%>
+                            : <%=misurazioneSensoreBeansPh.get(i).getValore()%>
                         </h8><br>
                         <%}%>
                     </div>
@@ -489,18 +501,15 @@
                                 <div class="value-status" style="background-color: <%=colorTemperatura%>;"></div>
                             </div>
                         </div>
-                        <% cm = new ColtivazioneManager();
-                            misurazioneSensoreBeans = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "Temperatura");
-
-                            for (int i = 0; i < misurazioneSensoreBeans.size(); i++) {
+                        <%  for (int i = 0; i < misurazioneSensoreBeansTemperatura.size(); i++) {
                                 colorTemperatura = "green";
                             /*
                             if (resultTemperatura è lontano dal valore ottimale) {
                                 colorTemperatura = "red";
                             }
                             */%>
-                        <h8>Sensore temperatura <%=misurazioneSensoreBeans.get(i).getSensore_id()%>
-                            : <%=misurazioneSensoreBeans.get(i).getValore()%>&degC
+                        <h8>Sensore temperatura <%=misurazioneSensoreBeansTemperatura.get(i).getSensore_id()%>
+                            : <%=misurazioneSensoreBeansTemperatura.get(i).getValore()%>&degC
                         </h8><br>
                         <%}%>
                     </div>

@@ -75,6 +75,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Coltivazioni</h5>
+            <button type="submit" class="btn btn-light" onclick="location.href='AggiungiColtivazione.jsp'">Aggiungi Coltivazione</button>
             <% /* -- INIZIO AUTENTICAZIONE -- */
                 Object sa = session.getAttribute("currentUserSession");
                 if (sa == null) {
@@ -181,7 +182,6 @@
     <!-- Fine coltivazioni -->
 <% }
 %>
-    <button type="submit" class="btn" onclick="location.href='AggiungiColtivazione.jsp'">Aggiungi Coltivazione</button>
 </div>
 </div>
 <%@include file="fragments/footer.html" %>
