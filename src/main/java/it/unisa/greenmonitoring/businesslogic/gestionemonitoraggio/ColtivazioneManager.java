@@ -58,7 +58,7 @@ public class ColtivazioneManager {
      * @param id_azienda
      * @return ArrayList of ColtivazioneBean
      */
-    public ArrayList<ColtivazioneBean> visualizzaStatoColtivazioni(String id_azienda) throws SQLException {
+    public ArrayList<ColtivazioneBean> visualizzaStatoColtivazioni(String id_azienda) {
         return cd.retrieveColtivazione(id_azienda);
     }
 
@@ -110,13 +110,9 @@ public class ColtivazioneManager {
     public ArrayList<ColtivazioneBean> visualizzaColtivazioniAvviate(String id_azienda) {
         cd = new ColtivazioneDAOImpl();
         ArrayList<ColtivazioneBean> l = new ArrayList<>();
-        try {
             cd.retrieveColtivazione(id_azienda).stream()
                     .filter(o -> o.getStato_archiviazione() == this.stato_coltivazione_avviata)
                     .forEach(o -> l.add(o));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         return l;
     }
     /**

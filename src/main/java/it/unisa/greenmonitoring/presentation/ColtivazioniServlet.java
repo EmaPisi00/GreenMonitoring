@@ -96,32 +96,38 @@ public class ColtivazioniServlet extends HttpServlet {
             } catch (IllegalArgumentException | NullPointerException numberFormatException) {
                 request.setAttribute("errore", "3");
                 request.setAttribute("descrizione", " Formato data errato");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/AggiungiColtivazione.jsp");
                 dispatcher.forward(request, response);
                 return;
             }
             if (piantaManager.visualizzaPianta(idPianta) == null) {
                 request.setAttribute("errore", "4");
-                request.setAttribute("descrizione", " Pianta ines,istente");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                request.setAttribute("descrizione", " Pianta inesistente");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/AggiungiColtivazione.jsp");
                 dispatcher.forward(request, response);
                 return;
             } else if (terrenoManager.restituisciTerrenoDaInt(idterreno) == null) {
                 request.setAttribute("errore", "5");
                 request.setAttribute("descrizione", " Terreno inesistente");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/AggiungiColtivazione.jsp");
                 dispatcher.forward(request, response);
                 return;
             } else if (dataInizio.after(new Date(System.currentTimeMillis()))) {
                 request.setAttribute("errore", "6");
                 request.setAttribute("descrizione", " Data non valida");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/AggiungiColtivazione.jsp");
                 dispatcher.forward(request, response);
                 return;
             } else if ((sensorePh == null || sensorePh.length == 0) && (sensoreTemperatura == null || sensoreTemperatura.length == 0) && (sensoreUmidita == null || sensoreUmidita.length == 0)) {
                 request.setAttribute("errore", "7");
                 request.setAttribute("descrizione", " Nessun sensore selezionato");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/ListaColtivazioni.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/AggiungiColtivazione.jsp");
+                dispatcher.forward(request, response);
+                return;
+            } else if (coltivazioneManager.visualizzaStatoColtivazioni(aziendaBean.getEmail()).stream().anyMatch(o -> o.getTerreno().equals(idterreno))) {
+                request.setAttribute("errore", "8");
+                request.setAttribute("descrizione", " Il terreno è già occupato");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/AggiungiColtivazione.jsp");
                 dispatcher.forward(request, response);
                 return;
             } else {

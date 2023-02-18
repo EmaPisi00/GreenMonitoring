@@ -26,7 +26,7 @@ public interface ColtivazioneDAO {
      * @return ColtivazioneBean
      * @throws SQLException
      */
-    ArrayList<ColtivazioneBean> retrieveColtivazione(String id_azienda) throws SQLException;
+    ArrayList<ColtivazioneBean> retrieveColtivazione(String id_azienda);
 
     /**
      * Questo metodo aggiorna un record nella tabella coltivazione.

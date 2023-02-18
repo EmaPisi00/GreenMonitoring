@@ -73,7 +73,7 @@
   <div class="card" id="formCard">
     <div class="card-body">
       <% if (request.getAttribute("errore") != null) {
-      %>
+      %><br>
       <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1"><%=request.getAttribute("descrizione")%>
         </i>

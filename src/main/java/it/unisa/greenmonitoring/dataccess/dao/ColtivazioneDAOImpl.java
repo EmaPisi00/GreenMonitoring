@@ -51,7 +51,7 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     }
 
     @Override
-    public ArrayList<ColtivazioneBean> retrieveColtivazione(String id_azienda) throws SQLException {
+    public ArrayList<ColtivazioneBean> retrieveColtivazione(String id_azienda) {
         String selectSQL = "SELECT Coltivazione.id , pianta, terreno, stato_archiviazione, data_inizio, data_fine, azienda FROM Coltivazione JOIN Terreno ON Coltivazione.terreno = Terreno.id WHERE Terreno.azienda = ?";
         ArrayList<ColtivazioneBean> list = new ArrayList<>();
         try {
@@ -74,7 +74,11 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
         } catch (SQLException s) {
             s.printStackTrace();
         } finally {
-            connection.close();
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return list;
     }
