@@ -48,7 +48,7 @@
             }
             #overFlow{
                 width: 300px;
-                height: 110px;
+                height: 180px;
                 overflow: scroll;
             }
         }
@@ -83,8 +83,11 @@
         }
         #overFlow{
             width: 500px;
-            height: 110px;
+            height: 180px;
             overflow: scroll;
+        }
+        .nav-item{
+            height: 20%;
         }
     </style>
     <title>Coltivazione</title>
@@ -193,10 +196,11 @@
                 <button class="btn btn-danger" id="archivia-coltivazione" disabled>Archivia Coltivazione</button>
             </h7>
         </div>
+        <br>
         <!-- lista dei sensori e form rimuovi sensore -->
         <div class="col-sm-6">
             <div class="card" style="width: auto;">
-                <h5 class="card-title">Sensori</h5>
+                <h5 class="card-title" style="text-emphasis: center;">Sensori</h5>
                 <% Object sa = session.getAttribute("currentUserSession");
                     cm = new ColtivazioneManager();
                     out.print("<ul class=\"list-group\">\n");
@@ -211,25 +215,29 @@
                         sList = sm.visualizzaListaSensori(a.getEmail()).stream().filter(o -> o.getColtivazione() == coltivazioneID).toList();
                     }
                     if (sList != null) {
+                        out.print("<div id=\"overFlow\" style=\"width: auto;\">");
                         for (int i = 0; i < sList.size(); i++) {
-                            out.print("<form id=\"rimuoviSensore\" action=\"ServletColtivazioni\" method=\"post\">");
-                            out.print("<div id=\"overFlow\">");
+                            out.print("<form id=\"rimuoviSensore\" action=\"ServletRimozioneSensore\" method=\"post\" style=\"margin: 1px\">");
                             out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getIdM());
                             out.print("<input type=\"hidden\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">");
                             if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
                                 out.print("<a></a><button type=\"submit\" class=\"btn btn-link\">Rimuovi</button>");
-                                out.print("</form><br>");
+                                out.print("</form>");
                             }
-                        }
-                        if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
-                            out.print("<button type=\"button\" class=\"btn btn-light\" onclick=\"window.location.href=\'./InserisciSensore.jsp\'\">Aggiungi sensore +</button>");
                         }
                         out.print("</div>");
                         out.print("</ul>");
                     }
                 %>
+                <%if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
+                    out.print("<button type=\"button\" class=\"btn btn-light\" onclick=\"window.location.href=\'./InserisciSensore.jsp\'\">Aggiungi sensore +</button>");
+                }%>
             </div>
     </div>
+
+
+
+
 </div>
 <div class="bd mt-5">
     <!-- elenco dei tab accessibili -->
