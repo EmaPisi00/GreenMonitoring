@@ -106,6 +106,15 @@ public class DipendenteBean extends UtenteBean implements Comparable<DipendenteB
         this.cognome = give_cognome;
     }
 
+    @Override
+    public String toString() {
+        return super.toString()
+                + "DipendenteBean{"
+                + "azienda='" + azienda + '\''
+                + ", nome='" + nome + '\''
+                + ", cognome='" + cognome + '\''
+                + '}';
+    }
 
     /**
      * Compares this object with the specified object for order.  Returns a

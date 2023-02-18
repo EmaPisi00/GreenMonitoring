@@ -169,6 +169,15 @@ public class AziendaBean extends UtenteBean implements Comparable<AziendaBean> {
     }
 
     @Override
+    public String toString() {
+        return "AziendaBean{"
+                + "nome_azienda='" + nome_azienda + '\''
+                + ", partita_iva='" + partita_iva + '\''
+                + ", codice_associazione='" + codice_associazione + '\''
+                + '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(nome_azienda, partita_iva, codice_associazione);
     }

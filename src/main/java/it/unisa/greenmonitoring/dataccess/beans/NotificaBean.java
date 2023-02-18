@@ -47,10 +47,11 @@ public class NotificaBean {
 
     /**
      *
-     * @param listaDipendenti
+     * @param emailD
+     * @param valore
      */
-    public void setListaDipendenti(HashMap<String, Boolean> listaDipendenti) {
-        ListaDipendenti = listaDipendenti;
+    public void setListaDipendenti(String emailD, boolean valore) {
+        ListaDipendenti.put(emailD, valore);
     }
 
     /**
@@ -82,12 +83,14 @@ public class NotificaBean {
         this.data = Param_data;
         this.contenuto = Param_contenuto;
         this.visualizzazioneNotifica = false;
+        this.ListaDipendenti = new HashMap<>();
     }
 
     /**
      * default.
      */
     public NotificaBean() {
+        this.ListaDipendenti = new HashMap<>();
 
     }
 

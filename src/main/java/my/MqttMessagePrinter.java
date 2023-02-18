@@ -51,7 +51,8 @@ public class MqttMessagePrinter implements MqttCallback {
             MisurazioneSensoreBean storico = new MisurazioneSensoreBean(new Date(System.currentTimeMillis()), new Time(System.currentTimeMillis()),
                     sensore.getTipo(), (int) valore, sensore.getColtivazione(), sensore.getId());
             msd.createMisurazioneManuel(storico);
-            if (storico.getTipo().matches("temperature")) {
+            System.out.println("storico=" + storico);
+            if (storico.getTipo().matches("Temperatura")) {
                 PiantaBean pianta = pd.ritornaPiantaPerColtivazione(sensore.getColtivazione());
                 if (storico.getValore() > pianta.getTemperatura_max()
                         || storico.getValore() < pianta.getTemperatura_min()) {
@@ -68,7 +69,7 @@ public class MqttMessagePrinter implements MqttCallback {
                     List<String> listaDipendenti = azienda.ListaEmailDipendenti(sensore.getAzienda());
                     nd.aggiungiNotifica(notificaBean, listaDipendenti);
                 }
-            } else if (storico.getTipo().matches("humidity")) {
+            } else if (storico.getTipo().matches("Umidità")) {
                 //prendo la pianta dal sensore che mi da la coltivazione.
                 PiantaBean pianta = pd.ritornaPiantaPerColtivazione(sensore.getColtivazione());
                 // se temperatura del sensore rilevata è diversa da max e min della pianta
@@ -85,7 +86,7 @@ public class MqttMessagePrinter implements MqttCallback {
                             "ErroreUmidita", new Timestamp(storico.getOra().getTime()), erroreTemp);
                     nd.aggiungiNotifica(nb, azienda.ListaEmailDipendenti(sensore.getAzienda()));
                 }
-            } else if (storico.getTipo().matches("ph")) {
+            } else if (storico.getTipo().matches("PH")) {
                 //prendo la pianta dal sensore che mi da la coltivazione.
                 PiantaBean pianta = pd.ritornaPiantaPerColtivazione(sensore.getColtivazione());
                 // se temperatura del sensore rilevata è diversa da max e min della pianta

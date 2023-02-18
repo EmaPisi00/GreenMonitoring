@@ -112,6 +112,7 @@
                             <input type="text" class="form-control"  id="cognome" name="cognome"  placeholder="null">
                             <label for="cognome"><%= ((DipendenteBean) user).getCognome() %></label>
                         </div>
+                            <input type="hidden" class="form-control"  id="Nome_aziendaDipendente" name="Nome_aziendaDipendente" value="<%= ((DipendenteBean) user).getAzienda() %>"  placeholder="null">
                     </div>
                         <% } else if (user instanceof AziendaBean) { %>
                     <div class="row">
