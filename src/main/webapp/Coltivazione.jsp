@@ -217,7 +217,7 @@
                     if (sList != null) {
                         out.print("<div id=\"overFlow\" style=\"width: auto;\">");
                         for (int i = 0; i < sList.size(); i++) {
-                            out.print("<form id=\"rimuoviSensore\" action=\"ServletRimozioneSensore\" method=\"post\" style=\"margin: 1px\">");
+                            out.print("<form id=\"rimuoviSensore\" action=\"RimuoviAssociazioneSensoreServlet\" method=\"post\" style=\"margin: 1px\">");
                             out.print("<li class=\"list-group-item\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">Sensore " + sList.get(i).getTipo() + " " + sList.get(i).getIdM());
                             out.print("<input type=\"hidden\" name=\"sensoreDaRimuovere\" value=\"" + sList.get(i).getId() + "\">");
                             if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
@@ -349,7 +349,7 @@
                                         var coltivazioneID = <%=coltivazioneID%>;
                                         var tipoSensore = "umidita"
                                             var xhr = new XMLHttpRequest();
-                                            xhr.open("POST", "ServletColtivazioni");
+                                            xhr.open("POST", "ColtivazioniServlet");
                                             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                             xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                             xhr.onreadystatechange = function () {
@@ -392,7 +392,7 @@
                     </div>
                 <% out.print("<br>" +
                         // ho aggiunto questo form, poi te lo gestisci tu, basta che chiama servletSuggerimenti e c'è l'id della coltivazione
-                        "<form action=\"ServletSuggerimenti\" method=\"get\">\n" +
+                        "<form action=\"SuggerimentiServlet\" method=\"get\">\n" +
                         "<input type=\"hidden\" name=\"coltivazione\" value=\"" + coltivazioneID + "\">" +
                         "<button type=\"submit\" class=\"btn btn-success\">Suggerimenti</button>"
                         + "</form>" +
@@ -415,7 +415,7 @@
                                 var coltivazioneID = <%=coltivazioneID%>;
                                 var tipoSensore = "pH"
                                     var xhr = new XMLHttpRequest();
-                                    xhr.open("POST", "ServletColtivazioni");
+                                    xhr.open("POST", "ColtivazioniServlet");
                                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                     xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                     xhr.onreadystatechange = function () {
@@ -473,7 +473,7 @@
                                     var coltivazioneID = <%=coltivazioneID%>;
                                     var tipoSensore = "Temperatura"
                                         var xhr = new XMLHttpRequest();
-                                        xhr.open("POST", "ServletColtivazioni");
+                                        xhr.open("POST", "ColtivazioniServlet");
                                         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                         xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                         xhr.onreadystatechange = function () {
@@ -579,7 +579,7 @@
     <!-- Storico -->
     <div class="tab-pane fade" id="storico-tab-pane" role="tabpanel" aria-labelledby="storico-tab-pane" tabindex="0">
         <h5 class="card-title">Rilevamenti per periodo</h5>
-        <form method="ServletColtivazioni" action="post">
+        <form method="ColtivazioniServlet" action="post">
             <input id="periodo-inizio" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>"
                    name="data_inizio_periodo" required>
             <input id="periodo-fine" type="date" max="<%=new java.sql.Date(System.currentTimeMillis())%>"
@@ -600,7 +600,7 @@
                 var tipoSensore = document.getElementById("selectSensore").value;
                 if (inputInizio != null && inputFine != null) {
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "ServletColtivazioni");
+                    xhr.open("POST", "ColtivazioniServlet");
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhr.send("data_inizio_periodo="+ inputInizio +"&data_fine_periodo="+ inputFine +"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                     xhr.onreadystatechange = function () {

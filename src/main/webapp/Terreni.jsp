@@ -188,7 +188,7 @@
             <div class="modal-footer">
                 <button id="closeModal" class="btn btn-secondary" data-dismiss="modal">No</button>
                 <button id="summit" class="btn btn btn-outline-danger"><a style="text-decoration: none; "
-                                                                          href="ServletRemoveTerreno?action=delete&id=<%= idTerreno%>">Conferma</a>
+                                                                          href="RimuoviTerrenoServlet?action=delete&id=<%= idTerreno%>">Conferma</a>
                 </button>
             </div>
         </div>

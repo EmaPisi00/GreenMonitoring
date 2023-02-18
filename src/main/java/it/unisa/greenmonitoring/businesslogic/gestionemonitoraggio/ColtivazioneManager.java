@@ -1,5 +1,6 @@
 package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
+import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.*;
 import it.unisa.greenmonitoring.dataccess.dao.*;
 
@@ -30,7 +31,7 @@ public class ColtivazioneManager {
     /**
      * SensoreDAO.
      */
-    private SensoreDAO sensoreDAO;
+    private SensoreManager sensoreManager;
 
     /**
      * FisiopatieDAO.
@@ -47,9 +48,18 @@ public class ColtivazioneManager {
         cd = new ColtivazioneDAOImpl();
         pd = new PiantaDAOImpl();
         td = new TerrenoDAOImpl();
-        sensoreDAO = new SensoreDAOImpl();
+        sensoreManager = new SensoreManager();
         fisiopatieDAO = new FisiopatieDAOImpl();
         misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
+    }
+
+    /**
+     * Questo metodo restituisce una lista di coltivazioni di una azienda.
+     * @param id_azienda
+     * @return ArrayList of ColtivazioneBean
+     */
+    public ArrayList<ColtivazioneBean> visualizzaStatoColtivazioni(String id_azienda) throws SQLException {
+        return cd.retrieveColtivazione(id_azienda);
     }
 
     /**
@@ -61,37 +71,36 @@ public class ColtivazioneManager {
      */
 
     public ColtivazioneBean avvioColtivazione(ColtivazioneBean c, String id_azienda, ArrayList<SensoreBean> collezioneSensori) throws Exception {
-         try {
-             TerrenoBean terrenoBean = td.retrieveByKey(c.getTerreno());
-                 //prende tutte le coltivazioni e cerca il terreno
-                 ArrayList<ColtivazioneBean> listaColtivazioni = cd.retrieveColtivazione(id_azienda);
-                 for (ColtivazioneBean coltivazione : listaColtivazioni) {
-                     if (terrenoBean.getId() == coltivazione.getTerreno()) {
-                         return null;
-                     }
-                 }
+        try {
+            TerrenoBean terrenoBean = td.retrieveByKey(c.getTerreno());
+            //prende tutte le coltivazioni e cerca il terreno
+            ArrayList<ColtivazioneBean> listaColtivazioni = cd.retrieveColtivazione(id_azienda);
+            for (ColtivazioneBean coltivazione : listaColtivazioni) {
+                if (terrenoBean.getId() == coltivazione.getTerreno()) {
+                    return null;
+                }
+            }
             /* Verifico che i sensori associati siano > 0, presenti nel db e non occupati */
-             for (SensoreBean sensore : collezioneSensori) {
+            for (SensoreBean sensore : collezioneSensori) {
                 if (sensore.getColtivazione() != 0) {
                     return null;
-                    }
                 }
+            }
             cd.createColtivazione(c);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
+        ArrayList<ColtivazioneBean> coltivazioneBeans = visualizzaStatoColtivazioni(id_azienda);
+        Integer id_coltivazione = coltivazioneBeans.get(coltivazioneBeans.size() - 1).getId();
+        c.setId(id_coltivazione);
+        for (SensoreBean sensore : collezioneSensori) {
+            sensoreManager.aggiungiAssociazioneSensore(c.getId(), sensore);
+        }
         return c;
     }
 
-    /**
-     * Questo metodo restituisce una lista di coltivazioni di una azienda.
-     * @param id_azienda
-     * @return ArrayList of ColtivazioneBean
-     */
-    public ArrayList<ColtivazioneBean> visualizzaStatoColtivazioni(String id_azienda) throws SQLException {
-        return cd.retrieveColtivazione(id_azienda);
-    }
+
 
     /**
      * Questo metodo restituisce una lista di coltivazioni avviate di una azienda.

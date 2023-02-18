@@ -168,7 +168,7 @@
                     </td>
                     </tr>
                 </table><br>
-                    <form action="ServletColtivazioni" method="get">
+                    <form action="ColtivazioniServlet" method="get">
                         <input type="hidden" name="coltivazione" value="<%=cb.getId()%>">
                         <button type="submit" class="btn btn-success">Visualizza stato</button>
                     </form>

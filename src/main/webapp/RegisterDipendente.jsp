@@ -42,7 +42,7 @@
         <h3 class="display-3 text-center py-5">Registrazione Dipendente</h3>
         <div class="card text-black"
              style="border-radius: 1rem; border: 2px solid green; font-size:  22px;">
-            <form class="row g-3 " style="font-family: 'Lora', serif; " action="ServletDipendente" method="get">
+            <form class="row g-3 " style="font-family: 'Lora', serif; " action="RegistrazioneDipendenteServlet" method="get">
 
                 <div class="col-md-6 ">
                     <div class="form-outline form-white mb-4">

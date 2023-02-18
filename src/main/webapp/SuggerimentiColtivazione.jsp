@@ -4,6 +4,8 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.TerrenoManager" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.*" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.AdapterMeteo.MeteoApiAdapter" %>
+<%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.AdapterMeteo.OpenMeteoApiAdapterImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,7 +28,8 @@
     }
 %>
 <%@include file="fragments/headerLoggedAzienda.html" %>
-<%MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl();
+<%
+    MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl();
     MisurazioneSensoreDAO misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
     PiantaManager piantaManager = new PiantaManager();
     ColtivazioneManager cm = new ColtivazioneManager();

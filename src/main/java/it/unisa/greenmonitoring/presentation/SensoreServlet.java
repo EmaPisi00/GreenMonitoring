@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-@WebServlet(name = "ServletSensore", value = "/ServletSensore")
+@WebServlet(name = "SensoreServlet", value = "/SensoreServlet")
 @MultipartConfig
-public class ServletSensore extends HttpServlet {
+public class SensoreServlet extends HttpServlet {
 
     /**
      * Method that handle the GET requests.

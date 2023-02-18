@@ -11,8 +11,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ServletDipendente", value = "/ServletDipendente")
-public class ServletDipendente extends HttpServlet {
+@WebServlet(name = "RegistrazioneDipendenteServlet", value = "/RegistrazioneDipendenteServlet")
+public class RegistrazioneDipendenteServlet extends HttpServlet {
 
 
     /**

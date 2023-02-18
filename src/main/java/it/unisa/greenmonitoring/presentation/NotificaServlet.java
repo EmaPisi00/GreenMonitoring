@@ -15,8 +15,8 @@ import java.io.IOException;
 
 
 
-@WebServlet(name = "ServletNotifica", value = "/ServletNotifica")
-public class ServletNotifica extends HttpServlet {
+@WebServlet(name = "NotificaServlet", value = "/NotificaServlet")
+public class NotificaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();

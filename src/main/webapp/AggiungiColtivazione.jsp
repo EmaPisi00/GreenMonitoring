@@ -84,7 +84,7 @@
       %>
       <div id="alrt" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1"> Selezionare almeno un sensore.</i></div>
-      <form action="ServletColtivazioni" method="post" id="aggiungi_coltivazione">
+      <form action="ColtivazioniServlet" method="post" id="aggiungi_coltivazione">
         <input type="hidden" name="moduloInserimentoColtivazione" required><br>
         <label>Scegliere il terreno di cui avviare una coltivazione</label><br>
         <% //Se servletColtivazione invia un errore viene stampato un alert

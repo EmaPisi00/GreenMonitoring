@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ServletRimozioneSensore", value = "/ServletRimozioneSensore")
-public class ServletRimozioneSensore extends HttpServlet {
+@WebServlet(name = "RimuoviAssociazioneSensoreServlet", value = "/RimuoviAssociazioneSensoreServlet")
+public class RimuoviAssociazioneSensoreServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("sensoreDaRimuovere") != null) {

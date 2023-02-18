@@ -5,8 +5,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "ServletLogout", value = "/ServletLogout")
-public class ServletLogout extends HttpServlet {
+@WebServlet(name = "LogoutServlet", value = "/LogoutServlet")
+public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

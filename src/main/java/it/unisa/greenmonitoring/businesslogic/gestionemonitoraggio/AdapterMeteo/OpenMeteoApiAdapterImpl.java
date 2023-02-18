@@ -1,4 +1,4 @@
-package it.unisa.greenmonitoring.dataccess.dao;
+package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.AdapterMeteo;
 
 import it.unisa.greenmonitoring.dataccess.beans.DatiMeteoBean;
 import org.json.simple.JSONArray;

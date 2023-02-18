@@ -30,7 +30,7 @@
     <body class="loginBody">
     <div class="loginContainer">
         <div id="formLogin">
-            <form method="post" action="ServletLogin">
+            <form method="post" action="LoginServlet">
                 <div class="formValidation">
                     <br>Email<br>
                     <input class="textInputStyle" type="text" placeholder='Inserisci email' name="email" id="email"/>

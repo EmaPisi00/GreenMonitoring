@@ -10,8 +10,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ServletRemoveDipendente", value = "/ServletRemoveDipendente")
-public class ServletRemoveDipendente extends HttpServlet {
+@WebServlet(name = "RimuoviAssociazioneServlet", value = "/RimuoviAssociazioneServlet")
+public class RimuoviAssociazioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
