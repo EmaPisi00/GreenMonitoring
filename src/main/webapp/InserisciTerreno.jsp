@@ -38,7 +38,18 @@
 <%}%>
 
 <body >
-<br>
+<% if (request.getAttribute("conferma")!=null) {%>
+<div class="alert alert-success">
+  <h3>Confermato</h3>
+  <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
+<% if (request.getAttribute("errore")!=null) {%>
+<div class="alert alert-danger">
+  <h3>Errore</h3>
+  <p><%=request.getAttribute("descrizione")%></p>
+</div>
+<%}%>
 <div class="container">
   <div class="row justify-content-center">
     <div class="card col-md-6">
@@ -58,13 +69,13 @@
 
           <div>
             <label for="latitudine"  class="text-left-label">latitudine</label>
-            <input type="number" class="form-control" id="latitudine" name="latitudine" placeholder="Inserisci latitudine" required>
+            <input type="text" class="form-control" id="latitudine" name="latitudine" placeholder="Inserisci latitudine" required>
           </div>
 
 
           <div>
             <label for="longitudine" class="form-label" >longitudine:</label>
-            <input type="number" class="form-control" id="longitudine" name="longitudine" placeholder="Inserisci longitudine" required>
+            <input type="text" class="form-control" id="longitudine" name="longitudine" placeholder="Inserisci longitudine" required>
           </div>
 
 

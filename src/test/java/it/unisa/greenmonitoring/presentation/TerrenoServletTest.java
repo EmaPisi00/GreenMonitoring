@@ -218,7 +218,7 @@ public class TerrenoServletTest {
         Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
         Mockito.when(part.getInputStream()).thenReturn(input);
         servlet.doPost(request, response);
-        assertEquals("10", request.getAttribute("errore"));
+        assertEquals("10", request.getAttribute("conferma"));
         assertEquals(200, response.getStatus());
     }
 }
