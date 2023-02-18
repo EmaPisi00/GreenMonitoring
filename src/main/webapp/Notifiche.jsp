@@ -16,7 +16,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>Bootstrap Example</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -37,7 +36,7 @@
         /* -- INIZIO AUTENTICAZIONE --*/
         UtenteBean seo = (UtenteBean) session.getAttribute("currentUserSession");
         NotificaDAO n = new NotificaDAOImpl();
-        List<NotificaBean> listaNotifiche=null;
+        List<NotificaBean> listaNotifiche= new ArrayList<>();
         if (seo instanceof AziendaBean) {
             listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());
         } else if (seo instanceof DipendenteBean) {
@@ -45,17 +44,23 @@
         } else {
             response.sendRedirect("error.jsp");
         }
+        List<NotificaBean> listaDaVisualizzare= new ArrayList<>();
+        for (NotificaBean not: listaNotifiche) {
+            if(!not.getVisualizzazioneNotifica()) {
+                listaDaVisualizzare.add(not);
+            }
+        }
 
-        int numNotifiche = listaNotifiche.size(); // Recupera il numero di notifiche dal database o da un'altra fonte
+        int numNotifiche = listaDaVisualizzare.size(); // Recupera il numero di notifiche dal database o da un'altra fonte
     %>
-    <tiitle>Notifiche</tiitle>
+
 </head>
 
 <body class="p-3 m-0 border-0 bd-example bg-light">
 
 <!-- bottone notifica Code -->
 <button type="button" class="btn btn-primary position-relative" id="notificationButton">
-    Inbox
+    Notifiche
     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationBadge">
     <%=numNotifiche%>
     <span class="visually-hidden">unread messages</span>
@@ -64,22 +69,17 @@
 
 <div class="toast-container">
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="notificationArea" style="display: none;">
-    <% int i=0;
-    List<NotificaBean> listaDaVisualizzare= new ArrayList<>();
-    for (NotificaBean not: listaNotifiche) {
-        listaDaVisualizzare.add(not);
-    }
+    <%
+        int i=0;
         for (NotificaBean notifica : listaDaVisualizzare ) {
-            System.out.println(notifica);
             if(i<4) {
-
                 out.print(
                         "" +
-                                " <div class=\"toast-header mt-3\">" +
+                                " <div id=\"riga" + i + "\" class=\"toast-header bg-danger bg-opacity-50\">" +
                                 "      <img src=\"img/logo.png\" class=\"rounded me-2\" alt=\"...\">" +
                                 "      <strong class=\"me-auto\">"+ notifica.getTipo()+"</strong>" +
                                 "      <small class=\"text-muted\">" +notifica.getData() + "</small>" +
-                                "      <button class=\"m-lg-1\"onclick='showModal(\""+notifica.getId() +"\",\""+ notifica.getTipo() + "\",\""+ notifica.getData() + "\",\""+notifica.getContenuto() + "\",\""+ notifica.getColtivazioneID() +"\")'>Leggi</button>" +
+                                "      <button class=\"m-lg-1\"onclick='showModal(\""+ i +"\",\""+notifica.getId() +"\",\""+ notifica.getTipo() + "\",\""+ notifica.getData() + "\",\""+notifica.getContenuto() + "\",\""+ notifica.getColtivazioneID() +"\")'>Leggi</button>" +
                                 "    </div>"
                               );
                 i++;
@@ -125,7 +125,7 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="myModal">Chiudi</button>
+                <button type="button" class="btn btn-danger"  onclick="closeModal()">Chiudi</button>
             </div>
         </div>
     </div>
@@ -142,7 +142,11 @@
             notificationArea.style.display = "none";
         }
     });
-        function showModal(idNotifica,notifica, data, contenuto,coltivazione) {
+        function showModal(indice,idNotifica,notifica, data, contenuto,coltivazione) {
+            var notificaRow = document.getElementById("riga"+indice);
+            if (notificaRow) {
+                notificaRow.classList.remove('bg-danger');
+            }
         // Imposta il titolo della notifica
         document.getElementById("notifica-titolo").innerText = notifica;
 
@@ -176,6 +180,10 @@
         var url = "ServletColtivazioni?coltivazione=" + coltivazioneId;
         window.location.href = url;
     });
+
+    function closeModal() {
+        $("#myModal").modal("hide");
+    }
 </script>
 
 </body>

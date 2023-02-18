@@ -1,6 +1,7 @@
 package it.unisa.greenmonitoring.presentation;
 import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.NotificaManager;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
+import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;
 import it.unisa.greenmonitoring.dataccess.beans.UtenteBean;
 
 import javax.servlet.RequestDispatcher;
@@ -32,10 +33,18 @@ public class ServletNotifica extends HttpServlet {
             dispatcher.forward(request, response);
         }
         if ("true".equals(request.getParameter("numNotifiche"))) {
-            if (utente instanceof AziendaBean) {
+            if (utente instanceof AziendaBean || utente instanceof DipendenteBean) {
+
                 NotificaManager nm = new NotificaManager();
-                nm.LeggiNotificaAziendaManager(Integer.parseInt(request.getParameter("idNotifica")));
-                int numNotifiche = nm.NotificheNonLette(utente.getEmail()).size();
+                Integer id = Integer.valueOf(request.getParameter("idNotifica"));
+
+                if (utente instanceof AziendaBean) {
+                    nm.LeggiNotificaAziendaManager(id);
+                } else {
+                    nm.LeggiNotificaDipendenteManager(id, utente.getEmail());
+                }
+                int numNotifiche = nm.NotificheNonLette(utente.getEmail(), utente).size();
+                System.out.println(numNotifiche + "numeroe notifiche");
                 response.setContentType("text/plain");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(String.valueOf(numNotifiche));

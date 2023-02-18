@@ -48,8 +48,6 @@ public class NotificaDAOImpl implements NotificaDAO {
             preparedStatement.setString(5, notifica.getContenuto());
             preparedStatement.setBoolean(6, notifica.getVisualizzazioneNotifica());
             preparedStatement.executeUpdate();
-
-            preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 int id = generatedKeys.getInt(1);
@@ -147,11 +145,12 @@ public class NotificaDAOImpl implements NotificaDAO {
      */
     @Override
     public void updateLetturaNotificaDipendente(int idNotifica, String idDipendente) {
-        String updateSQL = "UPDATE NotificaDipendenti SET visualizzazioneNotifica = ? WHERE id = ? AND dipendente = ?";
+        System.out.println("sono in dao upda letturadip" + idNotifica + "  " + idDipendente);
+        String updateSQL = "UPDATE NotificaDipendenti SET visualizzazioneNotifica = ? WHERE notifica = ? AND dipendente = ?";
         try {
             connection = ConnectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
-            preparedStatement.setBoolean(3, true);
+            preparedStatement.setBoolean(1, true);
             preparedStatement.setInt(2, idNotifica);
             preparedStatement.setString(3, idDipendente);
 
@@ -174,7 +173,8 @@ public class NotificaDAOImpl implements NotificaDAO {
      * @return List
      */
     public List<NotificaBean> retriveNotifichePerDipendente(String emailDipendente) {
-        String selectSQL = "select * from Notifica where id in(select notifica from NotificaDipendenti as n where notifica=Notifica.id and dipendente=?";
+        String selectSQL = "SELECT n.*, nd.visualizzazioneNotifica AS visualizzazioneDipendente FROM Notifica n"
+                + " LEFT JOIN NotificaDipendenti nd ON n.id = nd.notifica where nd.dipendente=? and n.id=nd.notifica;";
         List<NotificaBean> list = new ArrayList<>();
         try {
             connection = ConnectionPool.getConnection();
@@ -191,7 +191,7 @@ public class NotificaDAOImpl implements NotificaDAO {
                 s.setTipo(rs.getString("tipo"));
                 s.setData(rs.getTimestamp("data_ora"));
                 s.setContenuto(rs.getString("contenuto"));
-                s.setVisualizzazioneNotifica(rs.getBoolean("visualizzazioneNotifica"));
+                s.setVisualizzazioneNotifica(rs.getBoolean("visualizzazioneDipendente"));
 
                 list.add(s);
             }

@@ -43,7 +43,7 @@
         if (seo instanceof AziendaBean) {
             listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());
         } else if (seo instanceof DipendenteBean) {
-            listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());
+            listaNotifiche = n.retriveNotifichePerDipendente(seo.getEmail());
         } else {
             response.sendRedirect("error.jsp");
         }
@@ -58,11 +58,9 @@
         <thead>
         <tr>
             <th>Numero</th>
-            <th>Azienda</th>
             <th>Coltivazione</th>
             <th>Tipo di Notifica</th>
             <th>Data e ora</th>
-            <th>Visualizzazione Notifica</th>
         </tr>
         </thead>
         <tbody>
@@ -73,11 +71,9 @@
                         (!notifica.getVisualizzazioneNotifica() ? "background-color: red;" : "") +
                         "\" onclick='showModal(\""+notifica.getId() +"\",\""+ notifica.getTipo() + "\",\""+ notifica.getData() + "\",\""+notifica.getContenuto() + "\",\""+ notifica.getColtivazioneID() +"\")'>" +
                         "<td>" + i + "</td>" +
-                        "<td>" + notifica.getAziendaID() + "</td>" +
                         "<td>" + notifica.getColtivazioneID() + "</td>" +
                         "<td>" + notifica.getTipo() + "</td>" +
                         "<td>" + notifica.getData() + "</td>" +
-                        "<td>" + notifica.getVisualizzazioneNotifica() + "</td>" +
                         "</tr>"
                 );
                 i++;
