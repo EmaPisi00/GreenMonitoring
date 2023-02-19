@@ -51,65 +51,93 @@
     <p><%=request.getAttribute("descrizione")%></p>
 </div>
 <%}%>
-<h1>Dettagli utente attualmente in sessione</h1>
 
-<table>
-    <tr>
-        <td>Email:</td>
-        <td><%= user.getEmail() %></td>
-    </tr>
-    <tr>
-        <td>Password:</td>
-        <td><%= user.getPassword() %></td>
-    </tr>
-    <tr>
-        <td>Telefono:</td>
-        <td><%= user.getTelefono() %></td>
-    </tr>
-    <tr>
-        <td>Città:</td>
-        <td><%= user.getCitta() %></td>
-    </tr>
-    <tr>
-        <td>Provincia:</td>
-        <td><%= user.getProvincia() %></td>
-    </tr>
-    <tr>
-        <td>Indirizzo:</td>
-        <td><%= user.getIndirizzo() %></td>
-    </tr>
+
+<% if( user instanceof AziendaBean) {%>
+
+<div class="container py-5 w-100 h-100" style="margin-top: 50px">
+    <div class="row justify-content-center">
+        <div class="col-12 py-3">
+                <h5 class=" text-center">Benvenuto <%= ((AziendaBean)user).getNome_azienda() %> nella tua area personale</h5>
+        </div>
+        <div class="col-12">
+            <table class="table table-responsive-lg">
+                <tr style="font-family: 'Staatliches', cursive; font-size: 20px;">
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Telefono</th>
+                    <th>Città</th>
+                    <th>Provincia</th>
+                    <th>Indirizzo</th>
+                </tr>
+                <tr>
+                    <td><%= user.getEmail()%> </td>
+                    <td>*****</td>
+                    <td><%= user.getTelefono()%></td>
+                    <td><%= user.getCitta()%></td>
+                    <td><%= user.getProvincia()%></td>
+                    <td><%= user.getIndirizzo()%></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<%}%>
 
     <%  if (user instanceof DipendenteBean)  {
         AziendaDAO aziendaDAO = new AziendaDAOImpl();
         AziendaBean azienda = aziendaDAO.retrieveForKey(((DipendenteBean) user).getAzienda());
     %>
 
-    <tr>
-        <td>Nome:</td>
-        <td><%= ((DipendenteBean) user).getNome() %></td>
-    </tr>
-    <tr>
-        <td>Cognome:</td>
-        <td><%= ((DipendenteBean) user).getCognome() %></td>
-    </tr>
-    <tr>
-        <td>Azienda:</td>
-        <td><%= azienda.getNome_azienda() %></td>
-    </tr>
-    <% } else if (user instanceof AziendaBean) { %>
-    <tr>
-        <td>Nome Azienda:</td>
-        <td><%= ((AziendaBean) user).getNome_azienda() %></td>
-    </tr>
-    <tr>
-        <td>Partita IVA:</td>
-        <td><%= ((AziendaBean) user).getPartita_iva() %></td>
-    </tr>
+<div class="container py-5 w-100 h-100" style="margin-top: 50px">
+    <div class="row justify-content-center">
+        <div class="col-12 py-3">
+            <h5 class=" text-center">Benvenuto <%= ((DipendenteBean)user).getNome() %> nella tua area personale</h5>
+        </div>
+        <div class="col-12">
+            <table class="table table-responsive-lg">
+                <tr style="font-family: 'Staatliches', cursive; font-size: 20px;">
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Azienda</th>
+                    <th>Nome Azienda</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Telefono</th>
+                    <th>Città</th>
+                    <th>Provincia</th>
+                    <th>Indirizzo</th>
+                </tr>
+                <tr>
+                    <td><%= ((DipendenteBean) user).getNome()%></td>
+                    <td><%= ((DipendenteBean) user).getCognome() %></td>
+                    <td><%= azienda.getNome_azienda() %></td>
+                    <td><%= ((DipendenteBean) user).getAzienda() %></td>
+                    <td><%= user.getEmail()%> </td>
+                    <td>*****</td>
+                    <td><%= user.getTelefono()%></td>
+                    <td><%= user.getCitta()%></td>
+                    <td><%= user.getProvincia()%></td>
+                    <td><%= user.getIndirizzo()%></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
     <% } %>
-</table>
-
-<button onclick="location.href='ModificaProfilo.jsp'">Modifica profilo</button>
-
+<div class="container py-2">
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <button onclick="location.href='ModificaProfilo.jsp.jsp'" type="button"
+                    class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
+                    data-target="#exampleModalCenter">
+                Modifica Profilo
+            </button>
+        </div>
+    </div>
+</div>
 
 <%@include file="fragments/footer.html"%>
 
