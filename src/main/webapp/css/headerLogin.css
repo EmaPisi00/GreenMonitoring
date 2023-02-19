@@ -9,12 +9,12 @@ header{
     width: 100px;
     height: 100px;
     margin-top: -1%;
-    position:fixed;
+    position:absolute;
     left: 0;
 }
 
 .log_reg{
-    position: fixed;
+    position: absolute;
     right: 0;
 }
 

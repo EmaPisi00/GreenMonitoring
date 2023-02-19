@@ -48,7 +48,7 @@
         response.sendRedirect("Profile.jsp");
     }
 %>
-<%@ include file="fragments/headerLoggedDipendente.html"%>
+<%@ include file="fragments/headerLoggedDipendenteNonAssociato.html"%>
 
 
     <div class="loginContainer">
