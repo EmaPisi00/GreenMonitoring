@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <link rel="stylesheet"  href="css/login.css" type="text/css">
-    <link rel="stylesheet"  href="css/headerLogin.css" type="text/css">
-    <link rel="stylesheet"  href="css/footer.css" type="text/css">
+    <link rel="stylesheet" href="css/login.css" type="text/css">
+    <link rel="stylesheet" href="css/headerLogin.css" type="text/css">
+    <link rel="stylesheet" href="css/footer.css" type="text/css">
 
     <!-- Import Bootstrap -->
     <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,51 +17,71 @@
     <!-- Import Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,500&family=Quicksand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,500&family=Quicksand&display=swap"
+          rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
 
 </head>
-<% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (u != null)  {
+<% UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if (u != null) {
         request.getSession(false).invalidate();
     }%>
-<%@ include file="fragments/headerLogin.html"%>
-    <body class="loginBody">
-    <div class="loginContainer">
-        <div id="formLogin">
-            <form method="post" action="LoginServlet">
-                <div class="formValidation">
-                    <br>Email<br>
-                    <input class="textInputStyle" type="text" placeholder='Inserisci email' name="email" id="email"/>
+<%@ include file="fragments/headerLogin.html" %>
+
+<body class="loginBody ">
+
+<div class="container w-50 h-100 py-5">
+    <div class="row justify-content-center">
+        <form method="post" action="LoginServlet"
+              style="border-radius: 1rem; border: 2px solid green; font-size:  22px; ">
+            <div class="row justify-content-center">
+                <div class="col-6 text-center">
+                    <div class="mb-4 text-center">
+                        <label class="form-label text-center">E-mail</label>
+                        <input class="form-control " type="text" placeholder='Inserisci email' name="email"
+                               id="email"/>
+                    </div>
                 </div>
-                <div class="formValidation">
-                    <br>Password<br>
-                    <input class="textInputStyle" type="password" placeholder='********' name="password" id="password"/>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-6 text-center">
+                    <div class="mb-4 text-center">
+                        <label class="form-label text-center">Password</label>
+                        <input class="form-control" type="password" placeholder='********' name="password"
+                               id="password"/>
+                    </div>
                 </div>
-                <%
-                    String errorMessage = (String)request.getAttribute("errorMessage");
-                    if(errorMessage != null) {
-                %>
-                <div id="errorPopup" class="errorPopup">
-                    <p id="errorText" class="error"><%= errorMessage %></p>
+            </div>
+            <%
+                String errorMessage = (String) request.getAttribute("errorMessage");
+                if (errorMessage != null) {
+            %>
+            <div id="errorPopup" class="errorPopup">
+                <h6 id="errorText" class="error"><%= errorMessage %>
+                </h6 id="errorText">
+            </div>
+            <%
+                }
+            %>
+
+            <div class="row justify-content-center py-5">
+                <div class="col-3 ">
+                    <input type="submit" name="signin" class="btn btn-outline-success btn-lg px-5" value="Accedi"/>
                 </div>
-                <%
-                    }
-                %>
-                <input type="submit" name="signin" id="loginButton" value="Accedi" />
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+</div>
 
-    <%@ include file="fragments/footer.html"%>
+<%@ include file="fragments/footer.html" %>
 
-    <script>
-        // Mostra il popup di errore se necessario
-        var errorPopup = document.getElementById("errorPopup");
-        if (errorPopup) {
-            errorPopup.style.display = "block";
-        }
-    </script>
-    </body>
+<script>
+    // Mostra il popup di errore se necessario
+    var errorPopup = document.getElementById("errorPopup");
+    if (errorPopup) {
+        errorPopup.style.display = "block";
+    }
+</script>
+</body>
 </html>
