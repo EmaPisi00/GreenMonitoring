@@ -63,12 +63,12 @@
 
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    if(u == null){
+    System.out.println(request.getAttribute("errore"));
+    System.out.println(request.getAttribute("descrizione"));
+    if (!(u instanceof AziendaBean)) {
         response.sendRedirect("error.jsp");
-    }
-    if (u instanceof AziendaBean) {
-
-%>
+        return;
+    }%>
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
 <% if (u != null) {%>
@@ -119,18 +119,8 @@
 
                     <%
                         TerrenoBean terrenoBean = new TerrenoBean();
-                        int idTerreno = 0;
-                        /* -- INIZIO AUTENTICAZIONE -- */
-                        Object seo = session.getAttribute("currentUserSession");
-                        if (seo == null) {
-                            response.sendError(401);
-                        } else if (!(session.getAttribute("currentUserSession") instanceof AziendaBean)) {
-                            response.sendError(401);
-                        }
                         /* -- PASSATI I TEST, APRE IL RESTO DELLA PAGINA--*/
-                        else {
-                            AziendaBean a = (AziendaBean) seo;
-
+                            AziendaBean a = (AziendaBean) u;
                             TerrenoManager t = new TerrenoManager();
                             List<TerrenoBean> list = t.visualizzaListaTerreni(a.getEmail());
                             int i = 0;
@@ -161,13 +151,12 @@
                         </td>
                         <td><%= terrenoBean.getSuperficie()%>
                         </td>
-                        <td><p style="display: none"><%= idTerreno = terrenoBean.getId()%>
+                        <td><p style="display: none"><%= terrenoBean.getId()%>
                         </p> <img src="img/delete.png" width="35px" style="cursor: pointer" data-bs-toggle="modal"
                                   data-bs-target="#exampleModal"></td>
                     </tr>
 
                     <% }
-                    }
                     }
                     %>
 
@@ -202,14 +191,12 @@
             <div class="modal-footer">
                 <button id="closeModal" class="btn btn-secondary" data-dismiss="modal">No</button>
                 <button id="summit" class="btn btn btn-outline-danger"><a style="text-decoration: none; "
-                                                                          href="RimuoviTerrenoServlet?action=delete&id=<%= idTerreno%>">Conferma</a>
+                                                                          href="RimuoviTerrenoServlet?action=delete&id=<%= terrenoBean.getId()%>">Conferma</a>
                 </button>
             </div>
         </div>
     </div>
 </div>
-
-<%}%>
 <%@include file="fragments/footer.html" %>
 </body>
 </html>

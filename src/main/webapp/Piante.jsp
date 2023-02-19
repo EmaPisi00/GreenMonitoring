@@ -73,7 +73,8 @@
     System.out.println(request.getAttribute("errore"));
     System.out.println(request.getAttribute("descrizione"));
     if (!(u instanceof AziendaBean)) {
-        response.sendRedirect("error");
+        response.sendRedirect("error.jsp");
+        return;
     }%>
 <%@include file="fragments/headerLoggedAzienda.html"%>
 
@@ -116,19 +117,8 @@
                         <tbody>
                         <%
                             /* -- INIZIO AUTENTICAZIONE --*/
-                            Object seo = session.getAttribute("currentUserSession");
-                            String email = null;
+                            String email = u.getEmail();
                             int idPianta = 0;
-
-                            if (seo == null) {
-                                response.sendError(401);
-                            }
-
-                            if (seo instanceof AziendaBean) {
-                                email = ((AziendaBean) seo).getEmail();
-                            } else if (seo instanceof DipendenteBean) {
-                                response.sendError(401);
-                            }
 
                             PiantaManager p = new PiantaManager();
                             List<PiantaBean> list = p.ListaPianteManager(email);
