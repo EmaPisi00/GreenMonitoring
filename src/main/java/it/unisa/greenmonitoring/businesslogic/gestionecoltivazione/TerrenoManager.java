@@ -65,6 +65,7 @@ public class TerrenoManager {
     /**
      * Metodo usato per rimuovere un terreno.
      * @param id_terreno
+     * @param idAzienda
      * @pre t ha un id che esiste nel database.
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      * @return true se e solo se la rimozione avviene con successo.
