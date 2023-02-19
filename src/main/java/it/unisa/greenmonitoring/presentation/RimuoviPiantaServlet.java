@@ -35,11 +35,12 @@ public class RimuoviPiantaServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println(request.getParameter("idPianta"));
         if (request.getParameter("Rimuovi") != null) {
             System.out.println("sono in rimuovi");
             HttpSession session = request.getSession();
             AziendaBean utente = (AziendaBean) session.getAttribute("currentUserSession");
-            int idPianta = Integer.parseInt(request.getParameter("Rimuovi"));
+            int idPianta = Integer.parseInt(request.getParameter("idPianta"));
             if (!pm.rimuoviPiantaManager(idPianta, utente.getEmail())) {
                 System.out.println("sono impegnata in coltivazione");
                 request.setAttribute("errore", "0");

@@ -103,6 +103,7 @@
                             <th scope="col"></th>
                             <th scope="col">#</th>
                             <th scope="col">Nome</th>
+                            <th scope="col">Immagine</th>
                             <th scope="col">Descrizione</th>
                             <th scope="col">Ph minimo</th>
                             <th scope="col">Ph massimo</th>
@@ -110,11 +111,10 @@
                             <th scope="col">Temperatura massima</th>
                             <th scope="col">Umidità minima</th>
                             <th scope="col">Umidità massima</th>
-                            <th scope="col">Immagine</th>
-                            <th scope="col">Azione</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center align-middle">
                         <%
                             /* -- INIZIO AUTENTICAZIONE --*/
                             String email = u.getEmail();
@@ -122,7 +122,7 @@
 
                             PiantaManager p = new PiantaManager();
                             List<PiantaBean> list = p.ListaPianteManager(email);
-                            int i = 0;
+                            int i = 1;
                             if (list.size() != 0) {
                                 Iterator it = list.iterator();
                                 while (it.hasNext()) {
@@ -136,23 +136,27 @@
                                     out.print("<tr>" +
                                             "<td>");
                                     out.print("</td>" +
-                                            "<td>" + i++ + "</td>" +
+                                            "<td>" + i + "</td>" +
                                             "<td>" + pb.getNome() + "</td>" +
+                                            "<td><img class=\"imgPianta\" id=\"immagine\" src=\"data:image/jpeg;base64," + immagine + "\">" +
                                             "<td><div class=\"overflow-auto\" style=\"max-width: 260px; max-height: 100px;\" >" + pb.getDescrizione() + "</div></td>" +
                                             "<td>" + pb.getPh_min() + "</td>" +
                                             "<td>" + pb.getPh_max() + "</td>" +
                                             "<td>" + pb.getTemperatura_min() + "</td>" +
                                             "<td>" + pb.getTemperatura_max() + "</td>" +
                                             "<td>" + pb.getUmidita_min() + "</td>" +
-                                            "<td>" + pb.getUmidita_max() + "</td>" +
-                                            "<td><img class=\"imgPianta\" id=\"immagine\" src=\"data:image/jpeg;base64," + immagine + "\">");
+                                            "<td>" + pb.getUmidita_max() + "</td>");
                                             if (pb.getAzienda()!=null) {
                                                 idPianta = pb.getId();
                                     out.print(
-                                            "<td><img src=\"img/delete.png\" width=\"35px\" style=\"cursor: pointer\" data-bs-toggle=\"modal\"" + " data-bs-target=\"#exampleModal\"> " +
-                                            " <button type=\"submit\" value=\"" + pb.getId() + "\"class=\"btn btn-danger\" name=\"modificaRange_submit\">Modifica</button></td>" +
+                                            "<td><button class=\"btn btn-danger mx-2 my-2\" type=\"button\" value=\"" + pb.getId() + "\" onclick='showModal(\""+ pb.getId() +"\")'>Rimuovi</button>" +
+                                            " <button type=\"submit\" value=\"" + pb.getId() + "\"class=\"btn btn-primary mx-2\" name=\"modificaRange_submit\">Modifica</button></td>" +
                                             "</tr>"
-                                    );}
+                                    );} else {
+                                                out.print("<td><i class=\"bi bi-x-octagon-fill\"></i> <br>" +
+
+                                                        "</td>");
+                                            }
                                     i++;
                                 }
                             }
@@ -183,13 +187,13 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                Sei sicuro di voler effettuare la rimozione di <%=idPianta%>?
+                Sei sicuro di voler effettuare la rimozione ?
             </div>
             <div class="modal-footer">
                 <button id="closeModal" class="btn-reed" data-bs-dismiss="modal" onclick="closeModal()">No</button>
                 <form id="rimuoviPianta" action="RimuoviPiantaServlet" method="post">
-                    <button value="<%=idPianta%>" id="summit" name="Rimuovi" class="btn-green">
-                        <a style="text-decoration: none; ">Conferma</a>
+                    <input type="hidden" name="idPianta" value="">
+                    <button id="summit" name="Rimuovi" class="btn-green">Conferma</button>
                     </button>
                 </form>
             </div>
@@ -198,6 +202,13 @@
 </div>
 
 <script>
+    function showModal(id) {
+        // Mostra il modal
+        $("#exampleModal").modal("show");
+        $("#rimuoviPianta input[name=idPianta]").val(id);
+
+    }
+
     $(document).ready(function() {
 
         $("#alrt").hide();
@@ -206,20 +217,6 @@
             $("#rimuoviPianta").submit();
         });
 
-        $("#showModal").click(function() {
-            if ($('#chk:checked').length == 0) {
-                $("#alrt").fadeIn();
-                return false;
-            }
-            else {
-                $("#alrt").fadeOut();
-                $('#Modal').modal('toggle');
-            }
-        });
-
-        $("#closeModal").click(function(){
-            $('#Modal').modal('hide')
-        });
     });
 
     function closeModal() {
