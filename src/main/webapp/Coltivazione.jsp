@@ -535,44 +535,56 @@
                 %>
 
                 <div>
-                    <div style="display:flex;">
-                        <div style="width:5%;">ID</div>
-                        <div style="width:10%;">Pianta</div>
-                        <div style="width:10%;">Nome</div>
-                        <div style="width:15%;">Umidità Terra Min</div>
-                        <div style="width:15%;">Umidità Terra Max</div>
-                        <div style="width:15%;">Temperatura Min</div>
-                        <div style="width:15%;">Temperatura Max</div>
-                        <div style="width:15%;">Umidità Aria Min</div>
-                        <div style="width:15%;">Umidità Aria Max</div>
+                    <% for (FisiopatieBean fisiopatia : listaFisiopatie) { %>
+                    <div style="display:flex; flex-direction: column;">
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Pianta: </div><div> <%= nomePianta %></div>
+                        </div>
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Nome: </div><div> <%= fisiopatia.getNome() %></div>
+                        </div>
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Umidità Terra Min: </div><div> <%= fisiopatia.getUmid_terr_min() %></div>
+                        </div>
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Umidità Terra Max: </div><div> <%= fisiopatia.getUmid_terr_max() %></div>
+                        </div>
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Temperatura Min: </div><div> <%= fisiopatia.getTemp_min() %>°</div>
+                        </div>
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Temperatura Max: </div><div> <%= fisiopatia.getTemp_max() %>°</div>
+                        </div>
+                        <% if (resultTemperatura != null) { %>
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Temperatura attuale: </div><div style="font-weight:bold;"> <%= resultTemperatura %>°</div>
+                        </div>
+                        <% } %>
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Umidità Aria Min: </div><div> <%= fisiopatia.getUmid_aria_min() %></div>
+                        </div>
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Umidità Aria Max: </div><div> <%= fisiopatia.getUmid_aria_max() %></div>
+                        </div>
+                        <% if (resultUmidita != null ) { %>
+                        <div style="display:flex; ">
+                            <div style="width:22%; font-weight:bold;">Umidità aria attuale: </div><div style="font-weight:bold;"> <%= resultUmidita %>°</div>
+                        </div>
+                        <% } %>
                     </div>
-                    <%
-                        for (FisiopatieBean fisiopatia : listaFisiopatie) {
+                    <!-- <% if (resultUmidita != null ) { %>
+                        <div style="display:flex;">
+                            <div style="width:15%;">Umidità terreno attuale</div>
+                            <div style="width:15%;"><%= resultUmidita %></div>
+                            <div style="width:15%;"><%= fisiopatia.getUmid_terr_min() %></div>
+                            <div style="width:15%;"><%= fisiopatia.getUmid_terr_max() %></div>
+                        </div>
+                        <% } %> -->
 
-                    %>
-                    <div style="display:flex;">
-                        <div style="width:5%;"><%= fisiopatia.getId() %>
-                        </div>
-                        <div style="width:10%;"><%= nomePianta %>
-                        </div>
-                        <div style="width:10%;"><%= fisiopatia.getNome() %>
-                        </div>
-                        <div style="width:15%;"><%= fisiopatia.getUmid_terr_min() %>
-                        </div>
-                        <div style="width:15%;"><%= fisiopatia.getUmid_terr_max() %>
-                        </div>
-                        <div style="width:15%;"><%= fisiopatia.getTemp_min() %>
-                        </div>
-                        <div style="width:15%;"><%= fisiopatia.getTemp_max() %>
-                        </div>
-                        <div style="width:15%;"><%= fisiopatia.getUmid_aria_min() %>
-                        </div>
-                        <div style="width:15%;"><%= fisiopatia.getUmid_aria_max()%>
-                        </div>
-                    </div>
-                    <div div style="border: 1px solid black; padding: 10px;">
-                        <strong>Descrizione:</strong><br>
-                        <%= fisiopatia.getDescrizione() %>
+
+                    <div>
+                        <div style="font-weight:bold;">Descrizione:</div>
+                        <div><%= fisiopatia.getDescrizione() %></div>
                     </div>
                     <% }
                     }
