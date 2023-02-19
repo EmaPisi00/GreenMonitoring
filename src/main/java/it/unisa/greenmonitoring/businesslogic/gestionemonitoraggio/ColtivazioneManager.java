@@ -195,6 +195,8 @@ public class ColtivazioneManager {
     }
     /**
      * Questo metodo aggiorna una coltivazione.
+     * @param coltivazioneBean
+     * @return true se e solo se l'update avviene con successo.
      */
     public boolean aggiornaColtivazione(ColtivazioneBean coltivazioneBean) {
         try {
