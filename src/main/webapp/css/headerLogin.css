@@ -77,21 +77,21 @@ header{
     font-size: 19px;
     font-family: 'Inter', sans-serif;
     text-align: center;
-    height: 120px;
+    height: 90px;
 }
 
 .nav-item a:hover{
     font-family: 'Lora', sans-serif;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .dropdown-content {
     display: none;
-    line-height: 26px;
+    line-height: 20px;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 350px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
     z-index: 1;
 }
 
