@@ -138,7 +138,7 @@
                                     out.print("</td>" +
                                             "<td>" + i + "</td>" +
                                             "<td>" + pb.getNome() + "</td>" +
-                                            "<td><img class=\"imgPianta\" id=\"immagine\" src=\"data:image/jpeg;base64," + immagine + "\">" +
+                                            "<td><img class=\"imgPianta img-fluid\" data-toggle=\"modal\" data-target=\"#immagineModale\" id=\"immagine\" src=\"data:image/jpeg;base64," + immagine + "\">" +
                                             "<td><div class=\"overflow-auto\" style=\"max-width: 260px; max-height: 100px;\" >" + pb.getDescrizione() + "</div></td>" +
                                             "<td>" + pb.getPh_min() + "</td>" +
                                             "<td>" + pb.getPh_max() + "</td>" +
@@ -147,7 +147,7 @@
                                             "<td>" + pb.getUmidita_min() + "</td>" +
                                             "<td>" + pb.getUmidita_max() + "</td>");
                                             if (pb.getAzienda()!=null) {
-                                                idPianta = pb.getId();
+
                                     out.print(
                                             "<td><button class=\"btn btn-danger mx-2 my-2\" type=\"button\" value=\"" + pb.getId() + "\" onclick='showModal(\""+ pb.getId() +"\")'>Rimuovi</button>" +
                                             " <button type=\"submit\" value=\"" + pb.getId() + "\"class=\"btn btn-primary mx-2\" name=\"modificaRange_submit\">Modifica</button></td>" +
@@ -168,7 +168,7 @@
             </div>
         </div>
     </form>
-    <div class="container py-2">
+    <div class="container py-2 text-center align-middle">
         <div class="row justify-content-center">
             <div class="col-3">
                 <button onclick="location.href='InserisciPianta.jsp'" type="button"
@@ -201,6 +201,28 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="immagineModale" tabindex="-1" role="dialog" aria-labelledby="immagineModaleLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $(".img-fluid").on("click", function() {
+            $("#immagineModale .modal-body img").attr("src", $(this).attr("src"));
+            $("#immagineModale").modal("show");
+        });
+    });
+</script>
 <script>
     function showModal(id) {
         // Mostra il modal

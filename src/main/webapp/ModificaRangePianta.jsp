@@ -107,7 +107,7 @@
                 </div>
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <img id="immagine" src="data:image/jpeg;base64,<%=immagine%>">
-                    <span class="font-weight-bold">GreenMonitoring</span>
+                    <span class="font-weight-bold"><%=pianta.getNome()%></span>
                 </div>
 
                 <form id="ModificaRange" name="ModificaRange" action="RimuoviPiantaServlet" method="post">
@@ -145,7 +145,7 @@
                             <label for="umidita_min"><%=pianta.getUmidita_min() %></label>
                         </div>
 
-                        <label>umidita_max</label>
+                        <label class="text-center">>umidita_max</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"  id="umidita_max" name="umidita_max"  placeholder="null">
                             <label for="umidita_max"><%=pianta.getUmidita_max()%></label>
