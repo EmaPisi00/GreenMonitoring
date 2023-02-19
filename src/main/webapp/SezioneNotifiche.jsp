@@ -53,7 +53,7 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h3 class="display-3 text-center">Sezione Notifiche</h3>
+    <h5 class="display-3 text-center">Sezione Notifiche</h5>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
