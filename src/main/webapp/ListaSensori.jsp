@@ -39,13 +39,13 @@
     }%>
 
 <%if (u!= null) {%>
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-5 text-center">
 
+<div class="container py-5" style="width: 100%; height: 100%; ">
+    <div class="row ">
+        <div class="col-12 text-center">
             <h3 class="display-3 text-center">Lista Sensori</h3>
         </div>
-        <div class="col-12 py-5">
+        <div class="col-14 py-5">
             <table  class="table table-group-divider" style="font-size: 30px;">
                 <thead>
                 <tr style="font-family: 'Staatliches', cursive; font-size: 20px;">
@@ -87,6 +87,7 @@
 </div>
 
 <%}%>
+
 <%@include file="fragments/footer.html" %>
 </body>
 </html>

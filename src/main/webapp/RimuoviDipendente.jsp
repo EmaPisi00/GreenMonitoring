@@ -60,7 +60,6 @@
 <div class="container py-5" style="width: 100%; height: 100%; ">
     <div class="row">
         <div class="col-12 text-center">
-
             <h3 class="display-3 text-center">Dipendenti</h3>
         </div>
         <div class="col-14 py-5 " style="font-size: 20px;">
