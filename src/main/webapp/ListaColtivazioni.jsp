@@ -69,7 +69,7 @@
     Double resultPh = null;
     Double resultTemperatura = null;
 %>
-<div class="bd">
+<div class="bd" style="width: 100%; height: 100%; ">
     <legend style="text-align:center;">Coltivazioni</legend>
     <!-- Coltivazioni -->
     <div class="card">
@@ -177,7 +177,6 @@
                 } %>
 
             </ul>
-        </div>
     </div>
     <!-- Fine coltivazioni -->
 <% }
