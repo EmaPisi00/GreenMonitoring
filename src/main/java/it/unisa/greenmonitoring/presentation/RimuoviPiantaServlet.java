@@ -1,18 +1,13 @@
 package it.unisa.greenmonitoring.presentation;
-
 import it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.PiantaBean;
-
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-
-
 @WebServlet(name = "RimuoviPiantaServlet", value = "/RimuoviPiantaServlet")
 @MultipartConfig
 public class RimuoviPiantaServlet extends HttpServlet {
@@ -40,7 +35,6 @@ public class RimuoviPiantaServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println(request.getParameter("Rimuovi"));
         if (request.getParameter("Rimuovi") != null) {
             System.out.println("sono in rimuovi");
             HttpSession session = request.getSession();
@@ -50,26 +44,26 @@ public class RimuoviPiantaServlet extends HttpServlet {
                 System.out.println("sono impegnata in coltivazione");
                 request.setAttribute("errore", "0");
                 request.setAttribute("descrizione", "Pianta, impegnata in una coltivazione");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Piante.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Piante.jsp");
                 dispatcher.forward(request, response);
+
             } else {
                 System.out.println("conferma rimozione");
                 request.setAttribute("conferma", "1");
                 request.setAttribute("descrizione", "La pianta è stata rimossa con successo.");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Piante.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Piante.jsp");
                 dispatcher.forward(request, response);
-            }
-        }
 
-        //Modifica Pianta
-        if (request.getParameter("modificaRange_submit") != null) {
+            }
+        } else if (request.getParameter("modificaRange_submit") != null) {
             int idPianta = Integer.parseInt(request.getParameter("modificaRange_submit"));
             System.out.println("pianta id= " + idPianta);
             PiantaBean pianta = pm.visualizzaPianta(idPianta);
-            request.setAttribute("piantaModificare", pianta);
-            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/ModificaRangePianta.jsp");
+            request.getSession().setAttribute("piantaModificare", pianta);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/ModificaRangePianta.jsp");
             dispatcher.forward(request, response);
-        } else if (request.getParameter("modificaPianta") != null) {
+        } else if (request.getParameter("ModificaPianta") != null) {
+            System.out.println("sono nella request modificaPianta");
             System.out.println("sono in modifica");
             HttpSession session = request.getSession();
             PiantaBean pianta = (PiantaBean) session.getAttribute("pianta");
@@ -79,7 +73,6 @@ public class RimuoviPiantaServlet extends HttpServlet {
             Float temperatura_max = null;
             Float umidita_min = null;
             Float umidita_max = null;
-
             try {
                 ph_min = request.getParameter("ph_min").isEmpty() ? pianta.getPh_min() : Float.valueOf(request.getParameter("ph_min"));
             } catch (Exception e) {
@@ -173,16 +166,15 @@ public class RimuoviPiantaServlet extends HttpServlet {
                 request.setAttribute("descrizione", "Errore! Valore massimo minore di Valore minimo");
                 request.setAttribute("piantaModificare", pianta);
                 request.setAttribute("piantaModificare", pianta);
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/ModificaRangePianta.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/ModificaRangePianta.jsp");
                 dispatcher.forward(request, response);
             } else {
                 request.setAttribute("conferma", "11");
                 request.setAttribute("descrizione", "Modifiche effettuate con successo");
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Piante.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Piante.jsp");
                 dispatcher.forward(request, response);
             }
         }
-
 
     }
 }
