@@ -29,6 +29,7 @@ public class RimuoviPiantaServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
     /**
      * Method that handle the POST requests.
@@ -39,23 +40,29 @@ public class RimuoviPiantaServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("rimuoviPianta_submit") != null) {
+        System.out.println(request.getParameter("Rimuovi"));
+        if (request.getParameter("Rimuovi") != null) {
+            System.out.println("sono in rimuovi");
             HttpSession session = request.getSession();
             AziendaBean utente = (AziendaBean) session.getAttribute("currentUserSession");
-            int idPianta = Integer.parseInt(request.getParameter("rimuoviPianta_submit"));
+            int idPianta = Integer.parseInt(request.getParameter("Rimuovi"));
             if (!pm.rimuoviPiantaManager(idPianta, utente.getEmail())) {
+                System.out.println("sono impegnata in coltivazione");
                 request.setAttribute("errore", "0");
-                request.setAttribute("descrizione", "Modifiche effettuate con successo");
+                request.setAttribute("descrizione", "Pianta, impegnata in una coltivazione");
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Piante.jsp");
                 dispatcher.forward(request, response);
             } else {
+                System.out.println("conferma rimozione");
                 request.setAttribute("conferma", "1");
                 request.setAttribute("descrizione", "La pianta è stata rimossa con successo.");
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Piante.jsp");
                 dispatcher.forward(request, response);
             }
+        }
 
-        } else if (request.getParameter("modificaRange_submit") != null) {
+        //Modifica Pianta
+        if (request.getParameter("modificaRange_submit") != null) {
             int idPianta = Integer.parseInt(request.getParameter("modificaRange_submit"));
             System.out.println("pianta id= " + idPianta);
             PiantaBean pianta = pm.visualizzaPianta(idPianta);

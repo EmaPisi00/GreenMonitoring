@@ -34,10 +34,34 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
-        img {
+        .imgPianta {
             height: 70px;
             width: auto;
             object-fit: contain;
+        }
+        .btn-green {
+            color: rgb(255, 255, 255);
+            background-color: darkseagreen;
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 10px;
+            font-size: 26px;
+            font-family: 'Anton', sans-serif;
+        }
+        .btn-green:hover{
+            color: darkseagreen;
+            background-color: rgb(255, 255, 255);
+        }
+        .btn-reed {
+            color: rgb(255, 255, 255);
+            background-color: #ec084c;
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 10px;
+            font-size: 26px;
+            font-family: 'Anton', sans-serif;
+        }
+        .btn-reed:hover{
+            color: #ec084c;;
+            background-color: rgb(255, 255, 255);
         }
 
     </style>
@@ -94,6 +118,7 @@
                             /* -- INIZIO AUTENTICAZIONE --*/
                             Object seo = session.getAttribute("currentUserSession");
                             String email = null;
+                            int idPianta = 0;
 
                             if (seo == null) {
                                 response.sendError(401);
@@ -121,7 +146,7 @@
                                     out.print("<tr>" +
                                             "<td>");
                                     out.print("</td>" +
-                                            "<td>" + i + 1 + "</td>" +
+                                            "<td>" + i++ + "</td>" +
                                             "<td>" + pb.getNome() + "</td>" +
                                             "<td><div class=\"overflow-auto\" style=\"max-width: 260px; max-height: 100px;\" >" + pb.getDescrizione() + "</div></td>" +
                                             "<td>" + pb.getPh_min() + "</td>" +
@@ -130,10 +155,11 @@
                                             "<td>" + pb.getTemperatura_max() + "</td>" +
                                             "<td>" + pb.getUmidita_min() + "</td>" +
                                             "<td>" + pb.getUmidita_max() + "</td>" +
-                                            "<td><img id=\"immagine\" src=\"data:image/jpeg;base64," + immagine + "\">");
+                                            "<td><img class=\"imgPianta\" id=\"immagine\" src=\"data:image/jpeg;base64," + immagine + "\">");
                                             if (pb.getAzienda()!=null) {
+                                                idPianta = pb.getId();
                                     out.print(
-                                            "<td> <button type=\"submit\" id=\"rimuoviPianta_submit\" name=\"rimuoviPianta_submit\" class=\"btn btn-danger\" value=\"" + pb.getId() + "\">Rimuovi</button>" +
+                                            "<td><img src=\"img/delete.png\" width=\"35px\" style=\"cursor: pointer\" data-bs-toggle=\"modal\"" + " data-bs-target=\"#exampleModal\"> " +
                                             " <button type=\"submit\" value=\"" + pb.getId() + "\"class=\"btn btn-danger\" name=\"modificaRange_submit\">Modifica</button></td>" +
                                             "</tr>"
                                     );}
@@ -161,6 +187,56 @@
     </div>
 </div><!-- End bd -->
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                Sei sicuro di voler effettuare la rimozione di <%=idPianta%>?
+            </div>
+            <div class="modal-footer">
+                <button id="closeModal" class="btn-reed" data-bs-dismiss="modal" onclick="closeModal()">No</button>
+                <form id="rimuoviPianta" action="RimuoviPiantaServlet" method="post">
+                    <button value="<%=idPianta%>" id="summit" name="Rimuovi" class="btn-green">
+                        <a style="text-decoration: none; ">Conferma</a>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        $("#alrt").hide();
+
+        $("#summit").click(function(){
+            $("#rimuoviPianta").submit();
+        });
+
+        $("#showModal").click(function() {
+            if ($('#chk:checked').length == 0) {
+                $("#alrt").fadeIn();
+                return false;
+            }
+            else {
+                $("#alrt").fadeOut();
+                $('#Modal').modal('toggle');
+            }
+        });
+
+        $("#closeModal").click(function(){
+            $('#Modal').modal('hide')
+        });
+    });
+
+    function closeModal() {
+        $("#exampleModal").modal("hide");
+    }
+
+</script>
 <%@include file="fragments/footer.html" %>
 </body>
 </html>
