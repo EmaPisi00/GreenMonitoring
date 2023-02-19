@@ -130,7 +130,7 @@
 <div class="container py-2">
     <div class="row justify-content-center">
         <div class="col-3">
-            <button onclick="location.href='ModificaProfilo.jsp.jsp'" type="button"
+            <button onclick="location.href='ModificaProfilo.jsp'" type="button"
                     class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
                     data-target="#exampleModalCenter">
                 Modifica Profilo

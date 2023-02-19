@@ -30,6 +30,33 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <link href="bootstrap-5.2.3-dist/css/testCSS.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .btn-green {
+            color: rgb(255, 255, 255);
+            background-color: darkseagreen;
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 10px;
+            font-size: 26px;
+            font-family: 'Anton', sans-serif;
+        }
+        .btn-green:hover{
+            color: darkseagreen;
+            background-color: rgb(255, 255, 255);
+        }
+        .btn-reed {
+            color: rgb(255, 255, 255);
+            background-color: #ec084c;
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 10px;
+            font-size: 26px;
+            font-family: 'Anton', sans-serif;
+        }
+        .btn-reed:hover{
+            color: #ec084c;;
+            background-color: rgb(255, 255, 255);
+        }
+    </style>
 </head>
 <title>Modifica Profilo</title>
 <% UtenteBean user= (UtenteBean) request.getSession().getAttribute("currentUserSession");
@@ -56,7 +83,7 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="C:\Users\stefa\IdeaProjects\GreenMonitoring\src\main\webapp\img\logo.png"><span class="font-weight-bold">GreenMonitoring</span></div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="img/logo.png"><span class="font-weight-bold">GreenMonitoring</span></div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
@@ -65,30 +92,30 @@
                 </div>
                 <form id="GestioneProfilo" action="ModificaProfiloServlet" method="post">
                     <div class="row mt-2">
-                        <label>Email</label>
+                        <label class="text-center">Email</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"   id="email" name="email"  placeholder="null">
                             <label for="email"><%= user.getEmail() %></label>
                         </div>
 
-                        <label>Password</label>
+                        <label class="text-center">Password</label>
                         <div class="form-floating mb-3">
                             <input type="tex" class="form-control" id="password" name="password" placeholder="null">
                             <label for="password"> <%= user.getPassword()%> </label>
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <label>Telefono</label>
+                        <label class="text-center">Telefono</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"   id="telefono" name="telefono"  placeholder="null">
                             <label for="telefono"><%= user.getTelefono() %></label>
                         </div>
-                        <label>Citta'</label>
+                        <label class="text-center">Citta'</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"  id="citta" name="citta"  placeholder="null">
                             <label for="citta"><%= user.getCitta() %></label>
                         </div>
-                        <label>Provincia</label>
+                        <label class="text-center">Provincia</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control" id="provincia" name="provincia"  placeholder="null">
                             <label for="provincia"><%= user.getProvincia() %></label>
@@ -102,12 +129,12 @@
 
                         <%  if (user instanceof DipendenteBean)  {%>
                     <div class="row">
-                        <label>Nome</label>
+                        <label class="text-center">Nome</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control" id="nome" name="nome"  placeholder="null">
                             <label for="nome"><%= ((DipendenteBean) user).getNome() %></label>
                         </div>
-                        <label>Cognome</label>
+                        <label class="text-center">Cognome</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"  id="cognome" name="cognome"  placeholder="null">
                             <label for="cognome"><%= ((DipendenteBean) user).getCognome() %></label>
@@ -116,27 +143,63 @@
                     </div>
                         <% } else if (user instanceof AziendaBean) { %>
                     <div class="row">
-                        <label>Nome Azienda</label>
+                        <label class="text-center">Nome Azienda</label>
                         <div class="form-floating col mb-3 ">
                             <input type="text" class="form-control" id="Nome_azienda" name="Nome_azienda"  placeholder="null">
                             <label for="Nome_azienda"><%= ((AziendaBean) user).getNome_azienda()  %></label>
                         </div>
-                        <label>Partita Iva</label>
+                        <label class="text-center">Partita Iva</label>
                         <div class="form-floating col mb-3 ">
                             <input type="text" class="form-control"  id="partita_iva" name="partita_iva"  placeholder="null">
                             <label for="partita_iva"><%= ((AziendaBean) user).getPartita_iva() %></label>
                         </div>
                     </div>
                         <% } %>
-                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
-                </div>
+                    <button class="btn-green" type="submit" id="save-profile-btn">Save Profile</button>
+            </div>
             </form>
         </div>
     </div>
 </div>
 </div>
 
+<!--MODAL-->
+<div class="modal" id="confirm-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Conferma operazione</h5>
+            </div>
+            <div class="modal-body">
+                Sei sicuro di voler salvare il profilo?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-reed" onclick="closeModal()">Annulla</button>
+                <button type="button" class="btn-green" id="confirm-save-btn">Conferma</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+<script>
+    $(document).ready(function() {
+        $('#save-profile-btn').click(function(e) {
+            e.preventDefault(); // previene l'invio del form
+            $('#confirm-modal').modal('show'); // mostra il modal di conferma
+        });
+
+        $('#confirm-save-btn').click(function() {
+            $('#confirm-modal').modal('hide'); // nasconde il modal di conferma
+            $('#GestioneProfilo').submit(); // invia i dati al server
+        });
+    });
+
+    function closeModal() {
+        $("#confirm-modal").modal("hide");
+    }
+
+</script>
 <%@include file="fragments/footer.html"%>
 </body>
 </html>
