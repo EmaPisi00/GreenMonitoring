@@ -66,13 +66,12 @@
 </div>
 <%}%>
 
-<div class="bd py-5">
+<div class="bd py-5 ">
     <h3 class="display-3 text-center">Piante</h3>
     <form id="visualizza_piante" action="RimuoviPiantaServlet" method="post">
         <div class="container py-5">
             <div class="row">
                 <div class="col-14 py-5">
-
                     <table class="table table-group-divider">
                         <thead>
                         <tr  style="font-family: 'Staatliches', cursive; font-size: 20px;">
