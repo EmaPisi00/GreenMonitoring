@@ -84,7 +84,7 @@
     <p><%=request.getAttribute("descrizione")%></p>
 </div>
 <%}%>
-<div class="bd">
+<div class="bd" >
     <div id="alrt" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>
     </div>
@@ -99,10 +99,10 @@
         }
     %>
 
-    <div class="container py-5">
+    <div class="container py-5" style="width: 100%; height: 100%; ">
         <div class="row">
             <div class="col-12 text-center">
-                <h3 class="display-3 text-center">Terreni Presenti</h3>
+                <h5 class="display-3 text-center">Terreni Presenti</h5>
             </div>
             <div class="col-14 py-5">
                 <table class="table table-group-divider">
