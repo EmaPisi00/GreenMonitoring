@@ -63,7 +63,7 @@
 <% }%>
 
 
-<div class="bd">
+<div class="bd" style="width: 100%; height: 100%; ">
   <legend style="text-align:center;">Aggiungi una coltivazione</legend>
   <%
     /* Stampa il form per inserire la coltivazione solo se ad accedere alla pagina è un'azienda */
