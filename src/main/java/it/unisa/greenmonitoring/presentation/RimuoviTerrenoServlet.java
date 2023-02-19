@@ -14,7 +14,9 @@ import java.io.IOException;
 public class RimuoviTerrenoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
+            response.sendError(401);
+        }
 
         String action = request.getParameter("action");
         TerrenoManager terrenoManager = new TerrenoManager();
@@ -26,7 +28,7 @@ public class RimuoviTerrenoServlet extends HttpServlet {
             if (action != null && action.equalsIgnoreCase("delete")) {
 
                 int idTerreno = Integer.parseInt(request.getParameter("id"));
-                terrenoManager.rimuoviTerreno(idTerreno);
+                terrenoManager.rimuoviTerreno(idTerreno, user.getEmail());
                 response.sendRedirect("Terreni.jsp");
             }
         } else {

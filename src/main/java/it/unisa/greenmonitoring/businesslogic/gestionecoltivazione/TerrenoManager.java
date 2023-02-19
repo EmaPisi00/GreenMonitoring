@@ -61,6 +61,7 @@ public class TerrenoManager {
             return td.retrieveByKey(id_terreno);
     }
 
+
     /**
      * Metodo usato per rimuovere un terreno.
      * @param id_terreno
@@ -68,14 +69,13 @@ public class TerrenoManager {
      * @post la relazione tra t e la coltivazione nel database non esiste più.
      * @return true se e solo se la rimozione avviene con successo.
      */
-    public boolean rimuoviTerreno(int id_terreno) {
+    public boolean rimuoviTerreno(int id_terreno, String idAzienda) {
         try {
-            System.out.println("[TerrenoManager] - retrieveColtivazioneSingola -" + coltivazioneManager.retrieveColtivazioneSingola(id_terreno).getTerreno());
-            if (coltivazioneManager.retrieveColtivazioneSingola(id_terreno).getTerreno() == null) {
+            if (coltivazioneManager.visualizzaStatoColtivazioni(idAzienda).stream().anyMatch(o -> o.getTerreno() == id_terreno)) {
+                return false;
+            } else {
                 td.deleteTerreno(id_terreno);
                 return true;
-            } else {
-                return false;
             }
         } catch (SQLException e) {
             return false;

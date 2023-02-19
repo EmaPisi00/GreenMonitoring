@@ -17,6 +17,15 @@
     <!-- Import css -->
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
+    <script>
+        window.onload = function (){
+            var items = document.getElementsByClassName("list-group-item");
+            if (items.length > 3){
+                document.getElementById("overFlow").style.overflow = "scroll";
+            }
+
+        }
+    </script>
     <style>
         #umiditaChartCanvas {
             width: 500px;
@@ -49,7 +58,6 @@
             #overFlow{
                 width: 300px;
                 height: 180px;
-                overflow: scroll;
             }
         }
 

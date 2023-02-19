@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Enumeration;
 
 @WebServlet(name = "TerrenoServlet", value = "/TerrenoServlet")
 @MultipartConfig
@@ -122,20 +121,6 @@ public class TerrenoServlet extends HttpServlet {
                     dispatcher.forward(request, response);
                 }
             }
-        } else if (request.getParameter("inserisciTerreno_submit") == null) {
-            Enumeration<String> parameters = request.getParameterNames();
-            TerrenoBean temporaryTerrenoBean = new TerrenoBean();
-            boolean result = false;
-            while (parameters.hasMoreElements()) {
-                int id = Integer.parseInt(request.getParameter(parameters.nextElement()));
-                result = tm.rimuoviTerreno(id);
-                if (!result) {
-                    temporaryTerrenoBean = tm.restituisciTerrenoDaInt(id);
-                    request.getSession().setAttribute("terrenoOccupato", " Il terreno " + temporaryTerrenoBean.getNome() + " è impegnato con una coltivazione.");
-                    break;
-                }
-            }
-            response.sendRedirect("Terreni.jsp");
         }
        //response.sendRedirect("index.jsp");
     }
