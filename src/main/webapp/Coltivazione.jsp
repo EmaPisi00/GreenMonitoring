@@ -200,9 +200,10 @@
             </div>
         </div>
         <div class="col d-flex align-items-center">
-            <h7>
-                <button class="btn btn-danger" id="archivia-coltivazione" disabled>Archivia Coltivazione</button>
-            </h7>
+                <form id="archiviaColtivazione" method="POST" action="ArchiviaColtivazioneServlet">
+                    <input type="hidden" name="coltivazione" value="<%=coltivazioneID%>">
+                <button type="submit" class="btn btn-danger" id="archivia-coltivazione">Archivia Coltivazione</button>
+                </form>
         </div>
         <br>
         <!-- lista dei sensori e form rimuovi sensore -->

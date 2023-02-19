@@ -124,7 +124,7 @@
                         <td><%=cb.getId()%></td>
                         <%if (cb.getStato_archiviazione() == 1)
                         {%>
-                        (Archiviata)
+                        <h7>(Archiviata)</h7>
                         <% }%>
                         <td class="tohide">
                             <%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getNome()%></td>

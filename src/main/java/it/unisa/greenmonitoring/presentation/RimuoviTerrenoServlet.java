@@ -14,7 +14,7 @@ import java.io.IOException;
 public class RimuoviTerrenoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
+        if (!(request.getSession().getAttribute("currentUserSession") instanceof AziendaBean)) {
             response.sendError(401);
         }
 

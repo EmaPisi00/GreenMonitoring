@@ -110,7 +110,33 @@ public class ColtivazioneDAOImpl implements ColtivazioneDAO {
     }
 
     @Override
-    public void updateColtivazione(String id_coltivazione) throws SQLException {
+    public void updateColtivazione(ColtivazioneBean coltivazioneBean) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        String update = "UPDATE coltivazione SET pianta = ?, terreno = ?, stato_archiviazione = ?, data_inizio = ?, data_fine = ? WHERE id = ?;";
+        try {
+            connection = ConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement(update);
+            preparedStatement.setInt(1, coltivazioneBean.getPianta());
+            preparedStatement.setInt(2, coltivazioneBean.getTerreno());
+            preparedStatement.setByte(3, coltivazioneBean.getStato_archiviazione());
+            preparedStatement.setDate(4, coltivazioneBean.getData_inizio());
+            preparedStatement.setDate(5, coltivazioneBean.getData_fine());
+            preparedStatement.setInt(6, coltivazioneBean.getId());
+
+            preparedStatement.executeUpdate();
+            connection.commit();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
     }
 
     @Override

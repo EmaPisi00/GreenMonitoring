@@ -60,6 +60,7 @@ public class SensoreManager {
      */
     public void cancellaAssociazioneSensore(SensoreBean sensore) {
         try {
+            sensore.setColtivazione(null);
             sns.update(sensore.getId(), sensore);
         } catch (SQLException e) {
             throw new RuntimeException(e);

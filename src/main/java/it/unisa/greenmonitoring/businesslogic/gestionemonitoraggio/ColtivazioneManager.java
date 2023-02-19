@@ -167,8 +167,12 @@ public class ColtivazioneManager {
      * @param id
      * @return coltivazioneBean
      */
-    public ColtivazioneBean retrieveColtivazioneSingola(int id) throws SQLException {
-        return cd.retrieveByKey(id);
+    public ColtivazioneBean retrieveColtivazioneSingola(int id)  {
+        try {
+            return cd.retrieveByKey(id);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     /**
@@ -188,5 +192,16 @@ public class ColtivazioneManager {
 
     public ArrayList<FisiopatieBean> visualizzaFisiopatie() throws SQLException {
         return fisiopatieDAO.retrieveAll();
+    }
+    /**
+     * Questo metodo aggiorna una coltivazione.
+     */
+    public boolean aggiornaColtivazione(ColtivazioneBean coltivazioneBean) {
+        try {
+            cd.updateColtivazione(coltivazioneBean);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }

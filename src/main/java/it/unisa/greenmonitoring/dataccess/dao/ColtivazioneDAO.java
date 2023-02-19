@@ -30,10 +30,10 @@ public interface ColtivazioneDAO {
 
     /**
      * Questo metodo aggiorna un record nella tabella coltivazione.
-     * @param id_coltivazione
+     * @param coltivazioneBean
      * @throws SQLException
      */
-    void updateColtivazione(String id_coltivazione) throws SQLException;
+    void updateColtivazione(ColtivazioneBean coltivazioneBean) throws SQLException;
 
     /**
      * Questo metodo distrugge un record nella tabella coltivazione.
