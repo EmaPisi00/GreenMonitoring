@@ -37,78 +37,74 @@
     }
 
 %>
-<div class="container py-5 h100">
+<div class="container py-5 h100" style="width: 65%">
     <div class="row justify-content-center align-items-center h-100" style="width: 100%;">
         <h3 class="display-3 text-center py-5">Registrazione Dipendente</h3>
         <div class="card text-black"
              style="border-radius: 1rem; border: 2px solid green; font-size:  22px;">
             <form class="row g-3 " style="font-family: 'Lora', serif; " action="RegistrazioneDipendenteServlet" method="get">
 
-                <div class="col-md-6 ">
+                <div class="col-md-12 ">
                     <div class="form-outline form-white mb-4">
                         <label for="inputNome" class="form-label">Nome</label>
-                        <input type="text" class="form-control border-secondary"  id="inputNome" placeholder="emanuele"
+                        <input type="text" style=" background-color: rgb(208, 213, 218);" class="form-control border-secondary"  id="inputNome" placeholder="emanuele"
                                name="inputNome" required=""/>
                     </div>
                 </div>
-                <div class="col-md-6 ">
+                <div class="col-md-12 ">
                     <div class="form-outline form-white mb-4">
                         <label for="inputCognome" class="form-label">Cognome</label>
-                        <input type="text" class="form-control border-secondary" id="inputCognome"
+                        <input type="text" style=" background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="inputCognome"
                                placeholder="Pisaturo" name="inputCognome" required=""/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-outline form-white mb-4">
                         <label for="inputEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control border-secondary" id="inputEmail" placeholder="emanuele@x.com"
+                        <input type="email" style=" background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="inputEmail" placeholder="emanuele@x.com"
                                name="inputEmail" required=""/>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputEmail" class="form-label">Conferma Email</label>
-                    <input type="email" class="form-control border-secondary" id="confermaInputEmail" placeholder="emanuele@x.com"
-                           name="confermaInputEmail" required=""/>
                 </div>
                 <div class="col-6">
                     <div class="form-outline form-white mb-4">
                         <label for="inputPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control border-secondary" id="inputPassword" placeholder="*****"
+                        <input type="password" style=" background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="inputPassword" placeholder="*****"
                                name="inputPassword" required=""/>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-outline form-white mb-4">
                         <label for="inputPassword" class="form-label">Conferma Password</label>
-                        <input type="password" class="form-control border-secondary" id="confermaInputPassword" placeholder="*****"
+                        <input type="password" style=" background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="confermaInputPassword" placeholder="*****"
                                name="confermaInputPassword" required=""/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label for="inputProvincia" class="form-label">Provincia</label>
-                    <input type="text" class="form-control border-secondary" id="inputProvincia" placeholder="Napoli" required=""
+                    <input type="text" style=" background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="inputProvincia" placeholder="Napoli" required=""
                            name="inputProvincia"/>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-outline form-white mb-4">
                         <label for="inputTelefono" class="form-label">Telefono</label>
-                        <input type="text" class="form-control border-secondary" id="inputTelefono" placeholder="3457257849"
+                        <input type="text" style=" background-color: rgb(208, 213, 218);" class="form-control border-secondary" id="inputTelefono" placeholder="3457257849"
                                required="" name="inputTelefono"/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-outline form-white mb-4">
-                        <label for="inputIndirizzo" class="form-label">Indirizzo</label>
+                        <label for="inputIndirizzo"  class="form-label">Indirizzo</label>
                         <input
                                 type="text"
                                 class="form-control border-secondary"
                                 id="inputIndirizzo"
                                 placeholder="Via Roma 13"
                                 required=""
+                                style=" background-color: rgb(208, 213, 218);"
                                 name="inputIndirizzo"
                         /></div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-outline form-white mb-4">
                         <label for="inputCitta" class="form-label">Citta</label>
                         <input
@@ -117,6 +113,7 @@
                                 id="inputCitta"
                                 placeholder="Salerno"
                                 required=""
+                                style=" background-color: rgb(208, 213, 218);"
                                 name="inputCitta"
                         />
                     </div>
