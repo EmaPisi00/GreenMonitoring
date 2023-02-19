@@ -62,7 +62,11 @@
 <%@include file="fragments/headerLogin.html"%>
 <% }%>
 
-
+<%
+  if (!(u instanceof AziendaBean)) {
+    response.sendRedirect("error.jsp");
+    return;
+  }%>
 <div class="bd" style="width: 100%; height: 100%; ">
   <legend style="text-align:center;">Aggiungi una coltivazione</legend>
   <%
