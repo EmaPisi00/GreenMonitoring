@@ -53,12 +53,12 @@ public class AssociazioneServlet extends HttpServlet {
         if (user instanceof DipendenteBean) {
             if (((DipendenteBean) user).getAzienda() != null) { //controlla se l'utente è già associato
                 request.setAttribute("errore", "1");
-                request.setAttribute("descrizione", "descrizione...");
+                request.setAttribute("descrizione", "Sei gia' associato.");
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Associazione.jsp");
                 dispatcher.forward(request, response);
             } else if (!(codiceAzienda.matches("^\\w{8}$"))) { //stringa di 8 char, es: ASDdd234
                 request.setAttribute("errore", "2");
-                request.setAttribute("descrizione", "descrizione...");
+                request.setAttribute("descrizione", "Il codice non rispetta il formato.");
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Associazione.jsp");
                 dispatcher.forward(request, response);
             } else {
@@ -68,7 +68,7 @@ public class AssociazioneServlet extends HttpServlet {
                         dispatcher.forward(request, response);
                     } else {
                         request.setAttribute("errore", "3");
-                        request.setAttribute("descrizione", "non combacia");
+                        request.setAttribute("descrizione", "Il codice inserito non appartiene a nessuna azienda.");
                         RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Associazione.jsp");
                         dispatcher.forward(request, response);
                     }
