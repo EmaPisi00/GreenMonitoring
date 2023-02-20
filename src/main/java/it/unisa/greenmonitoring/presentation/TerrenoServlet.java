@@ -52,7 +52,7 @@ public class TerrenoServlet extends HttpServlet {
 
             Float latitudine;
             Float longitudine;
-            Float superficie;
+            Float superfice;
             try {
                 latitudine = Float.parseFloat(request.getParameter("latitudine"));
             } catch (NumberFormatException num) {
@@ -72,15 +72,15 @@ public class TerrenoServlet extends HttpServlet {
                 return;
             }
             try {
-                superficie = Float.parseFloat(request.getParameter("superficie"));
+                superfice = Float.parseFloat(request.getParameter("superfice"));
             } catch (NumberFormatException num) {
                 request.setAttribute("errore", "3");
-                request.setAttribute("descrizione", "Errore nel formato della superficie. Controlla l'info");
+                request.setAttribute("descrizione", "Errore nel formato della superfice. Controlla l'info");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
                 dispatcher.forward(request, response);
                 return;
             }
-            TerrenoBean terreno = new TerrenoBean(nome, latitudine, longitudine, superficie, imageData, azienda);
+            TerrenoBean terreno = new TerrenoBean(nome, latitudine, longitudine, superfice, imageData, azienda);
             System.out.println(terreno);
             if (!terreno.getNome().matches("^[a-zA-Z0-9 ]{3,30}")) {
                 request.setAttribute("errore", "4");
