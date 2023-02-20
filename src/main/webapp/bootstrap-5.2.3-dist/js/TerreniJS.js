@@ -1,4 +1,5 @@
-$(document).ready(function() {
+
+/*$(document).ready(function() {
 
     $("#alrt").hide();
 
@@ -21,4 +22,4 @@ $(document).ready(function() {
         $('#exampleModal').modal('hide');
         $("#alrt").hide();
     });
-});
+});*/

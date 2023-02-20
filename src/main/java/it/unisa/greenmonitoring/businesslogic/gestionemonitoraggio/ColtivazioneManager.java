@@ -110,9 +110,9 @@ public class ColtivazioneManager {
     public ArrayList<ColtivazioneBean> visualizzaColtivazioniAvviate(String id_azienda) {
         cd = new ColtivazioneDAOImpl();
         ArrayList<ColtivazioneBean> l = new ArrayList<>();
-            cd.retrieveColtivazione(id_azienda).stream()
-                    .filter(o -> o.getStato_archiviazione() == this.stato_coltivazione_avviata)
-                    .forEach(o -> l.add(o));
+        cd.retrieveColtivazione(id_azienda).stream()
+                .filter(o -> o.getStato_archiviazione() == this.stato_coltivazione_avviata)
+                .forEach(o -> l.add(o));
         return l;
     }
     /**
