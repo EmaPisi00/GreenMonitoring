@@ -16,7 +16,10 @@ import java.sql.SQLException;
 
 @WebServlet(name = "AssociazioneServlet", value = "/AssociazioneServlet")
 public class AssociazioneServlet extends HttpServlet {
-
+    /**
+     * UtenteManager.
+     */
+    private UtenteManager utenteManager = new UtenteManager();
     /** Non lo so, l'ha messa intellij sta roba sotto.
     */
     public AssociazioneServlet() throws SQLException {
@@ -44,8 +47,6 @@ public class AssociazioneServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //
-        UtenteManager utenteManager = new UtenteManager();
         String codiceAzienda = request.getParameter("codiceAzienda");
         HttpSession session = request.getSession();
         UtenteBean user = (UtenteBean) session.getAttribute("currentUserSession");
@@ -54,22 +55,23 @@ public class AssociazioneServlet extends HttpServlet {
             if (((DipendenteBean) user).getAzienda() != null) { //controlla se l'utente è già associato
                 request.setAttribute("errore", "1");
                 request.setAttribute("descrizione", "descrizione...");
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Associazione.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Associazione.jsp");
                 dispatcher.forward(request, response);
             } else if (!(codiceAzienda.matches("^\\w{8}$"))) { //stringa di 8 char, es: ASDdd234
                 request.setAttribute("errore", "2");
                 request.setAttribute("descrizione", "descrizione...");
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Associazione.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Associazione.jsp");
                 dispatcher.forward(request, response);
             } else {
                 try {
                     if (utenteManager.associazioneDipendente((DipendenteBean) user, codiceAzienda)) {
-                        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Profile.jsp");
+                        request.setAttribute("errore", "4");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/Profile.jsp");
                         dispatcher.forward(request, response);
                     } else {
                         request.setAttribute("errore", "3");
-                        request.setAttribute("descrizione", "non combacia");
-                        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Associazione.jsp");
+                        request.setAttribute("descrizione", "L'azienda associata a quel codice non esiste");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/Associazione.jsp");
                         dispatcher.forward(request, response);
                     }
                 } catch (SQLException e) {
