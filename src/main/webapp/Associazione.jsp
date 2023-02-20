@@ -72,7 +72,7 @@
                 %>
                 <br>
                 <!-- Button trigger modal -->
-                <button id="showModal" type="submit" class="btn btn-outline-success btn-lg px-3" data-toggle="Modal"
+                <button id="showModal" type="submit" disabled="disabled" class="btn btn-outline-success btn-lg px-3" data-toggle="Modal"
                         data-target="#exampleModalCenter">
                     Associa
                 </button>
@@ -124,12 +124,12 @@
                             $("#nomeAzienda").html(object["nome"]);
                             $("#indirizzoAzienda").html(object["indirizzo"]);
                             $("#provinciaAzienda").html(object["provincia"]);
-                            //$("#showModal").removeAttr("disabled");
+                            $("#showModal").removeAttr("disabled");
                             $("#showModal").attr("type","button")
                         }
                         else
                         {
-                            //$("#showModal").removeAttr("disabled");
+                            $("#showModal").removeAttr("disabled");
                             $("#showModal").attr("type", "submit");
                         }
                     }
