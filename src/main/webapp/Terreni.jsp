@@ -38,7 +38,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-    <script src="bootstrap-5.2.3-dist/js/TerreniJS.js"></script>
+
     <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -85,9 +85,6 @@
 </div>
 <%}%>
 <div class="bd" >
-    <div id="alrt" class="alert alert-warning fade show" role="alert">
-        <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>
-    </div>
     <%if (session.getAttribute("terrenoOccupato") != null) {%>
     <div id="alrtTerreno" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1"><%=session.getAttribute("terrenoOccupato")%>
@@ -189,8 +186,8 @@
                 Sei sicuro di voler effettuare la rimozione?
             </div>
             <div class="modal-footer">
-                <button id="closeModal" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button id="summit" class="btn btn btn-outline-danger"><a style="text-decoration: none; "
+                <button class="btn btn-secondary close" data-bs-dismiss="modal">No</button>
+                <button type="submit" class="btn btn btn-outline-danger"><a style="text-decoration: none; "
                                                                           href="RimuoviTerrenoServlet?action=delete&id=<%= terrenoBean.getId()%>">Conferma</a>
                 </button>
             </div>

@@ -1,4 +1,5 @@
-$(document).ready(function() {
+
+/*$(document).ready(function() {
 
     $("#alrt").hide();
 
@@ -18,6 +19,7 @@ $(document).ready(function() {
         });
 
     $("#closeModal").click(function(){
-        $('#Modal').modal('hide')
+        $('#exampleModal').modal('hide');
+        $("#alrt").hide();
     });
-});
+});*/
