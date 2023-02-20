@@ -24,6 +24,63 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        #image-preview {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+        .input-info-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .info-wrapper {
+            position: relative;
+            margin-left: -10px;
+        }
+
+        .info-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border: none;
+            background-color: transparent;
+            color: #333;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .info-btn:hover {
+            color: #ff0044;
+        }
+
+        .info-text {
+            position: absolute;
+            top: 50%;
+            left: calc(100% + 10px);
+            transform: translateY(-50%);
+            background-color: #ff0044;
+            color: #fff;
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+            width: 250px;
+        }
+
+        .info-btn:hover + .info-text,
+        .info-text:hover {
+            opacity: 1;
+            visibility: visible;
+        }
+
+    </style>
 </head>
 
 
@@ -48,66 +105,127 @@
 <% if (request.getAttribute("errore") != null) {%>
 <div class="alert alert-danger">
     <h3>Errore</h3>
-    <p><%=request.getAttribute("descrizione")%>
+    <p><%=request.getAttribute("descrizione")%> <i class="bi bi-info-circle"></i>
     </p>
 </div>
 <%}%>
 
-<div class="container py-5 w-100 h-100" >
-    <div class="row justify-content-center">
-        <div class="col-12 ">
-            <h3 class="display-3 text-center">Inserisci un Terreno</h3>
-        </div>
-        <div class="col-6">
-                <form id="inserisci_terreno" action="TerrenoServlet" method="post" enctype="multipart/form-data"
-                      class="needs-validation">
 
+<% if (errore != null) { %>
+<div class="text-danger"><%= errore%>
+</div>
+<% } %>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Inserisci Terreno</h4>
+                </div>
+                <form id="inserisciTerreno_submit" action="TerrenoServlet" method="post" enctype="multipart/form-data">
                     <input type="text" id="azienda" name="azienda" value="<%=u.getEmail()%>" style="display: none">
-                    <% if (errore != null) { %>
-                    <div class="text-danger"><%= errore%>
-                    </div>
-                    <% } %>
 
-                    <div>
-                        <label for="nome" class="text-left-label">nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserisci nome"
-                               required>
-                    </div>
-
-                    <div>
-                        <label for="latitudine" class="text-left-label">latitudine</label>
-                        <input type="text" class="form-control" id="latitudine" name="latitudine"
-                               placeholder="Inserisci latitudine" required>
+                    <div class="mb-3">
+                        <label class="text-center">Nome terreno</label>
+                        <div class="input-info-wrapper">
+                            <input type="text" class="form-control border-2" id="nome" name="nome" required placeholder="">
+                            <div class="info-wrapper">
+                                <button class="info-btn btn">
+                                    <i class="bi bi-info-circle"></i>
+                                </button>
+                                <span class="info-text">Il nome deve contenere almeno 3 caratteri e massimo 30</span>
+                            </div>
+                        </div>
                     </div>
 
 
-                    <div>
-                        <label for="longitudine" class="form-label">longitudine:</label>
-                        <input type="text" class="form-control" id="longitudine" name="longitudine"
-                               placeholder="Inserisci longitudine" required>
+                    <div class="mb-3">
+                        <label class="text-center">Latitudine</label>
+                        <div class="input-info-wrapper">
+                            <input type="text" class="form-control border-2" id="latitudine" name="latitudine" required placeholder="">
+                            <div class="info-wrapper">
+                                <button class="info-btn btn">
+                                    <i class="bi bi-info-circle"></i>
+                                </button>
+                                <span class="info-text">Inserire un numero compreso tra 1 e 90</span>
+                            </div>
+                        </div>
                     </div>
 
-
-                    <div>
-                        <label for="superficie" class="form-label">superficie:</label>
-                        <input type="text" class="form-control" id="superficie" name="superficie" required>
+                    <div class="mb-3">
+                        <label class="text-center">Longitudine</label>
+                        <div class="input-info-wrapper">
+                            <input type="text" class="form-control border-2" id="longitudine" name="longitudine" required placeholder="">
+                            <div class="info-wrapper">
+                                <button class="info-btn btn">
+                                    <i class="bi bi-info-circle"></i>
+                                </button>
+                                <span class="info-text">Inserire un numero compreso tra 1 e 180</span>
+                            </div>
+                        </div>
                     </div>
 
-
-                    <label for="immagine">immagine:</label>
-                    <input type="file" id="immagine" name="immagine" accept=".png, .jpg, .jpeg"><br><br>
-
-                    <div>
-                        <button class="btn btn-primary">
-                            <input type="submit" value="inserisciTerreno_submit" name="inserisciTerreno_submit">
-                        </button>
+                    <div class="mb-3">
+                        <label class="text-center">Superficie</label>
+                        <div class="input-info-wrapper">
+                            <input type="text" class="form-control border-2" id="superficie" name="superficie" required placeholder="">
+                            <div class="info-wrapper">
+                                <button class="info-btn btn">
+                                    <i class="bi bi-info-circle"></i>
+                                </button>
+                                <span class="info-text">Inserire un numero</span>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="mb-3">
+                        <label class="text-center">Immagine</label>
+                        <div class="input-info-wrapper">
+                            <label for="file-input" class="btn btn-primary bg-white">
+                                <img id="image-preview" src="img/card-image.svg" alt="Select Image">
+                            </label>
+                            <input id="file-input" name="immagine" accept=".png, .jpg, .jpeg" type="file" style="display:none;">
+                            <div class="info-wrapper">
+                                <button class="info-btn btn">
+                                    <i class="bi bi-info-circle"></i>
+                                </button>
+                                <span class="info-text">Inserire un file immagine non superiore a 3Mb</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container py-3">
+                        <div class="row justify-content-center">
+                            <div>
+                                <input type="submit" class="btn btn-outline-success btn-lg px-3" required value="inserisciTerreno_submit"
+                                       name="inserisciTerreno_submit">
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
-
+            </div>
         </div>
     </div>
 </div>
 
+
+
+
+<script>
+    const fileInput = document.getElementById("file-input");
+    const imagePreview = document.getElementById("image-preview");
+
+    fileInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            imagePreview.src = reader.result;
+        };
+    });
+</script>
 
 <%@include file="/fragments/footer.html" %>
 

@@ -94,36 +94,36 @@
                     <div class="row mt-2">
                         <label class="text-center">Email</label>
                         <div class="form-floating mb-3 ">
-                            <input type="text" class="form-control"   id="email" name="email"  placeholder="null">
-                            <label for="email"><%= user.getEmail() %></label>
+                            <input type="text" class="form-control border-2"   id="email" name="email"  placeholder="null">
+                            <label class="px-3" for="email"><%= user.getEmail() %></label>
                         </div>
 
                         <label class="text-center">Password</label>
                         <div class="form-floating mb-3">
-                            <input type="tex" class="form-control" id="password" name="password" placeholder="null">
-                            <label for="password"> <%= user.getPassword()%> </label>
+                            <input type="tex" class="form-control border-2" id="password" name="password" placeholder="null">
+                            <label class="px-3" for="password"> <%= user.getPassword()%> </label>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <label class="text-center">Telefono</label>
                         <div class="form-floating mb-3 ">
-                            <input type="text" class="form-control"   id="telefono" name="telefono"  placeholder="null">
-                            <label for="telefono"><%= user.getTelefono() %></label>
+                            <input type="text" class="form-control border-2"   id="telefono" name="telefono"  placeholder="null">
+                            <label class="px-3" for="telefono"><%= user.getTelefono() %></label>
                         </div>
                         <label class="text-center">Citta'</label>
                         <div class="form-floating mb-3 ">
-                            <input type="text" class="form-control"  id="citta" name="citta"  placeholder="null">
-                            <label for="citta"><%= user.getCitta() %></label>
+                            <input type="text" class="form-control border-2"  id="citta" name="citta"  placeholder="null">
+                            <label class="px-3" for="citta"><%= user.getCitta() %></label>
                         </div>
                         <label class="text-center">Provincia</label>
                         <div class="form-floating mb-3 ">
-                            <input type="text" class="form-control" id="provincia" name="provincia"  placeholder="null">
-                            <label for="provincia"><%= user.getProvincia() %></label>
+                            <input type="text" class="form-control border-2" id="provincia" name="provincia"  placeholder="null">
+                            <label class="px-3" for="provincia"><%= user.getProvincia() %></label>
                         </div>
-                        <label>Indirizzo</label>
+                        <label class="text-center" >Indirizzo</label>
                         <div class="form-floating mb-3 ">
-                            <input type="text" class="form-control"  id="indirizzo" name="indirizzo"  placeholder="null">
-                            <label for="indirizzo"><%= user.getIndirizzo() %></label>
+                            <input type="text" class="form-control border-2"  id="indirizzo" name="indirizzo"  placeholder="null">
+                            <label class="px-3" for="indirizzo"><%= user.getIndirizzo() %></label>
                         </div>
                     </div>
 
@@ -131,13 +131,13 @@
                     <div class="row">
                         <label class="text-center">Nome</label>
                         <div class="form-floating mb-3 ">
-                            <input type="text" class="form-control" id="nome" name="nome"  placeholder="null">
-                            <label for="nome"><%= ((DipendenteBean) user).getNome() %></label>
+                            <input type="text" class="form-control border-2" id="nome" name="nome"  placeholder="null">
+                            <label  class="px-3" for="nome"><%= ((DipendenteBean) user).getNome() %></label>
                         </div>
                         <label class="text-center">Cognome</label>
                         <div class="form-floating mb-3 ">
-                            <input type="text" class="form-control"  id="cognome" name="cognome"  placeholder="null">
-                            <label for="cognome"><%= ((DipendenteBean) user).getCognome() %></label>
+                            <input type="text" class="form-control border-2"  id="cognome" name="cognome"  placeholder="null">
+                            <label class="px-3" for="cognome"><%= ((DipendenteBean) user).getCognome() %></label>
                         </div>
                             <input type="hidden" class="form-control"  id="Nome_aziendaDipendente" name="Nome_aziendaDipendente" value="<%= ((DipendenteBean) user).getAzienda() %>"  placeholder="null">
                     </div>
@@ -145,13 +145,13 @@
                     <div class="row">
                         <label class="text-center">Nome Azienda</label>
                         <div class="form-floating col mb-3 ">
-                            <input type="text" class="form-control" id="Nome_azienda" name="Nome_azienda"  placeholder="null">
-                            <label for="Nome_azienda"><%= ((AziendaBean) user).getNome_azienda()  %></label>
+                            <input type="text" class="form-control border-2" id="Nome_azienda" name="Nome_azienda"  placeholder="null">
+                            <label class="px-3" for="Nome_azienda"><%= ((AziendaBean) user).getNome_azienda()  %></label>
                         </div>
                         <label class="text-center">Partita Iva</label>
                         <div class="form-floating col mb-3 ">
-                            <input type="text" class="form-control"  id="partita_iva" name="partita_iva"  placeholder="null">
-                            <label for="partita_iva"><%= ((AziendaBean) user).getPartita_iva() %></label>
+                            <input type="text" class="form-control border-2"  id="partita_iva" name="partita_iva"  placeholder="null">
+                            <label class="px-3" for="partita_iva"><%= ((AziendaBean) user).getPartita_iva() %></label>
                         </div>
                     </div>
                         <% } %>
