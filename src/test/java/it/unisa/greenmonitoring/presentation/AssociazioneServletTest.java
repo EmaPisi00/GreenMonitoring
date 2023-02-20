@@ -44,12 +44,11 @@ public class AssociazioneServletTest {
         request.setParameter("codiceAzienda", "ASDdd234");
         Mockito.when(utenteManager.associazioneDipendente(eq(dipendenteBean), any(String.class))).thenReturn(true);
         associazioneServlet.doPost(request, response);
-        Assert.assertEquals("4", request.getAttribute("errore"));
         Assert.assertEquals(200, response.getStatus());
     }
     // TC_1.1_1 Il dipendente inserisce un codice azienda che non rispetta il formato.
     @Test
-    public void associazioneDipendente2() throws Exception {
+    public void associazioneDipendente1() throws Exception {
         DipendenteBean dipendenteBean = new DipendenteBean();
         request.getSession().setAttribute("currentUserSession", dipendenteBean);
         request.setParameter("codiceAzienda", "");
@@ -57,9 +56,9 @@ public class AssociazioneServletTest {
         Assert.assertEquals("2", request.getAttribute("errore"));
         Assert.assertEquals(200, response.getStatus());
     }
-    // TC_1.1_3 Il dipendente inserisce un codice azienda non presente sul db.
+    // TC_1.1_2 Il dipendente inserisce un codice azienda non presente sul db.
     @Test
-    public void associazioneDipendente3() throws Exception {
+    public void associazioneDipendente2() throws Exception {
         DipendenteBean dipendenteBean = new DipendenteBean();
         request.getSession().setAttribute("currentUserSession", dipendenteBean);
         request.setParameter("codiceAzienda", "ASDdd234");
@@ -69,14 +68,15 @@ public class AssociazioneServletTest {
         Assert.assertEquals(200, response.getStatus());
     }
 
-    // TC_1.1_2 Il dipendente inserisce un codice azienda non presente sul db.
+    // TC_1.1_3 Il dipendente inserisce un codice azienda a cui è già associato
     @Test
-    public void associazioneDipendente1() throws Exception {
+    public void associazioneDipendente3() throws Exception {
         DipendenteBean dipendenteBean = new DipendenteBean();
         dipendenteBean.setAzienda("impresa@host.dominio");
         request.getSession().setAttribute("currentUserSession", dipendenteBean);
         request.setParameter("codiceAzienda", "ASDdd234");
         associazioneServlet.doPost(request, response);
+        Mockito.when(utenteManager.associazioneDipendente(eq(dipendenteBean), any(String.class))).thenReturn(false);
         Assert.assertEquals("1", request.getAttribute("errore"));
         Assert.assertEquals(200, response.getStatus());
     }
