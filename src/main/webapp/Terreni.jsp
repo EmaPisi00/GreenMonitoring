@@ -85,9 +85,6 @@
 </div>
 <%}%>
 <div class="bd" >
-    <div id="alrt" class="alert alert-warning fade show" role="alert">
-        <i class="bi bi-exclamation-triangle me-1">Selezionare almeno un terreno.</i>
-    </div>
     <%if (session.getAttribute("terrenoOccupato") != null) {%>
     <div id="alrtTerreno" class="alert alert-warning fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1"><%=session.getAttribute("terrenoOccupato")%>
