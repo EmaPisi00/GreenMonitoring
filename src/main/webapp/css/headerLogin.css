@@ -1,5 +1,5 @@
 header{
-    background-color: darkseagreen;
+    background-color: #1E6B27;
     width: 100%;
     height: 110px;
 }
@@ -42,7 +42,7 @@ header{
 
 .reg{
     color: rgb(255, 255, 255);
-    background-color: darkseagreen;
+    background-color: #1E6B27;
     border: 2px solid rgb(255, 255, 255);
     border-radius: 10px;
     font-size: 26px;
@@ -52,7 +52,7 @@ header{
 
 .log{
     color: rgb(255, 255, 255);
-    background-color: darkseagreen;
+    background-color: #1E6B27;
     border: 2px solid rgb(255, 255, 255);
     font-size: 26px;
     font-family: 'Anton', sans-serif;
@@ -61,7 +61,7 @@ header{
 }
 
 .reg:hover , .log:hover{
-    color: darkseagreen;
+    color: #1E6B27;
 
     background-color: rgb(255, 255, 255);
 }
@@ -69,7 +69,7 @@ header{
 .dropdown-item:hover  {
     color: white;
     font-family: 'Anton', sans-serif;
-    background-color: darkseagreen;
+    background-color: #1E6B27;
 }
 
 .nav-item{
@@ -96,7 +96,7 @@ header{
 }
 
 .offcanvas{
-    background: linear-gradient(to bottom,rgb(221, 203, 203) , darkseagreen);
+    background: linear-gradient(to bottom,rgb(221, 203, 203) , #1E6B27);
 }
 
 .dropdown-content a {

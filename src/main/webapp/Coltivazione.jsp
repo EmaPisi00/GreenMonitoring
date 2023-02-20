@@ -162,7 +162,7 @@
 } else {
     response.sendError(404);
 }%>
-<div class="container">
+<div class="container" style="margin-bottom: 9%">
     <div class="row">
         <div class="col">
             <div class="row text-center">
@@ -644,6 +644,7 @@
         </script>
         <script src="canvas/canvasjs.min.js"></script>
     </div>
+</div>
 </div>
     <!-- Fine coltivazioni -->
 

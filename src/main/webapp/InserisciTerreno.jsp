@@ -198,7 +198,7 @@
                     <div class="container py-3">
                         <div class="row justify-content-center">
                             <div>
-                                <input type="submit" class="btn btn-outline-success btn-lg px-3" required value="inserisciTerreno_submit"
+                                <input type="submit" class="btn btn-outline-success btn-lg px-3" required value="Inserisci"
                                        name="inserisciTerreno_submit">
                             </div>
                         </div>

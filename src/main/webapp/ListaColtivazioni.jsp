@@ -69,7 +69,7 @@
     Double resultPh = null;
     Double resultTemperatura = null;
 %>
-<div class="bd" style="width: 100%; height: 100%; ">
+<div class="bd" style="width: 100%; margin-bottom: 13% ">
     <legend style="text-align:center;">Coltivazioni</legend>
     <!-- Coltivazioni -->
     <div class="card">
@@ -103,7 +103,7 @@
             <h7>Non ci sono coltivazioni.</h7>
             <% } else { TerrenoManager terrenoManager = new TerrenoManager();
             %>
-            <ul class="list-group">
+            <ul class="list-group" style="margin-top: 10px">
                 <% for (ColtivazioneBean cb : list) {
                      %>
                 <li class="list-group-item ">
