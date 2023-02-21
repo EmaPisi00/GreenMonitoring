@@ -61,7 +61,7 @@ public class PiantaServlet extends HttpServlet {
             } catch (NumberFormatException e) {
                 System.out.println("1");
                 request.setAttribute("errore", "1");
-                request.setAttribute("descrizione", "errore ph_min formato");
+                request.setAttribute("descrizione", "Errore! Inserisci un numero in Ph minimo.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
                 return;
@@ -71,7 +71,7 @@ public class PiantaServlet extends HttpServlet {
                 ph_max = Float.parseFloat(request.getParameter("ph_max"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "2");
-                request.setAttribute("descrizione", "errore ph_max formato");
+                request.setAttribute("descrizione", "Errore! Inserisci un numero in Ph massimo.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
                 return;
@@ -81,7 +81,7 @@ public class PiantaServlet extends HttpServlet {
                 temperatura_min = Float.parseFloat(request.getParameter("temperatura_min"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "3");
-                request.setAttribute("descrizione", "errore temperatura_min formato");
+                request.setAttribute("descrizione", "Errore! Inserisci un numero in Temperatura minima.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
                 return;
@@ -91,7 +91,7 @@ public class PiantaServlet extends HttpServlet {
                 temperatura_max = Float.parseFloat(request.getParameter("temperatura_max"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "4");
-                request.setAttribute("descrizione", "errore temperatura_max formato");
+                request.setAttribute("descrizione", "Errore! Inserisci un numero in Temperatura massima.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
                 return;
@@ -101,7 +101,7 @@ public class PiantaServlet extends HttpServlet {
                umidita_min = Float.parseFloat(request.getParameter("umidita_min"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "5");
-                request.setAttribute("descrizione", "errore umidita_min formato");
+                request.setAttribute("descrizione", "Errore! Inserisci un numero in Umidità minima.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
                 return;
@@ -111,7 +111,7 @@ public class PiantaServlet extends HttpServlet {
                 umidita_max = Float.parseFloat(request.getParameter("umidita_max"));
             } catch (NumberFormatException e) {
                 request.setAttribute("errore", "6");
-                request.setAttribute("descrizione", "errore umidita_max formato");
+                request.setAttribute("descrizione", "Errore! Inserisci un numero in Umidità massima.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
                 return;
@@ -125,44 +125,44 @@ public class PiantaServlet extends HttpServlet {
             //errori
             if (!pianta.getNome().matches("^[a-zA-Z0-9 ]{3,30}")) {
                 request.setAttribute("errore", "7");
-                request.setAttribute("descrizione", "errore nome");
+                request.setAttribute("descrizione", "Errore! La lunghezza del nome deve essere maggiore di 3 e minore di 30.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
             } else if (pianta.getPh_min() <= 1 || pianta.getPh_min() >= 14 || pianta.getPh_max() <= 1 || pianta.getPh_max() >= 14) {
                 request.setAttribute("errore", "8");
-                request.setAttribute("descrizione", "errore valori range ph");
+                request.setAttribute("descrizione", "Errore! Inserisci un numero in Ph compreso tra 1 e 14.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
             } else if (pianta.getTemperatura_min() < 10 || pianta.getTemperatura_min() > 100 || pianta.getTemperatura_max() < 10 || pianta.getTemperatura_max() > 100) {
                 request.setAttribute("errore", "9");
-                request.setAttribute("descrizione", "errore valori range temperatura");
+                request.setAttribute("descrizione", "Errore! Inserisci un numero in Temperatura compreso tra 10 e 100.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
             } else if (pianta.getUmidita_min() < 1 || pianta.getUmidita_min() > 100 || pianta.getUmidita_max() < 1 || pianta.getUmidita_max() > 100) {
                  request.setAttribute("errore", "10");
-                 request.setAttribute("descrizione", "errore valori range umidità");
+                 request.setAttribute("descrizione", "Errore! Inserisci un numero in Umidità compreso tra 1 e 100.");
                  RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                  dispatcher.forward(request, response);
             } else if (!pianta.getDescrizione().matches("^[a-zA-Z0-9 ]{1,255}")) {
                 request.setAttribute("errore", "11");
-                request.setAttribute("descrizione", "errore lunghezza descrizione");
+                request.setAttribute("descrizione", "Errore! Inserisci una descrizione massima di 255 caratteri.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
             } else if (immagine.getSize() > 3145728L || immagine.getSize() <= 0) {
                 request.setAttribute("errore", "12");
-                request.setAttribute("descrizione", "errore dimensione immagine");
+                request.setAttribute("descrizione", "Errore! Inserisci un'immagine con dimensione massima 3Mb.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
             } else if (!immagine.getContentType().contains("image")) {
                 request.setAttribute("errore", "13");
-                request.setAttribute("descrizione", "errore tipo immagine");
+                request.setAttribute("descrizione", "Errore! Inserisci un'immagine del tipo (.png, .jpg, .jpeg).");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                 dispatcher.forward(request, response);
             } else {
                 if (pm.inserisciPianta(pianta) == null) {
                     // se l'inserimento nel db non è andato a buon fine.
                     request.setAttribute("errore", "14");
-                    request.setAttribute("descrizione", "errore nell'inserimento nel DB");
+                    request.setAttribute("descrizione", "errore nell'inserimento nel DB oppure il nome della pianta è già presente per questa azienda");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                     dispatcher.forward(request, response);
                 } else {

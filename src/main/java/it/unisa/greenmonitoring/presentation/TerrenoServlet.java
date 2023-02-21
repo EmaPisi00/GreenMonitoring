@@ -81,7 +81,6 @@ public class TerrenoServlet extends HttpServlet {
                 return;
             }
             TerrenoBean terreno = new TerrenoBean(nome, latitudine, longitudine, superfice, imageData, azienda);
-            System.out.println(terreno);
             if (!terreno.getNome().matches("^[a-zA-Z0-9 ]{3,30}")) {
                 request.setAttribute("errore", "4");
                 request.setAttribute("descrizione", "Errore nel nome. Controlla l'info.");

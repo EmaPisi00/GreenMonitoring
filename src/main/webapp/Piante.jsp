@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
 
-    <title>Lista Piante</title>
+    <title>Piante</title>
     <script src="./jquery/jquery-3.6.3.min.js"></script>
     <link href="/img/favicon.png" rel="icon">
     <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -70,8 +70,6 @@
 <body>
 <%
     UtenteBean u = (UtenteBean) session.getAttribute("currentUserSession");
-    System.out.println(request.getAttribute("errore"));
-    System.out.println(request.getAttribute("descrizione"));
     if (!(u instanceof AziendaBean)) {
         response.sendRedirect("error.jsp");
         return;

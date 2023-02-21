@@ -41,13 +41,6 @@ public interface AziendaDAO {
      */
     AziendaBean retrieveByCode(String codice_associazione) throws SQLException;
 
-
-    /**
-     * Metodo update che permette di modificare dati già presenti nel DB.
-     * @param utente
-     * @throws SQLException
-     */
-    void update(AziendaBean utente) throws SQLException;
     /**
      * Metodo update che permette di modificare dati già presenti nel DB anche l email.
      * @param utente

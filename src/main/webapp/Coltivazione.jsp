@@ -202,14 +202,15 @@
         <div class="col d-flex align-items-center">
                 <form id="archiviaColtivazione" method="POST" action="ArchiviaColtivazioneServlet">
                     <input type="hidden" name="coltivazione" value="<%=coltivazioneID%>">
-                <button type="submit" class="btn btn-danger" id="archivia-coltivazione">Archivia Coltivazione</button>
+                <button type="submit" class="btn btn-danger" id="archivia-coltivazione" <%if (temporaryColtivazioneBean.getStato_archiviazione() == 1)
+                { %> disabled="disabled"<% }%>>Archivia Coltivazione</button>
                 </form>
         </div>
         <br>
         <!-- lista dei sensori e form rimuovi sensore -->
         <div class="col-sm-6">
             <div class="card" style="width: auto;">
-                <h5 class="card-title" style="text-emphasis: center;">Sensori</h5>
+                <h5 class="card-title" style="text-indent: 16px;">Sensori</h5>
                 <% Object sa = session.getAttribute("currentUserSession");
                     cm = new ColtivazioneManager();
                     out.print("<ul class=\"list-group\">\n");
@@ -363,7 +364,7 @@
                                         var coltivazioneID = <%=coltivazioneID%>;
                                         var tipoSensore = "umidita"
                                             var xhr = new XMLHttpRequest();
-                                            xhr.open("POST", "ColtivazioniServlet");
+                                            xhr.open("POST", "StoricoServlet");
                                             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                             xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                             xhr.onreadystatechange = function () {
@@ -429,7 +430,7 @@
                                 var coltivazioneID = <%=coltivazioneID%>;
                                 var tipoSensore = "pH"
                                     var xhr = new XMLHttpRequest();
-                                    xhr.open("POST", "ColtivazioniServlet");
+                                    xhr.open("POST", "StoricoServlet");
                                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                     xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                     xhr.onreadystatechange = function () {
@@ -487,7 +488,7 @@
                                     var coltivazioneID = <%=coltivazioneID%>;
                                     var tipoSensore = "Temperatura"
                                         var xhr = new XMLHttpRequest();
-                                        xhr.open("POST", "ColtivazioniServlet");
+                                        xhr.open("POST", "StoricoServlet");
                                         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                         xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                         xhr.onreadystatechange = function () {
@@ -626,7 +627,7 @@
                 var tipoSensore = document.getElementById("selectSensore").value;
                 if (inputInizio != null && inputFine != null) {
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "ColtivazioniServlet");
+                    xhr.open("POST", "StoricoServlet");
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhr.send("data_inizio_periodo="+ inputInizio +"&data_fine_periodo="+ inputFine +"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                     xhr.onreadystatechange = function () {

@@ -33,6 +33,12 @@ public class PiantaManager {
      */
     public PiantaBean inserisciPianta(PiantaBean pianta) {
         try {
+            List<PiantaBean> piante = ListaPianteManager(pianta.getAzienda());
+            for (PiantaBean pianteA : piante) {
+                if (pianta.getNome().matches(pianteA.getNome())) {
+                    return null;
+                }
+            }
             pd.aggiungiPiantaPersonalizzata(pianta);
             return pianta;
         } catch (Exception e) {
@@ -48,7 +54,7 @@ public class PiantaManager {
     public List<PiantaBean> ListaPianteManager(String email) {
         List<PiantaBean> listaPiante = pd.RetriveAllPiantaDefault();
         listaPiante.addAll(pd.RetriveAllPiantaAzienda(email));
-        return (!listaPiante.isEmpty()) ? listaPiante : null;
+        return  listaPiante;
     }
     /**
      * @param emailAzienda
