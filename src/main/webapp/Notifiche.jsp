@@ -25,7 +25,7 @@
     .cursore:hover {
         background-color: lightgray;
     }
-     img {
+     #imgNotifica {
          height: 25px;
          width: auto;
          object-fit: contain;
@@ -76,7 +76,7 @@
                 out.print(
                         "" +
                                 " <div id=\"riga" + i + "\" class=\"toast-header bg-danger bg-opacity-50\">" +
-                                "      <img src=\"img/logo.png\" class=\"rounded me-2\" alt=\"...\">" +
+                                "      <img id=\"imgNotifica\" src=\"img/logo.png\" class=\"rounded me-2\" alt=\"...\">" +
                                 "      <strong class=\"me-auto\">"+ notifica.getTipo()+"</strong>" +
                                 "      <small class=\"text-muted\">" +notifica.getData() + "</small>" +
                                 "      <button class=\"m-lg-1\"onclick='showModal(\""+ i +"\",\""+notifica.getId() +"\",\""+ notifica.getTipo() + "\",\""+ notifica.getData() + "\",\""+notifica.getContenuto() + "\",\""+ notifica.getColtivazioneID() +"\")'>Leggi</button>" +

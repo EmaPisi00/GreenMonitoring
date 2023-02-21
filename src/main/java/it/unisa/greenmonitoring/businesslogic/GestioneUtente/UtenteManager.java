@@ -1,4 +1,4 @@
-package it.unisa.greenmonitoring.businesslogic.gestioneautenticazione;
+package it.unisa.greenmonitoring.businesslogic.GestioneUtente;
 
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 import it.unisa.greenmonitoring.dataccess.beans.DipendenteBean;

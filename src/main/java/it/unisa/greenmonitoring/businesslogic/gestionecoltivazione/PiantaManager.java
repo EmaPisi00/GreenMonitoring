@@ -54,7 +54,7 @@ public class PiantaManager {
     public List<PiantaBean> ListaPianteManager(String email) {
         List<PiantaBean> listaPiante = pd.RetriveAllPiantaDefault();
         listaPiante.addAll(pd.RetriveAllPiantaAzienda(email));
-        return (!listaPiante.isEmpty()) ? listaPiante : null;
+        return  listaPiante;
     }
     /**
      * @param emailAzienda

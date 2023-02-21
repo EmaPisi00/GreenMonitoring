@@ -283,10 +283,6 @@ public class AziendaDAOImpl implements AziendaDAO {
      * @param utente
      * @throws SQLException
      */
-    @Override
-    public void update(AziendaBean utente) throws SQLException {
-
-    }
 
 
     /**
