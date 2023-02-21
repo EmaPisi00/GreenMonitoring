@@ -200,11 +200,13 @@
             </div>
         </div>
         <div class="col d-flex align-items-center">
+            <%if (session.getAttribute("currentUserSession") instanceof AziendaBean) { %>
                 <form id="archiviaColtivazione" method="POST" action="ArchiviaColtivazioneServlet">
                     <input type="hidden" name="coltivazione" value="<%=coltivazioneID%>">
                 <button type="submit" class="btn btn-danger" id="archivia-coltivazione" <%if (temporaryColtivazioneBean.getStato_archiviazione() == 1)
                 { %> disabled="disabled"<% }%>>Archivia Coltivazione</button>
                 </form>
+            <%}%>
         </div>
         <br>
         <!-- lista dei sensori e form rimuovi sensore -->
@@ -244,10 +246,6 @@
                 }%>
             </div>
     </div>
-
-
-
-
 </div>
 <div class="bd mt-5">
     <!-- elenco dei tab accessibili -->
