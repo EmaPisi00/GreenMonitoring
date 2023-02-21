@@ -67,15 +67,15 @@
     response.sendRedirect("error.jsp");
     return;
   }%>
-<div class="bd" style="width: 100%; height: 100%; ">
-  <legend style="text-align:center;">Aggiungi una coltivazione</legend>
+<div class="bd py-2" style="width: 100%; height: 100%; ">
+  <h5 class="display-3 text-center py-5">Aggiungi una coltivazione</h5>
   <%
     /* Stampa il form per inserire la coltivazione solo se ad accedere alla pagina è un'azienda */
     if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
       AziendaBean ab = (AziendaBean) session.getAttribute("currentUserSession");
   %> <!-- Inserisci coltivazione -->
-  <div class="card" id="formCard">
-    <div class="card-body">
+  <div class="card py-4" id="formCard">
+    <div class="card-body ">
       <% if (request.getAttribute("errore") != null) {
       %><br>
       <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
