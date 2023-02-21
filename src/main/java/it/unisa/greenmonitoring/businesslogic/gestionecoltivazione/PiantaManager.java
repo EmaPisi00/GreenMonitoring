@@ -33,6 +33,12 @@ public class PiantaManager {
      */
     public PiantaBean inserisciPianta(PiantaBean pianta) {
         try {
+            List<PiantaBean> piante = ListaPianteManager(pianta.getAzienda());
+            for (PiantaBean pianteA : piante) {
+                if (pianta.getNome().matches(pianteA.getNome())) {
+                    return null;
+                }
+            }
             pd.aggiungiPiantaPersonalizzata(pianta);
             return pianta;
         } catch (Exception e) {

@@ -162,7 +162,7 @@ public class PiantaServlet extends HttpServlet {
                 if (pm.inserisciPianta(pianta) == null) {
                     // se l'inserimento nel db non è andato a buon fine.
                     request.setAttribute("errore", "14");
-                    request.setAttribute("descrizione", "errore nell'inserimento nel DB");
+                    request.setAttribute("descrizione", "errore nell'inserimento nel DB oppure il nome della pianta già esiste per questa azienda");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciPianta.jsp");
                     dispatcher.forward(request, response);
                 } else {
