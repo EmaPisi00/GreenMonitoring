@@ -119,7 +119,7 @@
                     </tr>
                     <tr>
                         <td>
-                        <img id="immagine" src="data:image/jpeg;base64,<%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()%>" alt="Foto coltivazione">
+                        <img id="immagine" src="data:image/jpeg;base64,<%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()%>" alt="Foto terreno">
                         </td>
                         <td><%=cb.getId()%></td>
                         <td class="tohide">

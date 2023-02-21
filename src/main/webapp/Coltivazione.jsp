@@ -178,7 +178,7 @@
                 </div>
             </div>
             <div class="row">
-                <img id="immagine" src="data:image/jpeg;base64,<%=Immagine%>" alt="Foto coltivazione">
+                <img id="immagine" src="data:image/jpeg;base64,<%=Immagine%>" alt="Foto terreno">
             </div>
             <div class="row row-cols-2">
                 <div class="col">
