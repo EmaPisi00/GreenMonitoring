@@ -76,7 +76,6 @@ public class AssociazioneServletTest {
         request.getSession().setAttribute("currentUserSession", dipendenteBean);
         request.setParameter("codiceAzienda", "ASDdd234");
         associazioneServlet.doPost(request, response);
-        Mockito.when(utenteManager.associazioneDipendente(eq(dipendenteBean), any(String.class))).thenReturn(false);
         Assert.assertEquals("1", request.getAttribute("errore"));
         Assert.assertEquals(200, response.getStatus());
     }
