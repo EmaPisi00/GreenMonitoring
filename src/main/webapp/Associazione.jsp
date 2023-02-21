@@ -77,31 +77,32 @@
                     Associa
                 </button>
                 <br>
+                <!-- Modal -->
+                <div id=Modal class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                Nome Azienda:
+                                <h5 id="nomeAzienda"></h5> <br>
+                                Indirizzo Azienda:
+                                <h5 id="indirizzoAzienda"></h5> <br>
+                                Provincia Azienda:
+                                <h5 id="provinciaAzienda"></h5> <br>
+                                Cliccare su "Conferma" per associarsi oppure su "Esci" per annullare l'operazione.
+                            </div>
+                            <div class="modal-footer">
+                                <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Esci</button>
+                                <button id="summit" type="submit" class="btn btn-primary">Conferma</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
             <br>
         </div>
     </div>
-<!-- Modal -->
-<div id=Modal class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                Nome Azienda:
-                <h5 id="nomeAzienda"></h5> <br>
-                Indirizzo Azienda:
-                <h5 id="indirizzoAzienda"></h5> <br>
-                Provincia Azienda:
-                <h5 id="provinciaAzienda"></h5> <br>
-                Cliccare su "Conferma" per associarsi oppure su "Esci" per annullare l'operazione.
-            </div>
-            <div class="modal-footer">
-                <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Esci</button>
-                <button id="summit" type="button" class="btn btn-primary">Conferma</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script type="text/javascript">
     $(document).ready(function(){

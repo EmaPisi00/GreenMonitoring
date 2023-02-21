@@ -19,15 +19,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<% UtenteBean user= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (user == null)  {
-        response.sendRedirect("error.jsp");
-    } else if(user instanceof AziendaBean){ %>
+<% UtenteBean user = (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if(user == null){ %>
+<%@include file="fragments/headerLogin.html"%>
+<% } else if (user instanceof DipendenteBean && ((DipendenteBean) user).getAzienda()!= null ) { %>
+<%@include file="/fragments/headerLoggedDipendente.html" %>
+<%} else if(user instanceof DipendenteBean && ((DipendenteBean) user).getAzienda() == null) {%>
+<%@include file="fragments/headerLoggedDipendenteNonAssociato.html"%>
+<% } else if (user instanceof AziendaBean) { %>
 <%@ include file="/fragments/headerLoggedAzienda.html" %>
-<%} else if (user instanceof DipendenteBean){ %>
-<%@ include file="/fragments/headerLoggedDipendente.html" %>
+<%}%>
 
-<% }%>
 <html>
 <body>
 <% if (request.getAttribute("conferma")!=null) {%>

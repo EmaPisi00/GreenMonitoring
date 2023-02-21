@@ -122,10 +122,6 @@
                         <img id="immagine" src="data:image/jpeg;base64,<%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()%>" alt="Foto coltivazione">
                         </td>
                         <td><%=cb.getId()%></td>
-                        <%if (cb.getStato_archiviazione() == 1)
-                        {%>
-                        <h7>(Archiviata)</h7>
-                        <% }%>
                         <td class="tohide">
                             <%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getNome()%></td>
                         <td>
@@ -167,7 +163,10 @@
                         <div class="value-status" style="background-color: <%=colorTemperatura%>"></div>
                     </td>
                     </tr>
-                </table><br>
+                </table><br><%if (cb.getStato_archiviazione() == 1)
+                {%>
+                    <h7>(Archiviata)</h7>
+                    <% }%><br><br>
                     <form action="AccediAColtivazioneServlet" method="post">
                         <input type="hidden" name="coltivazione" value="<%=cb.getId()%>">
                         <button type="submit" class="btn btn-success">Visualizza stato</button>
