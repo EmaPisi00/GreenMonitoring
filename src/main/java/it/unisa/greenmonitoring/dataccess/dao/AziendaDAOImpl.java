@@ -276,15 +276,6 @@ public class AziendaDAOImpl implements AziendaDAO {
         }
         return  azienda;
     }
-
-    /**
-     * Metodo update chee permette di modificare dati già presenti nel DB.
-     *
-     * @param utente
-     * @throws SQLException
-     */
-
-
     /**
      * Metodo update che aggiorna anche l'id dell'azienda.
      * @param utente
