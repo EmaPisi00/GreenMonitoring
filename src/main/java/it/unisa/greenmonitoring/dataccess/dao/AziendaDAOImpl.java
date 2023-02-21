@@ -278,20 +278,11 @@ public class AziendaDAOImpl implements AziendaDAO {
     }
 
     /**
-     * Metodo update chee permette di modificare dati già presenti nel DB.
-     *
-     * @param utente
-     * @throws SQLException
-     */
-
-
-    /**
      * Metodo update che aggiorna anche l'id dell'azienda.
      * @param utente
      * @param emailVecchia
      * @throws SQLException
      */
-
     public void update(AziendaBean utente, String emailVecchia) throws SQLException {
         PreparedStatement preparedStatement = null;
         String retrieveSQL = "UPDATE " + TABLE_NAME + " SET email= ?, password= ?, telefono= ?, citta= ?,"
