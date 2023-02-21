@@ -283,7 +283,6 @@ public class AziendaDAOImpl implements AziendaDAO {
      * @param emailVecchia
      * @throws SQLException
      */
-
     public void update(AziendaBean utente, String emailVecchia) throws SQLException {
         PreparedStatement preparedStatement = null;
         String retrieveSQL = "UPDATE " + TABLE_NAME + " SET email= ?, password= ?, telefono= ?, citta= ?,"
