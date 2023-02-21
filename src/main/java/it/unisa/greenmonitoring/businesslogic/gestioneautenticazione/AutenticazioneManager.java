@@ -40,6 +40,7 @@ public class AutenticazioneManager {
         AziendaBean ricercaAzienda = aziendaDao.retrieveForKey(aziendaBean.getEmail());
         if (ricercaAzienda.getEmail() != null) {
             System.out.println("Errore");
+            return null;
         }
         aziendaDao.create(aziendaBean);
         System.out.println("Inserimento fatto con successo");

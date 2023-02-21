@@ -15,6 +15,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Terreni.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/fragments/headerLogged.html" value="file://$PROJECT_DIR$/src/main/webapp/fragments" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/fragments/headerLoggedDipendente.html" value="file://$PROJECT_DIR$/src/main/webapp/fragments" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/fragments/headerLoggedDipendenteAssociato.html" value="file://$PROJECT_DIR$/src/main/webapp/fragments" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/fragments/headerLogin.html" value="file://$PROJECT_DIR$/src/main/webapp/fragments" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
       </map>

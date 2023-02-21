@@ -128,12 +128,7 @@ header{
 
 }
 
-@media screen and (min-width: 1100px) {
-
-    .logo{
-        position: fixed;
-        left: 0;
-    }
+@media screen and (min-width: 990px) {
 
     .title{
         text-align: end;
@@ -142,7 +137,6 @@ header{
         height: 10%;
         font-size: 1px;
         display:inline;
-        margin-top: 100%;
         font-family: 'Anton', sans-serif;
         color: rgb(255, 255, 255);
     }
