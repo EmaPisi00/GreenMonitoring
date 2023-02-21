@@ -31,7 +31,7 @@
 
 <body class="loginBody ">
 
-<div class="container w-50 h-100 py-5">
+<div class="container w-50 py-5" style="margin-bottom: 15%">
     <div class="row justify-content-center">
         <form method="post" action="LoginServlet"
               style="border-radius: 1rem; border: 2px solid green; font-size:  22px; ">
@@ -65,8 +65,8 @@
                 }
             %>
 
-            <div class="row justify-content-center py-5">
-                <div class="col-3 ">
+            <div>
+                <div style="display:flex;flex-direction: column;align-items: center;  margin-bottom: 20px">
                     <input type="submit" name="signin" class="btn btn-outline-success btn-lg px-5" value="Accedi"/>
                 </div>
             </div>

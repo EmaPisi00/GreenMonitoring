@@ -162,7 +162,7 @@
 } else {
     response.sendError(404);
 }%>
-<div class="container">
+<div class="container" style="margin-bottom: 9%">
     <div class="row">
         <div class="col">
             <div class="row text-center">
@@ -363,7 +363,7 @@
                                         var coltivazioneID = <%=coltivazioneID%>;
                                         var tipoSensore = "umidita"
                                             var xhr = new XMLHttpRequest();
-                                            xhr.open("POST", "ColtivazioniServlet");
+                                            xhr.open("POST", "StoricoServlet");
                                             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                             xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                             xhr.onreadystatechange = function () {
@@ -429,7 +429,7 @@
                                 var coltivazioneID = <%=coltivazioneID%>;
                                 var tipoSensore = "pH"
                                     var xhr = new XMLHttpRequest();
-                                    xhr.open("POST", "ColtivazioniServlet");
+                                    xhr.open("POST", "StoricoServlet");
                                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                     xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                     xhr.onreadystatechange = function () {
@@ -487,7 +487,7 @@
                                     var coltivazioneID = <%=coltivazioneID%>;
                                     var tipoSensore = "Temperatura"
                                         var xhr = new XMLHttpRequest();
-                                        xhr.open("POST", "ColtivazioniServlet");
+                                        xhr.open("POST", "StoricoServlet");
                                         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                         xhr.send("today=today"+"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                                         xhr.onreadystatechange = function () {
@@ -626,7 +626,7 @@
                 var tipoSensore = document.getElementById("selectSensore").value;
                 if (inputInizio != null && inputFine != null) {
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "ColtivazioniServlet");
+                    xhr.open("POST", "StoricoServlet");
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhr.send("data_inizio_periodo="+ inputInizio +"&data_fine_periodo="+ inputFine +"&coltivazioneID="+coltivazioneID+"&tipoSensore="+tipoSensore);
                     xhr.onreadystatechange = function () {
@@ -644,6 +644,7 @@
         </script>
         <script src="canvas/canvasjs.min.js"></script>
     </div>
+</div>
 </div>
     <!-- Fine coltivazioni -->
 

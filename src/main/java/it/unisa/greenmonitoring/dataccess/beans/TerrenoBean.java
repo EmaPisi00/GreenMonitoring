@@ -22,9 +22,9 @@ public class TerrenoBean {
      */
     private Float  longitudine;
     /**
-     * Questo campo contiene il tipo di superficie.
+     * Questo campo contiene il tipo di superfice.
      */
-    private Float superficie;
+    private Float superfice;
     /**
      * Questo campo contiene il link all'immagine.
      */
@@ -39,15 +39,15 @@ public class TerrenoBean {
      * @param given_nome
      * @param given_latitudine
      * @param given_longitudine
-     * @param given_superficie
+     * @param given_superfice
      * @param given_immagine
      * @param given_azienda
      */
-    public TerrenoBean(String given_nome, Float given_latitudine, Float given_longitudine, Float given_superficie, byte[] given_immagine, String given_azienda) {
+    public TerrenoBean(String given_nome, Float given_latitudine, Float given_longitudine, Float given_superfice, byte[] given_immagine, String given_azienda) {
         this.nome = given_nome;
         this.latitudine = given_latitudine;
         this.longitudine = given_longitudine;
-        this.superficie = given_superficie;
+        this.superfice = given_superfice;
         this.immagine = given_immagine;
         this.azienda = given_azienda;
     }
@@ -125,15 +125,15 @@ public class TerrenoBean {
      * @return String
      */
     public Float getSuperficie() {
-        return superficie;
+        return superfice;
     }
 
     /**
      *
-     * @param given_superficie
+     * @param given_superfice
      */
-    public void setSuperficie(Float given_superficie) {
-        this.superficie = given_superficie;
+    public void setSuperficie(Float given_superfice) {
+        this.superfice = given_superfice;
     }
 
     /**
@@ -166,7 +166,7 @@ public class TerrenoBean {
                 + "nome=" + nome
                 + ", latitudine=" + latitudine
                 + ", longitudine=" + longitudine
-                + ", superficie='" + superficie + '\''
+                + ", superfice='" + superfice + '\''
                 + ", immagine='" + immagine + '\''
                 + ", azienda='" + azienda + '\''
                 + '}';
@@ -188,11 +188,11 @@ public class TerrenoBean {
         if (!(o instanceof TerrenoBean that)) {
             return false;
         }
-        return nome.equals(that.nome) && id.equals(that.id) && latitudine.equals(that.latitudine) && longitudine.equals(that.longitudine) && superficie.equals(that.superficie) && immagine.equals(that.immagine) && azienda.equals(that.azienda);
+        return nome.equals(that.nome) && id.equals(that.id) && latitudine.equals(that.latitudine) && longitudine.equals(that.longitudine) && superfice.equals(that.superfice) && immagine.equals(that.immagine) && azienda.equals(that.azienda);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nome, id, latitudine, longitudine, superficie, immagine, azienda);
+        return Objects.hash(nome, id, latitudine, longitudine, superfice, immagine, azienda);
     }
 }

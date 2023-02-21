@@ -57,11 +57,22 @@
                 <div class="formValidation">
                     <label for="codiceAzienda" class="form-label">Codice Azienda:</label>
                     <input type="text" class="textInputStyle" id="codiceAzienda" placeholder="AA22ss33"
-                           name="codiceAzienda"/>
+                           name="codiceAzienda" required/>
                 </div>
+                <%
+                    String errorMessage = (String) request.getAttribute("descrizione");
+                    if (errorMessage != null) {
+                %>
+                <div id="errorPopup" class="errorPopup">
+                    <h6 id="errorText" class="error"><%= errorMessage %>
+                    </h6 id="errorText">
+                </div>
+                <%
+                    }
+                %>
                 <br>
                 <!-- Button trigger modal -->
-                <button id="showModal" type="button" class="btn btn-outline-success btn-lg px-3" data-toggle="Modal"
+                <button id="showModal" type="submit" disabled="disabled" class="btn btn-outline-success btn-lg px-3" data-toggle="Modal"
                         data-target="#exampleModalCenter">
                     Associa
                 </button>
@@ -113,20 +124,33 @@
                             $("#nomeAzienda").html(object["nome"]);
                             $("#indirizzoAzienda").html(object["indirizzo"]);
                             $("#provinciaAzienda").html(object["provincia"]);
+                            $("#showModal").removeAttr("disabled");
+                            $("#showModal").attr("type","button")
                         }
                         else
                         {
-                            $("#nomeAzienda").html(object["errore"]);
-                            $("#indirizzoAzienda").html(object["errore"]);
-                            $("#provinciaAzienda").html(object["errore"]);
+                            $("#showModal").removeAttr("disabled");
+                            $("#showModal").attr("type", "submit");
                         }
                     }
                 });
+            }
+            else {
+                $("#showModal").attr("type", "submit");
+            }
+        });
+
+        // aggiungi il listener del pulsante "Associa"
+        $("#showModal").on("click", function(){
+            if($("#showModal").attr("type") === "button") // controlla se il pulsante è abilitato
+            {
+                $("#exampleModalCenter").modal("show");
             }
         });
 
     });
 </script>
+
 
 <%@include file="fragments/footer.html" %>
 </body>

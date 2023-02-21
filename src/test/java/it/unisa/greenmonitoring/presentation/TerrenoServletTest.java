@@ -53,7 +53,7 @@ public class TerrenoServletTest {
         request.setParameter("azienda", "techenegative@gmail.com");
         request.setParameter("latitudine", "jjjjdfff");
         request.setParameter("longitudine", "14.7972");
-        request.setParameter("superficie", "50");
+        request.setParameter("superfice", "50");
 
         request.setParameter("inserisciTerreno_submit","1");
         Mockito.when(request.getPart("immagine")).thenReturn(part);
@@ -80,13 +80,13 @@ public class TerrenoServletTest {
         assertEquals("2", request.getAttribute("errore"));
         assertEquals(200, response.getStatus());
     }
-    @Test //superficie sbagliata
+    @Test //superfice sbagliata
     public void InserisciTerreno3() throws Exception {
         request.setParameter("nome", "terreno 1");
         request.setParameter("azienda", "techenegative@gmail.com");
         request.setParameter("latitudine", "40.770");
         request.setParameter("longitudine", "14.7972");
-        request.setParameter("superficie", "dddssd");
+        request.setParameter("superfice", "dddssd");
 
         request.setParameter("inserisciTerreno_submit","1");
         Mockito.when(request.getPart("immagine")).thenReturn(part);
@@ -103,7 +103,7 @@ public class TerrenoServletTest {
         request.setParameter("azienda", "techenegative@gmail.com");
         request.setParameter("latitudine", "40.770");
         request.setParameter("longitudine", "14.7972");
-        request.setParameter("superficie", "50");
+        request.setParameter("superfice", "50");
         request.setParameter("inserisciTerreno_submit","1");
         Mockito.when(request.getPart("immagine")).thenReturn(part);
         Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
@@ -119,7 +119,7 @@ public class TerrenoServletTest {
         request.setParameter("azienda", "techenegative@gmail.com");
         request.setParameter("latitudine", "100.0000");
         request.setParameter("longitudine", "14.7972");
-        request.setParameter("superficie", "50");
+        request.setParameter("superfice", "50");
 
         request.setParameter("inserisciTerreno_submit","1");
         Mockito.when(request.getPart("immagine")).thenReturn(part);
@@ -136,7 +136,7 @@ public class TerrenoServletTest {
         request.setParameter("azienda", "techenegative@gmail.com");
         request.setParameter("latitudine", "40.770");
         request.setParameter("longitudine", "190");
-        request.setParameter("superficie", "50");
+        request.setParameter("superfice", "50");
 
         request.setParameter("inserisciTerreno_submit","1");
         Mockito.when(request.getPart("immagine")).thenReturn(part);
@@ -153,7 +153,7 @@ public class TerrenoServletTest {
         request.setParameter("azienda", "techenegative@gmail.com");
         request.setParameter("latitudine", "40.770");
         request.setParameter("longitudine", "14.7972");
-        request.setParameter("superficie", "50");
+        request.setParameter("superfice", "50");
         request.setParameter("inserisciTerreno_submit","1");
         Mockito.when(part.getSize()).thenReturn(0L);
         Mockito.when(request.getPart("immagine")).thenReturn(part);
@@ -170,7 +170,7 @@ public class TerrenoServletTest {
         request.setParameter("azienda", "techenegative@gmail.com");
         request.setParameter("latitudine", "40.770");
         request.setParameter("longitudine", "14.7972");
-        request.setParameter("superficie", "50");
+        request.setParameter("superfice", "50");
         request.setParameter("inserisciTerreno_submit","1");
         Mockito.when(part.getSize()).thenReturn(2L);
         Mockito.when(part.getContentType()).thenReturn("pdf");
@@ -188,7 +188,7 @@ public class TerrenoServletTest {
         request.setParameter("azienda", "techenegative@gmail.com");
         request.setParameter("latitudine", "40.770");
         request.setParameter("longitudine", "14.7972");
-        request.setParameter("superficie", "50");
+        request.setParameter("superfice", "50");
         request.setParameter("inserisciTerreno_submit","1");
         Mockito.when(part.getSize()).thenReturn(1L);
         Mockito.when(part.getContentType()).thenReturn("image");
@@ -209,7 +209,7 @@ public class TerrenoServletTest {
         request.setParameter("azienda", "techenegative@gmail.com");
         request.setParameter("latitudine", "40.770");
         request.setParameter("longitudine", "14.7972");
-        request.setParameter("superficie", "50");
+        request.setParameter("superfice", "50");
         request.setParameter("inserisciTerreno_submit","1");
         Mockito.when(part.getSize()).thenReturn(2L);
         Mockito.when(part.getContentType()).thenReturn("image");

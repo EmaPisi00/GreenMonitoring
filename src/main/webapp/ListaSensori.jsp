@@ -40,7 +40,7 @@
 
 <%if (u!= null) {%>
 
-<div class="container py-5" style="width: 100%; height: 100%; ">
+<div class="container py-5" style="width: 50%;">
     <div class="row ">
         <div class="col-12 text-center">
             <h3 class="display-3 text-center">Lista Sensori</h3>
@@ -49,30 +49,29 @@
             <table  class="table table-group-divider" style="font-size: 30px;">
                 <thead>
                 <tr style="font-family: 'Staatliches', cursive; font-size: 20px;">
-                    <th  scope="col">ID</th>
+                    <th  scope="col">Indice</th>
                     <th  scope="col">Tipo</th>
                     <th  scope="col">ID Mosquitto</th>
-                    <th  scope="col">Azienda</th>
                 </tr>
                 </thead>
                 <% SensoreDAOImpl sensoreDAO = new SensoreDAOImpl();
                     List<SensoreBean> sensori = sensoreDAO.retrieveAllByAzienda(u.getEmail());
+                    int i=1;
                     for (SensoreBean sensore : sensori) { %>
                 <tr class="justify-content-center" >
-                    <td ><%= sensore.getId() %>
+                    <td ><%= i %>
                     </td>
                     <td><%= sensore.getTipo() %>
                     </td>
                     <td><%= sensore.getIdM() %>
                     </td>
-                    <td><%= sensore.getAzienda() %>
-                    </td>
                 </tr>
-                <% } %>
+                <% i+=1;
+                    } %>
             </table>
         </div>
         <div class="container py-2">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" style="text-align: center">
                 <div class="col-3">
                     <button onclick="location.href='InserisciSensore.jsp'" type="button"
                             class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"

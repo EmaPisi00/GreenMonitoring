@@ -69,10 +69,10 @@
 <%}%>
 
 <body>
-<form method="post" action="SensoreServlet">
+<form method="post" action="SensoreServlet" style="margin-bottom: 11%">
     <div class="container py-5">
         <h5 class="display-5 text-center">Inserisci Un Sensore</h5>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" style="display:flex;flex-direction: column;flex-wrap: nowrap;align-items: center;">
             <div class="col-3 py-3">
                 <div class="mb-3 ">
                     <label class="form-label text-center" for="tipo">Tipo Sensore</label>
@@ -86,7 +86,17 @@
             <div class="col-3 py-3">
                 <div class="mb-3">
                     <label class="form-label text-center" for="id_mosquitto">ID Mosquitto</label>
-                    <input type="text" class="form-control" id="id_mosquitto" name="id_mosquitto">
+                    <input type="text" class="form-control" id="id_mosquitto" name="id_mosquitto" required
+                           oninvalid="this.setCustomValidity('Inserire un codice Mosquitto.')"
+                           oninput="this.setCustomValidity('')">
+                </div>
+            </div>
+            <div class="container py-3">
+                <div class="row justify-content-center" style="text-align: center">
+                    <div class="col-2">
+                        <input type="submit" class="btn btn-outline-success btn-lg px-3" value="Registra Sensore"
+                               name="RegistraSensore">
+                    </div>
                 </div>
             </div>
         </div>
@@ -96,7 +106,7 @@
             if(success == "1") {
         %>
         <div id="successPopup" class="successPopup">
-            <h3 class="display-3 text-center"> <%= successMessage %> </h3>
+            <h5 class="display-5 text-center"> <%= successMessage %> </h5>
         </div>
         <%
         } else if (success == "2") {
@@ -105,14 +115,6 @@
             <h5 class="display-5 text-center"> <%= successMessage %> </h5>
         </div>
         <%}%>
-    </div>
-    <div class="container py-3">
-        <div class="row justify-content-center">
-            <div class="col-2">
-                <input type="submit" class="btn btn-outline-success btn-lg px-3" value="Registra Sensore"
-                       name="RegistraSensore">
-            </div>
-        </div>
     </div>
 </form>
 <script>

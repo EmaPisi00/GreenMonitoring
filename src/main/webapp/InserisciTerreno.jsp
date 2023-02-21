@@ -169,7 +169,7 @@
                     <div class="mb-3">
                         <label class="text-center">Superficie</label>
                         <div class="input-info-wrapper">
-                            <input type="text" class="form-control border-2" id="superficie" name="superficie" required placeholder="">
+                            <input type="text" class="form-control border-2" id="superfice" name="superfice" required placeholder="">
                             <div class="info-wrapper">
                                 <button class="info-btn btn">
                                     <i class="bi bi-info-circle"></i>
@@ -198,7 +198,7 @@
                     <div class="container py-3">
                         <div class="row justify-content-center">
                             <div>
-                                <input type="submit" class="btn btn-outline-success btn-lg px-3" required value="inserisciTerreno_submit"
+                                <input type="submit" class="btn btn-outline-success btn-lg px-3" required value="Inserisci"
                                        name="inserisciTerreno_submit">
                             </div>
                         </div>
