@@ -74,7 +74,7 @@
     <!-- Coltivazioni -->
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Coltivazioni</h5>
+            <h5 class="card-title"></h5>
             <%if (session.getAttribute("currentUserSession") instanceof AziendaBean) {%>
             <button type="submit" class="btn btn-light" onclick="location.href='AggiungiColtivazione.jsp'">Aggiungi Coltivazione</button>
             <%}%>
