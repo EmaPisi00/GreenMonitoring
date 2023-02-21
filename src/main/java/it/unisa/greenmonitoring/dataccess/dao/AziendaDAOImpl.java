@@ -276,6 +276,7 @@ public class AziendaDAOImpl implements AziendaDAO {
         }
         return  azienda;
     }
+
     /**
      * Metodo update che aggiorna anche l'id dell'azienda.
      * @param utente
