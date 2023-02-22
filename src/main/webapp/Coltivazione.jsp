@@ -155,7 +155,11 @@
     temporaryPiantaBean = pm.visualizzaPianta(idPianta);
     nomePianta = temporaryPiantaBean.getNome();
     temporaryTerrenoBean = tm.restituisciTerrenoDaInt(temporaryColtivazioneBean.getTerreno());
-    Immagine = new String(Base64.getEncoder().encode(temporaryTerrenoBean.getImmagine()));
+    try {
+        Immagine = new String(Base64.getEncoder().encode(temporaryTerrenoBean.getImmagine()));
+    } catch (NullPointerException e) {
+        Immagine = null;
+    }
     descrizioneTerreno = temporaryTerrenoBean.getNome();
     resultUmidita = cm.restituisciMisurazioniRecenti("umidita", coltivazioneID);
     resultPH = cm.restituisciMisurazioniRecenti("pH", coltivazioneID);
