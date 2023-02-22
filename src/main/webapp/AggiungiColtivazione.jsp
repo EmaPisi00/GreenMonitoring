@@ -52,7 +52,7 @@
   <!-- link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet"> -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
+<body style="background-color: white;">
 <% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
   if (u instanceof DipendenteBean)  { %>
 <%@include file="/fragments/headerLoggedDipendente.html" %>
@@ -84,7 +84,7 @@
   }
 %>
 
-<div class="container py-5 h100" style="width: 65%">
+<div class="container py-5 h100" style="width: 65%; background-color: white;">
 <div class="bd py-2" style="width: 100%; height: 100%; ">
   <h3 class="display-3 text-center py-5">Aggiungi una coltivazione</h3>
   <%
@@ -98,7 +98,7 @@
         <input type="hidden" name="moduloInserimentoColtivazione" required><br>
         <div class="col-md-12 ">
           <div class="form-outline form-white mb-4">
-        <label>Scegliere il terreno di cui avviare una coltivazione</label><br>
+        <label style="text-align: center">Scegliere il terreno di cui avviare una coltivazione</label><br>
         <% //Se servletColtivazione invia un errore viene stampato un alert
           TerrenoManager tm = new TerrenoManager();
           List<TerrenoBean> tbList = tm.visualizzaListaTerreni(ab.getEmail());
@@ -121,7 +121,7 @@
           <% }
           }%>
           <% } else { %>
-          <label>Non ci sono terreni.</label>
+          <label style="text-align: center">Non ci sono terreni.</label>
           <% } %>
         </select><br>
         <% } else {
@@ -135,14 +135,14 @@
         </div>
         <div class="col-md-12 ">
           <div class="form-outline form-white mb-4">
-        <label>Scegliere la pianta di cui avviare una coltivazione</label><br>
+        <label style="text-align: center">Scegliere la pianta di cui avviare una coltivazione</label><br>
         <% cList = cm.visualizzaStatoColtivazioni(ab.getEmail());
           PiantaManager pm = new PiantaManager();
           List<PiantaBean> pList = pm.ListaPianteManager(ab.getEmail());
           if (pList == null || pList.size() == 0) {
 
         %>
-        <h7>Non ci sono piante.</h7>
+        <h7 style="text-align: center">Non ci sono piante.</h7>
         <%
         } else {
         %>
@@ -156,7 +156,7 @@
         <!-- INSERIMENTO DEI SENSORI -->
         <div class="col-md-12 ">
           <div class="form-outline form-white mb-4">
-        <label>Scegliere i sensori da associare alla coltivazione</label><br>
+        <label style="text-align: center">Scegliere i sensori da associare alla coltivazione</label><br>
         <%
           SensoreManager sm = new SensoreManager();
           List<SensoreBean> sbList = sm.visualizzaListaSensori(ab.getEmail());
@@ -168,7 +168,7 @@
         } else {
           System.out.println("AggiungiColtivazione -- " + sbList.toString());
             %>
-        <label>pH</label><br>
+        <label style="text-align: center">pH</label><br>
         <%
           for (int i = 0; i < sbList.size(); i++) {
             if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
@@ -181,7 +181,7 @@
         </div>
         <div class="col-md-12 ">
           <div class="form-outline form-white mb-4">
-        <label>Temperatura</label><br>
+        <label style="text-align: center">Temperatura</label><br>
         <% for (int i = 0; i < sbList.size(); i++) {
           if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
         %>
@@ -193,7 +193,7 @@
         </div>
         <div class="col-md-12 ">
           <div class="form-outline form-white mb-4">
-        <label>Umidità</label><br>
+        <label style="text-align: center">Umidità</label><br>
         <%
           for (int i = 0; i < sbList.size(); i++) {
             if (sbList.get(i).getColtivazione() == 0 && (sbList.get(i).getTipo().toLowerCase().contains("umidit"))) {
@@ -210,7 +210,7 @@
         </div>
         <div class="col-md-12 ">
           <div class="form-outline form-white mb-4">
-        <label>Inserire la data di inizio della coltivazione</label><br>
+        <label style="text-align: center">Inserire la data di inizio della coltivazione</label><br>
         <input type="date" id="dataInizio" name="datainizio" max="" required><br><br>
         <button type="submit" id="summit" class="btn btn-primary">Aggiungi coltivazione</button>
           </div>
