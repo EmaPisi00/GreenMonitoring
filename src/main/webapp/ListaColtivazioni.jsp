@@ -181,11 +181,14 @@
                 } %>
 
             </ul>
-            <div class="text-center py-4">
-                <button type="submit" class="btn btn-outline-success btn-lg px-5"
-                        onclick="location.href='AggiungiColtivazione.jsp'">Aggiungi Coltivazione
-                </button>
-            </div>
+            <% if (session.getAttribute("currentUserSession") instanceof AziendaBean)
+            { %>
+            <div class="text-center py-4" >
+                <button type = "submit" class="btn btn-outline-success btn-lg px-5"
+                onclick = "location.href='AggiungiColtivazione.jsp'" > Aggiungi Coltivazione
+                        </button>
+            </div >
+            <% } %>
         </div>
         <!-- Fine coltivazioni -->
         <% }
