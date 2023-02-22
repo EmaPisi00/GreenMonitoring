@@ -7,8 +7,7 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
-<%@ page import="java.sql.Date" %>
-<%@ page import="java.util.Base64" %><%--
+<%@ page import="java.sql.Date" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -27,15 +26,10 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
     <style>
-        .imgTerreno {
-            height: 70px;
-            width: auto;
-            object-fit: contain;
-        }
-
         .tableColtivazione {
             width: 100%;
         }
+
         @media screen and (max-width: 768px) {
             .tohide {
                 width: 100%;
@@ -60,13 +54,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<% UtenteBean u= (UtenteBean) request.getSession().getAttribute("currentUserSession");
-    if (u instanceof DipendenteBean)  { %>
+<% UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if (u instanceof DipendenteBean) { %>
 <%@include file="/fragments/headerLoggedDipendente.html" %>
-<%} else if(u instanceof  AziendaBean){ %>
+<%} else if (u instanceof AziendaBean) { %>
 <%@ include file="/fragments/headerLoggedAzienda.html" %>
 <%} else { %>
-<%@include file="fragments/headerLogin.html"%>
+<%@include file="fragments/headerLogin.html" %>
 <% }%>
 
 <%! ColtivazioneManager coltivazioneManager = new ColtivazioneManager();
@@ -77,14 +71,10 @@
     Double resultTemperatura = null;
 %>
 <div class="bd" style="width: 100%; margin-bottom: 13% ">
-    <legend style="text-align:center;">Coltivazioni</legend>
+    <h5 class="display-3 text-center py-3">Coltivazioni</h5>
     <!-- Coltivazioni -->
-    <div class="card">
+    <div class="card border border-success rounded" style="margin: 100px">
         <div class="card-body">
-            <h5 class="card-title"></h5>
-            <%if (session.getAttribute("currentUserSession") instanceof AziendaBean) {%>
-            <button type="submit" class="btn btn-light" onclick="location.href='AggiungiColtivazione.jsp'">Aggiungi Coltivazione</button>
-            <%}%>
             <% /* -- INIZIO AUTENTICAZIONE -- */
                 Object sa = session.getAttribute("currentUserSession");
                 if (sa == null) {
@@ -98,7 +88,7 @@
                     if ((session.getAttribute("currentUserSession") instanceof DipendenteBean)) {
                         DipendenteBean a = (DipendenteBean) sa;
                         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> qui <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                        if(a.getAzienda() == null) {
+                        if (a.getAzienda() == null) {
                             response.sendRedirect("error.jsp");
                         }
                         ColtivazioneManager cm = new ColtivazioneManager();
@@ -110,78 +100,76 @@
                     }
                     if (list.size() == 0) { %>
             <h7>Non ci sono coltivazioni.</h7>
-            <% } else { TerrenoManager terrenoManager = new TerrenoManager();
+            <% } else {
+                TerrenoManager terrenoManager = new TerrenoManager();
             %>
             <ul class="list-group" style="margin-top: 10px">
                 <% for (ColtivazioneBean cb : list) {
-                     %>
+                %>
                 <li class="list-group-item ">
-                <table class="tableColtivazione">
-                    <tr>
-                        <th></th><!-- foto del terreno -->
-                    <th>Coltivazione</th>
-                        <th class="tohide">Terreno</th>
-                        <th class="tohide">Pianta</th>
-                        <th class="tohide">media pH</th>
-                        <th class="tohide">media Temperatura</th>
-                        <th class="tohide">media Umidità</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <%
-                            String immagine;
-                            try {
-                            immagine = new String(Base64.getEncoder().encode(terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()));
-                            } catch (NullPointerException e) {
-                            immagine = null;
-                            }
-                            %>
-                        <img id="immagine" class="imgTerreno" src="data:image/jpeg;base64,<%=immagine%>" alt="Foto terreno">
-                        </td>
-                        <td><%=cb.getId()%></td>
-                        <td class="tohide">
-                            <%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getNome()%></td>
-                        <td>
-                            <%=piantaManager.visualizzaPianta(cb.getPianta()).getNome()%></td>
-                        <td class="tohide">
-                            <%
-                            resultPh = coltivazioneManager.restituisciMisurazioniRecenti("pH", cb.getId());
-                            String colorPh = "green";
+                    <table class="tableColtivazione">
+                        <tr>
+                            <th></th><!-- foto del terreno -->
+                            <th>Coltivazione</th>
+                            <th class="tohide">Terreno</th>
+                            <th class="tohide">Pianta</th>
+                            <th class="tohide">media pH</th>
+                            <th class="tohide">media Temperatura</th>
+                            <th class="tohide">media Umidità</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img id="immagine"
+                                     src="data:image/jpeg;base64,<%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()%>"
+                                     alt="Foto terreno">
+                            </td>
+                            <td><%=cb.getId()%>
+                            </td>
+                            <td class="tohide">
+                                <%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getNome()%>
+                            </td>
+                            <td>
+                                <%=piantaManager.visualizzaPianta(cb.getPianta()).getNome()%>
+                            </td>
+                            <td class="tohide">
+                                <%
+                                    resultPh = coltivazioneManager.restituisciMisurazioniRecenti("pH", cb.getId());
+                                    String colorPh = "green";
                             /*
                             if (resultUmidita è lontano dal valore ottimale) {
                                 colorPh  = "red";
                             }
                             */%>
-                            <%=resultPh%><br>
-                            <div class="value-status" style="background-color: <%=colorPh%>"></div>
-                        </td>
-                        <td class="tohide">
-                            <%
-                            resultUmidità = coltivazioneManager.restituisciMisurazioniRecenti("umidita", cb.getId());
-                            String colorUmidità = "green";
+                                <%=resultPh%><br>
+                                <div class="value-status" style="background-color: <%=colorPh%>"></div>
+                            </td>
+                            <td class="tohide">
+                                <%
+                                    resultUmidità = coltivazioneManager.restituisciMisurazioniRecenti("umidita", cb.getId());
+                                    String colorUmidità = "green";
                             /*
                             if (resultUmidita è lontano dal valore ottimale) {
                                 colorUmidità = "red";
                             }
                             */%>
-                            <%=resultUmidità%>%<br>
-                            <div class="value-status" style="background-color: <%=colorUmidità%>"></div>
-                        </td>
-                        <td class="tohide">
-                            <%
-                        resultTemperatura = coltivazioneManager.restituisciMisurazioniRecenti("Temperatura", cb.getId());
-                        String colorTemperatura = "green";
+                                <%=resultUmidità%>%<br>
+                                <div class="value-status" style="background-color: <%=colorUmidità%>"></div>
+                            </td>
+                            <td class="tohide">
+                                <%
+                                    resultTemperatura = coltivazioneManager.restituisciMisurazioniRecenti("Temperatura", cb.getId());
+                                    String colorTemperatura = "green";
                             /*
                             if (resultUmidita è lontano dal valore ottimale) {
                                 colorUmidità = "red";
                             }
                             */%>
-                        <%=resultTemperatura%>&deg<br>
-                        <div class="value-status" style="background-color: <%=colorTemperatura%>"></div>
-                    </td>
-                    </tr>
-                </table><br><%if (cb.getStato_archiviazione() == 1)
-                {%>
+                                <%=resultTemperatura%>&deg<br>
+                                <div class="value-status" style="background-color: <%=colorTemperatura%>"></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <br><%if (cb.getStato_archiviazione() == 1) {%>
                     <h7>(Archiviata)</h7>
                     <% }%><br><br>
                     <form action="AccediAColtivazioneServlet" method="post">
@@ -193,11 +181,16 @@
                 } %>
 
             </ul>
+            <div class="text-center py-4">
+                <button type="submit" class="btn btn-outline-success btn-lg px-5"
+                        onclick="location.href='AggiungiColtivazione.jsp'">Aggiungi Coltivazione
+                </button>
+            </div>
+        </div>
+        <!-- Fine coltivazioni -->
+        <% }
+        %>
     </div>
-    <!-- Fine coltivazioni -->
-<% }
-%>
-</div>
 </div>
 <%@include file="fragments/footer.html" %>
 </body>
