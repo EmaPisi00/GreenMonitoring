@@ -27,6 +27,12 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
     <style>
+        .imgTerreno {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+
         .tableColtivazione {
             width: 100%;
         }
@@ -130,7 +136,7 @@
                             immagine = null;
                             }
                             %>
-                        <img id="immagine" src="data:image/jpeg;base64,<%=immagine%>" alt="Foto terreno">
+                        <img id="immagine" class="imgTerreno" src="data:image/jpeg;base64,<%=immagine%>" alt="Foto terreno">
                         </td>
                         <td><%=cb.getId()%></td>
                         <td class="tohide">
