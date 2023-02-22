@@ -40,7 +40,7 @@ public class ColtivazioneManager {
      */
     private FisiopatieDAO fisiopatieDAO;
     /**
-     * MeteoApiAdapter
+     * MeteoApiAdapter.
      */
     private MeteoApiAdapter meteoApi;
     /**

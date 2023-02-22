@@ -74,8 +74,8 @@
     if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
       AziendaBean ab = (AziendaBean) session.getAttribute("currentUserSession");
   %> <!-- Inserisci coltivazione -->
-  <div class="card py-4" id="formCard">
-    <div class="card-body ">
+  <div class="card text-black"
+       style="border-radius: 1rem; border: 2px solid green; font-size:  22px;">
       <% if (request.getAttribute("errore") != null) {
       %><br>
       <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -140,16 +140,19 @@
         <% } %>
         <!-- INSERIMENTO DEI SENSORI -->
         <label>Scegliere i sensori da associare alla coltivazione</label><br>
-        <label>pH</label><br>
         <%
           SensoreManager sm = new SensoreManager();
           List<SensoreBean> sbList = sm.visualizzaListaSensori(ab.getEmail());
-          if (sbList == null || sbList.size() == 0) {
-
+          if (sbList == null || sbList.stream().filter(o -> o.getColtivazione() == 0).toList().size() == 0) {
+            System.out.println("AggiungiColtivazione -- " + sbList.toString());
         %>
         <h7>Non ci sono sensori.</h7>
         <%
         } else {
+          System.out.println("AggiungiColtivazione -- " + sbList.toString());
+            %>
+        <label>pH</label><br>
+        <%
           for (int i = 0; i < sbList.size(); i++) {
             if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
         %>
@@ -182,7 +185,6 @@
         <input type="date" id="dataInizio" name="datainizio" max="" required><br><br>
         <button type="submit" id="summit" class="btn btn-primary">Aggiungi coltivazione</button>
       </form>
-    </div>
   </div>
   <!-- Fine inserisci coltivazione --> </div>
 <% }
