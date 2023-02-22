@@ -151,7 +151,7 @@
                     <tr class="justify-content-center">
                         <td><%= terrenoBean.getNome()%>
                         </td>
-                        <td><img id="immagine" src="data:image/jpeg;base64,<%=immagine%>">
+                        <td class="tohide"><img id="immagine" src="data:image/jpeg;base64,<%=immagine%>">
                         </td>
                         <td><%= terrenoBean.getLatitudine()%>
                         </td>

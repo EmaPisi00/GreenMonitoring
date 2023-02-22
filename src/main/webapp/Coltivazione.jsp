@@ -8,6 +8,7 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.FisiopatieDAO" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.FisiopatieDAOImpl" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Base64" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -123,7 +124,7 @@
 
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
-<%! byte[] Immagine = null;
+<%! String Immagine = null;
     List<ColtivazioneBean> list = null;
     List<SensoreBean> sList = null;
     List<PiantaBean> piantaBeanList = null;
@@ -153,8 +154,8 @@
     idPianta = temporaryColtivazioneBean.getPianta();
     temporaryPiantaBean = pm.visualizzaPianta(idPianta);
     nomePianta = temporaryPiantaBean.getNome();
-    Immagine = temporaryPiantaBean.getImmagine();
     temporaryTerrenoBean = tm.restituisciTerrenoDaInt(temporaryColtivazioneBean.getTerreno());
+    Immagine = new String(Base64.getEncoder().encode(temporaryTerrenoBean.getImmagine()));
     descrizioneTerreno = temporaryTerrenoBean.getNome();
     resultUmidita = cm.restituisciMisurazioniRecenti("umidita", coltivazioneID);
     resultPH = cm.restituisciMisurazioniRecenti("pH", coltivazioneID);
