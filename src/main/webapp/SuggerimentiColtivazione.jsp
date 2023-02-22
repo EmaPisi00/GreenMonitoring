@@ -29,7 +29,6 @@
 %>
 <%@include file="fragments/headerLoggedAzienda.html" %>
 <%
-    MeteoApiAdapter meteoApi = new OpenMeteoApiAdapterImpl();
     MisurazioneSensoreDAO misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
     PiantaManager piantaManager = new PiantaManager();
     ColtivazioneManager cm = new ColtivazioneManager();
@@ -43,11 +42,11 @@
     Double umidMin = Double.valueOf(piantaBean.getUmidita_min());
 %>
 
-<table>
+<table style="margin-bottom: 20%">
     <tr>
-        <th>Informazioni sul tempo</th>
+        <th>Informazioni sul tempo di domani per la coltivazione sul terreno " <%= terrenoBean.getNome()%> "</th>
     </tr>
-    <%  DatiMeteoBean meteo = meteoApi.getTomorrowRain(terrenoBean.getLatitudine(), terrenoBean.getLongitudine());{ %>
+    <%  DatiMeteoBean meteo = cm.visualizzaDatiMeteo(terrenoBean.getLatitudine(), terrenoBean.getLongitudine());{ %>
     <tr>
         <td>Temperatura minima: <%= meteo.getTemperatura_min() %>°<br>
             Temperatura massima: <%= meteo.getTemperatura_max() %>°<br>
@@ -61,7 +60,6 @@
             if (weather_code < 56 && (misurazione > umidMax || (umidMax - misurazione)<= 5)) {
                 out.println("Domani non pioverà però è consigliato disattivare l'irrigazione in quanto " +
                         "l'umidità della pianta è quasi ai suoi limiti.");
-               %> <img src="img\NonIrrigare.jpg" alt="NonIrrigare"> <%
             }else if (weather_code < 56 && (umidMax - misurazione) >= (umidMax - umidMin)/2) {
                 out.println("Domani non pioverà ed è consigliato di attivare l'irrigazione in quanto " +
                         "il terreno risulta alquanto secca e ha bisogno di idratazione.");
