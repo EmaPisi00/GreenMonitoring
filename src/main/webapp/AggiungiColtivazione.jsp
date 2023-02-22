@@ -67,8 +67,26 @@
     response.sendRedirect("error.jsp");
     return;
   }%>
+
+<% if (request.getAttribute("errore") != null) {
+%>
+<div class="container py-5 w-50">
+  <div class="row justify-content-center">
+    <div class="alert alert-danger text-center">
+      <h3>Errore</h3>
+      <p><%= request.getAttribute("descrizione")%>
+      </p>
+    </div>
+  </div>
+</div>
+
+<%
+  }
+%>
+
+<div class="container py-5 h100" style="width: 65%">
 <div class="bd py-2" style="width: 100%; height: 100%; ">
-  <h5 class="display-3 text-center py-5">Aggiungi una coltivazione</h5>
+  <h3 class="display-3 text-center py-5">Aggiungi una coltivazione</h3>
   <%
     /* Stampa il form per inserire la coltivazione solo se ad accedere alla pagina è un'azienda */
     if ((session.getAttribute("currentUserSession") instanceof AziendaBean)) {
@@ -76,17 +94,10 @@
   %> <!-- Inserisci coltivazione -->
   <div class="card text-black"
        style="border-radius: 1rem; border: 2px solid green; font-size:  22px;">
-      <% if (request.getAttribute("errore") != null) {
-      %><br>
-      <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-triangle me-1"><%=request.getAttribute("descrizione")%>
-        </i>
-      </div>
-      <%
-        }
-      %>
-      <form action="ColtivazioniServlet" method="post" id="aggiungi_coltivazione">
+      <form action="ColtivazioniServlet" method="post" id="aggiungi_coltivazione" class="row g-3">
         <input type="hidden" name="moduloInserimentoColtivazione" required><br>
+        <div class="col-md-12 ">
+          <div class="form-outline form-white mb-4">
         <label>Scegliere il terreno di cui avviare una coltivazione</label><br>
         <% //Se servletColtivazione invia un errore viene stampato un alert
           TerrenoManager tm = new TerrenoManager();
@@ -120,6 +131,10 @@
         </option>
         <% }
         } %>
+          </div>
+        </div>
+        <div class="col-md-12 ">
+          <div class="form-outline form-white mb-4">
         <label>Scegliere la pianta di cui avviare una coltivazione</label><br>
         <% cList = cm.visualizzaStatoColtivazioni(ab.getEmail());
           PiantaManager pm = new PiantaManager();
@@ -136,9 +151,11 @@
           <option value="<%=pList.get(i).getId()%>"><%=pList.get(i).getNome()%>
           </option>
           <% } %>
-        </select><br>
+        </select><br></div></div>
         <% } %>
         <!-- INSERIMENTO DEI SENSORI -->
+        <div class="col-md-12 ">
+          <div class="form-outline form-white mb-4">
         <label>Scegliere i sensori da associare alla coltivazione</label><br>
         <%
           SensoreManager sm = new SensoreManager();
@@ -160,6 +177,10 @@
         sensore: <%=sbList.get(i).getId()%><br>
         <% }
         } %>
+          </div>
+        </div>
+        <div class="col-md-12 ">
+          <div class="form-outline form-white mb-4">
         <label>Temperatura</label><br>
         <% for (int i = 0; i < sbList.size(); i++) {
           if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
@@ -168,6 +189,10 @@
         sensore: <%=sbList.get(i).getId()%><br>
         <% }
         } %>
+          </div>
+        </div>
+        <div class="col-md-12 ">
+          <div class="form-outline form-white mb-4">
         <label>Umidità</label><br>
         <%
           for (int i = 0; i < sbList.size(); i++) {
@@ -181,17 +206,25 @@
           }
           java.sql.Date todayDate = new java.sql.Date(System.currentTimeMillis());
         %>
+          </div>
+        </div>
+        <div class="col-md-12 ">
+          <div class="form-outline form-white mb-4">
         <label>Inserire la data di inizio della coltivazione</label><br>
         <input type="date" id="dataInizio" name="datainizio" max="" required><br><br>
         <button type="submit" id="summit" class="btn btn-primary">Aggiungi coltivazione</button>
+          </div>
+        </div>
       </form>
-  </div>
-  <!-- Fine inserisci coltivazione --> </div>
+  <!-- Fine inserisci coltivazione -->
 <% }
 }
 %>
 </div>
 </div>
+</div>
+</div>
+
 <%@include file="fragments/footer.html" %>
 </body>
 </html>
