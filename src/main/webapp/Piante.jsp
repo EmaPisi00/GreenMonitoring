@@ -90,7 +90,18 @@
 <%}%>
 
 <div class="bd py-5 ">
-    <h3 class="display-3 text-center">Piante</h3>
+    <h3 class="display-3 text-center">Lista Piante</h3>
+    <div class="container py-2 text-center align-middle">
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <button onclick="location.href='InserisciPianta.jsp'" type="button"
+                        class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
+                        data-target="#exampleModalCenter">
+                    Aggiungi Pianta
+                </button>
+            </div>
+        </div>
+    </div>
     <form id="visualizza_piante" action="RimuoviPiantaServlet" method="post">
         <div class="container py-5">
             <div class="row">
@@ -166,17 +177,7 @@
             </div>
         </div>
     </form>
-    <div class="container py-2 text-center align-middle">
-        <div class="row justify-content-center">
-            <div class="col-3">
-                <button onclick="location.href='InserisciPianta.jsp'" type="button"
-                        class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
-                        data-target="#exampleModalCenter">
-                    Aggiungi Pianta
-                </button>
-            </div>
-        </div>
-    </div>
+
 </div><!-- End bd -->
 
 <!-- Modal -->

@@ -40,10 +40,22 @@
 
 <%if (u!= null) {%>
 
-<div class="container py-5" style="width: 50%;">
+<div class="container py-5" style="width: 50%; margin-bottom: 4%;">
     <div class="row ">
         <div class="col-12 text-center">
             <h3 class="display-3 text-center">Lista Sensori</h3>
+            <div class="container py-2">
+                <div class="row justify-content-center" style="text-align: center">
+                    <div>
+                        <button onclick="location.href='InserisciSensore.jsp'" type="button"
+                                class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
+                                data-target="#exampleModalCenter">
+                            Aggiungi Sensore
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="col-14 py-5">
             <table  class="table table-group-divider" style="font-size: 30px;">
@@ -70,19 +82,7 @@
                     } %>
             </table>
         </div>
-        <div class="container py-2">
-            <div class="row justify-content-center" style="text-align: center">
-                <div class="col-3">
-                    <button onclick="location.href='InserisciSensore.jsp'" type="button"
-                            class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
-                            data-target="#exampleModalCenter">
-                        Inserisci Sensore
-                    </button>
-                </div>
-            </div>
-        </div>
 
-    </div>
 </div>
 
 <%}%>

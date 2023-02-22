@@ -1,5 +1,7 @@
 package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
+import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.AdapterMeteo.MeteoApiAdapter;
+import it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.AdapterMeteo.OpenMeteoApiAdapterImpl;
 import it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager;
 import it.unisa.greenmonitoring.dataccess.beans.*;
 import it.unisa.greenmonitoring.dataccess.dao.*;
@@ -38,6 +40,10 @@ public class ColtivazioneManager {
      */
     private FisiopatieDAO fisiopatieDAO;
     /**
+     * MeteoApiAdapter.
+     */
+    private MeteoApiAdapter meteoApi;
+    /**
      * Questa costante indica lo stato di una coltivazione avviata.
      */
     private final int stato_coltivazione_avviata = 0;
@@ -51,6 +57,7 @@ public class ColtivazioneManager {
         sensoreManager = new SensoreManager();
         fisiopatieDAO = new FisiopatieDAOImpl();
         misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
+        meteoApi = new OpenMeteoApiAdapterImpl();
     }
 
     /**
@@ -205,5 +212,15 @@ public class ColtivazioneManager {
         } catch (SQLException e) {
             return false;
         }
+    }
+
+    /**
+     * Metodo per prendere i dati meteo in base a latitudine e longitudine del terreno.
+     * @param latitudine
+     * @param longitudine
+     * @return DatiMeteoBean
+     */
+    public DatiMeteoBean visualizzaDatiMeteo(double latitudine, double longitudine) {
+        return meteoApi.getTomorrowRain(latitudine, longitudine);
     }
 }

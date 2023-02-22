@@ -8,6 +8,7 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.FisiopatieDAO" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.FisiopatieDAOImpl" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Base64" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -27,6 +28,7 @@
         }
     </script>
     <style>
+
         #umiditaChartCanvas {
             width: 500px;
             height: 200px;
@@ -123,7 +125,7 @@
 
 <%@include file="fragments/headerLoggedAzienda.html" %>
 
-<%! byte[] Immagine = null;
+<%! String Immagine = null;
     List<ColtivazioneBean> list = null;
     List<SensoreBean> sList = null;
     List<PiantaBean> piantaBeanList = null;
@@ -153,8 +155,12 @@
     idPianta = temporaryColtivazioneBean.getPianta();
     temporaryPiantaBean = pm.visualizzaPianta(idPianta);
     nomePianta = temporaryPiantaBean.getNome();
-    Immagine = temporaryPiantaBean.getImmagine();
     temporaryTerrenoBean = tm.restituisciTerrenoDaInt(temporaryColtivazioneBean.getTerreno());
+    try {
+        Immagine = new String(Base64.getEncoder().encode(temporaryTerrenoBean.getImmagine()));
+    } catch (NullPointerException e) {
+        Immagine = null;
+    }
     descrizioneTerreno = temporaryTerrenoBean.getNome();
     resultUmidita = cm.restituisciMisurazioniRecenti("umidita", coltivazioneID);
     resultPH = cm.restituisciMisurazioniRecenti("pH", coltivazioneID);
@@ -200,11 +206,13 @@
             </div>
         </div>
         <div class="col d-flex align-items-center">
+            <%if (session.getAttribute("currentUserSession") instanceof AziendaBean) { %>
                 <form id="archiviaColtivazione" method="POST" action="ArchiviaColtivazioneServlet">
                     <input type="hidden" name="coltivazione" value="<%=coltivazioneID%>">
                 <button type="submit" class="btn btn-danger" id="archivia-coltivazione" <%if (temporaryColtivazioneBean.getStato_archiviazione() == 1)
                 { %> disabled="disabled"<% }%>>Archivia Coltivazione</button>
                 </form>
+            <%}%>
         </div>
         <br>
         <!-- lista dei sensori e form rimuovi sensore -->
@@ -244,10 +252,6 @@
                 }%>
             </div>
     </div>
-
-
-
-
 </div>
 <div class="bd mt-5">
     <!-- elenco dei tab accessibili -->

@@ -99,7 +99,18 @@
     <div class="container py-5" style="width: 100%; height: 100%; ">
         <div class="row">
             <div class="col-12 text-center">
-                <h5 class="display-3 text-center">Terreni Presenti</h5>
+                <h5 class="display-3 text-center">Lista Terreni </h5>
+            </div>
+            <div class="container py-2">
+                <div class="row justify-content-center">
+                    <div class="col-3">
+                        <button onclick="location.href='InserisciTerreno.jsp'" type="button"
+                                class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
+                                data-target="#exampleModalCenter">
+                            Aggiungi terreno
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="col-14 py-5">
                 <table class="table table-group-divider">
@@ -140,7 +151,7 @@
                     <tr class="justify-content-center">
                         <td><%= terrenoBean.getNome()%>
                         </td>
-                        <td><img id="immagine" src="data:image/jpeg;base64,<%=immagine%>">
+                        <td class="tohide"><img id="immagine" src="data:image/jpeg;base64,<%=immagine%>">
                         </td>
                         <td><%= terrenoBean.getLatitudine()%>
                         </td>
@@ -161,19 +172,6 @@
             </div>
         </div>
     </div>
-
-    <div class="container py-2">
-        <div class="row justify-content-center">
-            <div class="col-3">
-                <button onclick="location.href='InserisciTerreno.jsp'" type="button"
-                        class="btn btn-outline-success btn-lg px-5" data-toggle="Modal"
-                        data-target="#exampleModalCenter">
-                    Aggiungi terreno
-                </button>
-            </div>
-        </div>
-    </div>
-
 </div><!-- End bd -->
 
 

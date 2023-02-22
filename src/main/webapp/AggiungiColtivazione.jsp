@@ -144,7 +144,7 @@
         <%
           SensoreManager sm = new SensoreManager();
           List<SensoreBean> sbList = sm.visualizzaListaSensori(ab.getEmail());
-          if (sbList == null || sbList.size() == 0) {
+          if (sbList == null || sbList.stream().filter(o -> o.getColtivazione().equals(0)).toList().size() == 0) {
 
         %>
         <h7>Non ci sono sensori.</h7>

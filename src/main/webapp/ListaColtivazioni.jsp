@@ -7,7 +7,8 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
-<%@ page import="java.sql.Date" %><%--
+<%@ page import="java.sql.Date" %>
+<%@ page import="java.util.Base64" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -26,6 +27,12 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
     <style>
+        .imgTerreno {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+
         .tableColtivazione {
             width: 100%;
         }
@@ -74,8 +81,10 @@
     <!-- Coltivazioni -->
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Coltivazioni</h5>
+            <h5 class="card-title"></h5>
+            <%if (session.getAttribute("currentUserSession") instanceof AziendaBean) {%>
             <button type="submit" class="btn btn-light" onclick="location.href='AggiungiColtivazione.jsp'">Aggiungi Coltivazione</button>
+            <%}%>
             <% /* -- INIZIO AUTENTICAZIONE -- */
                 Object sa = session.getAttribute("currentUserSession");
                 if (sa == null) {
@@ -119,7 +128,15 @@
                     </tr>
                     <tr>
                         <td>
-                        <img id="immagine" src="data:image/jpeg;base64,<%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()%>" alt="Foto terreno">
+                            <%
+                            String immagine;
+                            try {
+                            immagine = new String(Base64.getEncoder().encode(terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()));
+                            } catch (NullPointerException e) {
+                            immagine = null;
+                            }
+                            %>
+                        <img id="immagine" class="imgTerreno" src="data:image/jpeg;base64,<%=immagine%>" alt="Foto terreno">
                         </td>
                         <td><%=cb.getId()%></td>
                         <td class="tohide">
