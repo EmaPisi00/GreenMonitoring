@@ -122,7 +122,8 @@
                     </tr>
                     <tr>
                         <td>
-                        <img id="immagine" src="data:image/jpeg;base64,<%=new String(Base64.getEncoder().encode(terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()))%>" alt="Foto terreno">
+                            <%String immagine = new String(Base64.getEncoder().encode(terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()));%>
+                        <img id="immagine" src="data:image/jpeg;base64,<%=immagine%>" alt="Foto terreno">
                         </td>
                         <td><%=cb.getId()%></td>
                         <td class="tohide">
