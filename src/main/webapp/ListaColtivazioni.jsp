@@ -7,7 +7,8 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
-<%@ page import="java.sql.Date" %><%--
+<%@ page import="java.sql.Date" %>
+<%@ page import="java.util.Base64" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -26,6 +27,11 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/headerLogin.css">
     <style>
+        .imgPianta {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
         .tableColtivazione {
             width: 100%;
         }
@@ -105,6 +111,12 @@
             %>
             <ul class="list-group" style="margin-top: 10px">
                 <% for (ColtivazioneBean cb : list) {
+                    String immagine;
+                    try {
+                        immagine = new String(Base64.getEncoder().encode(terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()));
+                    } catch (NullPointerException e) {
+                        immagine = null;
+                    }
                 %>
                 <li class="list-group-item ">
                     <table class="tableColtivazione">
@@ -119,8 +131,8 @@
                         </tr>
                         <tr>
                             <td>
-                                <img id="immagine"
-                                     src="data:image/jpeg;base64,<%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()%>"
+                                <img id="immagine" class="imgPianta"
+                                     src="data:image/jpeg;base64,<%=immagine%>"
                                      alt="Foto terreno">
                             </td>
                             <td><%=cb.getId()%>
