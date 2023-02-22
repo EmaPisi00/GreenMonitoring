@@ -122,7 +122,14 @@
                     </tr>
                     <tr>
                         <td>
-                            <%String immagine = new String(Base64.getEncoder().encode(terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()));%>
+                            <%
+                            String immagine;
+                            try {
+                            immagine = new String(Base64.getEncoder().encode(terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()));
+                            } catch (NullPointerException e) {
+                            immagine = null;
+                            }
+                            %>
                         <img id="immagine" src="data:image/jpeg;base64,<%=immagine%>" alt="Foto terreno">
                         </td>
                         <td><%=cb.getId()%></td>
