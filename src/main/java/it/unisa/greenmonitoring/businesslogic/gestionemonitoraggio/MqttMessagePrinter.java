@@ -1,4 +1,4 @@
-package my;
+package it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio;
 
 import it.unisa.greenmonitoring.dataccess.beans.MisurazioneSensoreBean;
 import it.unisa.greenmonitoring.dataccess.beans.NotificaBean;
