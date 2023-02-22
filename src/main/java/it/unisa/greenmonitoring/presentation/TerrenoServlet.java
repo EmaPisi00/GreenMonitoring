@@ -52,7 +52,7 @@ public class TerrenoServlet extends HttpServlet {
 
             Float latitudine;
             Float longitudine;
-            Float superfice;
+            Float superficie;
             try {
                 latitudine = Float.parseFloat(request.getParameter("latitudine"));
             } catch (NumberFormatException num) {
@@ -72,7 +72,7 @@ public class TerrenoServlet extends HttpServlet {
                 return;
             }
             try {
-                superfice = Float.parseFloat(request.getParameter("superfice"));
+                superficie = Float.parseFloat(request.getParameter("superfice"));
             } catch (NumberFormatException num) {
                 request.setAttribute("errore", "3");
                 request.setAttribute("descrizione", "Errore nel formato della superfice. Controlla l'info");
@@ -80,7 +80,7 @@ public class TerrenoServlet extends HttpServlet {
                 dispatcher.forward(request, response);
                 return;
             }
-            TerrenoBean terreno = new TerrenoBean(nome, latitudine, longitudine, superfice, imageData, azienda);
+            TerrenoBean terreno = new TerrenoBean(nome, latitudine, longitudine, superficie, imageData, azienda);
             if (!terreno.getNome().matches("^[a-zA-Z0-9 ]{3,30}")) {
                 request.setAttribute("errore", "4");
                 request.setAttribute("descrizione", "Errore nel nome. Controlla l'info.");
@@ -107,9 +107,14 @@ public class TerrenoServlet extends HttpServlet {
                 request.setAttribute("descrizione", "Errore nel formato dell'immagine. Controlla l'info");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
                 dispatcher.forward(request, response);
+            } else if (superficie <= 0) {
+                request.setAttribute("errore", "10");
+                request.setAttribute("descrizione", "Errore. La superficie deve essere maggiore di 0");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
+                dispatcher.forward(request, response);
             } else {
                 if (tm.inserisciTerreno(terreno) != null) {
-                    request.setAttribute("conferma", "10");
+                    request.setAttribute("conferma", "11");
                     request.setAttribute("descrizione", "Inserimento avvenuto con successo");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/Terreni.jsp");
                     dispatcher.forward(request, response);

@@ -200,6 +200,24 @@ public class TerrenoServletTest {
         assertEquals("9", request.getAttribute("errore"));
         assertEquals(200, response.getStatus());
     }
+    @Test //
+    public void InserisciTerreno10() throws Exception {
+        request.setParameter("nome", "terreno 1");
+        request.setParameter("azienda", "techenegative@gmail.com");
+        request.setParameter("latitudine", "40.770");
+        request.setParameter("longitudine", "14.7972");
+        request.setParameter("superfice", "0");
+        request.setParameter("inserisciTerreno_submit","1");
+        Mockito.when(part.getSize()).thenReturn(1L);
+        Mockito.when(part.getContentType()).thenReturn("image");
+        Mockito.when(request.getPart("immagine")).thenReturn(part);
+//        Mockito.when(terrenoManager.inserisciTerreno(any(TerrenoBean.class))).thenReturn(null);
+        //Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
+        Mockito.when(part.getInputStream()).thenReturn(input);
+        servlet.doPost(request, response);
+        assertEquals("10", request.getAttribute("errore"));
+        assertEquals(200, response.getStatus());
+    }
 
 
 
@@ -218,7 +236,7 @@ public class TerrenoServletTest {
         Mockito.when(input.readAllBytes()).thenReturn(new byte[5]);
         Mockito.when(part.getInputStream()).thenReturn(input);
         servlet.doPost(request, response);
-        assertEquals("10", request.getAttribute("conferma"));
+        assertEquals("11", request.getAttribute("conferma"));
         assertEquals(200, response.getStatus());
     }
 }
