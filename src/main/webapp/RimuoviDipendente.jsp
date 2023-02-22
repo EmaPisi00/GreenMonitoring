@@ -90,7 +90,6 @@
         </div>
     </div>
 </div>
-</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
