@@ -88,12 +88,12 @@ public class TerrenoServlet extends HttpServlet {
                 dispatcher.forward(request, response);
             } else if (terreno.getLatitudine() < 0 || terreno.getLatitudine() > 90) {
                 request.setAttribute("errore", "5");
-                request.setAttribute("descrizione", "Errore nei valori insriti in latitudine. Controlla l'info");
+                request.setAttribute("descrizione", "Errore nei valori inseriti in latitudine. Controlla l'info");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
                 dispatcher.forward(request, response);
             } else if (terreno.getLongitudine() < 0 || terreno.getLongitudine() > 180) {
                 request.setAttribute("errore", "6");
-                request.setAttribute("descrizione", "Errore nei valori insriti in longitudine. Controlla l'info");
+                request.setAttribute("descrizione", "Errore nei valori inseriti in longitudine. Controlla l'info");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/InserisciTerreno.jsp");
                 dispatcher.forward(request, response);
 
