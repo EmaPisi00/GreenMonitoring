@@ -55,9 +55,9 @@
     <div>
         <div class="col-12 py-3">
             <% if (user instanceof AziendaBean) {%>
-                <h5 class=" text-center">Benvenuto <%= ((AziendaBean)user).getNome_azienda() %> nella tua area personale</h5>
+                <h5 class=" display-5 text-center">Benvenuto <%= ((AziendaBean)user).getNome_azienda() %> nella tua area personale</h5>
             <% } else if (user instanceof DipendenteBean) {%>
-            <h5 class=" text-center">Benvenuto <%= ((DipendenteBean)user).getNome() %> nella tua area personale</h5>
+            <h5 class=" display-5 text-center">Benvenuto <%= ((DipendenteBean)user).getNome() %> nella tua area personale</h5>
             <% } %>
         </div>
         <div class="col-12">
