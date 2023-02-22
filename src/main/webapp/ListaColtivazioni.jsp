@@ -7,7 +7,8 @@
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionemonitoraggio.ColtivazioneManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionesensore.SensoreManager" %>
 <%@ page import="it.unisa.greenmonitoring.businesslogic.gestionecoltivazione.PiantaManager" %>
-<%@ page import="java.sql.Date" %><%--
+<%@ page import="java.sql.Date" %>
+<%@ page import="java.util.Base64" %><%--
   Created by IntelliJ IDEA.
   User: Nicola
   Date: 16/01/2023
@@ -121,7 +122,7 @@
                     </tr>
                     <tr>
                         <td>
-                        <img id="immagine" src="data:image/jpeg;base64,<%=terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()%>" alt="Foto terreno">
+                        <img id="immagine" src="data:image/jpeg;base64,<%=new String(Base64.getEncoder().encode(terrenoManager.restituisciTerrenoDaInt(cb.getTerreno()).getImmagine()))%>" alt="Foto terreno">
                         </td>
                         <td><%=cb.getId()%></td>
                         <td class="tohide">
