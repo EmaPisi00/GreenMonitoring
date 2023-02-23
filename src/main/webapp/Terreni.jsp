@@ -96,7 +96,7 @@
         }
     %>
 
-    <div class="container py-5" style="width: 100%; height: 100%; ">
+    <div class="container py-5" style="width: 100%; margin-bottom: 3%;">
         <div class="row">
             <div class="col-12 text-center">
                 <h5 class="display-3 text-center">Lista Terreni </h5>
@@ -140,11 +140,13 @@
                                 Iterator it = list.iterator();
                                 while (it.hasNext()) {
                                     terrenoBean = (TerrenoBean) it.next();
-                                    String immagine;
+                                    String immagine ;
                                     try {
                                         immagine = new String(Base64.getEncoder().encode(terrenoBean.getImmagine()));
+                                        System.out.println("immagine pianta" + immagine);
                                     } catch (NullPointerException e) {
                                         immagine = null;
+                                        System.out.println("immagine pianta" + immagine);
                                     }
                     %>
 
@@ -160,8 +162,11 @@
                         <td><%= terrenoBean.getSuperficie()%>
                         </td>
                         <td><p style="display: none"><%= terrenoBean.getId()%>
-                        </p> <img src="img/delete.png" width="35px" style="cursor: pointer" data-bs-toggle="modal"
-                                  data-bs-target="#exampleModal"></td>
+                        </p>
+                        <%out.print(
+                                "<button class=\"btn btn-danger mx-2 my-2\" type=\"button\" value=\"" + terrenoBean.getId() + "\" onclick='showModal(\""+
+                                        terrenoBean.getId() +"\")'>Rimuovi</button>");%>
+                        </td>
                     </tr>
 
                     <% }
@@ -181,17 +186,42 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                Sei sicuro di voler effettuare la rimozione?
+                Sei sicuro di voler effettuare la rimozione ?
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary close" data-bs-dismiss="modal">No</button>
-                <button type="submit" class="btn btn btn-outline-danger"><a style="text-decoration: none; "
-                                                                          href="RimuoviTerrenoServlet?action=delete&id=<%= terrenoBean.getId()%>">Conferma</a>
-                </button>
+                <button id="closeModal" class="btn-reed" data-bs-dismiss="modal" onclick="closeModal()">No</button>
+                <form id="rimuoviTerreno" action="RimuoviTerrenoServlet" method="post">
+                    <input type="hidden" name="id" value="">
+                    <button id="summit" name="Rimuovi" class="btn-green">Conferma</button>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function showModal(id) {
+        // Mostra il modal
+        $("#exampleModal").modal("show");
+        $("#rimuoviTerreno input[name=id]").val(id);
+
+    }
+
+    $(document).ready(function() {
+
+        $("#alrt").hide();
+
+        $("#summit").click(function(){
+            $("#rimuoviTerreno").submit();
+        });
+
+    });
+
+    function closeModal() {
+        $("#exampleModal").modal("hide");
+    }
+
+</script>
 <%@include file="fragments/footer.html" %>
 </body>
 </html>

@@ -65,11 +65,12 @@ public class TerrenoDAOImpl implements TerrenoDAO {
                 TerrenoBean t = new TerrenoBean();
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
-                t.setImmagine(rs.getBytes("immagine"));
+
                 t.setSuperficie(rs.getFloat("superfice"));
                 t.setLatitudine(rs.getFloat("latitudine"));
                 t.setLongitudine(rs.getFloat("longitudine"));
                 t.setAzienda(rs.getString("azienda"));
+                t.setImmagine(rs.getBytes("immagine"));
                 connection.commit();
                 list.add(t);
             }

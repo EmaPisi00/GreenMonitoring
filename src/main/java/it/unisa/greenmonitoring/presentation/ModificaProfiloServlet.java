@@ -46,6 +46,7 @@ public class ModificaProfiloServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         HttpSession session = request.getSession();
         UtenteBean utente = (UtenteBean) session.getAttribute("currentUserSession");
 
@@ -106,12 +107,14 @@ public class ModificaProfiloServlet extends HttpServlet {
                     request.setAttribute("descrizione", "Errore nell'inserimento del nome azienda");
                     RequestDispatcher rd = request.getRequestDispatcher("/ModificaProfilo.jsp");
                     rd.forward(request, response);
+                    return;
                 } else if (!(partita_iva.matches("^[0-9]+$"))) {
                     System.out.println("\nErrore nella partita iva\n");
                     request.setAttribute("errore", "8");
                     request.setAttribute("descrizione", "Errore nell'inserimento della partita iva");
                     RequestDispatcher rd = request.getRequestDispatcher("/ModificaProfilo.jsp");
                     rd.forward(request, response);
+                    return;
                 }
 
                 AziendaBean utenteNuovo = new AziendaBean(emailNuova, password, telefono, citta, indirizzo, provincia);
