@@ -82,8 +82,10 @@
                     <td><%= dipendente.getCognome() %>
                     </td>
                     <td><%salvaEmail = dipendente.getEmail();%>
-                        <img src="img/delete.png" width="35px" style="cursor: pointer" data-bs-toggle="modal"
-                             data-bs-target="#exampleModal"></td>
+                        <%out.print(
+                                "<button class=\"btn btn-danger mx-2 my-2\" type=\"button\" value=\"" + dipendente.getEmail() + "\" onclick='showModal(\""+
+                                        dipendente.getEmail() +"\")'>Rimuovi</button>");%>
+                    </td>
                 </tr>
                 <% } %>
             </table>
@@ -93,17 +95,19 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-     aria-hidden="true">
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                Sei sicuro di voler effettuare la rimozione?
+                Sei sicuro di voler effettuare la rimozione ?
             </div>
             <div class="modal-footer">
-                <button id="closeModal" class="btn btn-secondary" data-dismiss="modal">Esci</button>
-                <button id="summit" class="btn btn-outline-danger"><a style="text-decoration: none; "
-                                                                      href="RimuoviAssociazioneServlet?action=delete&email=<%= salvaEmail%>">Conferma</a>
-                </button>
+                <button id="closeModal" class="btn-reed" data-bs-dismiss="modal" onclick="closeModal()">No</button>
+                <form id="rimuoviPianta" action="RimuoviAssociazioneServlet" method="post">
+                    <input type="hidden" name="email" value="">
+                    <button id="summit" name="Rimuovi" class="btn-green">Conferma</button>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -111,7 +115,29 @@
 
 <% } %>
 
+<script>
+    function showModal(id) {
+        // Mostra il modal
+        $("#exampleModal").modal("show");
+        $("#rimuoviPianta input[name=email]").val(id);
 
+    }
+
+    $(document).ready(function() {
+
+        $("#alrt").hide();
+
+        $("#summit").click(function(){
+            $("#rimuoviPianta").submit();
+        });
+
+    });
+
+    function closeModal() {
+        $("#exampleModal").modal("hide");
+    }
+
+</script>
 <%@include file="fragments/footer.html" %>
 </body>
 
