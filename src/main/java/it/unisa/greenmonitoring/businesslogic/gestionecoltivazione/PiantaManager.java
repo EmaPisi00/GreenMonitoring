@@ -28,6 +28,7 @@ public class PiantaManager {
     }
     //TO-DO implementare i metodi di pianta manager
     /**
+     * Questo metodo inserisce una nuova pianta nel a partire da un PiantaBean DB.
      * @param pianta
      * @return PiantaBean
      */
@@ -47,7 +48,7 @@ public class PiantaManager {
     }
 
     /**
-     * ritorna la lista delle piante per utente.
+     * Ritorna la lista delle piante per utente.
      * @param email
      * @return List
      */
@@ -57,9 +58,10 @@ public class PiantaManager {
         return  listaPiante;
     }
     /**
+     * Questo metodo rimuove una pianta da db.
      * @param emailAzienda
      * @param id_pianta
-     * @return boolean
+     * @return true se e solo se la pianta è rimossa con successo dal database.
      */
     public boolean rimuoviPiantaManager(int id_pianta, String emailAzienda) {
         ArrayList<ColtivazioneBean> c = cm.visualizzaColtivazioniAvviate(emailAzienda);
@@ -74,7 +76,7 @@ public class PiantaManager {
     }
 
     /**
-     *
+     * Questo metodo restituisce una pianta a partire dal suo id.
      * @param id
      * @return PiantaBean
      */
@@ -83,7 +85,7 @@ public class PiantaManager {
         return pianta;
     }
     /**
-     *
+     * Questo metodo aggiorna una pianta partendo da un'istanza di PiantaBean.
      * @param pianta
      * @return PiantaBean
      */

@@ -95,7 +95,7 @@ public class UtenteManager {
         return utenteNuovo;
     }
     /**
-     * retrieve dati azienda basandosi sul codice di associazione.
+     * Retrieve dati azienda basandosi sul codice di associazione.
      * @param codice_associazione
      * @return AziendaBean
      */

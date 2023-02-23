@@ -21,6 +21,7 @@ public class SensoreManager {
         sns = new SensoreDAOImpl();
     }
     /**
+     * Questo metodo crea un nuovo sensore.
      * @param s
      * @throws SQLException
      */

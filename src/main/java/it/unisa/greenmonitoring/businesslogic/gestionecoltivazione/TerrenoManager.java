@@ -16,7 +16,7 @@ public class TerrenoManager {
      */
     private ColtivazioneManager coltivazioneManager;
     /**
-     * terrenodao.
+     * Terrenodao.
      */
     private TerrenoDAO td;
 
@@ -29,10 +29,10 @@ public class TerrenoManager {
     }
 
     /**
-     * inserisce un terreno.
+     * Inserisce un terreno.
      * @param t
      * @throws SQLException
-     * @return List
+     * @return TerrenoBean
      */
     public TerrenoBean inserisciTerreno(TerrenoBean t)  {
 
