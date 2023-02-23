@@ -140,7 +140,6 @@
         <% } %>
         <!-- INSERIMENTO DEI SENSORI -->
         <label>Scegliere i sensori da associare alla coltivazione</label><br>
-        <label>pH</label><br>
         <%
           SensoreManager sm = new SensoreManager();
           List<SensoreBean> sbList = sm.visualizzaListaSensori(ab.getEmail());
@@ -149,8 +148,9 @@
         %>
         <h7>Non ci sono sensori.</h7>
         <%
-        } else {
-          for (int i = 0; i < sbList.size(); i++) {
+        } else { %>
+        <label>pH</label><br>
+        <%  for (int i = 0; i < sbList.size(); i++) {
             if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("ph")) {
         %>
         <input type="checkbox" id="chk" name="sensorePh" value="<%=sbList.get(i).getId()%>"> Codice

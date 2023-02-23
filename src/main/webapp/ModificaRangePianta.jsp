@@ -113,13 +113,13 @@
                 <form id="ModificaRange" name="ModificaRange" action="RimuoviPiantaServlet" method="post">
                     <input type="hidden" id="ModificaPianta" name="ModificaPianta" value="1">
                     <div class="row mt-2">
-                        <label class="text-center">ph_min</label>
+                        <label class="text-center">PH minimo</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"   id="ph_min" name="ph_min"  placeholder="null">
                             <label for="ph_min"><%=pianta.getPh_min() %></label>
                         </div>
 
-                        <label class="text-center">ph_max</label>
+                        <label class="text-center">PH massimo</label>
                         <div class="form-floating mb-3">
                             <input type="tex" class="form-control" id="ph_max" name="ph_max" placeholder="null">
                             <label for="ph_max"> <%=pianta.getPh_max()%> </label>
@@ -127,25 +127,25 @@
                     </div>
 
                     <div class="row mt-3">
-                        <label class="text-center">temperatura_min</label>
+                        <label class="text-center">Temperatura minima</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"   id="temperatura_min" name="temperatura_min"  placeholder="null">
                             <label for="temperatura_min"><%=pianta.getTemperatura_min() %></label>
                         </div>
 
-                        <label class="text-center">temperatura_max'</label>
+                        <label class="text-center">Temperatura massima</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"  id="temperatura_max" name="temperatura_max"  placeholder="null">
                             <label for="temperatura_max"><%=pianta.getTemperatura_max() %></label>
                         </div>
 
-                        <label class="text-center">umidita_min</label>
+                        <label class="text-center">Umidità minima</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control" id="umidita_min" name="umidita_min"  placeholder="null">
                             <label for="umidita_min"><%=pianta.getUmidita_min() %></label>
                         </div>
 
-                        <label class="text-center">>umidita_max</label>
+                        <label class="text-center">Umidità massima</label>
                         <div class="form-floating mb-3 ">
                             <input type="text" class="form-control"  id="umidita_max" name="umidita_max"  placeholder="null">
                             <label for="umidita_max"><%=pianta.getUmidita_max()%></label>
