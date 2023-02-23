@@ -145,7 +145,7 @@
     }
     document.getElementById("coltivazioneBtn").addEventListener("click", function() {
         var coltivazioneId = document.getElementById("notifica-coltivazione").innerText;
-        var url = "ColtivazioniServlet?coltivazione=" + coltivazioneId;
+        var url = "AccediAColtivazioneServlet?coltivazione=" + coltivazioneId;
         window.location.href = url;
     });
 

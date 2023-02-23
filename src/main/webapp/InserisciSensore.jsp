@@ -77,7 +77,7 @@
                 <div class="mb-3 ">
                     <label class="form-label text-center" for="tipo">Tipo Sensore</label>
                     <select class="form-select" id="tipo" name="tipo">
-                        <option value="Umidità">Umidita'</option>
+                        <option value="Umidita">Umidita'</option>
                         <option value="Temperatura">Temperatura</option>
                         <option value="PH">PH</option>
                     </select>
