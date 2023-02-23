@@ -62,9 +62,9 @@
 <body>
 <% UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
     if (u instanceof DipendenteBean) { %>
-<%@include file="/fragments/headerLoggedDipendente.html" %>
+<%@include file="/fragments/headerLoggedDipendente.jsp" %>
 <%} else if (u instanceof AziendaBean) { %>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%@ include file="/fragments/headerLoggedAzienda.jsp" %>
 <%} else { %>
 <%@include file="fragments/headerLogin.html" %>
 <% }%>

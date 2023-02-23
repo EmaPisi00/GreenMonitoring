@@ -27,7 +27,7 @@
         response.sendRedirect("error.jsp");
     }
 %>
-<%@include file="fragments/headerLoggedAzienda.html" %>
+<%@include file="fragments/headerLoggedAzienda.jsp" %>
 <%
     MisurazioneSensoreDAO misurazioneSensoreDAO = new MisurazioneSensoreDAOImpl();
     PiantaManager piantaManager = new PiantaManager();

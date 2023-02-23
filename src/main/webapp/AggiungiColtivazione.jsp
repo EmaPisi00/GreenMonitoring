@@ -57,7 +57,7 @@
   if (u instanceof DipendenteBean)  { %>
 <%@include file="/fragments/headerLoggedDipendente.html" %>
 <%} else if(u instanceof  AziendaBean){ %>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%@ include file="/fragments/headerLoggedAzienda.jsp" %>
 <%} else { %>
 <%@include file="fragments/headerLogin.html"%>
 <% }%>

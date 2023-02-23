@@ -48,7 +48,7 @@
     if (u instanceof DipendenteBean) {
         response.sendRedirect("error.jsp");
     } else if (u instanceof AziendaBean) { %>
-<%@include file="fragments/headerLoggedAzienda.html" %>
+<%@include file="fragments/headerLoggedAzienda.jsp" %>
 <%
     DipendenteDAO d = new DipendenteDAOImpl();
     List<DipendenteBean> dipendenti = d.retrieveAllByCode(u.getEmail());

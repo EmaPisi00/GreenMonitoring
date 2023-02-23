@@ -65,7 +65,7 @@
     } else if (!(u instanceof AziendaBean)) { %>
 <% response.sendRedirect("error.jsp"); %>
 <% } else { %>
-<%@include file="fragments/headerLoggedAzienda.html" %>
+<%@include file="fragments/headerLoggedAzienda.jsp" %>
 <%}%>
 
 <body>

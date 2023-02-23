@@ -40,16 +40,17 @@
         UtenteBean seo = (UtenteBean) session.getAttribute("currentUserSession");
         NotificaDAO n = new NotificaDAOImpl();
         List<NotificaBean> listaNotifiche = null;
-        if (seo instanceof AziendaBean) {
-            listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());
-        } else if (seo instanceof DipendenteBean) {
-            listaNotifiche = n.retriveNotifichePerDipendente(seo.getEmail());
+        if (seo instanceof AziendaBean) {%>
+    <%@include file="/fragments/headerLoggedDipendente.jsp" %>
+           <% listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());%>
+        <%} else if (seo instanceof DipendenteBean) {%>
+    <%@include file="/fragments/headerLoggedDipendente.jsp" %>
+            <%listaNotifiche = n.retriveNotifichePerDipendente(seo.getEmail());
         } else {
             response.sendRedirect("error.jsp");
         }
+            %>
 
-    %>
-    <%@ include file="/fragments/headerLoggedAzienda.html" %>
 </head>
 <body>
 <div class="container mt-5">

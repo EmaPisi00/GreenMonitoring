@@ -63,9 +63,9 @@
     if (user == null)  {
     response.sendRedirect("error.jsp");
 } else if(user instanceof AziendaBean){ %>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%@ include file="/fragments/headerLoggedAzienda.jsp" %>
 <%} else if (user instanceof DipendenteBean){ %>
-<%@ include file="/fragments/headerLoggedDipendente.html" %>
+<%@ include file="/fragments/headerLoggedDipendente.jsp" %>
    <% }%>
 <body>
 <% if (request.getAttribute("conferma")!=null) {%>

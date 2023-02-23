@@ -28,11 +28,11 @@
     if(u == null){ %>
 <%@include file="fragments/headerLogin.html"%>
     <% } else if (u instanceof DipendenteBean && ((DipendenteBean) u).getAzienda()!= null ) { %>
-<%@include file="/fragments/headerLoggedDipendente.html" %>
+<%@include file="/fragments/headerLoggedDipendente.jsp" %>
 <%} else if(u instanceof DipendenteBean && ((DipendenteBean) u).getAzienda() == null) {%>
         <%@include file="fragments/headerLoggedDipendenteNonAssociato.html"%>
 <% } else if (u instanceof AziendaBean) { %>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%@ include file="/fragments/headerLoggedAzienda.jsp" %>
 <%}%>
 
 

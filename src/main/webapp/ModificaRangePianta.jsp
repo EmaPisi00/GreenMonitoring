@@ -88,7 +88,7 @@
 
 %>
 
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%@ include file="/fragments/headerLoggedAzienda.jsp" %>
 <%}%>
 
 <% if (errori !=null) {%>

@@ -123,7 +123,7 @@
 <body>
 
 
-<%@include file="fragments/headerLoggedAzienda.html" %>
+<%@include file="fragments/headerLoggedAzienda.jsp" %>
 
 <%! String Immagine = null;
     List<ColtivazioneBean> list = null;

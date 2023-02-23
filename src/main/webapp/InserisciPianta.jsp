@@ -33,7 +33,7 @@
     } else if (user instanceof DipendenteBean) {
         response.sendRedirect("error.jsp");
     } else if (user instanceof AziendaBean) { %>
-<%@include file="fragments/headerLoggedAzienda.html" %>
+<%@include file="fragments/headerLoggedAzienda.jsp" %>
 
 <%} %>
 <% if (request.getAttribute("conferma") != null) {%>

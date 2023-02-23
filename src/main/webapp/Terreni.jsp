@@ -69,7 +69,7 @@
         response.sendRedirect("error.jsp");
         return;
     }%>
-<%@include file="fragments/headerLoggedAzienda.html" %>
+<%@include file="fragments/headerLoggedAzienda.jsp" %>
 
 <% if (u != null) {%>
 <% if (request.getAttribute("conferma")!=null) {%>

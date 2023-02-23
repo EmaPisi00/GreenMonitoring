@@ -4,6 +4,7 @@
 <%@ page import="it.unisa.greenmonitoring.dataccess.beans.DipendenteBean" %>
 <%@ page import="it.unisa.greenmonitoring.dataccess.dao.AziendaDAOImpl" %>
 
+
 <head>
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
 
@@ -23,11 +24,11 @@
     if(user == null){ %>
 <%@include file="fragments/headerLogin.html"%>
 <% } else if (user instanceof DipendenteBean && ((DipendenteBean) user).getAzienda()!= null ) { %>
-<%@include file="/fragments/headerLoggedDipendente.html" %>
+<%@include file="/fragments/headerLoggedDipendente.jsp" %>
 <%} else if(user instanceof DipendenteBean && ((DipendenteBean) user).getAzienda() == null) {%>
 <%@include file="fragments/headerLoggedDipendenteNonAssociato.html"%>
 <% } else if (user instanceof AziendaBean) { %>
-<%@ include file="/fragments/headerLoggedAzienda.html" %>
+<%@ include file="/fragments/headerLoggedAzienda.jsp" %>
 <%}%>
 
 <html>
