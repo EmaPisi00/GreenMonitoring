@@ -652,7 +652,5 @@
 </div>
 </div>
     <!-- Fine coltivazioni -->
-
-    <%@include file="fragments/footer.html" %>
 </body>
 </html>

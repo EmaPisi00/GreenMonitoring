@@ -53,7 +53,7 @@
 
 </head>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 " style="margin-bottom: 20%">
     <h5 class="display-3 text-center">Sezione Notifiche</h5>
     <div class="py-5">
     <table class="table table-group-divider">

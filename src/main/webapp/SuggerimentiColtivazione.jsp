@@ -59,6 +59,7 @@
 <div class="text-center"
      style="font-size: 30px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ; line-height: 100px;">
     <% DatiMeteoBean meteo = cm.visualizzaDatiMeteo(terrenoBean.getLatitudine(), terrenoBean.getLongitudine());
+    System.out.println("dati meteo " + meteo);
         { %>
     <div class="col-12">
         Temperatura Minima:     <%= meteo.getTemperatura_min() %>
@@ -75,7 +76,7 @@
     <div class="container w-50 text-center py-5">
         <%
             long weather_code = meteo.getWeather_code();
-
+            System.out.println("codice meteo" + weather_code);
             if (weather_code < 56 && (misurazione > umidMax || (umidMax - misurazione) <= 5)) { %>
         <div class="row">
             <div class="col-5">
@@ -139,8 +140,11 @@
         <div class=" text-center" style="margin-top:144px">
             <p style="color:black">Domani ci sarà una forte pioggia, è consigliato disattivare l'irrigazione.</p>
         </div>
-        <% } %>
-        <% } %>
+        <% } else if (weather_code >65) { %>
+        <div class=" text-center" style="margin-top:144px">
+            <p style="color:black">Domani ci sarà una tempesta violenta che potrebbe causare gravi danni alle coltivazioni.</p>
+        </div>
+        <% } } %>
     </div>
 </div>
 
