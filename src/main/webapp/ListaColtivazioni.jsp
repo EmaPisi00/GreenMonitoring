@@ -184,7 +184,7 @@
                     <br><%if (cb.getStato_archiviazione() == 1) {%>
                     <h7>(Archiviata)</h7>
                     <% }%><br><br>
-                    <form action="AccediAColtivazioneServlet" method="post">
+                    <form action="AccediAColtivazioneServlet" method="get">
                         <input type="hidden" name="coltivazione" value="<%=cb.getId()%>">
                         <button type="submit" class="btn btn-success">Visualizza stato</button>
                     </form>
