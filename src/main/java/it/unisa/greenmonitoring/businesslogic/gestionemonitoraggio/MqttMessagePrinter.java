@@ -71,7 +71,7 @@ public class MqttMessagePrinter implements MqttCallback {
                     List<String> listaDipendenti = azienda.ListaEmailDipendenti(sensore.getAzienda());
                     nd.aggiungiNotifica(notificaBean, listaDipendenti);
                 }
-            } else if (storico.getTipo().matches("Umidità")) {
+            } else if (storico.getTipo().matches("Umidita")) {
                 //prendo la pianta dal sensore che mi da la coltivazione.
                 // se temperatura del sensore rilevata è diversa da max e min della pianta
                 if (storico.getValore() > pianta.getUmidita_max()
@@ -87,7 +87,7 @@ public class MqttMessagePrinter implements MqttCallback {
                             "ErroreUmidita", new Timestamp(storico.getOra().getTime()), erroreTemp);
                     nd.aggiungiNotifica(nb, azienda.ListaEmailDipendenti(sensore.getAzienda()));
                 }
-            } else if (storico.getTipo().matches("PH")) {
+            } else if (storico.getTipo().matches("pH")) {
                 //prendo la pianta dal sensore che mi da la coltivazione.
                 // se temperatura del sensore rilevata è diversa da max e min della pianta
                 if (storico.getValore() > pianta.getPh_max()

@@ -60,7 +60,7 @@ public class AutenticazioneManager {
         ListIterator<DipendenteBean> listaDipendenti = dipendenteDao.retrieveAll().listIterator();
         if (listaDipendenti.hasNext()) {
             DipendenteBean bean = listaDipendenti.next();
-            if ((bean.getNome().equals(dipendenteBean.getNome())) && (bean.getCognome().equals(dipendenteBean.getCognome())) && (bean.getAzienda().equals(dipendenteBean.getAzienda()))) {
+            if ((bean.getEmail().equals(dipendenteBean.getEmail()))) {
                 System.out.println("\nDipendente già presente\n");
                 return null;
             }

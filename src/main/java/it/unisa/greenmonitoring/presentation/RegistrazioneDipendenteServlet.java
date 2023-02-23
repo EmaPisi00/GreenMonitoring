@@ -90,6 +90,7 @@ public class RegistrazioneDipendenteServlet extends HttpServlet {
             } else {
                 try {
                     aziendaManager.registraDipendente(dipendenteBean);
+                    request.getSession().setAttribute("currentUserSession", dipendenteBean);
                     response.sendRedirect("Associazione.jsp");
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

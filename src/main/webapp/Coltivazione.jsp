@@ -284,7 +284,7 @@
             </button>
         </li>
         <% } %>
-        <%  List<MisurazioneSensoreBean> misurazioneSensoreBeansTemperatura = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "Temperatura");
+        <%  List<MisurazioneSensoreBean> misurazioneSensoreBeansTemperatura = cm.visualizzaMisurazioneColtivazione(coltivazioneID, "Temperature");
             if (misurazioneSensoreBeansTemperatura.size() !=  0) {%>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="temperatura-tab" data-bs-toggle="tab" data-bs-target="#temperatura-tab-pane"
@@ -497,7 +497,7 @@
                             <script type="text/javascript">
                                 function findTemperaturaChart() {
                                     var coltivazioneID = <%=coltivazioneID%>;
-                                    var tipoSensore = "Temperatura"
+                                    var tipoSensore = "Temperature"
                                         var xhr = new XMLHttpRequest();
                                         xhr.open("POST", "StoricoServlet");
                                         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -625,7 +625,7 @@
             <select id="selectSensore" required>
                 <option name="tipoSensore" value="umidita">Umidità</option>
                 <option name="tipoSensore" value="pH">pH</option>
-                <option name="tipoSensore" value="temperatura">Temperatura</option>
+                <option name="tipoSensore" value="Temperature">Temperatura</option>
             </select>
             <button id="rilevamentiPerPeriodo" type="button" class="btn btn-success" onclick="loadJsonAndPrintChart()" style="height: auto; width: auto;">Mostra per questi periodi</button>
         </form>

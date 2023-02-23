@@ -130,6 +130,7 @@ public class ColtivazioneManager {
      */
     public Double restituisciMisurazioniRecenti(String tipo, Integer id_coltivazione) {
         try {
+            System.out.println("*****" + tipo + " ***" + id_coltivazione);
             return misurazioneSensoreDAO.retrieveMostRecentMesurement(tipo, id_coltivazione);
         } catch (SQLException e) {
             throw new RuntimeException(e);
