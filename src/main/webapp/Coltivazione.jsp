@@ -171,7 +171,7 @@
     descrizioneTerreno = temporaryTerrenoBean.getNome();
     resultUmidita = cm.restituisciMisurazioniRecenti("umidita", coltivazioneID);
     resultPH = cm.restituisciMisurazioniRecenti("pH", coltivazioneID);
-    resultTemperatura = cm.restituisciMisurazioniRecenti("Temperatura", coltivazioneID);
+    resultTemperatura = cm.restituisciMisurazioniRecenti("Temperature", coltivazioneID);
 } else {
     response.sendError(404);
 }%>

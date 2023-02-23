@@ -159,7 +159,7 @@
         } %>
         <label>Temperatura</label><br>
         <% for (int i = 0; i < sbList.size(); i++) {
-          if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("temperatura")) {
+          if (sbList.get(i).getColtivazione() == 0 && sbList.get(i).getTipo().toLowerCase().equals("temperature")) {
         %>
         <input type="checkbox" id="chk" name="sensoreTemperatura" value="<%=sbList.get(i).getId()%>"> Codice
         sensore: <%=sbList.get(i).getId()%><br>
