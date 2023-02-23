@@ -123,7 +123,14 @@
 <body>
 
 
-<%@include file="fragments/headerLoggedAzienda.jsp" %>
+<% UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if (u instanceof DipendenteBean) { %>
+<%@include file="/fragments/headerLoggedDipendente.jsp" %>
+<%} else if (u instanceof AziendaBean) { %>
+<%@ include file="/fragments/headerLoggedAzienda.jsp" %>
+<%} else { %>
+<%@include file="fragments/headerLogin.html" %>
+<% }%>
 
 <%! String Immagine = null;
     List<ColtivazioneBean> list = null;
@@ -164,7 +171,7 @@
     descrizioneTerreno = temporaryTerrenoBean.getNome();
     resultUmidita = cm.restituisciMisurazioniRecenti("umidita", coltivazioneID);
     resultPH = cm.restituisciMisurazioniRecenti("pH", coltivazioneID);
-    resultTemperatura = cm.restituisciMisurazioniRecenti("Temperatura", coltivazioneID);
+    resultTemperatura = cm.restituisciMisurazioniRecenti("Temperature", coltivazioneID);
 } else {
     response.sendError(404);
 }%>

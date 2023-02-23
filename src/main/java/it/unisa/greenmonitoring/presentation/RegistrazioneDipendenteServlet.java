@@ -33,7 +33,6 @@ public class RegistrazioneDipendenteServlet extends HttpServlet {
         String nome = request.getParameter("inputNome");
         String cognome = request.getParameter("inputCognome");
         String email = request.getParameter("inputEmail");
-        String confermEmail = request.getParameter("confermaInputEmail");
         String password = request.getParameter("inputPassword");
         String confermPassword = request.getParameter("confermaInputPassword");
         String indirizzo = request.getParameter("inputIndirizzo");
@@ -42,8 +41,8 @@ public class RegistrazioneDipendenteServlet extends HttpServlet {
         String telefono = request.getParameter("inputTelefono");
         String azienda = request.getParameter("inputAzienda");
 
-        if (!(password.equals(confermPassword)) || !(email.equals(confermEmail))) {
-            System.out.println("\nErrore email o password diverse ");
+        if (!(password.equals(confermPassword))) {
+            System.out.println("\nErrore password diverse ");
             response.sendRedirect("RegisterDipendente.jsp");
         } else {
 
@@ -61,37 +60,37 @@ public class RegistrazioneDipendenteServlet extends HttpServlet {
 
             if (!(dipendenteBean.getCitta().matches("^[a-zA-Z]+$"))) {
                 request.setAttribute("errore", "1");
-                request.setAttribute("descrizione", "descrizione...");
+                request.setAttribute("descrizione", "Errore nel nome della citta', inserisci solo caratteri e non numeri");
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else if (!(dipendenteBean.getProvincia().matches("^[a-zA-Z]+$"))) {
                 System.out.println("\nErrore nel nome della Provincia\n");
                 request.setAttribute("errore", "2");
-                request.setAttribute("descrizione", "descrizione...");
+                request.setAttribute("descrizione", "Errore nel nome della provincia, inserisci solo caratteri e non numeri");
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else if (!(dipendenteBean.getPassword().matches("^[a-zA-Z0-9!@#$%^&*]+$"))) {
                 System.out.println("\nErrore nella password\n");
                 request.setAttribute("errore", "3");
-                request.setAttribute("descrizione", "descrizione...");
+                request.setAttribute("descrizione", "Errore nella password puoi inserire caratteri speciali e numeri");
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else if (!(dipendenteBean.getNome().matches("^[a-zA-Z]+$"))) {
                 System.out.println("\nErrore nel nome");
                 request.setAttribute("errore", "4");
-                request.setAttribute("descrizione", "descrizione...");
+                request.setAttribute("descrizione", "Errore nel nome, puoi inserire solo caratteri e non numeri");
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else if (!(dipendenteBean.getCognome().matches("^[a-zA-Z]+$"))) {
                 System.out.println("\nErrore nel nome");
                 request.setAttribute("errore", "5");
-                request.setAttribute("descrizione", "descrizione...");
+                request.setAttribute("descrizione", "Errore nel cognome, puoi inserire solo caratteri e non numeri");
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else {
                 try {
                     aziendaManager.registraDipendente(dipendenteBean);
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("Associazione.jsp");
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

@@ -169,7 +169,7 @@
                             </td>
                             <td class="tohide">
                                 <%
-                                    resultTemperatura = coltivazioneManager.restituisciMisurazioniRecenti("Temperatura", cb.getId());
+                                    resultTemperatura = coltivazioneManager.restituisciMisurazioniRecenti("Temperature", cb.getId());
                                     String colorTemperatura = "green";
                             /*
                             if (resultUmidita è lontano dal valore ottimale) {
