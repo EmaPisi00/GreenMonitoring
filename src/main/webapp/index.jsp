@@ -20,6 +20,17 @@
     <link rel="stylesheet" href="css/headerLogin.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
 
+    <!--Altro-->
+    <script src="./jquery/jquery-3.6.3.min.js"></script>
+    <link href="/img/favicon.png" rel="icon">
+    <link href="bootstrap-5.2.3-dist/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="bootstrap-5.2.3-dist/css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
     <title>HomePage</title>
 </head>
 <body>

@@ -41,7 +41,7 @@
         NotificaDAO n = new NotificaDAOImpl();
         List<NotificaBean> listaNotifiche = null;
         if (seo instanceof AziendaBean) {%>
-    <%@include file="/fragments/headerLoggedDipendente.jsp" %>
+    <%@include file="/fragments/headerLoggedAzienda.jsp" %>
            <% listaNotifiche = n.retriveNotifichePerAzienda(seo.getEmail());%>
         <%} else if (seo instanceof DipendenteBean) {%>
     <%@include file="/fragments/headerLoggedDipendente.jsp" %>
