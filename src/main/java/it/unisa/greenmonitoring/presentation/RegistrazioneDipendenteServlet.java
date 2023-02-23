@@ -44,7 +44,7 @@ public class RegistrazioneDipendenteServlet extends HttpServlet {
 
         if (!(password.equals(confermPassword)) || !(email.equals(confermEmail))) {
             System.out.println("\nErrore email o password diverse ");
-            response.sendRedirect("RegistrazioneDipendente.jsp");
+            response.sendRedirect("RegisterDipendente.jsp");
         } else {
 
             DipendenteBean dipendenteBean = new DipendenteBean();
@@ -62,31 +62,31 @@ public class RegistrazioneDipendenteServlet extends HttpServlet {
             if (!(dipendenteBean.getCitta().matches("^[a-zA-Z]+$"))) {
                 request.setAttribute("errore", "1");
                 request.setAttribute("descrizione", "descrizione...");
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else if (!(dipendenteBean.getProvincia().matches("^[a-zA-Z]+$"))) {
                 System.out.println("\nErrore nel nome della Provincia\n");
                 request.setAttribute("errore", "2");
                 request.setAttribute("descrizione", "descrizione...");
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else if (!(dipendenteBean.getPassword().matches("^[a-zA-Z0-9!@#$%^&*]+$"))) {
                 System.out.println("\nErrore nella password\n");
                 request.setAttribute("errore", "3");
                 request.setAttribute("descrizione", "descrizione...");
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else if (!(dipendenteBean.getNome().matches("^[a-zA-Z]+$"))) {
                 System.out.println("\nErrore nel nome");
                 request.setAttribute("errore", "4");
                 request.setAttribute("descrizione", "descrizione...");
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else if (!(dipendenteBean.getCognome().matches("^[a-zA-Z]+$"))) {
                 System.out.println("\nErrore nel nome");
                 request.setAttribute("errore", "5");
                 request.setAttribute("descrizione", "descrizione...");
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/Dipendente.jsp");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/RegisterDipendente.jsp");
                 dispatcher.forward(request, response);
             } else {
                 try {
