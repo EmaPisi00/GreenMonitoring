@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.AutenticazioneManager;
-import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.GeneraCodice.GeneraCodiceRandom;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 
 import javax.servlet.*;
@@ -63,16 +62,14 @@ public class RegistrazioneAziendaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        // ottengo la lunghezza di ogni array
-        int lunghezzaCaratteri = Caratteri.length;
-        int lunghezzaNumeri = Numeri.length;
 
-        // istanzio la variabile che conterrà il prodotto finale
         String codiceAssociazione = "";
 
         while (codiceAssociazione.length() < 6) {
 
-            // ottengo un elemento casuale per ogni array
+            int lunghezzaCaratteri = Caratteri.length;
+            int lunghezzaNumeri = Numeri.length;
+
             int c = rand.nextInt(lunghezzaCaratteri);
             int n = rand.nextInt(lunghezzaNumeri);
 
