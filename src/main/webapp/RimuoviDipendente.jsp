@@ -65,7 +65,7 @@
         <div class="col-14 py-5 " style="font-size: 20px;">
             <table class="table table-group-divider">
                 <thead>
-                <tr style="font-family: 'Staatliches', cursive; font-size: 25px;">
+                <tr style="font-size: 25px;">
                     <th scope="col">ID</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Cognome</th>
