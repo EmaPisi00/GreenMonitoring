@@ -53,9 +53,10 @@
 
 </head>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 h-100">
     <h5 class="display-3 text-center">Sezione Notifiche</h5>
-    <table class="table table-striped table-hover">
+    <div class="py-5">
+    <table class="table table-group-divider">
         <thead>
         <tr>
             <th>Numero</th>
@@ -82,6 +83,7 @@
         %>
         </tbody>
     </table>
+    </div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" >
@@ -173,6 +175,10 @@
 
     }
 </script>
+
+
+
+
 <%@include file="fragments/footer.html"%>
 </body>
 </html>
