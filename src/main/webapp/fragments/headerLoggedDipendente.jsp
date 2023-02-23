@@ -143,22 +143,22 @@
     <!-- Logo e titolo -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-7 col-md-12 col-xs-12" style="margin-top: 20px;">
+            <div class="col-lg-8 col-md-12 col-xs-12" style="margin-top: 20px;">
                 <!-- Titolo -->
-                <div class="title text-center">
+                <div class="title" >
                     <h1 style="font-family: 'Anton', sans-serif;" class="display-4">Green Monitoring</h1>
                 </div>
             </div>
-            <div class="col-1 col-md-1 col-xs-12">
+            <div class="col-1 col-md-1 col-xs-12" >
                 <!-- Logo -->
-                <div style="position: absolute;" class="logo">
-                    <a href="index.jsp"><img src="img/zoomed_lg2.png" style="   left: 50px; display: block; position: absolute; margin-top: 40;"  class="img-fluid rounded-top  " alt=""></a>
+                <div style="position: absolute;" class="logo" >
+                    <a href="index.jsp"><img src="img/zoomed_lg2.png" style="   left: 50px; display: block; position: absolute; margin-top: 20px;" class="log_img img-fluid rounded-top  " alt=""></a>
                 </div>
             </div>
             <!-- Profilo e Logout -->
-            <div class="log_reg col-lg-4 py-2" style="position: absolute; margin-top: 40px;">
+            <div class="log_reg col-lg-4 py-2" style=" position: absolute; margin-top: 28px;">
 
-                <% if (!request.getRequestURI().endsWith("SezioneNotifiche.jsp")) { %>
+            <% if (!request.getRequestURI().endsWith("SezioneNotifiche.jsp")) { %>
 
 
                 <!--Notifica-->
@@ -182,7 +182,7 @@
                 <div class="btn1">
                     <form action="LogoutServlet"><input class="log" type="submit" value="Logout"></form>
                 </div>
-            </div>
+
         </div>
     </div>
 
@@ -356,7 +356,6 @@
         <ul class="menu__box">
             <li><a class="menu__item" href="index.jsp">Home</a></li>
             <li><a class="menu__item" href="ListaColtivazioni.jsp">Coltivazioni</a></li>
-            <li><a class="menu__item" href="Notifiche.jsp">Notifiche</a></li>
         </ul>
     </div>
 

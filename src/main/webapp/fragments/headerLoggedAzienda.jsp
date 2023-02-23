@@ -150,11 +150,11 @@
             <div class="col-1 col-md-1 col-xs-12" >
             <!-- Logo -->
             <div style="position: absolute;" class="logo" >
-                <a href="index.jsp"><img src="img/zoomed_lg2.png" style="   left: 50px; display: block; position: absolute; margin-top: 40px;" class="log_img img-fluid rounded-top  " alt=""></a>
+                <a href="index.jsp"><img src="img/zoomed_lg2.png" style="   left: 50px; display: block; position: absolute; margin-top: 20px;" class="log_img img-fluid rounded-top  " alt=""></a>
             </div>
         </div>
             <!-- Profilo e Logout -->
-            <div class="log_reg col-lg-4 py-2" style="position: absolute; margin-top: 40px;">
+            <div class="log_reg col-lg-4 py-2" style=" position: absolute; margin-top: 28px;">
 
                 <% if (!request.getRequestURI().endsWith("SezioneNotifiche.jsp")) { %>
 
@@ -375,7 +375,6 @@
             <li><a class="menu__item" href="Piante.jsp">Piante</a></li>
             <li><a class="menu__item" href="ListaColtivazioni.jsp">Coltivazioni</a></li>
             <li><a class="menu__item" href="ListaSensori.jsp">Sensori</a></li>
-            <li><a class="menu__item" href="Notifiche.jsp">Notifiche</a></li>
         </ul>
     </div>
 
