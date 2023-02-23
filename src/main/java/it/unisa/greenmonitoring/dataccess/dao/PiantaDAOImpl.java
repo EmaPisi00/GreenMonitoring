@@ -247,9 +247,7 @@ public class PiantaDAOImpl implements PiantaDAO {
             preparedStatement.setFloat(5, p.getUmidita_min());
             preparedStatement.setFloat(6, p.getUmidita_max());
             preparedStatement.setInt(7, p.getId());
-
             preparedStatement.executeUpdate();
-            System.out.println("singola pianta da aggiornare" + p);
             connection.commit();
         } catch (SQLException s) {
             s.printStackTrace();

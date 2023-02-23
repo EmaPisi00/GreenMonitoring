@@ -90,8 +90,9 @@ public class PiantaManager {
      * @return PiantaBean
      */
     public PiantaBean aggiornaPianta(PiantaBean pianta) {
+        System.out.println(pianta);
         if (pianta.getPh_min() > pianta.getPh_max()
-                || pianta.getTemperatura_min() > pianta.getUmidita_max()
+                || pianta.getTemperatura_min() > pianta.getTemperatura_max()
                 || pianta.getUmidita_min() > pianta.getUmidita_max()) {
             return null;
         }
