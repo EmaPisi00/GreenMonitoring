@@ -14,6 +14,13 @@ public class AccediAColtivazioneServlet extends HttpServlet  {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!(request.getSession().getAttribute("currentUserSession") instanceof UtenteBean)) {
+            response.sendError(401);
+        }
+        if (request.getParameter("coltivazione") != null) {
+            request.getSession().setAttribute("coltivazioneID", request.getParameter("coltivazione"));
+            response.sendRedirect("Coltivazione.jsp");
+        }
     }
 
     /**

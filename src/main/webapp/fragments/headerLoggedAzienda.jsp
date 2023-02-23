@@ -302,7 +302,7 @@
         }
         document.getElementById("coltivazioneBtnH").addEventListener("click", function() {
             var coltivazioneId = document.getElementById("notifica-coltivazioneH").innerText;
-            var url = "ColtivazioniServlet?coltivazione=" + coltivazioneId;
+            var url = "AccediAColtivazioneServlet?coltivazione=" + coltivazioneId;
             window.location.href = url;
         });
 

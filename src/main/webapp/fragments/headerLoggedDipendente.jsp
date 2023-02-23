@@ -300,7 +300,7 @@
         }
         document.getElementById("coltivazioneBtnH").addEventListener("click", function() {
             var coltivazioneId = document.getElementById("notifica-coltivazioneH").innerText;
-            var url = "ColtivazioniServlet?coltivazione=" + coltivazioneId;
+            var url = "AccediAColtivazioneServlet?coltivazione=" + coltivazioneId;
             window.location.href = url;
         });
 
@@ -309,43 +309,6 @@
         }
     </script>
 
-
-    <!--        <div class="col-lg-6">
-
-                <nav class="navbar navbar-light " style="position: absolute; top:0%;">
-                    <div class="container-fluid">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
-                             aria-labelledby="offcanvasNavbarLabel">
-                            <div style="background: linear-gradient(to bottom,rgb(221, 203, 203) , rgb(221,203,203))"
-                                 class="offcanvas-header">
-                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="offcanvas-body">
-                                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3"
-                                    style="line-height: 108px;">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="Notifiche.jsp">Notifiche</a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link active" aria-current="page" href="ListaColtivazioni.jsp">Coltivazioni</a>
-                            </li>
-                            </ul>
-                        </div>
-                    </div>
-            </div>
-            </nav>
-        </div>
-    </div>
-    </div>
--->
 
 
     <div class="hamburger-menu">
