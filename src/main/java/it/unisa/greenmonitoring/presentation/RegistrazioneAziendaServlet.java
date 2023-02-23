@@ -1,7 +1,6 @@
 package it.unisa.greenmonitoring.presentation;
 
 import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.AutenticazioneManager;
-import it.unisa.greenmonitoring.businesslogic.gestioneautenticazione.GeneraCodice.GeneraCodiceRandom;
 import it.unisa.greenmonitoring.dataccess.beans.AziendaBean;
 
 import javax.servlet.*;
@@ -9,9 +8,30 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Random;
 
 @WebServlet(name = "RegistrazioneAziendaServlet", value = "/RegistrazioneAziendaServlet")
 public class RegistrazioneAziendaServlet extends HttpServlet {
+
+    /**
+     * Variabile private String caratteri.
+     */
+    private String[] Caratteri = {"a", "b", "c", "d", "e", "f", "g", "h", "i",
+            "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "z", "y",
+            "j", "k", "x", "w", "A", "B", "C", "D", "E", "F", "G", "H", "I",
+            "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "Z", "Y",
+            "J", "K", "X", "W"};
+
+    /**
+     * Variabile private string[] numeri.
+     */
+    private String[] Numeri = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+
+    /**
+     * Variabile private Random.
+     */
+    private Random rand = new Random();
+
 
     /**
      * Dichiaro la variabile privata AziendaManager.
@@ -41,8 +61,25 @@ public class RegistrazioneAziendaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        GeneraCodiceRandom generaCodiceRandom = new GeneraCodiceRandom();
-        String codiceAssociazione = generaCodiceRandom.GeneraCodice();
+
+
+        String codiceAssociazione = "";
+
+        while (codiceAssociazione.length() < 6) {
+
+            int lunghezzaCaratteri = Caratteri.length;
+            int lunghezzaNumeri = Numeri.length;
+
+            int c = rand.nextInt(lunghezzaCaratteri);
+            int n = rand.nextInt(lunghezzaNumeri);
+
+            // aggiungo una lettera casuale
+            codiceAssociazione += Caratteri[c];
+            // aggiungo un numero random
+            codiceAssociazione += Numeri[n];
+
+        }
+
 
         String email = request.getParameter("inputEmail");
         String password = request.getParameter("inputPassword");
