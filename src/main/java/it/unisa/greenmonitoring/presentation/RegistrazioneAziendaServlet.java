@@ -65,7 +65,7 @@ public class RegistrazioneAziendaServlet extends HttpServlet {
 
         String codiceAssociazione = "";
 
-        while (codiceAssociazione.length() < 6) {
+        while (codiceAssociazione.length() < 8) {
 
             int lunghezzaCaratteri = Caratteri.length;
             int lunghezzaNumeri = Numeri.length;
