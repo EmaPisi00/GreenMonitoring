@@ -42,41 +42,110 @@
     Double umidMin = Double.valueOf(piantaBean.getUmidita_min());
 %>
 
-<table style="margin-bottom: 20%">
-    <tr>
-        <th>Informazioni sul tempo di domani per la coltivazione sul terreno " <%= terrenoBean.getNome()%> "</th>
-    </tr>
-    <%  DatiMeteoBean meteo = cm.visualizzaDatiMeteo(terrenoBean.getLatitudine(), terrenoBean.getLongitudine());{ %>
-    <tr>
-        <td>Temperatura minima: <%= meteo.getTemperatura_min() %>°<br>
-            Temperatura massima: <%= meteo.getTemperatura_max() %>°<br>
-            Millimetri di pioggia: <%= meteo.getRain() %><br>
-    </tr>
-</table>
-<table>
-    <tr>
+
+<div class="container py-5">
+    <div class=" text-center">
+        <h5 class="display-3" style="color: black">Suggerimenti</h5>
+    </div>
+</div>
+
+
+<div class="container py-2">
+    <div class="col-12 text-center">
+        <p style="font-size: 35px;">Informazioni sul tempo di domani per la coltivazione sul terreno
+            " <%= terrenoBean.getNome()%> "</p>
+    </div>
+</div>
+<div class="text-center"
+     style="font-size: 30px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ; line-height: 100px;">
+    <% DatiMeteoBean meteo = cm.visualizzaDatiMeteo(terrenoBean.getLatitudine(), terrenoBean.getLongitudine());
+        { %>
+    <div class="col-12">
+        Temperatura Minima:     <%= meteo.getTemperatura_min() %>
+    </div>
+    <div class="col-12">
+        Temperatura Max:        <%= meteo.getTemperatura_max()%>
+    </div>
+    <div class="col-12">
+        Millimetri di Pioggia:      <%= meteo.getRain()%>
+    </div>
+</div>
+
+<div class="container h-100">
+    <div class="container w-50 text-center py-5">
         <%
             long weather_code = meteo.getWeather_code();
-            if (weather_code < 56 && (misurazione > umidMax || (umidMax - misurazione)<= 5)) {
-                out.println("Domani non pioverà però è consigliato disattivare l'irrigazione in quanto " +
-                        "l'umidità della pianta è quasi ai suoi limiti.");
-            }else if (weather_code < 56 && (umidMax - misurazione) >= (umidMax - umidMin)/2) {
-                out.println("Domani non pioverà ed è consigliato di attivare l'irrigazione in quanto " +
-                        "il terreno risulta alquanto secca e ha bisogno di idratazione.");
-            } else if (weather_code == 56 || weather_code == 57 && (umidMax - misurazione) >= (umidMax - umidMin)/2) {
-                out.println("Domani ci sarà una leggera pioggia, è consigliato non irrigare.");
-            } else if (weather_code == 56 || weather_code == 57 && (umidMax - misurazione) <= (umidMax - umidMin)/2) {
-                out.println("Domani ci sarà una leggera pioggia, però è consigliato irrigare in quanto " +
-                        "il terrento è asciutto.");
-            } else if (weather_code == 61 || weather_code == 63 || weather_code == 65) {
-                out.println("Domani ci sarà una forte pioggia, è consigliato disattivare l'irrigazione.");
-            }
-        %>
-    </tr>
-</table>
-<% } %>
 
+            if (weather_code < 56 && (misurazione > umidMax || (umidMax - misurazione) <= 5)) { %>
+        <div class="row">
+            <div class="col-5">
+                <img src="img/sun.png" style="margin-bottom: -50%;" width="50%">
+            </div>
+            <div class="col-2 text-center">
+                    <p style="color:black">Domani non pioverà però è consigliato disattivare l'irrigazione in quanto " +
+                        "l'umidità della pianta è quasi ai suoi limiti.</p>
+            </div>
+            <div class="col-5">
+                <img src="img/NonIrrigare.jpg" style="margin-bottom: -50%;" width="50%">
+            </div>
+        </div>
 
-<%@include file="fragments/footer.html"%>
+        <% } else if (weather_code < 56 && (umidMax - misurazione) >= (umidMax - umidMin) / 2) { %>
+        <div class="row">
+            <div class="col-5">
+                <img src="img/sun.png" style="margin-bottom: -50%;" width="50%">
+            </div>
+            <div class="col-2 text-center">
+                <p style="color:black">Domani non pioverà ed è consigliato di attivare l'irrigazione in quanto " +
+                    "il terreno risulta alquanto secca e ha bisogno di idratazione.</p>
+            </div>
+            <div class="col-5">
+                <img src="img/Irrigare.png" style="margin-bottom: -50%;" width="50%">
+            </div>
+        </div>
+        <% } else if (weather_code == 56 || weather_code == 57 && (umidMax - misurazione) >= (umidMax - umidMin) / 2) { %>
+        <div class="row">
+            <div class="col-5">
+                <img src="img/Pioggia.jpg" style="margin-bottom: -50%;" width="50%">
+            </div>
+            <div class="col-2 text-center">
+                <p style="color:black">Domani ci sarà una leggera pioggia, è consigliato non irrigare.</p>
+            </div>
+            <div class="col-5">
+                <img src="img/NonIrrigare.jpg" style="margin-bottom: -50%;" width="50%">
+            </div>
+        </div>
+        <% } else if (weather_code == 56 || weather_code == 57 && (umidMax - misurazione) <= (umidMax - umidMin) / 2) { %>
+        <div class="row">
+            <div class="col-5">
+                <img src="img/Pioggia.jpg" style="margin-bottom: -50%;" width="50%">
+            </div>
+            <div class="col-2 text-center">
+                <p style="color:black">Domani ci sarà una leggera pioggia, però è consigliato irrigare in quanto " +
+                    "il terrento è asciutto.</p>
+            </div>
+            <div class="col-5">
+                <img src="img/Irrigare.png" style="margin-bottom: -50%;" width="50%">
+            </div>
+        </div>
+        <% } else if (weather_code == 61 || weather_code == 63 || weather_code == 65) { %>
+        <div class="row">
+            <div class="col-5">
+                <img src="img/Temporale.jpg" style="margin-bottom: -50%;" width="50%">
+            </div>
+            <div class="col-2 text-center">
+                <p style="color:black">Domani ci sarà una forte pioggia, è consigliato disattivare l'irrigazione.</p>
+            </div>
+            <div class="col-5">
+                <img src="img/NonIrrigare.jpg" style="margin-bottom: -50%;" width="50%">
+            </div>
+        </div>
+        <% } %>
+        <% } %>
+    </div>
+</div>
+
+<%@include file="fragments/footer.html" %>
+
 </body>
 </html>
