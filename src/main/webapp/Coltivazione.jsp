@@ -123,7 +123,14 @@
 <body>
 
 
-<%@include file="fragments/headerLoggedAzienda.jsp" %>
+<% UtenteBean u = (UtenteBean) request.getSession().getAttribute("currentUserSession");
+    if (u instanceof DipendenteBean) { %>
+<%@include file="/fragments/headerLoggedDipendente.jsp" %>
+<%} else if (u instanceof AziendaBean) { %>
+<%@ include file="/fragments/headerLoggedAzienda.jsp" %>
+<%} else { %>
+<%@include file="fragments/headerLogin.html" %>
+<% }%>
 
 <%! String Immagine = null;
     List<ColtivazioneBean> list = null;

@@ -69,24 +69,24 @@
     </div>
     <div class="container py-5 ">
         <div class="row ">
-            <div class="col-12 ">
+            <div class="col-12 py-5 ">
                 <h3 class="display-3 text-center">Inserisci una Pianta</h3>
             </div>
         </div>
         <div class="card  text-black" style="border-radius: 1rem; border: 6px solid green; font-size:  22px; ">
             <div class="row justify-content-center "
-                 style="font-family: 'Staatliches', cursive; font-size: 20px; text-align: center">
+                 style=" font-size: 20px; text-align: center">
                 <div class="col-md-10">
                     <div class="form-outline form-white mb-4">
                         <label class="form-label" for="nome">Nome:</label>
-                        <input style=" background-color: rgb(208, 213, 218);" type="text" id="nome"
+                        <input style=" background-color: rgb(208, 213, 218);" type="text" id="nome" placeholder="Inserisci il nome della pianta"
                                class="form-control border-secondary" name="nome" required><br>
                     </div>
                 </div>
                 <div class="col-md-10">
                     <div class="form-outline form-white mb-4">
                         <label class="form-label" for="descrizione">Descrizione:</label>
-                        <textarea style=" background-color: rgb(208, 213, 218);" id="descrizione"
+                        <textarea style=" background-color: rgb(208, 213, 218);" id="descrizione" placeholder="Inserisci la descrizione della pianta"
                                   class="form-control border-secondary " name="descrizione"></textarea><br>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                 <div class="col-md-5">
                     <div class="form-outline form-white mb-4">
                         <label class="form-label" for="ph_min">pH minimo:</label>
-                        <input style=" background-color: rgb(208, 213, 218);" type="text"
+                        <input style=" background-color: rgb(208, 213, 218);" type="text" placeholder="Inserisci il ph minimo"
                                class="form-control border-secondary" id="ph_min" name="ph_min" required><br>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                 <div class="col-md-5">
                     <div class="form-outline form-white mb-4">
                         <label class="form-label" for="ph_max">pH massimo:</label>
-                        <input style=" background-color: rgb(208, 213, 218);" type="text"
+                        <input style=" background-color: rgb(208, 213, 218);" type="text" placeholder="Inserisci il ph massimo"
                                class="form-control border-secondary" id="ph_max" name="ph_max" required><br>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                 <div class="col-md-5">
                     <div class="form-outline form-white mb-4">
                         <label class="form-label" for="temperatura_min">Temperatura minima:</label>
-                        <input style=" background-color: rgb(208, 213, 218);" type="text"
+                        <input style=" background-color: rgb(208, 213, 218);" type="text" placeholder="Inserisci la temperatura minima"
                                class="form-control border-secondary" id="temperatura_min" name="temperatura_min"
                                required><br>
                     </div>
@@ -119,7 +119,7 @@
                 <div class="col-md-5">
                     <div class="form-outline form-white mb-4">
                         <label class="form-label" for="temperatura_max">Temperatura massima:</label>
-                        <input style=" background-color: rgb(208, 213, 218);" type="text"
+                        <input style=" background-color: rgb(208, 213, 218);" type="text" placeholder="Inserisci la temperatura max"
                                class="form-control border-secondary" id="temperatura_max" name="temperatura_max"
                                required><br>
                     </div>
@@ -128,7 +128,7 @@
                 <div class="col-md-5">
                     <div class="form-outline form-white mb-4">
                         <label class="form-label" for="umidita_min">Umidità minima:</label>
-                        <input style=" background-color: rgb(208, 213, 218); " type="text"
+                        <input style=" background-color: rgb(208, 213, 218); " type="text" placeholder="Inserisci l'umidià minima"
                                class="form-control border-secondary" id="umidita_min" name="umidita_min" required><br>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                 <div class="col-md-5">
                     <div class="form-outline form-white mb-4">
                         <label class="form-label" for="umidita_max">Umidità massima:</label>
-                        <input style=" background-color: rgb(208, 213, 218);" type="text"
+                        <input style=" background-color: rgb(208, 213, 218);" type="text" placeholder="Inserisci l'umidità massima"
                                class="form-control border-secondary" id="umidita_max" name="umidita_max" required><br>
                     </div>
                 </div>

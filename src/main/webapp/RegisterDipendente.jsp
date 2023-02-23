@@ -36,6 +36,25 @@
     }
 
 %>
+
+
+<% if (request.getAttribute("errore") != null) { %>
+
+<div class="container py-5 w-50">
+    <div class="row justify-content-center">
+        <div class="alert alert-danger text-center">
+            <h3>Errore</h3>
+            <p><%= request.getAttribute("descrizione")%>
+            </p>
+        </div>
+    </div>
+</div>
+
+<%}%>
+
+
+
+
 <div class="container py-5 h100" style="width: 65%">
     <div class="row justify-content-center align-items-center h-100" style="width: 100%;">
         <h3 class="display-3 text-center py-5">Registrazione Dipendente</h3>
