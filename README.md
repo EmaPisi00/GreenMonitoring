@@ -9,7 +9,7 @@
   <br>
   Software Engineering and Software Project Management 
   <br>
-  courses of Computer Science at University of Salerno <img src="https://th.bing.com/th/id/OIP.bzx-CjuN2g7JEu7Yah_cRAHaHa?pid=ImgDet&w=350&h=350&rs=1" style="height: 26px; width: 26px"/> .
+  courses of Computer Science at University of Salerno.
 </p>
 
 # Project description and introduction
@@ -18,7 +18,7 @@ In this section we introduce context informations for the project.
 
 ## Introduction
 
-🌱📋 Java Web App for crop support. Produced for the Software Engineering and Software Project Management courses of Computer Science at University of Salerno.
+🌱📋 Java Web App for crop support. Produced for the Software Engineering and Software Project Management courses of Computer Science at University of Salerno <img src="https://th.bing.com/th/id/OIP.bzx-CjuN2g7JEu7Yah_cRAHaHa?pid=ImgDet&w=350&h=350&rs=1" style="height: 16px; width: 16px"/> .
 
 ## Authors
 
