@@ -1,6 +1,5 @@
 <p align = "center">
-  <img src = "" width = "500" heigth = "500">
-https://raw.githubusercontent.com/EmaPisi00/GreenMonitoring/master/src/main/webapp/img/fullLogo.png
+  <img src = "https://raw.githubusercontent.com/EmaPisi00/GreenMonitoring/master/src/main/webapp/img/fullLogo.png" width = "500" heigth = "500">
 </p>
 
 <p align = "center">
