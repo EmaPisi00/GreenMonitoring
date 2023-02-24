@@ -39,5 +39,5 @@ In this section we introduce context informations for the project.
 # Contributors
 
 <a href="https://github.com/EmaPisi00/GreenMonitoring/graphs/contributors">
-  <img src="https://raw.githubusercontent.com/EmaPisi00/GreenMonitoring/master/src/main/webapp/img/zoomed_lg2.png" style="width:500px; height:500px"/>
+  <img src="https://raw.githubusercontent.com/EmaPisi00/GreenMonitoring/master/src/main/webapp/img/zoomed_lg2.png"/>
 </a>
