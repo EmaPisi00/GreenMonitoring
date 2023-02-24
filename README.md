@@ -18,7 +18,7 @@ In this section we introduce context informations for the project.
 
 ## Introduction
 
-🌱📋 Java Web App for crop support. Produced for the Software Engineering and Software Project Management courses of Computer Science at University of Salerno <img src="https://web.unisa.it/images/favicon.ico" style="height: 17px; width: 17px"/> .
+🌱📋 Java Web App for crop support. Produced for the Software Engineering and Software Project Management courses of Computer Science at University of Salerno   <img src="https://web.unisa.it/images/favicon.ico" style="height: 16px; width: 16px; vertical-align: middle;"> .
 
 ## Authors
 
